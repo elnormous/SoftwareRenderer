@@ -28,12 +28,12 @@ int gpApplicationRun(GPApplication* application)
 
     gpMain(application);
 
-    GPWindowWindows* windowWin = (GPWindowWindows*)application->window.opaque;
+    GPWindowWindows* windowWindows = (GPWindowWindows*)application->window.opaque;
     MSG msg;
     BOOL ret;
     for (;;)
     {
-        ret = GetMessage(&msg, windowWin->window, 0, 0);
+        ret = GetMessage(&msg, windowWindows->window, 0, 0);
 
         if (ret > 0)
         {
