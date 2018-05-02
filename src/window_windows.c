@@ -16,15 +16,7 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
     {
         case WM_SIZE:
         {
-            RECT clientRect;
-            GetClientRect(window, &clientRect);
-
-            SetWindowPos(windowWindows->textBox, NULL,
-                clientRect.left, clientRect.top,
-                clientRect.right - clientRect.left,
-                clientRect.bottom - clientRect.top,
-                0);
-
+            // TODO: resize back buffer
             break;
         }
     }
@@ -87,25 +79,8 @@ int gpWindowInit(GPWindow* window, int argc, const char** argv)
     RECT clientRect;
     GetClientRect(windowWindows->window, &clientRect);
 
-    windowWindows->textBox = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"",
-        WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | ES_AUTOHSCROLL,
-        clientRect.left, clientRect.top,
-        clientRect.right - clientRect.left,
-        clientRect.bottom - clientRect.top,
-        windowWindows->window, NULL, instance, NULL);
-
-    if (!windowWindows->textBox)
-    {
-        fprintf(stderr, "Failed to create text box\n");
-        return 0;
-    }
-
     ShowWindow(windowWindows->window, SW_SHOW);
     SetWindowLongPtr(windowWindows->window, GWLP_USERDATA, (LONG_PTR)windowWindows);
-
-    windowWindows->textSize = 1;
-    windowWindows->text = malloc(windowWindows->textSize * sizeof(WCHAR));
-    windowWindows->text[0] = 0;
 
     return 1;
 }
@@ -116,8 +91,6 @@ int gpWindowDestroy(GPWindow* window)
     {
         GPWindowWindows* windowWindows = (GPWindowWindows*)window->opaque;
 
-        if (windowWindows->text) free(windowWindows->text);
-        if (windowWindows->textBox) DestroyWindow(windowWindows->textBox);
         if (windowWindows->window) DestroyWindow(windowWindows->window);
         if (windowWindows->windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
 
