@@ -29,23 +29,7 @@ int main(int argc, const char* argv[])
 #endif
 {
     GPApplication application;
-    int i;
     int result;
-    const char* outputFile = "output.txt";
-
-#ifdef WIN32
-    // TODO: implement command line parsing
-    int argc = 0;
-    const char** argv = NULL;
-#else
-    for (i = 1; i < argc; ++i)
-    {
-        if (strcmp(argv[i], "-o") == 0)
-        {
-            if (++i < argc) outputFile = argv[i];
-        }
-    }
-#endif
 
     gpApplicationInit(&application, argc, argv);
     result = gpApplicationRun(&application) ? EXIT_SUCCESS : EXIT_FAILURE;
