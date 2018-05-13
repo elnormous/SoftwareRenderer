@@ -4,10 +4,18 @@
 
 #pragma once
 
-class Renderer
+namespace sr
 {
-public:
-    Renderer();
+    class Renderer
+    {
+    public:
+        Renderer();
 
-    bool draw();
-};
+        bool init();
+
+        bool draw();
+
+    private:
+
+    };
+}

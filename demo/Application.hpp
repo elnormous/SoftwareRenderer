@@ -9,9 +9,10 @@
 class Application
 {
 public:
+    Application(int initArgc, const char** initArgv);
     ~Application();
 
-    bool init(int argc, const char** argv);
+    bool init();
     bool run();
 
     Window window;

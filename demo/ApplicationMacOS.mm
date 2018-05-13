@@ -60,15 +60,18 @@ void srMain(Application& application);
 
 @end
 
+Application::Application(int initArgc, const char** initArgv):
+    argc(initArgc),
+    argv(initArgv)
+{
+}
+
 Application::~Application()
 {
 }
 
-bool Application::init(int argc, const char** argv)
+bool Application::init()
 {
-    argc = argc;
-    argv = argv;
-
     return true;
 }
 

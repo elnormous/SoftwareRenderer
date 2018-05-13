@@ -76,10 +76,10 @@ static void freeBitmap(void* info)
 
         /*bitmap.width = width;
         bitmap.height = height;
-        bitmap.buffer = malloc(bitmap.width * bitmap.height * componentsPerPixel);
+        bitmap.buffer = malloc(bitmap.width * bitmap.height * componentsPerPixel);*/
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        provider = CGDataProviderCreateDirect(&bitmap, width * height * componentsPerPixel, &providerCallbacks);*/
+        //provider = CGDataProviderCreateDirect(&bitmap, width * height * componentsPerPixel, &providerCallbacks);
     }
 
     return self;

@@ -4,12 +4,15 @@
 
 #include "Renderer.hpp"
 
-Renderer::Renderer()
+namespace sr
 {
-    
-}
+    Renderer::Renderer()
+    {
 
-bool Renderer::draw()
-{
-    return true;
+    }
+
+    bool Renderer::draw()
+    {
+        return true;
+    }
 }
