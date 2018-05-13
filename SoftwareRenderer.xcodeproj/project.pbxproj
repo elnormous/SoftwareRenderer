@@ -8,30 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
-		306944DC205DF43400C4969C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.c */; };
-		306944DD205DF43400C4969C /* thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 300984FA202E95F700BB0340 /* thread.c */; };
-		306944DE205DF43400C4969C /* application_macos.m in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* application_macos.m */; };
-		306944E1205E00A900C4969C /* window_macos.m in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* window_macos.m */; };
+		306944DC205DF43400C4969C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.cpp */; };
+		306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* ApplicationMacOS.mm */; };
+		306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* WindowMacOS.mm */; };
 		306944E52068654C00C4969C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEAB20425CEC0073390E /* IOKit.framework */; };
 		306944E62068655200C4969C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEA920425CE50073390E /* Foundation.framework */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		300984F2202D38FF00BB0340 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		300984F9202E95F700BB0340 /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
-		300984FA202E95F700BB0340 /* thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = thread.c; sourceTree = "<group>"; };
-		306944A6205DF13900C4969C /* application_macos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = application_macos.m; sourceTree = "<group>"; };
-		306944A8205DF15A00C4969C /* application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
+		300984F2202D38FF00BB0340 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		306944A6205DF13900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
+		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306944B2205DF40A00C4969C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		306944B7205DF40A00C4969C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		306944DF205E00A900C4969C /* window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
-		306944E0205E00A900C4969C /* window_macos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = window_macos.m; sourceTree = "<group>"; };
+		306944DF205E00A900C4969C /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
+		306944E0205E00A900C4969C /* WindowMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WindowMacOS.mm; sourceTree = "<group>"; };
 		306944E72068655900C4969C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3071DEA920425CE50073390E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		30971FB2206BDA1C000D196D /* window_macos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window_macos.h; sourceTree = "<group>"; };
+		30971FB2206BDA1C000D196D /* WindowMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowMacOS.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +48,7 @@
 		300984E6202D38FF00BB0340 = {
 			isa = PBXGroup;
 			children = (
-				300984F1202D38FF00BB0340 /* src */,
+				300984F1202D38FF00BB0340 /* demo */,
 				306944AE205DF40A00C4969C /* macos */,
 				300984F0202D38FF00BB0340 /* Products */,
 				3071DEA820425CE50073390E /* Frameworks */,
@@ -66,19 +63,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		300984F1202D38FF00BB0340 /* src */ = {
+		300984F1202D38FF00BB0340 /* demo */ = {
 			isa = PBXGroup;
 			children = (
-				306944A6205DF13900C4969C /* application_macos.m */,
-				306944A8205DF15A00C4969C /* application.h */,
-				300984F2202D38FF00BB0340 /* main.c */,
-				300984FA202E95F700BB0340 /* thread.c */,
-				300984F9202E95F700BB0340 /* thread.h */,
-				30971FB2206BDA1C000D196D /* window_macos.h */,
-				306944E0205E00A900C4969C /* window_macos.m */,
-				306944DF205E00A900C4969C /* window.h */,
+				306944A6205DF13900C4969C /* ApplicationMacOS.mm */,
+				306944A8205DF15A00C4969C /* Application.hpp */,
+				300984F2202D38FF00BB0340 /* main.cpp */,
+				30971FB2206BDA1C000D196D /* WindowMacOS.hpp */,
+				306944E0205E00A900C4969C /* WindowMacOS.mm */,
+				306944DF205E00A900C4969C /* Window.hpp */,
 			);
-			path = src;
+			path = demo;
 			sourceTree = "<group>";
 		};
 		306944AE205DF40A00C4969C /* macos */ = {
@@ -169,10 +164,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				306944DC205DF43400C4969C /* main.c in Sources */,
-				306944DE205DF43400C4969C /* application_macos.m in Sources */,
-				306944E1205E00A900C4969C /* window_macos.m in Sources */,
-				306944DD205DF43400C4969C /* thread.c in Sources */,
+				306944DC205DF43400C4969C /* main.cpp in Sources */,
+				306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */,
+				306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,7 +179,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_MODULES_AUTOLINK = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -201,7 +196,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -219,7 +213,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -232,7 +225,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_MODULES_AUTOLINK = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -248,7 +242,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -260,7 +253,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -270,14 +262,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;
@@ -289,14 +277,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;

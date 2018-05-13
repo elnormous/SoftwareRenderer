@@ -2,33 +2,34 @@
 //  SoftwareRenderer
 //
 
-#include "application.h"
-#include "window_macos.h"
+#include "Application.hpp"
+#include "WindowMacOS.hpp"
 
-void gpMain(GPApplication* application);
+void srMain(Application& application);
 
 @interface AppDelegate: NSObject<NSApplicationDelegate>
 {
-    GPApplication* application;
+    Application* application;
 }
 @end
 
 @implementation AppDelegate
 
--(id)initWithApplication:(GPApplication*)initApplication
+-(id)initWithApplication:(Application*)initApplication
 {
     if (self = [super init])
-    {
         application = initApplication;
-    }
 
     return self;
 }
 
 -(void)applicationWillFinishLaunching:(__unused NSNotification*)notification
 {
-    gpWindowInit(&application->window, application->argc, application->argv);
-    gpMain(application);
+    WindowMacOS* windowMacOS = new WindowMacOS();
+    application->window.impl.reset(windowMacOS);
+    windowMacOS->init(application->argc, application->argv);
+
+    srMain(*application);
 }
 
 -(void)applicationDidFinishLaunching:(__unused NSNotification*)notification
@@ -37,7 +38,6 @@ void gpMain(GPApplication* application);
 
 -(void)applicationWillTerminate:(__unused NSNotification*)notification
 {
-    gpWindowDestroy(&application->window);
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(__unused NSApplication*)sender
@@ -60,26 +60,25 @@ void gpMain(GPApplication* application);
 
 @end
 
-int gpApplicationInit(GPApplication* application, int argc, const char** argv)
+Application::~Application()
 {
-    application->argc = argc;
-    application->argv = argv;
-
-    return 1;
 }
 
-int gpApplicationDestroy(GPApplication* application)
+bool Application::init(int argc, const char** argv)
 {
-    return 1;
+    argc = argc;
+    argv = argv;
+
+    return true;
 }
 
-int gpApplicationRun(GPApplication* application)
+bool Application::run()
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSApplication* sharedApplication = [NSApplication sharedApplication];
     [sharedApplication activateIgnoringOtherApps:YES];
-    [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:application] autorelease]];
+    [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
 
     NSMenu* mainMenu = [[[NSMenu alloc] initWithTitle:@"Main Menu"] autorelease];
 
@@ -99,5 +98,5 @@ int gpApplicationRun(GPApplication* application)
 
     [pool release];
 
-    return 1;
+    return true;
 }

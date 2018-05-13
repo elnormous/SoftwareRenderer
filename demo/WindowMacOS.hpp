@@ -5,12 +5,17 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
-#include "window.h"
+#include "Window.hpp"
 
-typedef struct GPWindowMacOS
+class WindowMacOS: public WindowImpl
 {
+public:
+    ~WindowMacOS();
+    bool init(int argc, const char** argv);
+
+private:
     NSScreen* screen;
     NSWindow* window;
     NSView* content;
     NSObject<NSWindowDelegate>* windowDelegate;
-} GPWindowMacOS;
+};
