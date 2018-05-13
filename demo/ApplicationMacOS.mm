@@ -26,7 +26,7 @@ void srMain(Application& application);
 -(void)applicationWillFinishLaunching:(__unused NSNotification*)notification
 {
     WindowMacOS* windowMacOS = new WindowMacOS();
-    application->window.impl.reset(windowMacOS);
+    application->window.reset(windowMacOS);
     windowMacOS->init(application->argc, application->argv);
 
     srMain(*application);

@@ -8,22 +8,49 @@
 #include "sr.hpp"
 #include "Application.hpp"
 
-std::thread thread;
-std::condition_variable startCondition;
-std::mutex startMutex;
-std::atomic<bool> done;
-sr::Renderer renderer;
+class Demo
+{
+public:
+    Demo():
+        done(false)
+    {
+        renderer.init(200, 200);
+    }
+
+    Demo(const Demo&) = delete;
+    Demo& operator=(const Demo&) = delete;
+    Demo(Demo&&) = delete;
+    Demo& operator=(Demo&&) = delete;
+
+    ~Demo()
+    {
+        done = true;
+        thread.join();
+    }
+
+    void run()
+    {
+        thread = std::thread([this]() {
+            while (!done)
+            {
+                renderer.clear();
+                renderer.draw();
+            }
+        });
+    }
+
+    std::thread thread;
+    std::condition_variable startCondition;
+    std::mutex startMutex;
+    std::atomic<bool> done;
+    sr::Renderer renderer;
+};
+
+Demo demo;
 
 void srMain(Application& application)
 {
-    done = false;
-
-    thread = std::thread([&application]() {
-        while (!done)
-        {
-            renderer.draw();
-        }
-    });
+    demo.run();
 }
 
 #ifdef WIN32
@@ -40,9 +67,6 @@ int main(int argc, const char* argv[])
 
     application.init();
     result = application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
-
-    done = true;
-    if (thread.joinable()) thread.join();
 
     return result;
 }

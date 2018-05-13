@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30345F2B20A9062200B9B963 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Window.cpp */; };
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
 		306944DC205DF43400C4969C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.cpp */; };
 		306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* ApplicationMacOS.mm */; };
@@ -14,7 +15,7 @@
 		306944E52068654C00C4969C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEAB20425CEC0073390E /* IOKit.framework */; };
 		306944E62068655200C4969C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEA920425CE50073390E /* Foundation.framework */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
-		30C9638220A7E0A300B54158 /* liblibsr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30C9637E20A7DF2C00B54158 /* liblibsr.a */; };
+		30C9638220A7E0A300B54158 /* libsr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30C9637E20A7DF2C00B54158 /* libsr.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		300984F2202D38FF00BB0340 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		30345F2A20A9062200B9B963 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		306944A6205DF13900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30C9638220A7E0A300B54158 /* liblibsr.a in Frameworks */,
+				30C9638220A7E0A300B54158 /* libsr.a in Frameworks */,
 				306944E82068655900C4969C /* Cocoa.framework in Frameworks */,
 				306944E62068655200C4969C /* Foundation.framework in Frameworks */,
 				306944E52068654C00C4969C /* IOKit.framework in Frameworks */,
@@ -86,6 +88,7 @@
 				30971FB2206BDA1C000D196D /* WindowMacOS.hpp */,
 				306944E0205E00A900C4969C /* WindowMacOS.mm */,
 				306944DF205E00A900C4969C /* Window.hpp */,
+				30345F2A20A9062200B9B963 /* Window.cpp */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -112,7 +115,7 @@
 		30C9637A20A7DF2C00B54158 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				30C9637E20A7DF2C00B54158 /* liblibsr.a */,
+				30C9637E20A7DF2C00B54158 /* libsr.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,10 +180,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		30C9637E20A7DF2C00B54158 /* liblibsr.a */ = {
+		30C9637E20A7DF2C00B54158 /* libsr.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = liblibsr.a;
+			path = libsr.a;
 			remoteRef = 30C9637D20A7DF2C00B54158 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -205,6 +208,7 @@
 				306944DC205DF43400C4969C /* main.cpp in Sources */,
 				306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */,
 				306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */,
+				30345F2B20A9062200B9B963 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

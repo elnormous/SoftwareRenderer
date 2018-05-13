@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #include "Window.hpp"
 
-class WindowMacOS: public WindowImpl
+class WindowMacOS: public Window
 {
 public:
     ~WindowMacOS();

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <memory>
 #include "Window.hpp"
 
 class Application
@@ -15,7 +16,7 @@ public:
     bool init();
     bool run();
 
-    Window window;
+    std::unique_ptr<Window> window;
     int argc;
     const char** argv;
 };

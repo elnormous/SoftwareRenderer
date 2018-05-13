@@ -163,5 +163,8 @@ bool WindowMacOS::init(int argc, const char** argv)
     window.contentView = content;
     [window makeKeyAndOrderFront:nil];
 
+    width = static_cast<uint32_t>(windowSize.width);
+    height = static_cast<uint32_t>(windowSize.height);
+
     return 1;
 }

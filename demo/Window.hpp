@@ -4,14 +4,15 @@
 
 #pragma once
 
-#include <memory>
-
-class WindowImpl
-{
-};
+#include <cstdint>
 
 class Window
 {
 public:
-    std::unique_ptr<WindowImpl> impl;
+
+protected:
+    void onResize();
+
+    uint32_t width;
+    uint32_t height;
 };
