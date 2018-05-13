@@ -3,3 +3,5 @@ SoftwareRenderer.xcodeproj/xcuserdata
 *.opendb
 *.db
 x64/
+build/sr.xcodeproj/project.xcworkspace
+build/sr.xcodeproj/xcuserdata

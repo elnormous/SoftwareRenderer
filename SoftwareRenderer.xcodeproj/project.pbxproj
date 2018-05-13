@@ -14,7 +14,18 @@
 		306944E52068654C00C4969C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEAB20425CEC0073390E /* IOKit.framework */; };
 		306944E62068655200C4969C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEA920425CE50073390E /* Foundation.framework */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
+		30C9638220A7E0A300B54158 /* liblibsr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30C9637E20A7DF2C00B54158 /* liblibsr.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30C9637D20A7DF2C00B54158 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30C9637920A7DF2C00B54158 /* sr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 30C9637220A7DEFF00B54158;
+			remoteInfo = libsr;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		300984F2202D38FF00BB0340 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -29,6 +40,7 @@
 		3071DEA920425CE50073390E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		30971FB2206BDA1C000D196D /* WindowMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowMacOS.hpp; sourceTree = "<group>"; };
+		30C9637920A7DF2C00B54158 /* sr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sr.xcodeproj; path = build/sr.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30C9638220A7E0A300B54158 /* liblibsr.a in Frameworks */,
 				306944E82068655900C4969C /* Cocoa.framework in Frameworks */,
 				306944E62068655200C4969C /* Foundation.framework in Frameworks */,
 				306944E52068654C00C4969C /* IOKit.framework in Frameworks */,
@@ -48,6 +61,7 @@
 		300984E6202D38FF00BB0340 = {
 			isa = PBXGroup;
 			children = (
+				30C9637920A7DF2C00B54158 /* sr.xcodeproj */,
 				300984F1202D38FF00BB0340 /* demo */,
 				306944AE205DF40A00C4969C /* macos */,
 				300984F0202D38FF00BB0340 /* Products */,
@@ -93,6 +107,14 @@
 				3071DEA920425CE50073390E /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		30C9637A20A7DF2C00B54158 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30C9637E20A7DF2C00B54158 /* liblibsr.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,12 +163,28 @@
 			mainGroup = 300984E6202D38FF00BB0340;
 			productRefGroup = 300984F0202D38FF00BB0340 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 30C9637A20A7DF2C00B54158 /* Products */;
+					ProjectRef = 30C9637920A7DF2C00B54158 /* sr.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				306944AC205DF40A00C4969C /* SoftwareRenderer */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		30C9637E20A7DF2C00B54158 /* liblibsr.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblibsr.a;
+			remoteRef = 30C9637D20A7DF2C00B54158 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		306944AB205DF40A00C4969C /* Resources */ = {
@@ -266,6 +304,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				HEADER_SEARCH_PATHS = sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;
@@ -281,6 +320,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				HEADER_SEARCH_PATHS = sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;

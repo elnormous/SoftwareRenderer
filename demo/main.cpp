@@ -5,12 +5,14 @@
 #include <functional>
 #include <iostream>
 #include <thread>
+#include "Renderer.hpp"
 #include "Application.hpp"
 
 std::thread thread;
 std::condition_variable startCondition;
 std::mutex startMutex;
 std::atomic<bool> done;
+Renderer renderer;
 
 void srMain(Application& application)
 {
@@ -19,7 +21,7 @@ void srMain(Application& application)
     thread = std::thread([&application]() {
         while (!done)
         {
-
+            renderer.draw();
         }
     });
 }
