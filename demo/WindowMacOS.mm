@@ -33,30 +33,32 @@
 
 @interface Canvas: NSView
 {
+    Window* window;
     NSInteger width;
     NSInteger height;
     size_t componentsPerPixel;
     size_t bitsPerComponent;
     CGColorSpaceRef colorSpace;
     CGDataProviderRef provider;
-    sr::Buffer buffer;
 }
 
 @end
 
 static const void* getBytePointer(void* info)
 {
-    sr::Buffer* buffer = (sr::Buffer*)info;
+    Window* window = static_cast<Window*>(info);
+    const sr::Buffer& buffer = window->render();
 
-    return buffer->getData().data();
+    return buffer.getData().data();
 }
 
 @implementation Canvas
 
--(id)initWithFrame:(NSRect)frameRect
+-(id)initWithFrame:(NSRect)frameRect andWindow:(Window*)initWindow
 {
     if (self = [super initWithFrame:frameRect])
     {
+        window = initWindow;
         width = frameRect.size.width;
         height = frameRect.size.height;
         componentsPerPixel = 4;
@@ -72,11 +74,7 @@ static const void* getBytePointer(void* info)
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
 
-        buffer.init(sr::Buffer::Type::RGBA,
-                    static_cast<uint32_t>(width),
-                    static_cast<uint32_t>(height));
-
-        provider = CGDataProviderCreateDirect(&buffer, width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(window, width * height * componentsPerPixel, &providerCallbacks);
     }
 
     return self;
@@ -99,9 +97,6 @@ static const void* getBytePointer(void* info)
     width = newSize.width;
     height = newSize.height;
 
-    buffer.resize(static_cast<uint32_t>(width),
-                  static_cast<uint32_t>(height));
-
     CGDataProviderDirectCallbacks providerCallbacks = {
         0,
         getBytePointer,
@@ -110,7 +105,7 @@ static const void* getBytePointer(void* info)
         nullptr
     };
     
-    provider = CGDataProviderCreateDirect(&buffer, width * height * componentsPerPixel, &providerCallbacks);
+    provider = CGDataProviderCreateDirect(window, width * height * componentsPerPixel, &providerCallbacks);
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -137,8 +132,6 @@ static const void* getBytePointer(void* info)
     NSValue* userInfo = timer.userInfo;
 
     Window* window = static_cast<Window*>(userInfo.pointerValue);
-
-    buffer = window->render();
 
     [self setNeedsDisplay:YES];
 }
@@ -193,7 +186,7 @@ bool WindowMacOS::init(int argc, const char** argv)
     width = static_cast<uint32_t>(windowFrame.size.width);
     height = static_cast<uint32_t>(windowFrame.size.height);
 
-    content = [[Canvas alloc] initWithFrame:windowFrame];
+    content = [[Canvas alloc] initWithFrame:windowFrame andWindow:this];
 
     window.contentView = content;
     [window makeKeyAndOrderFront:nil];
