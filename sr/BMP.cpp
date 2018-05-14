@@ -176,6 +176,7 @@ namespace sr
         fseek(f, header.bfOffBits, SEEK_SET);
 
         data.resize(infoHeader.biWidth * std::abs(infoHeader.biHeight) * sizeof(RGBQUAD));
+        std::fill(data.begin(), data.end(), 255);
 
         if (infoHeader.biHeight > 0) // bottom to top
         {
@@ -183,7 +184,7 @@ namespace sr
             {
                 for (int x = 0; x < infoHeader.biWidth; ++x)
                 {
-                    fread(&data[y * infoHeader.biWidth + x], infoHeader.biBitCount / 8, 1, f);
+                    fread(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQUAD)], infoHeader.biBitCount / 8, 1, f);
                 }
             }
         }
@@ -193,7 +194,7 @@ namespace sr
             {
                 for (int x = 0; x < infoHeader.biWidth; ++x)
                 {
-                    fread(&data[y * infoHeader.biWidth + x], infoHeader.biBitCount / 8, 1, f);
+                    fread(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQUAD)], infoHeader.biBitCount / 8, 1, f);
                 }
             }
         }

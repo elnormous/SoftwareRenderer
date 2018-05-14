@@ -102,15 +102,41 @@ namespace sr
                     s.y >= 0.0f && s.y <= 1.0f &&
                     s.z >= 0.0f && s.z <= 1.0f)
                 {
-                    float rgba[4] = {
+                    float finalRGBA[4] = {
                         vertices[0].color.normR() * s.x + vertices[1].color.normR() * s.y + vertices[2].color.normR() * s.z,
                         vertices[0].color.normG() * s.x + vertices[1].color.normG() * s.y + vertices[2].color.normG() * s.z,
                         vertices[0].color.normB() * s.x + vertices[1].color.normB() * s.y + vertices[2].color.normB() * s.z,
                         vertices[0].color.normA() * s.x + vertices[1].color.normA() * s.y + vertices[2].color.normA() * s.z,
                     };
 
-                    Color color(rgba);
+                    Vector2 texCoords(
+                        clamp(vertices[0].texCoords[0].x * s.x + vertices[1].texCoords[0].x * s.y + vertices[2].texCoords[0].x * s.z, 0.0F, 1.0F),
+                        clamp(vertices[0].texCoords[0].y * s.x + vertices[1].texCoords[0].y * s.y + vertices[2].texCoords[0].y * s.z, 0.0F, 1.0F)
+                    );
 
+                    if (texture)
+                    {
+                        uint32_t textureX = static_cast<uint32_t>(texCoords.x * texture->getWidth());
+                        uint32_t textureY = static_cast<uint32_t>(texCoords.y * texture->getHeight());
+
+                        if (texture->getType() == Buffer::Type::RGB)
+                        {
+                            const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 3];
+                            finalRGBA[0] *= sample[0] / 255.0F;
+                            finalRGBA[1] *= sample[1] / 255.0F;
+                            finalRGBA[2] *= sample[2] / 255.0F;
+                        }
+                        else if (texture->getType() == Buffer::Type::RGBA)
+                        {
+                            const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 4];
+                            finalRGBA[0] *= sample[0] / 255.0F;
+                            finalRGBA[1] *= sample[1] / 255.0F;
+                            finalRGBA[2] *= sample[2] / 255.0F;
+                            finalRGBA[3] *= sample[3] / 255.0F;
+                        }
+                    }
+
+                    Color color(finalRGBA);
                     frameBufferData[y * frameBuffer.getWidth() + x] = color.getIntValueRaw();
                 }
             }
