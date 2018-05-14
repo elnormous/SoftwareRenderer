@@ -87,5 +87,10 @@ namespace sr
                    (static_cast<uint32_t>(b) << 8) |
                    static_cast<uint32_t>(a);
         }
+
+        inline uint32_t getIntValueRaw() const
+        {
+            return *reinterpret_cast<const uint32_t*>(&r);
+        }
     };
 } // namespace sr

@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <iostream>
 #include "Renderer.hpp"
 #include "Box2.hpp"
 #include "MathUtils.hpp"
@@ -43,7 +44,7 @@ namespace sr
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
         float* depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
-        uint32_t rgba = color.getIntValue();
+        uint32_t rgba = color.getIntValueRaw();
 
         for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
         {
@@ -83,14 +84,14 @@ namespace sr
             if (positions[i].y > boundingBox.max.y) boundingBox.max.y = positions[i].y;
         }
 
-        boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth()));
-        boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight()));
-        boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth()));
-        boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight()));
+        boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+        boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
+        boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+        boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
 
-        for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y < static_cast<uint32_t>(boundingBox.max.y); ++y)
+        for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y <= static_cast<uint32_t>(boundingBox.max.y); ++y)
         {
-            for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x < static_cast<uint32_t>(boundingBox.max.x); ++x)
+            for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x <= static_cast<uint32_t>(boundingBox.max.x); ++x)
             {
                 Vector3 s = barycentric(positions[0],
                                         positions[1],
@@ -101,7 +102,16 @@ namespace sr
                     s.y >= 0.0f && s.y <= 1.0f &&
                     s.z >= 0.0f && s.z <= 1.0f)
                 {
-                    frameBufferData[y * frameBuffer.getWidth() + x] = vertices[0].color.getIntValue();
+                    float rgba[4] = {
+                        vertices[0].color.normR() * s.x + vertices[1].color.normR() * s.y + vertices[2].color.normR() * s.z,
+                        vertices[0].color.normG() * s.x + vertices[1].color.normG() * s.y + vertices[2].color.normG() * s.z,
+                        vertices[0].color.normB() * s.x + vertices[1].color.normB() * s.y + vertices[2].color.normB() * s.z,
+                        vertices[0].color.normA() * s.x + vertices[1].color.normA() * s.y + vertices[2].color.normA() * s.z,
+                    };
+
+                    Color color(rgba);
+
+                    frameBufferData[y * frameBuffer.getWidth() + x] = color.getIntValueRaw();
                 }
             }
         }
