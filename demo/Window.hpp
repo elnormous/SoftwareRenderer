@@ -28,4 +28,6 @@ protected:
     uint32_t height;
 
     sr::Renderer renderer;
+
+    sr::Buffer texture;
 };

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		30345F2B20A9062200B9B963 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Window.cpp */; };
+		30345F4620AA1BE300B9B963 /* libsr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30345F4320AA1B7E00B9B963 /* libsr.a */; };
+		30345F4C20AA1C0600B9B963 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4920AA1C0600B9B963 /* cube.mtl */; };
+		30345F4D20AA1C0600B9B963 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
+		30345F4F20AA1C7A00B9B963 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
 		306944DC205DF43400C4969C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.cpp */; };
 		306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* ApplicationMacOS.mm */; };
@@ -15,22 +19,24 @@
 		306944E52068654C00C4969C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEAB20425CEC0073390E /* IOKit.framework */; };
 		306944E62068655200C4969C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEA920425CE50073390E /* Foundation.framework */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
-		30C9638220A7E0A300B54158 /* libsr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30C9637E20A7DF2C00B54158 /* libsr.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		30C9637D20A7DF2C00B54158 /* PBXContainerItemProxy */ = {
+		30345F4220AA1B7E00B9B963 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 30C9637920A7DF2C00B54158 /* sr.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 30C9637220A7DEFF00B54158;
-			remoteInfo = libsr;
+			remoteInfo = sr;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		300984F2202D38FF00BB0340 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		30345F2A20A9062200B9B963 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		30345F4920AA1C0600B9B963 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
+		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
 		306944A6205DF13900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,7 +48,7 @@
 		3071DEA920425CE50073390E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		30971FB2206BDA1C000D196D /* WindowMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowMacOS.hpp; sourceTree = "<group>"; };
-		30C9637920A7DF2C00B54158 /* sr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sr.xcodeproj; path = build/sr.xcodeproj; sourceTree = "<group>"; };
+		30C9637920A7DF2C00B54158 /* sr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sr.xcodeproj; path = ../build/sr.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30C9638220A7E0A300B54158 /* libsr.a in Frameworks */,
+				30345F4620AA1BE300B9B963 /* libsr.a in Frameworks */,
 				306944E82068655900C4969C /* Cocoa.framework in Frameworks */,
 				306944E62068655200C4969C /* Foundation.framework in Frameworks */,
 				306944E52068654C00C4969C /* IOKit.framework in Frameworks */,
@@ -82,6 +88,7 @@
 		300984F1202D38FF00BB0340 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				30345F4720AA1BF300B9B963 /* Resources */,
 				306944A6205DF13900C4969C /* ApplicationMacOS.mm */,
 				306944A8205DF15A00C4969C /* Application.hpp */,
 				300984F2202D38FF00BB0340 /* main.cpp */,
@@ -90,7 +97,25 @@
 				306944DF205E00A900C4969C /* Window.hpp */,
 				30345F2A20A9062200B9B963 /* Window.cpp */,
 			);
-			path = demo;
+			name = demo;
+			sourceTree = "<group>";
+		};
+		30345F3F20AA1B7E00B9B963 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30345F4320AA1B7E00B9B963 /* libsr.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30345F4720AA1BF300B9B963 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				30345F4E20AA1C7900B9B963 /* cube.bmp */,
+				30345F4920AA1C0600B9B963 /* cube.mtl */,
+				30345F4A20AA1C0600B9B963 /* cube.obj */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		306944AE205DF40A00C4969C /* macos */ = {
@@ -110,14 +135,6 @@
 				3071DEA920425CE50073390E /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		30C9637A20A7DF2C00B54158 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				30C9637E20A7DF2C00B54158 /* libsr.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,7 +185,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 30C9637A20A7DF2C00B54158 /* Products */;
+					ProductGroup = 30345F3F20AA1B7E00B9B963 /* Products */;
 					ProjectRef = 30C9637920A7DF2C00B54158 /* sr.xcodeproj */;
 				},
 			);
@@ -180,11 +197,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		30C9637E20A7DF2C00B54158 /* libsr.a */ = {
+		30345F4320AA1B7E00B9B963 /* libsr.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libsr.a;
-			remoteRef = 30C9637D20A7DF2C00B54158 /* PBXContainerItemProxy */;
+			remoteRef = 30345F4220AA1B7E00B9B963 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -194,6 +211,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30345F4F20AA1C7A00B9B963 /* cube.bmp in Resources */,
+				30345F4D20AA1C0600B9B963 /* cube.obj in Resources */,
+				30345F4C20AA1C0600B9B963 /* cube.mtl in Resources */,
 				306944B3205DF40A00C4969C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,7 +328,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				HEADER_SEARCH_PATHS = sr;
+				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;
@@ -324,7 +344,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				HEADER_SEARCH_PATHS = sr;
+				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;

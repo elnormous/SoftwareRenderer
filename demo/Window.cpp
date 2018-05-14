@@ -6,6 +6,9 @@
 
 Window::Window()
 {
+    sr::BMP bmp;
+    bmp.load("cube.bmp");
+    texture = bmp.getBuffer();
 }
 
 Window::~Window()
@@ -22,6 +25,8 @@ bool Window::init(int argc, const char** argv)
 const sr::Buffer& Window::render()
 {
     renderer.clear(sr::Color(255, 255, 255, 255), 1.0f);
+
+    renderer.setTexture(texture);
 
     sr::Vertex vertices[3] = {
         sr::Vertex(sr::Vector3(10.0F, 10.0F, 0.0F), 0xFF0000FF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),

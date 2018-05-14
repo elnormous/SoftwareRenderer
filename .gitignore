@@ -1,5 +1,5 @@
-SoftwareRenderer.xcodeproj/project.xcworkspace
-SoftwareRenderer.xcodeproj/xcuserdata
+demo/SoftwareRenderer.xcodeproj/project.xcworkspace
+demo/SoftwareRenderer.xcodeproj/xcuserdata
 *.opendb
 *.db
 x64/
