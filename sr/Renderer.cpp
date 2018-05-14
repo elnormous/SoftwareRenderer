@@ -27,8 +27,28 @@ namespace sr
         return true;
     }
 
-    bool Renderer::clear()
+    bool Renderer::clear(Color color, float depth)
     {
+        uint32_t* frameBufferData = static_cast<uint32_t*>(frameBuffer.getData());
+        float* depthBufferData = static_cast<float*>(depthBuffer.getData());
+        uint32_t rgba = color.getIntValue();
+
+        for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
+        {
+            for (uint32_t x = 0; x < frameBuffer.getWidth(); ++x)
+            {
+                frameBufferData[y * frameBuffer.getWidth() + x] = rgba;
+            }
+        }
+
+        for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
+        {
+            for (uint32_t x = 0; x < frameBuffer.getWidth(); ++x)
+            {
+                depthBufferData[y * frameBuffer.getWidth() + x] = depth;
+            }
+        }
+
         return true;
     }
 

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace sr
 {
@@ -32,12 +33,13 @@ namespace sr
         Type getType() const { return type; }
         uint32_t getWidth() const { return width; }
         uint32_t getHeight() const { return height; }
-        void* getData() const { return data; }
+        void* getData() { return data.data(); }
+        const void* getData() const { return data.data(); }
 
     private:
         Type type = Type::NONE;
         uint32_t width = 0;
         uint32_t height = 0;
-        void* data = nullptr;
+        std::vector<uint8_t> data;
     };
 }

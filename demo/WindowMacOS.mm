@@ -39,7 +39,7 @@
     size_t bitsPerComponent;
     CGColorSpaceRef colorSpace;
     CGDataProviderRef provider;
-    //Bitmap bitmap;
+    sr::Buffer buffer;
     CGImageRef image;
 }
 
@@ -47,17 +47,9 @@
 
 static const void* getBytePointer(void* info)
 {
-    /*Bitmap* bitmap = (Bitmap*)info;
+    sr::Buffer* buffer = (sr::Buffer*)info;
 
-    return bitmap->buffer;*/
-
-    return nullptr;
-}
-
-static void freeBitmap(void* info)
-{
-    //Bitmap* bitmap = (Bitmap*)info;
-    //free(bitmap->buffer);
+    return buffer->getData();
 }
 
 @implementation Canvas
@@ -74,17 +66,18 @@ static void freeBitmap(void* info)
         CGDataProviderDirectCallbacks providerCallbacks = {
             0,
             getBytePointer,
-            NULL,
-            NULL,
-            freeBitmap
+            nullptr,
+            nullptr,
+            nullptr
         };
 
-        /*bitmap.width = width;
-        bitmap.height = height;
-        bitmap.buffer = malloc(bitmap.width * bitmap.height * componentsPerPixel);*/
-
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        //provider = CGDataProviderCreateDirect(&bitmap, width * height * componentsPerPixel, &providerCallbacks);
+
+        buffer.init(sr::Buffer::Type::RGBA,
+                    static_cast<uint32_t>(width),
+                    static_cast<uint32_t>(height));
+
+        provider = CGDataProviderCreateDirect(&buffer, width * height * componentsPerPixel, &providerCallbacks);
     }
 
     return self;
@@ -96,6 +89,29 @@ static void freeBitmap(void* info)
     CGColorSpaceRelease(colorSpace);
 
     [super dealloc];
+}
+
+-(void)setFrameSize:(NSSize)newSize
+{
+    [super setFrameSize:newSize];
+
+    CGDataProviderRelease(provider);
+
+    width = newSize.width;
+    height = newSize.height;
+
+    buffer.resize(static_cast<uint32_t>(width),
+                  static_cast<uint32_t>(height));
+
+    CGDataProviderDirectCallbacks providerCallbacks = {
+        0,
+        getBytePointer,
+        nullptr,
+        nullptr,
+        nullptr
+    };
+    
+    provider = CGDataProviderCreateDirect(&buffer, width * height * componentsPerPixel, &providerCallbacks);
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -121,6 +137,12 @@ static void freeBitmap(void* info)
 
 -(void)draw:(NSTimer*)timer
 {
+    NSValue* userInfo = timer.userInfo;
+
+    Window* window = static_cast<Window*>(userInfo.pointerValue);
+
+    buffer = window->render();
+
     [self setNeedsDisplay:YES];
 }
 
@@ -175,7 +197,7 @@ bool WindowMacOS::init(int argc, const char** argv)
 
     [content setNeedsDisplay:TRUE];
 
-    timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:nil repeats:YES] retain];
+    timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
     return Window::init(argc, argv);
 }

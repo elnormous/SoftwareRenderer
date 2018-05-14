@@ -21,7 +21,7 @@ bool Window::init(int argc, const char** argv)
 
 const sr::Buffer& Window::render()
 {
-    renderer.clear();
+    renderer.clear(sr::Color(255, 0, 0, 255), 1.0f);
     renderer.draw();
     return renderer.getFrameBuffer();
 }

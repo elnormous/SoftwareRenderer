@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "Color.hpp"
 #include "Buffer.hpp"
 
 namespace sr
@@ -16,7 +17,7 @@ namespace sr
         bool init(uint32_t width, uint32_t height);
         bool resize(uint32_t width, uint32_t height);
 
-        bool clear();
+        bool clear(Color color, float depth);
         bool draw();
 
         const Buffer& getFrameBuffer() const { return frameBuffer; }
