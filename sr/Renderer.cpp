@@ -27,6 +27,16 @@ namespace sr
         return true;
     }
 
+    void Renderer::setShader(const Shader& newShader)
+    {
+        shader = &newShader;
+    }
+
+    void Renderer::setTexture(const Buffer& newTexture)
+    {
+        texture = &newTexture;
+    }
+
     bool Renderer::clear(Color color, float depth)
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
@@ -52,8 +62,18 @@ namespace sr
         return true;
     }
 
-    bool Renderer::draw()
+    bool Renderer::drawTriangle(Vertex vertices[3])
     {
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
+
+        for (uint32_t i = 0; i < 3; ++i)
+        {
+            uint32_t x = static_cast<uint32_t>(vertices[i].position.x);
+            uint32_t y = static_cast<uint32_t>(vertices[i].position.y);
+
+            frameBufferData[y * frameBuffer.getWidth() + x] = vertices[i].color.getIntValue();
+        }
+
         return true;
     }
 }
