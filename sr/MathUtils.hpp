@@ -5,6 +5,8 @@
 #pragma once
 
 #include <cstdint>
+#include "Vector2.hpp"
+#include "Vector3.hpp"
 
 namespace sr
 {
@@ -15,12 +17,7 @@ namespace sr
     const float PI_2 = 1.57079632679489661923F; // pi/2
     const float PI_4 = 0.78539816339744830962F; // pi/4
     const float FLOAT_SMALL = 1.0e-37F;
-    const float TOLERANCE = 2e-37F;
-    const float E = 2.71828182845904523536F;
-    const float LOG10E = 0.4342944819032518F;
-    const float LOG2E = 1.442695040888963387F;
-    const float PIX2 = 6.28318530717958647693F;
-    const float EPSILON = 0.000001F;
+    const float EPSILON = 1.19209290e-07F;
     const float SQRT2 = 1.4142135623730950488F;
 
     inline float lerp(float v0, float v1, float t)
@@ -84,5 +81,25 @@ namespace sr
             hash = hash * FNV_MULTIPLE; // multiply by the magic number
         }
         return hash;
+    }
+
+    inline Vector3 barycentric(Vector2 a, Vector2 b, Vector2 c, Vector2 p)
+    {
+        Vector3 s[2];
+
+        s[0].x = c.x - a.x;
+        s[0].y = b.x - a.x;
+        s[0].z = a.x - p.x;
+
+        s[1].x = c.y - a.y;
+        s[1].y = b.y - a.y;
+        s[1].z = a.y - p.y;
+
+        Vector3 u = Vector3::cross(s[0], s[1]);
+
+        if (std::abs(u.z) > 1e-2) // dont forget that u.z is integer. If it is zero then triangle ABC is degenerate
+            return Vector3(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+
+        return Vector3(-1.0F, 1.0F, 1.0F);
     }
 }

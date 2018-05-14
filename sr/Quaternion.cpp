@@ -27,7 +27,7 @@ namespace sr
             return;
 
         n = sqrtf(n);
-        if (n < TOLERANCE) // too close to zero
+        if (n < EPSILON) // too close to zero
             return;
 
         n = 1.0F / n;
@@ -54,7 +54,7 @@ namespace sr
     {
         angle = 2.0F * acosf(w);
         float s = sqrtf(1.0F - w * w);
-        if (s < TOLERANCE) // too close to zero
+        if (s < EPSILON) // too close to zero
         {
             axis.x = x;
             axis.y = y;

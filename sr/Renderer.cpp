@@ -3,6 +3,8 @@
 //
 
 #include "Renderer.hpp"
+#include "Box2.hpp"
+#include "MathUtils.hpp"
 
 namespace sr
 {
@@ -66,12 +68,42 @@ namespace sr
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
 
+        Vector2 positions[3] = {
+            vertices[0].position,
+            vertices[1].position,
+            vertices[2].position
+        };
+
+        Box2 boundingBox;
         for (uint32_t i = 0; i < 3; ++i)
         {
-            uint32_t x = static_cast<uint32_t>(vertices[i].position.x);
-            uint32_t y = static_cast<uint32_t>(vertices[i].position.y);
+            if (positions[i].x < boundingBox.min.x) boundingBox.min.x = positions[i].x;
+            if (positions[i].x > boundingBox.max.x) boundingBox.max.x = positions[i].x;
+            if (positions[i].y < boundingBox.min.y) boundingBox.min.y = positions[i].y;
+            if (positions[i].y > boundingBox.max.y) boundingBox.max.y = positions[i].y;
+        }
 
-            frameBufferData[y * frameBuffer.getWidth() + x] = vertices[i].color.getIntValue();
+        boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth()));
+        boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight()));
+        boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth()));
+        boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight()));
+
+        for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y < static_cast<uint32_t>(boundingBox.max.y); ++y)
+        {
+            for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x < static_cast<uint32_t>(boundingBox.max.x); ++x)
+            {
+                Vector3 s = barycentric(positions[0],
+                                        positions[1],
+                                        positions[2],
+                                        Vector2(x, y));
+
+                if (s.x >= 0.0f && s.x <= 1.0f &&
+                    s.y >= 0.0f && s.y <= 1.0f &&
+                    s.z >= 0.0f && s.z <= 1.0f)
+                {
+                    frameBufferData[y * frameBuffer.getWidth() + x] = vertices[0].color.getIntValue();
+                }
+            }
         }
 
         return true;
