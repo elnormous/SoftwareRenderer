@@ -5,8 +5,6 @@
 #include "Application.hpp"
 #include "WindowMacOS.hpp"
 
-void srMain(Application& application);
-
 @interface AppDelegate: NSObject<NSApplicationDelegate>
 {
     Application* application;
@@ -28,8 +26,6 @@ void srMain(Application& application);
     WindowMacOS* windowMacOS = new WindowMacOS();
     application->window.reset(windowMacOS);
     windowMacOS->init(application->argc, application->argv);
-
-    srMain(*application);
 }
 
 -(void)applicationDidFinishLaunching:(__unused NSNotification*)notification

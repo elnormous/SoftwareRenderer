@@ -10,12 +10,15 @@
 class WindowMacOS: public Window
 {
 public:
-    ~WindowMacOS();
-    bool init(int argc, const char** argv);
+    virtual ~WindowMacOS();
+    virtual bool init(int argc, const char** argv) override;
+
+    void didResize();
 
 private:
-    NSScreen* screen;
-    NSWindow* window;
-    NSView* content;
-    NSObject<NSWindowDelegate>* windowDelegate;
+    NSScreen* screen = nil;
+    NSWindow* window = nil;
+    NSView* content = nil;
+    NSObject<NSWindowDelegate>* windowDelegate = nil;
+    NSTimer* timer = nil;
 };

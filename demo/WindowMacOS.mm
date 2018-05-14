@@ -24,6 +24,11 @@
     return self;
 }
 
+-(void)windowDidResize:(NSNotification*)notification
+{
+    window->didResize();
+}
+
 @end
 
 @interface Canvas: NSView
@@ -110,17 +115,20 @@ static void freeBitmap(void* info)
     CGContextFlush(context);
 
     CGImageRelease(image);
-}
-
--(void)draw:(NSValue*)data
-{
 
     [self setNeedsDisplay:TRUE];
 }
+
+-(void)draw:(NSTimer*)timer
+{
+    [self setNeedsDisplay:YES];
+}
+
 @end
 
 WindowMacOS::~WindowMacOS()
 {
+    [timer release];
     [content release];
     window.delegate = nil;
     [window release];
@@ -157,14 +165,28 @@ bool WindowMacOS::init(int argc, const char** argv)
     NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                  styleMask:[window styleMask]];
 
+    width = static_cast<uint32_t>(windowFrame.size.width);
+    height = static_cast<uint32_t>(windowFrame.size.height);
 
     content = [[Canvas alloc] initWithFrame:windowFrame];
 
     window.contentView = content;
     [window makeKeyAndOrderFront:nil];
 
-    width = static_cast<uint32_t>(windowSize.width);
-    height = static_cast<uint32_t>(windowSize.height);
+    [content setNeedsDisplay:TRUE];
 
-    return 1;
+    timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:nil repeats:YES] retain];
+
+    return Window::init(argc, argv);
+}
+
+void WindowMacOS::didResize()
+{
+    NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                 styleMask:[window styleMask]];
+
+    width = static_cast<uint32_t>(windowFrame.size.width);
+    height = static_cast<uint32_t>(windowFrame.size.height);
+
+    onResize();
 }
