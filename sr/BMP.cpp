@@ -6,6 +6,8 @@
 #include <iostream>
 #include "BMP.hpp"
 
+#define BITMAPFILEHEADER_TYPE_BM    0x4D42
+
 typedef struct                       /**** BMP file header structure ****/
 {
     unsigned short bfType;           /* Magic number for file */
@@ -87,7 +89,7 @@ namespace sr
 
         fread(&header.bfType, sizeof(header.bfType), 1, f);
 
-        if (header.bfType != 0x4d42) // MB
+        if (header.bfType != BITMAPFILEHEADER_TYPE_BM)
         {
             std::cerr << "Bad bitmap file" << std::endl;
             fclose(f);
@@ -215,7 +217,7 @@ namespace sr
         }
 
         BITMAPFILEHEADER header;
-        header.bfType = 0x4d42; // MB
+        header.bfType = BITMAPFILEHEADER_TYPE_BM;
         header.bfSize = width  * height * 4 + 14 + 40;
         header.bfReserved1 = 0;
         header.bfReserved2 = 0;
