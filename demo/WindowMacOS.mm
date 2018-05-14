@@ -40,7 +40,6 @@
     CGColorSpaceRef colorSpace;
     CGDataProviderRef provider;
     sr::Buffer buffer;
-    CGImageRef image;
 }
 
 @end
@@ -49,7 +48,7 @@ static const void* getBytePointer(void* info)
 {
     sr::Buffer* buffer = (sr::Buffer*)info;
 
-    return buffer->getData();
+    return buffer->getData().data();
 }
 
 @implementation Canvas
@@ -118,12 +117,12 @@ static const void* getBytePointer(void* info)
 {
     [super drawRect:dirtyRect];
 
-    image = CGImageCreate(width, height, bitsPerComponent,
-                          bitsPerComponent * componentsPerPixel,
-                          componentsPerPixel * width,
-                          colorSpace,
-                          kCGBitmapByteOrderDefault | kCGImageAlphaLast,
-                          provider, NULL, FALSE, kCGRenderingIntentDefault);
+    CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+                                     bitsPerComponent * componentsPerPixel,
+                                     componentsPerPixel * width,
+                                     colorSpace,
+                                     kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                     provider, NULL, FALSE, kCGRenderingIntentDefault);
 
     CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 
@@ -131,8 +130,6 @@ static const void* getBytePointer(void* info)
     CGContextFlush(context);
 
     CGImageRelease(image);
-
-    [self setNeedsDisplay:TRUE];
 }
 
 -(void)draw:(NSTimer*)timer

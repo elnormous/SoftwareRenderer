@@ -33,8 +33,10 @@ namespace sr
         Type getType() const { return type; }
         uint32_t getWidth() const { return width; }
         uint32_t getHeight() const { return height; }
-        void* getData() { return data.data(); }
-        const void* getData() const { return data.data(); }
+
+        std::vector<uint8_t>& getData() { return data; }
+        const std::vector<uint8_t>& getData() const { return data; }
+        void setDate(std::vector<uint8_t>& newData) { data = newData; }
 
     private:
         Type type = Type::NONE;

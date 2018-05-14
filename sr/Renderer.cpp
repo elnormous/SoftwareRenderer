@@ -29,8 +29,8 @@ namespace sr
 
     bool Renderer::clear(Color color, float depth)
     {
-        uint32_t* frameBufferData = static_cast<uint32_t*>(frameBuffer.getData());
-        float* depthBufferData = static_cast<float*>(depthBuffer.getData());
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
+        float* depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
         uint32_t rgba = color.getIntValue();
 
         for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
