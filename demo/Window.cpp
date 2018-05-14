@@ -30,13 +30,16 @@ const sr::Buffer& Window::render()
 
     renderer.setTexture(texture);
 
-    sr::Vertex vertices[3] = {
+    std::vector<sr::Vertex> vertices = {
         sr::Vertex(sr::Vector3(10.0F, 10.0F, 0.0F), 0xFF0000FF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector3(10.0F, 100.0F, 0.0F), 0x00FF00FF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector3(100.0F, 10.0F, 0.0F), 0x0000FFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
+        sr::Vertex(sr::Vector3(10.0F, 200.0F, 0.0F), 0x00FF00FF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector3(200.0F, 10.0F, 0.0F), 0x0000FFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector3(200.0F, 200.0F, 0.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
     };
 
-    renderer.drawTriangle(vertices);
+    std::vector<uint32_t> indices = {0, 1, 2, 1, 2, 3};
+
+    renderer.drawTriangles(indices, vertices);
     return renderer.getFrameBuffer();
 }
 

@@ -23,7 +23,7 @@ namespace sr
         void setTexture(const Buffer& newTexture);
 
         bool clear(Color color, float depth);
-        bool drawTriangle(Vertex vertices[3]);
+        bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices);
 
         const Buffer& getFrameBuffer() const { return frameBuffer; }
         const Buffer& getDepthBuffer() const { return depthBuffer; }

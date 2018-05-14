@@ -65,79 +65,88 @@ namespace sr
         return true;
     }
 
-    bool Renderer::drawTriangle(Vertex vertices[3])
+    bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices)
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
 
-        Vector2 positions[3] = {
-            vertices[0].position,
-            vertices[1].position,
-            vertices[2].position
-        };
-
-        Box2 boundingBox;
-        for (uint32_t i = 0; i < 3; ++i)
+        for (uint32_t i = 0; i < indices.size(); i += 3)
         {
-            if (positions[i].x < boundingBox.min.x) boundingBox.min.x = positions[i].x;
-            if (positions[i].x > boundingBox.max.x) boundingBox.max.x = positions[i].x;
-            if (positions[i].y < boundingBox.min.y) boundingBox.min.y = positions[i].y;
-            if (positions[i].y > boundingBox.max.y) boundingBox.max.y = positions[i].y;
-        }
+            uint32_t currentIndices[3] = {
+                indices[i + 0],
+                indices[i + 1],
+                indices[i + 2]
+            };
 
-        boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
-        boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
-        boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
-        boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
+            Vertex currentVertices[3] = {
+                vertices[currentIndices[0]],
+                vertices[currentIndices[1]],
+                vertices[currentIndices[2]]
+            };
 
-        for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y <= static_cast<uint32_t>(boundingBox.max.y); ++y)
-        {
-            for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x <= static_cast<uint32_t>(boundingBox.max.x); ++x)
+            Box2 boundingBox;
+            for (uint32_t i = 0; i < 3; ++i)
             {
-                Vector3 s = barycentric(positions[0],
-                                        positions[1],
-                                        positions[2],
-                                        Vector2(x, y));
+                if (currentVertices[i].position.x < boundingBox.min.x) boundingBox.min.x = currentVertices[i].position.x;
+                if (currentVertices[i].position.x > boundingBox.max.x) boundingBox.max.x = currentVertices[i].position.x;
+                if (currentVertices[i].position.y < boundingBox.min.y) boundingBox.min.y = currentVertices[i].position.y;
+                if (currentVertices[i].position.y > boundingBox.max.y) boundingBox.max.y = currentVertices[i].position.y;
+            }
 
-                if (s.x >= 0.0f && s.x <= 1.0f &&
-                    s.y >= 0.0f && s.y <= 1.0f &&
-                    s.z >= 0.0f && s.z <= 1.0f)
+            boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+            boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
+            boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+            boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
+
+            for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y <= static_cast<uint32_t>(boundingBox.max.y); ++y)
+            {
+                for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x <= static_cast<uint32_t>(boundingBox.max.x); ++x)
                 {
-                    float finalRGBA[4] = {
-                        vertices[0].color.normR() * s.x + vertices[1].color.normR() * s.y + vertices[2].color.normR() * s.z,
-                        vertices[0].color.normG() * s.x + vertices[1].color.normG() * s.y + vertices[2].color.normG() * s.z,
-                        vertices[0].color.normB() * s.x + vertices[1].color.normB() * s.y + vertices[2].color.normB() * s.z,
-                        vertices[0].color.normA() * s.x + vertices[1].color.normA() * s.y + vertices[2].color.normA() * s.z,
-                    };
+                    Vector3 s = barycentric(currentVertices[0].position,
+                                            currentVertices[1].position,
+                                            currentVertices[2].position,
+                                            Vector2(x, y));
 
-                    Vector2 texCoords(
-                        clamp(vertices[0].texCoords[0].x * s.x + vertices[1].texCoords[0].x * s.y + vertices[2].texCoords[0].x * s.z, 0.0F, 1.0F),
-                        clamp(vertices[0].texCoords[0].y * s.x + vertices[1].texCoords[0].y * s.y + vertices[2].texCoords[0].y * s.z, 0.0F, 1.0F)
-                    );
-
-                    if (texture)
+                    if (s.x >= 0.0f && s.x <= 1.0f &&
+                        s.y >= 0.0f && s.y <= 1.0f &&
+                        s.z >= 0.0f && s.z <= 1.0f)
                     {
-                        uint32_t textureX = static_cast<uint32_t>(texCoords.x * texture->getWidth());
-                        uint32_t textureY = static_cast<uint32_t>(texCoords.y * texture->getHeight());
+                        float finalRGBA[4] = {
+                            currentVertices[0].color.normR() * s.x + currentVertices[1].color.normR() * s.y + currentVertices[2].color.normR() * s.z,
+                            currentVertices[0].color.normG() * s.x + currentVertices[1].color.normG() * s.y + currentVertices[2].color.normG() * s.z,
+                            currentVertices[0].color.normB() * s.x + currentVertices[1].color.normB() * s.y + currentVertices[2].color.normB() * s.z,
+                            currentVertices[0].color.normA() * s.x + currentVertices[1].color.normA() * s.y + currentVertices[2].color.normA() * s.z,
+                        };
 
-                        if (texture->getType() == Buffer::Type::RGB)
+                        Vector2 texCoords(
+                            clamp(currentVertices[0].texCoords[0].x * s.x + currentVertices[1].texCoords[0].x * s.y + currentVertices[2].texCoords[0].x * s.z, 0.0F, 1.0F),
+                            clamp(currentVertices[0].texCoords[0].y * s.x + currentVertices[1].texCoords[0].y * s.y + currentVertices[2].texCoords[0].y * s.z, 0.0F, 1.0F)
+                        );
+
+                        if (texture)
                         {
-                            const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 3];
-                            finalRGBA[0] *= sample[0] / 255.0F;
-                            finalRGBA[1] *= sample[1] / 255.0F;
-                            finalRGBA[2] *= sample[2] / 255.0F;
+                            uint32_t textureX = static_cast<uint32_t>(texCoords.x * texture->getWidth());
+                            uint32_t textureY = static_cast<uint32_t>(texCoords.y * texture->getHeight());
+
+                            if (texture->getType() == Buffer::Type::RGB)
+                            {
+                                const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 3];
+                                finalRGBA[0] *= sample[0] / 255.0F;
+                                finalRGBA[1] *= sample[1] / 255.0F;
+                                finalRGBA[2] *= sample[2] / 255.0F;
+                            }
+                            else if (texture->getType() == Buffer::Type::RGBA)
+                            {
+                                const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 4];
+                                finalRGBA[0] *= sample[0] / 255.0F;
+                                finalRGBA[1] *= sample[1] / 255.0F;
+                                finalRGBA[2] *= sample[2] / 255.0F;
+                                finalRGBA[3] *= sample[3] / 255.0F;
+                            }
                         }
-                        else if (texture->getType() == Buffer::Type::RGBA)
-                        {
-                            const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 4];
-                            finalRGBA[0] *= sample[0] / 255.0F;
-                            finalRGBA[1] *= sample[1] / 255.0F;
-                            finalRGBA[2] *= sample[2] / 255.0F;
-                            finalRGBA[3] *= sample[3] / 255.0F;
-                        }
+
+                        Color color(finalRGBA);
+                        frameBufferData[y * frameBuffer.getWidth() + x] = color.getIntValueRaw();
                     }
-
-                    Color color(finalRGBA);
-                    frameBufferData[y * frameBuffer.getWidth() + x] = color.getIntValueRaw();
                 }
             }
         }
