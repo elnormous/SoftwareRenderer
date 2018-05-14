@@ -145,6 +145,12 @@ static const void* getBytePointer(void* info)
 
 @end
 
+WindowMacOS::WindowMacOS(Application& initApplication):
+    Window(initApplication)
+{
+
+}
+
 WindowMacOS::~WindowMacOS()
 {
     [timer release];

@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <iostream>
 #include "Application.hpp"
 #include "WindowMacOS.hpp"
 
@@ -23,9 +24,6 @@
 
 -(void)applicationWillFinishLaunching:(__unused NSNotification*)notification
 {
-    WindowMacOS* windowMacOS = new WindowMacOS();
-    application->window.reset(windowMacOS);
-    windowMacOS->init(application->argc, application->argv);
 }
 
 -(void)applicationDidFinishLaunching:(__unused NSNotification*)notification
@@ -93,9 +91,31 @@ bool Application::run()
 
     sharedApplication.mainMenu = mainMenu;
 
+    WindowMacOS* windowMacOS = new WindowMacOS(*this);
+    window.reset(windowMacOS);
+    windowMacOS->init(argc, argv);
+
     [sharedApplication run];
 
     [pool release];
 
     return true;
+}
+
+std::string Application::getResourcePath() const
+{
+    CFBundleRef bundle = CFBundleGetMainBundle(); // [NSBundle mainBundle]
+    CFURLRef path = CFBundleCopyResourcesDirectoryURL(bundle); // [bundle resourceURL]
+
+    if (path)
+    {
+        char resourceDirectory[1024];
+        CFURLGetFileSystemRepresentation(path, TRUE, reinterpret_cast<UInt8*>(resourceDirectory), sizeof(resourceDirectory));
+        CFRelease(path);
+        return resourceDirectory;
+    }
+    else
+        std::cerr << "Failed to get current directory" << std::endl;
+
+    return "";
 }

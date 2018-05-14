@@ -3,11 +3,13 @@
 //
 
 #include "Window.hpp"
+#include "Application.hpp"
 
-Window::Window()
+Window::Window(Application& initApplication):
+    application(initApplication)
 {
     sr::BMP bmp;
-    bmp.load("cube.bmp");
+    bmp.load(application.getResourcePath() + "/cube.bmp");
     texture = bmp.getBuffer();
 }
 

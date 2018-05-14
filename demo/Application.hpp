@@ -16,6 +16,9 @@ public:
     bool init();
     bool run();
 
+    std::string getResourcePath() const;
+
+private:
     std::unique_ptr<Window> window;
     int argc;
     const char** argv;

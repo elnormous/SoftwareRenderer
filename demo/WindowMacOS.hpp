@@ -10,6 +10,7 @@
 class WindowMacOS: public Window
 {
 public:
+    WindowMacOS(Application& initApplication);
     virtual ~WindowMacOS();
     virtual bool init(int argc, const char** argv) override;
 

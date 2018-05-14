@@ -7,10 +7,12 @@
 #include <cstdint>
 #include "sr.hpp"
 
+class Application;
+
 class Window
 {
 public:
-    Window();
+    Window(Application& initApplication);
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
     Window(Window&&) = delete;
@@ -24,6 +26,7 @@ public:
 protected:
     void onResize();
 
+    Application& application;
     uint32_t width;
     uint32_t height;
 
