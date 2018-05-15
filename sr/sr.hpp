@@ -16,6 +16,7 @@
 #include "OBJ.hpp"
 #include "Plane.hpp"
 #include "Quaternion.hpp"
+#include "Rect.hpp"
 #include "Renderer.hpp"
 #include "Shader.hpp"
 #include "Size2.hpp"

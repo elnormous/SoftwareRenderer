@@ -40,6 +40,12 @@ namespace sr
         texture = &newTexture;
     }
 
+    bool Renderer::setViewport(const Rect& newViewport)
+    {
+        viewport = newViewport;
+        return true;
+    }
+
     bool Renderer::clear(Color color, float depth)
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
@@ -65,7 +71,7 @@ namespace sr
         return true;
     }
 
-    bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices)
+    bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
 
@@ -83,33 +89,50 @@ namespace sr
                 vertices[currentIndices[2]]
             };
 
-            Box2 boundingBox;
-            for (uint32_t i = 0; i < 3; ++i)
+            Matrix4 transposed = modelViewProjection;
+            transposed.transpose();
+
+            // vertex shader step
+            for (sr::Vertex& vertex : currentVertices)
             {
-                if (currentVertices[i].position.x < boundingBox.min.x) boundingBox.min.x = currentVertices[i].position.x;
-                if (currentVertices[i].position.x > boundingBox.max.x) boundingBox.max.x = currentVertices[i].position.x;
-                if (currentVertices[i].position.y < boundingBox.min.y) boundingBox.min.y = currentVertices[i].position.y;
-                if (currentVertices[i].position.y > boundingBox.max.y) boundingBox.max.y = currentVertices[i].position.y;
+                // transform to clip space
+                modelViewProjection.transformVector(vertex.position);
+            }
+
+            Box2 boundingBox;
+            for (sr::Vertex& vertex : currentVertices)
+            {
+                // transform to normalized device coordinates
+                vertex.position /= vertex.position.w;
+
+                // transform to viewport coordinates
+                vertex.position.x = vertex.position.x * viewport.size.width / 2.0F + viewport.position.x + viewport.size.width / 2.0F; // xndc * width / 2 + x + width / 2
+                vertex.position.y = vertex.position.y * viewport.size.height / 2.0F + viewport.position.y + viewport.size.height / 2.0F;  // yndc * height / 2 + y + height / 2
+                vertex.position.z = vertex.position.z * (1.0F - 0.0F) / 2.0F + (1.0F + 0.0F) / 2.0F; // zndc * (far - near) / 2 + (far + near) / 2
+
+                if (vertex.position.x < boundingBox.min.x) boundingBox.min.x = vertex.position.x;
+                if (vertex.position.x > boundingBox.max.x) boundingBox.max.x = vertex.position.x;
+                if (vertex.position.y < boundingBox.min.y) boundingBox.min.y = vertex.position.y;
+                if (vertex.position.y > boundingBox.max.y) boundingBox.max.y = vertex.position.y;
             }
 
             boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
-            boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
-            boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+            boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
+            boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
             boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
 
-            for (uint32_t y = static_cast<uint32_t>(boundingBox.min.y); y <= static_cast<uint32_t>(boundingBox.max.y); ++y)
+            for (uint32_t screenY = static_cast<uint32_t>(boundingBox.min.y); screenY <= static_cast<uint32_t>(boundingBox.max.y); ++screenY)
             {
-                for (uint32_t x = static_cast<uint32_t>(boundingBox.min.x); x <= static_cast<uint32_t>(boundingBox.max.x); ++x)
+                for (uint32_t screenX = static_cast<uint32_t>(boundingBox.min.x); screenX <= static_cast<uint32_t>(boundingBox.max.x); ++screenX)
                 {
                     Vector3 s = barycentric(currentVertices[0].position,
                                             currentVertices[1].position,
                                             currentVertices[2].position,
-                                            Vector2(x, y));
+                                            Vector2(screenX, screenY));
 
-                    if (s.x >= 0.0f && s.x <= 1.0f &&
-                        s.y >= 0.0f && s.y <= 1.0f &&
-                        s.z >= 0.0f && s.z <= 1.0f)
+                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F)
                     {
+                        // pixel shader step
                         float finalRGBA[4] = {
                             currentVertices[0].color.normR() * s.x + currentVertices[1].color.normR() * s.y + currentVertices[2].color.normR() * s.z,
                             currentVertices[0].color.normG() * s.x + currentVertices[1].color.normG() * s.y + currentVertices[2].color.normG() * s.z,
@@ -145,7 +168,7 @@ namespace sr
                         }
 
                         Color color(finalRGBA);
-                        frameBufferData[y * frameBuffer.getWidth() + x] = color.getIntValueRaw();
+                        frameBufferData[screenY * frameBuffer.getWidth() + screenX] = color.getIntValueRaw();
                     }
                 }
             }

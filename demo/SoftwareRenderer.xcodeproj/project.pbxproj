@@ -88,14 +88,14 @@
 		300984F1202D38FF00BB0340 /* demo */ = {
 			isa = PBXGroup;
 			children = (
-				30345F4720AA1BF300B9B963 /* Resources */,
-				306944A6205DF13900C4969C /* ApplicationMacOS.mm */,
 				306944A8205DF15A00C4969C /* Application.hpp */,
+				306944A6205DF13900C4969C /* ApplicationMacOS.mm */,
 				300984F2202D38FF00BB0340 /* main.cpp */,
+				30345F4720AA1BF300B9B963 /* Resources */,
+				30345F2A20A9062200B9B963 /* Window.cpp */,
+				306944DF205E00A900C4969C /* Window.hpp */,
 				30971FB2206BDA1C000D196D /* WindowMacOS.hpp */,
 				306944E0205E00A900C4969C /* WindowMacOS.mm */,
-				306944DF205E00A900C4969C /* Window.hpp */,
-				30345F2A20A9062200B9B963 /* Window.cpp */,
 			);
 			name = demo;
 			sourceTree = "<group>";

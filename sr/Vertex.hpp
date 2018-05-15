@@ -7,6 +7,7 @@
 #include "Color.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
+#include "Vector4.hpp"
 
 namespace sr
 {
@@ -14,9 +15,9 @@ namespace sr
     {
     public:
         Vertex();
-        Vertex(const Vector3& initPosition, Color initColor, const Vector2& initTexCoord, const Vector3& initNormal);
+        Vertex(const Vector4& initPosition, Color initColor, const Vector2& initTexCoord, const Vector3& initNormal);
 
-        Vector3 position;
+        Vector4 position;
         Color color;
         Vector2 texCoords[2];
         Vector3 normal;
