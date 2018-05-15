@@ -103,17 +103,22 @@ namespace sr
                 clipPosition = modelViewProjection * clipPosition;
             }
 
-            float w[3] = { clipPositions[0].w, clipPositions[1].w, clipPositions[2].w };
-
-            // transform to normalized device coordinates
-            clipPositions[0] /= w[0];
-            clipPositions[1] /= w[1];
-            clipPositions[2] /= w[2];
-
-            Vector4 viewportPositions[3] = {
+            Vector4 ndcPositions[3] = {
                 clipPositions[0],
                 clipPositions[1],
                 clipPositions[2]
+            };
+
+            for (sr::Vector4& ndcPosition : ndcPositions)
+            {
+                // transform to normalized device coordinates
+                ndcPosition /= ndcPosition.w;
+            }
+
+            Vector4 viewportPositions[3] = {
+                ndcPositions[0],
+                ndcPositions[1],
+                ndcPositions[2]
             };
 
             Box2 boundingBox;
@@ -144,7 +149,7 @@ namespace sr
                                             viewportPositions[2],
                                             Vector2(screenX, screenY));
 
-                    Vector3 clip = Vector3(s.x / w[0], s.y / w[1], s.z / w[2]);
+                    Vector3 clip = Vector3(s.x / clipPositions[0].w, s.y / clipPositions[1].w, s.z / clipPositions[2].w);
                     clip = clip / (clip.x + clip.y + clip.z);
 
                     float depth = clipPositions[0].z * clip.x + clipPositions[1].z * clip.y + clipPositions[2].z * clip.z;
