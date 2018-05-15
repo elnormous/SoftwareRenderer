@@ -149,8 +149,8 @@ namespace sr
 
                         if (texture)
                         {
-                            uint32_t textureX = static_cast<uint32_t>(texCoords.x * texture->getWidth());
-                            uint32_t textureY = static_cast<uint32_t>(texCoords.y * texture->getHeight());
+                            uint32_t textureX = static_cast<uint32_t>(texCoords.x * (texture->getWidth() - 1));
+                            uint32_t textureY = static_cast<uint32_t>(texCoords.y * (texture->getHeight() - 1));
 
                             if (texture->getType() == Buffer::Type::RGB)
                             {

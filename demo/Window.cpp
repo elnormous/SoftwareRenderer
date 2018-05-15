@@ -35,7 +35,7 @@ bool Window::init(int argc, const char** argv)
 
 const sr::Buffer& Window::render()
 {
-    rotationY += 0.01F;
+    rotationY += 0.05F;
     sr::Matrix4::createRotationY(rotationY, model);
 
     sr::Matrix4 modelViewProjection = projection * view * model;
