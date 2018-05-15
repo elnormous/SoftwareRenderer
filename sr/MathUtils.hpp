@@ -91,11 +91,12 @@ namespace sr
         s[1].y = b.y - a.y;
         s[1].z = a.y - p.y;
 
-        Vector3 u = Vector3::cross(s[0], s[1]);
+        Vector3 u;
+        Vector3::cross(s[0], s[1], u);
 
-        if (std::abs(u.z) > 1e-2) // dont forget that u.z is integer. If it is zero then triangle ABC is degenerate
-            return Vector3(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+        if (std::abs(u.z) < EPSILON) // degenerate triangle (all three points in a line)
+            return Vector3(-1.0F, 1.0F, 1.0F);
 
-        return Vector3(-1.0F, 1.0F, 1.0F);
+        return Vector3(1.0F - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
     }
 }
