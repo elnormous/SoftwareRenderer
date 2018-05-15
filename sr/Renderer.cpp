@@ -74,6 +74,7 @@ namespace sr
     bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
     {
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
+        float* depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
 
         for (uint32_t i = 0; i < indices.size(); i += 3)
         {
@@ -93,7 +94,7 @@ namespace sr
             for (sr::Vertex& vertex : currentVertices)
             {
                 // transform to clip space
-                modelViewProjection.transformVector(vertex.position);
+                vertex.position = modelViewProjection * vertex.position;
             }
 
             Box2 boundingBox;
@@ -127,8 +128,12 @@ namespace sr
                                             currentVertices[2].position,
                                             Vector2(screenX, screenY));
 
-                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F)
+                    float depth = currentVertices[0].position.z * s.x + currentVertices[1].position.z * s.y + currentVertices[2].position.z * s.z;
+
+                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
                     {
+                        depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
+
                         // pixel shader step
                         float finalRGBA[4] = {
                             currentVertices[0].color.normR() * s.x + currentVertices[1].color.normR() * s.y + currentVertices[2].color.normR() * s.z,

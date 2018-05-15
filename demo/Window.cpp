@@ -28,7 +28,7 @@ bool Window::init(int argc, const char** argv)
     sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
                                    1.0F, 1000.0F, projection);
 
-    view.translate(0.0F, 0.0F, 400.0F);
+    view.translate(0.0F, 0.0F, 100.0F);
 
     return true;
 }
