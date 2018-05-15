@@ -90,28 +90,42 @@ namespace sr
                 vertices[currentIndices[2]]
             };
 
+            Vector4 clipPositions[3] = {
+                vertices[currentIndices[0]].position,
+                vertices[currentIndices[1]].position,
+                vertices[currentIndices[2]].position
+            };
+
             // vertex shader step
-            for (sr::Vertex& vertex : currentVertices)
+            for (sr::Vector4& clipPosition : clipPositions)
             {
                 // transform to clip space
-                vertex.position = modelViewProjection * vertex.position;
+                clipPosition = modelViewProjection * clipPosition;
             }
 
+            Vector4 viewportPositions[3] = {
+                clipPositions[0],
+                clipPositions[1],
+                clipPositions[2]
+            };
+
+            float w[3] = { clipPositions[0].w, clipPositions[1].w, clipPositions[2].w };
+
             Box2 boundingBox;
-            for (sr::Vertex& vertex : currentVertices)
+            for (sr::Vector4& viewportPosition : viewportPositions)
             {
                 // transform to normalized device coordinates
-                vertex.position /= vertex.position.w;
+                viewportPosition /= viewportPosition.w;
 
                 // transform to viewport coordinates
-                vertex.position.x = vertex.position.x * viewport.size.width / 2.0F + viewport.position.x + viewport.size.width / 2.0F; // xndc * width / 2 + x + width / 2
-                vertex.position.y = vertex.position.y * viewport.size.height / 2.0F + viewport.position.y + viewport.size.height / 2.0F;  // yndc * height / 2 + y + height / 2
-                vertex.position.z = vertex.position.z * (1.0F - 0.0F) / 2.0F + (1.0F + 0.0F) / 2.0F; // zndc * (far - near) / 2 + (far + near) / 2
+                viewportPosition.x = viewportPosition.x * viewport.size.width / 2.0F + viewport.position.x + viewport.size.width / 2.0F; // xndc * width / 2 + x + width / 2
+                viewportPosition.y = viewportPosition.y * viewport.size.height / 2.0F + viewport.position.y + viewport.size.height / 2.0F;  // yndc * height / 2 + y + height / 2
+                viewportPosition.z = viewportPosition.z * (1.0F - 0.0F) / 2.0F + (1.0F + 0.0F) / 2.0F; // zndc * (far - near) / 2 + (far + near) / 2
 
-                if (vertex.position.x < boundingBox.min.x) boundingBox.min.x = vertex.position.x;
-                if (vertex.position.x > boundingBox.max.x) boundingBox.max.x = vertex.position.x;
-                if (vertex.position.y < boundingBox.min.y) boundingBox.min.y = vertex.position.y;
-                if (vertex.position.y > boundingBox.max.y) boundingBox.max.y = vertex.position.y;
+                if (viewportPosition.x < boundingBox.min.x) boundingBox.min.x = viewportPosition.x;
+                if (viewportPosition.x > boundingBox.max.x) boundingBox.max.x = viewportPosition.x;
+                if (viewportPosition.y < boundingBox.min.y) boundingBox.min.y = viewportPosition.y;
+                if (viewportPosition.y > boundingBox.max.y) boundingBox.max.y = viewportPosition.y;
             }
 
             boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
@@ -123,12 +137,15 @@ namespace sr
             {
                 for (uint32_t screenX = static_cast<uint32_t>(boundingBox.min.x); screenX <= static_cast<uint32_t>(boundingBox.max.x); ++screenX)
                 {
-                    Vector3 s = barycentric(currentVertices[0].position,
-                                            currentVertices[1].position,
-                                            currentVertices[2].position,
+                    Vector3 s = barycentric(viewportPositions[0],
+                                            viewportPositions[1],
+                                            viewportPositions[2],
                                             Vector2(screenX, screenY));
 
-                    float depth = currentVertices[0].position.z * s.x + currentVertices[1].position.z * s.y + currentVertices[2].position.z * s.z;
+                    Vector3 clip = Vector3(s.x / w[0], s.y / w[1], s.z / w[2]);
+                    clip = clip / (clip.x + clip.y + clip.z);
+
+                    float depth = viewportPositions[0].z * s.x + viewportPositions[1].z * s.y + viewportPositions[2].z * s.z;
 
                     if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
                     {
@@ -136,15 +153,15 @@ namespace sr
 
                         // pixel shader step
                         float finalRGBA[4] = {
-                            currentVertices[0].color.normR() * s.x + currentVertices[1].color.normR() * s.y + currentVertices[2].color.normR() * s.z,
-                            currentVertices[0].color.normG() * s.x + currentVertices[1].color.normG() * s.y + currentVertices[2].color.normG() * s.z,
-                            currentVertices[0].color.normB() * s.x + currentVertices[1].color.normB() * s.y + currentVertices[2].color.normB() * s.z,
-                            currentVertices[0].color.normA() * s.x + currentVertices[1].color.normA() * s.y + currentVertices[2].color.normA() * s.z,
+                            currentVertices[0].color.normR() * clip.x + currentVertices[1].color.normR() * clip.y + currentVertices[2].color.normR() * clip.z,
+                            currentVertices[0].color.normG() * clip.x + currentVertices[1].color.normG() * clip.y + currentVertices[2].color.normG() * clip.z,
+                            currentVertices[0].color.normB() * clip.x + currentVertices[1].color.normB() * clip.y + currentVertices[2].color.normB() * clip.z,
+                            currentVertices[0].color.normA() * clip.x + currentVertices[1].color.normA() * clip.y + currentVertices[2].color.normA() * clip.z,
                         };
 
                         Vector2 texCoords(
-                            clamp(currentVertices[0].texCoords[0].x * s.x + currentVertices[1].texCoords[0].x * s.y + currentVertices[2].texCoords[0].x * s.z, 0.0F, 1.0F),
-                            clamp(currentVertices[0].texCoords[0].y * s.x + currentVertices[1].texCoords[0].y * s.y + currentVertices[2].texCoords[0].y * s.z, 0.0F, 1.0F)
+                            clamp(currentVertices[0].texCoords[0].x * clip.x + currentVertices[1].texCoords[0].x * clip.y + currentVertices[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
+                            clamp(currentVertices[0].texCoords[0].y * clip.x + currentVertices[1].texCoords[0].y * clip.y + currentVertices[2].texCoords[0].y * clip.z, 0.0F, 1.0F)
                         );
 
                         if (texture)
