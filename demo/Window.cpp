@@ -41,7 +41,7 @@ const sr::Buffer& Window::render()
     sr::Matrix4 modelViewProjection = projection * view * model;
 
     renderer.setViewport(sr::Rect(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
-    renderer.clear(sr::Color(255, 255, 255, 255), 1.0f);
+    renderer.clear(sr::Color(255, 255, 255, 255), 0.0F);
 
     renderer.setTexture(texture);
 

@@ -33,7 +33,7 @@ protected:
     sr::Matrix4 projection;
     sr::Matrix4 view;
     sr::Matrix4 model;
-    float rotationY = 0.0f;
+    float rotationY = 0.0F;
 
     sr::Renderer renderer;
 
