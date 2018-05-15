@@ -147,7 +147,7 @@ namespace sr
 
                     float depth = clipPositions[0].z * clip.x + clipPositions[1].z * clip.y + clipPositions[2].z * clip.z;
 
-                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] < depth)
+                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
                     {
                         depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
 
