@@ -89,9 +89,6 @@ namespace sr
                 vertices[currentIndices[2]]
             };
 
-            Matrix4 transposed = modelViewProjection;
-            transposed.transpose();
-
             // vertex shader step
             for (sr::Vertex& vertex : currentVertices)
             {

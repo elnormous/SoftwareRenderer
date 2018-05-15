@@ -102,7 +102,7 @@ namespace sr
         assert(zFarPlane != zNearPlane);
 
         float theta = fieldOfView * 0.5F;
-        if (fabsf(fmodf(theta, PI_2)) < EPSILON)
+        if (fabsf(fmodf(theta, PI / 2.0F)) < EPSILON)
         {
             // invalid field of view value
             return;
