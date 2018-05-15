@@ -145,7 +145,7 @@ namespace sr
                     Vector3 clip = Vector3(s.x / w[0], s.y / w[1], s.z / w[2]);
                     clip = clip / (clip.x + clip.y + clip.z);
 
-                    float depth = viewportPositions[0].z * s.x + viewportPositions[1].z * s.y + viewportPositions[2].z * s.z;
+                    float depth = viewportPositions[0].z * clip.z;
 
                     if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
                     {
