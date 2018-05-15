@@ -8,7 +8,7 @@
 
 namespace sr
 {
-    class OBJ
+    class MTL
     {
     public:
         bool load(const std::string& filename);

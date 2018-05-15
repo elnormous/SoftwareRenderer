@@ -2,11 +2,11 @@
 //  SoftwareRenderer
 //
 
-#include "OBJ.hpp"
+#include "MTL.hpp"
 
 namespace sr
 {
-    bool OBJ::load(const std::string& filename)
+    bool MTL::load(const std::string& filename)
     {
         return true;
     }
