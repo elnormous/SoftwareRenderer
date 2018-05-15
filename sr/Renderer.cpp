@@ -103,20 +103,22 @@ namespace sr
                 clipPosition = modelViewProjection * clipPosition;
             }
 
+            float w[3] = { clipPositions[0].w, clipPositions[1].w, clipPositions[2].w };
+
+            // transform to normalized device coordinates
+            clipPositions[0] /= w[0];
+            clipPositions[1] /= w[1];
+            clipPositions[2] /= w[2];
+
             Vector4 viewportPositions[3] = {
                 clipPositions[0],
                 clipPositions[1],
                 clipPositions[2]
             };
 
-            float w[3] = { clipPositions[0].w, clipPositions[1].w, clipPositions[2].w };
-
             Box2 boundingBox;
             for (sr::Vector4& viewportPosition : viewportPositions)
             {
-                // transform to normalized device coordinates
-                viewportPosition /= viewportPosition.w;
-
                 // transform to viewport coordinates
                 viewportPosition.x = viewportPosition.x * viewport.size.width / 2.0F + viewport.position.x + viewport.size.width / 2.0F; // xndc * width / 2 + x + width / 2
                 viewportPosition.y = viewportPosition.y * viewport.size.height / 2.0F + viewport.position.y + viewport.size.height / 2.0F;  // yndc * height / 2 + y + height / 2
