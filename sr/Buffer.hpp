@@ -30,13 +30,13 @@ namespace sr
         bool init(Type initType, uint32_t initWidth, uint32_t initHeight);
         bool resize(uint32_t newWidth, uint32_t newHeight);
 
-        Type getType() const { return type; }
-        uint32_t getWidth() const { return width; }
-        uint32_t getHeight() const { return height; }
+        inline Type getType() const { return type; }
+        inline uint32_t getWidth() const { return width; }
+        inline uint32_t getHeight() const { return height; }
 
-        std::vector<uint8_t>& getData() { return data; }
-        const std::vector<uint8_t>& getData() const { return data; }
-        void setDate(std::vector<uint8_t>& newData) { data = newData; }
+        inline std::vector<uint8_t>& getData() { return data; }
+        inline const std::vector<uint8_t>& getData() const { return data; }
+        inline void setDate(std::vector<uint8_t>& newData) { data = newData; }
 
     private:
         Type type = Type::NONE;

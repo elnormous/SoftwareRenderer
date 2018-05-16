@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include "BlendState.hpp"
 #include "Buffer.hpp"
 #include "Color.hpp"
+#include "DepthState.hpp"
 #include "Matrix4.hpp"
 #include "Rect.hpp"
 #include "Shader.hpp"
@@ -23,13 +25,15 @@ namespace sr
 
         void setShader(const Shader& newShader);
         void setTexture(const Buffer& newTexture, uint32_t level);
+        void setViewport(const Rect& newViewport);
+        void setBlendState(const BlendState& newBlendState);
+        void setDepthState(const DepthState& newDepthState);
 
-        bool setViewport(const Rect& newViewport);
         bool clear(Color color, float depth);
         bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection);
 
-        const Buffer& getFrameBuffer() const { return frameBuffer; }
-        const Buffer& getDepthBuffer() const { return depthBuffer; }
+        inline const Buffer& getFrameBuffer() const { return frameBuffer; }
+        inline const Buffer& getDepthBuffer() const { return depthBuffer; }
 
     private:
         Buffer frameBuffer;
@@ -38,5 +42,7 @@ namespace sr
         Rect viewport;
         const Shader* shader = nullptr;
         const Buffer* textures[2];
+        BlendState blendState;
+        DepthState depthState;
     };
 }

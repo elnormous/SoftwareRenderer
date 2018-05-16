@@ -15,6 +15,11 @@ Window::Window(Application& initApplication):
     sr::BMP bmp;
     bmp.load(application.getResourcePath() + "/cube.bmp");
     texture = bmp.getBuffer();
+
+    blendState.enabled = true;
+
+    depthState.read = true;
+    depthState.write = true;
 }
 
 Window::~Window()
@@ -41,6 +46,9 @@ const sr::Buffer& Window::render()
     sr::Matrix4 modelViewProjection = projection * view * model;
 
     renderer.setViewport(sr::Rect(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
+    renderer.setBlendState(blendState);
+    renderer.setDepthState(depthState);
+
     renderer.clear(sr::Color(255, 255, 255, 255), 1000.0F);
 
     renderer.setShader(shader);
@@ -48,40 +56,40 @@ const sr::Buffer& Window::render()
 
     std::vector<sr::Vertex> vertices = {
         // front
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000FF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00FF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0x0000FFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000A0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00A0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0x0000FFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
         // back
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
         // left
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
         // right
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
         // bottom
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
         // top
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+        sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
     };
 
     std::vector<uint32_t> indices = {

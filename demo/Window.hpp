@@ -38,6 +38,9 @@ protected:
 
     sr::Renderer renderer;
 
+    sr::BlendState blendState;
+    sr::DepthState depthState;
+
     TextureShader shader;
     sr::Buffer texture;
 };

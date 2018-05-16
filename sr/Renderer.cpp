@@ -42,10 +42,19 @@ namespace sr
         textures[level] = &newTexture;
     }
 
-    bool Renderer::setViewport(const Rect& newViewport)
+    void Renderer::setViewport(const Rect& newViewport)
     {
         viewport = newViewport;
-        return true;
+    }
+
+    void Renderer::setBlendState(const BlendState& newBlendState)
+    {
+        blendState = newBlendState;
+    }
+
+    void Renderer::setDepthState(const DepthState& newDepthState)
+    {
+        depthState = newDepthState;
     }
 
     bool Renderer::clear(Color color, float depth)
@@ -140,11 +149,14 @@ namespace sr
                     Vector3 clip = Vector3(s.x / vsOutputs[0].position.w, s.y / vsOutputs[1].position.w, s.z / vsOutputs[2].position.w);
                     clip = clip / (clip.x + clip.y + clip.z);
 
-                    float depth = vsOutputs[0].position.z * clip.x + vsOutputs[1].position.z * clip.y + vsOutputs[2].position.z * clip.z;
-
-                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
+                    if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F)
                     {
-                        depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
+                        float depth = vsOutputs[0].position.z * clip.x + vsOutputs[1].position.z * clip.y + vsOutputs[2].position.z * clip.z;
+
+                        if (depthState.read && depthBufferData[screenY * depthBuffer.getWidth() + screenX] < depth)
+                            continue; // discard the pixel
+
+                        if (depthState.write) depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
 
                         Shader::VSOutput psInput;
                         psInput.position = clip;
@@ -164,7 +176,21 @@ namespace sr
 
                         Color psOutput = shader->fragmentShader(psInput, textures);
 
-                        frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
+                        if (blendState.enabled)
+                        {
+                            uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * frameBuffer.getWidth() + screenX]);
+
+                            Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
+
+                            // alpha blend
+                            psOutput.r = psOutput.r * psOutput.a + destColor.r * (1.0F - destColor.a);
+                            psOutput.g = psOutput.g * psOutput.a + destColor.g * (1.0F - destColor.a);
+                            psOutput.b = psOutput.b * psOutput.a + destColor.b * (1.0F - destColor.a);
+
+                            frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
+                        }
+                        else
+                            frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
                     }
                 }
             }
