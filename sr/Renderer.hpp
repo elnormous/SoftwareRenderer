@@ -22,7 +22,7 @@ namespace sr
         bool resize(uint32_t width, uint32_t height);
 
         void setShader(const Shader& newShader);
-        void setTexture(const Buffer& newTexture);
+        void setTexture(const Buffer& newTexture, uint32_t level);
 
         bool setViewport(const Rect& newViewport);
         bool clear(Color color, float depth);
@@ -37,6 +37,6 @@ namespace sr
 
         Rect viewport;
         const Shader* shader = nullptr;
-        const Buffer* texture = nullptr;
+        const Buffer* textures[2];
     };
 }

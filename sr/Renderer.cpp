@@ -11,7 +11,7 @@ namespace sr
 {
     Renderer::Renderer()
     {
-
+        std::fill(std::begin(textures), std::end(textures), nullptr);
     }
 
     bool Renderer::init(uint32_t width, uint32_t height)
@@ -35,9 +35,11 @@ namespace sr
         shader = &newShader;
     }
 
-    void Renderer::setTexture(const Buffer& newTexture)
+    void Renderer::setTexture(const Buffer& newTexture, uint32_t level)
     {
-        texture = &newTexture;
+        assert(level < 2);
+
+        textures[level] = &newTexture;
     }
 
     bool Renderer::setViewport(const Rect& newViewport)
@@ -160,7 +162,7 @@ namespace sr
 
                         psInput.normal = vsOutputs[0].normal * clip.x + vsOutputs[1].normal * clip.y + vsOutputs[2].normal * clip.z;
 
-                        Color psOutput = shader->fragmentShader(psInput, texture);
+                        Color psOutput = shader->fragmentShader(psInput, textures);
 
                         frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
                     }

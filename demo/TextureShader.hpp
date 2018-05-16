@@ -23,23 +23,23 @@ public:
         return result;
     }
 
-    virtual sr::Color fragmentShader(VSOutput input, const sr::Buffer* texture) const
+    virtual sr::Color fragmentShader(VSOutput input, const sr::Buffer* texture[2]) const
     {
         sr::Color sampleColor;
 
-        if (texture)
+        if (texture[0])
         {
-            uint32_t textureX = static_cast<uint32_t>(input.texCoords[0].x * (texture->getWidth() - 1));
-            uint32_t textureY = static_cast<uint32_t>(input.texCoords[0].y * (texture->getHeight() - 1));
+            uint32_t textureX = static_cast<uint32_t>(input.texCoords[0].x * (texture[0]->getWidth() - 1));
+            uint32_t textureY = static_cast<uint32_t>(input.texCoords[0].y * (texture[0]->getHeight() - 1));
 
-            if (texture->getType() == sr::Buffer::Type::RGB)
+            if (texture[0]->getType() == sr::Buffer::Type::RGB)
             {
-                const uint8_t* rgb = &texture->getData()[(textureY * texture->getWidth() + textureX) * 3];
+                const uint8_t* rgb = &texture[0]->getData()[(textureY * texture[0]->getWidth() + textureX) * 3];
                 sampleColor = sr::Color(rgb[0], rgb[1], rgb[2], 255);
             }
-            else if (texture->getType() == sr::Buffer::Type::RGBA)
+            else if (texture[0]->getType() == sr::Buffer::Type::RGBA)
             {
-                const uint8_t* rgba = &texture->getData()[(textureY * texture->getWidth() + textureX) * 4];
+                const uint8_t* rgba = &texture[0]->getData()[(textureY * texture[0]->getWidth() + textureX) * 4];
                 sampleColor = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
             }
         }

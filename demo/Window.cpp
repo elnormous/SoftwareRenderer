@@ -44,7 +44,7 @@ const sr::Buffer& Window::render()
     renderer.clear(sr::Color(255, 255, 255, 255), 1000.0F);
 
     renderer.setShader(shader);
-    renderer.setTexture(texture);
+    renderer.setTexture(texture, 0);
 
     std::vector<sr::Vertex> vertices = {
         // front
