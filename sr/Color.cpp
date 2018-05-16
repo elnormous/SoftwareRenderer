@@ -60,37 +60,37 @@ namespace sr
     {
         uint32_t intValue = parseColorString(color);
 
-        r = static_cast<uint8_t>((intValue & 0xFF000000) >> 24);
-        g = static_cast<uint8_t>((intValue & 0x00FF0000) >> 16);
-        b = static_cast<uint8_t>((intValue & 0x0000FF00) >> 8);
-        a = static_cast<uint8_t>(intValue & 0x000000FF);
+        r = static_cast<uint8_t>((intValue & 0xFF000000) >> 24) / 255.0F;
+        g = static_cast<uint8_t>((intValue & 0x00FF0000) >> 16) / 255.0F;
+        b = static_cast<uint8_t>((intValue & 0x0000FF00) >> 8) / 255.0F;
+        a = static_cast<uint8_t>(intValue & 0x000000FF) / 255.0F;
     }
 
     Color& Color::operator=(const std::string& color)
     {
         uint32_t intValue = parseColorString(color);
 
-        r = static_cast<uint8_t>((intValue & 0xFF000000) >> 24);
-        g = static_cast<uint8_t>((intValue & 0x00FF0000) >> 16);
-        b = static_cast<uint8_t>((intValue & 0x0000FF00) >> 8);
-        a = static_cast<uint8_t>(intValue & 0x000000FF);
+        r = static_cast<uint8_t>((intValue & 0xFF000000) >> 24) / 255.0F;
+        g = static_cast<uint8_t>((intValue & 0x00FF0000) >> 16) / 255.0F;
+        b = static_cast<uint8_t>((intValue & 0x0000FF00) >> 8) / 255.0F;
+        a = static_cast<uint8_t>(intValue & 0x000000FF) / 255.0F;
 
         return *this;
     }
 
     Color::Color(const Vector3& vec)
     {
-        r = static_cast<uint8_t>(vec.x * 255.0F);
-        g = static_cast<uint8_t>(vec.y * 255.0F);
-        b = static_cast<uint8_t>(vec.z * 255.0F);
+        r = vec.x;
+        g = vec.y;
+        b = vec.z;
         a = 0;
     }
 
     Color& Color::operator=(const Vector3& vec)
     {
-        r = static_cast<uint8_t>(vec.x * 255.0F);
-        g = static_cast<uint8_t>(vec.y * 255.0F);
-        b = static_cast<uint8_t>(vec.z * 255.0F);
+        r = vec.x;
+        g = vec.y;
+        b = vec.z;
         a = 0;
 
         return *this;
@@ -98,18 +98,18 @@ namespace sr
 
     Color::Color(const Vector4& vec)
     {
-        r = static_cast<uint8_t>(vec.x * 255.0F);
-        g = static_cast<uint8_t>(vec.y * 255.0F);
-        b = static_cast<uint8_t>(vec.z * 255.0F);
-        a = static_cast<uint8_t>(vec.w * 255.0F);
+        r = vec.x;
+        g = vec.y;
+        b = vec.z;
+        a = vec.w;
     }
 
     Color& Color::operator=(const Vector4& vec)
     {
-        r = static_cast<uint8_t>(vec.x * 255.0F);
-        g = static_cast<uint8_t>(vec.y * 255.0F);
-        b = static_cast<uint8_t>(vec.z * 255.0F);
-        a = static_cast<uint8_t>(vec.w * 255.0F);
+        r = vec.x;
+        g = vec.y;
+        b = vec.z;
+        a = vec.w;
 
         return *this;
     }

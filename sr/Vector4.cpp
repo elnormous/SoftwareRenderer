@@ -57,18 +57,18 @@ namespace sr
 
     Vector4::Vector4(const Color& color)
     {
-        x = color.normR();
-        y = color.normG();
-        z = color.normB();
-        w = color.normA();
+        x = color.r;
+        y = color.g;
+        z = color.b;
+        w = color.a;
     }
 
     Vector4& Vector4::operator=(const Color& color)
     {
-        x = color.normR();
-        y = color.normG();
-        z = color.normB();
-        w = color.normA();
+        x = color.r;
+        y = color.g;
+        z = color.b;
+        w = color.a;
         return *this;
     }
 

@@ -62,16 +62,16 @@ namespace sr
 
     Vector3::Vector3(const Color& color)
     {
-        x = color.normR();
-        y = color.normG();
-        z = color.normB();
+        x = color.r;
+        y = color.g;
+        z = color.b;
     }
 
     Vector3& Vector3::operator=(const Color& color)
     {
-        x = color.normR();
-        y = color.normG();
-        z = color.normB();
+        x = color.r;
+        y = color.g;
+        z = color.b;
 
         return *this;
     }

@@ -144,43 +144,25 @@ namespace sr
                     {
                         depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
 
-                        // pixel shader step
-                        float finalRGBA[4] = {
-                            vsOutputs[0].color.normR() * clip.x + vsOutputs[1].color.normR() * clip.y + vsOutputs[2].color.normR() * clip.z,
-                            vsOutputs[0].color.normG() * clip.x + vsOutputs[1].color.normG() * clip.y + vsOutputs[2].color.normG() * clip.z,
-                            vsOutputs[0].color.normB() * clip.x + vsOutputs[1].color.normB() * clip.y + vsOutputs[2].color.normB() * clip.z,
-                            vsOutputs[0].color.normA() * clip.x + vsOutputs[1].color.normA() * clip.y + vsOutputs[2].color.normA() * clip.z,
-                        };
+                        Shader::VSOutput psInput;
+                        psInput.position = clip;
 
-                        Vector2 texCoords(
-                            clamp(vsOutputs[0].texCoords[0].x * clip.x + vsOutputs[1].texCoords[0].x * clip.y + vsOutputs[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
-                            clamp(vsOutputs[0].texCoords[0].y * clip.x + vsOutputs[1].texCoords[0].y * clip.y + vsOutputs[2].texCoords[0].y * clip.z, 0.0F, 1.0F)
-                        );
+                        psInput.color.r = vsOutputs[0].color.r * clip.x + vsOutputs[1].color.r * clip.y + vsOutputs[2].color.r * clip.z;
+                        psInput.color.g = vsOutputs[0].color.g * clip.x + vsOutputs[1].color.g * clip.y + vsOutputs[2].color.g * clip.z;
+                        psInput.color.b = vsOutputs[0].color.b * clip.x + vsOutputs[1].color.b * clip.y + vsOutputs[2].color.b * clip.z;
+                        psInput.color.a = vsOutputs[0].color.a * clip.x + vsOutputs[1].color.a * clip.y + vsOutputs[2].color.a * clip.z;
 
-                        if (texture)
-                        {
-                            uint32_t textureX = static_cast<uint32_t>(texCoords.x * (texture->getWidth() - 1));
-                            uint32_t textureY = static_cast<uint32_t>(texCoords.y * (texture->getHeight() - 1));
+                        psInput.texCoords[0] = Vector2(clamp(vsOutputs[0].texCoords[0].x * clip.x + vsOutputs[1].texCoords[0].x * clip.y + vsOutputs[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
+                                                       clamp(vsOutputs[0].texCoords[0].y * clip.x + vsOutputs[1].texCoords[0].y * clip.y + vsOutputs[2].texCoords[0].y * clip.z, 0.0F, 1.0F));
 
-                            if (texture->getType() == Buffer::Type::RGB)
-                            {
-                                const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 3];
-                                finalRGBA[0] *= sample[0] / 255.0F;
-                                finalRGBA[1] *= sample[1] / 255.0F;
-                                finalRGBA[2] *= sample[2] / 255.0F;
-                            }
-                            else if (texture->getType() == Buffer::Type::RGBA)
-                            {
-                                const uint8_t* sample = &texture->getData()[(textureY * texture->getWidth() + textureX) * 4];
-                                finalRGBA[0] *= sample[0] / 255.0F;
-                                finalRGBA[1] *= sample[1] / 255.0F;
-                                finalRGBA[2] *= sample[2] / 255.0F;
-                                finalRGBA[3] *= sample[3] / 255.0F;
-                            }
-                        }
+                        psInput.texCoords[1] = Vector2(clamp(vsOutputs[0].texCoords[1].x * clip.x + vsOutputs[1].texCoords[1].x * clip.y + vsOutputs[2].texCoords[1].x * clip.z, 0.0F, 1.0F),
+                                                       clamp(vsOutputs[0].texCoords[1].y * clip.x + vsOutputs[1].texCoords[1].y * clip.y + vsOutputs[2].texCoords[1].y * clip.z, 0.0F, 1.0F));
 
-                        Color color(finalRGBA);
-                        frameBufferData[screenY * frameBuffer.getWidth() + screenX] = color.getIntValueRaw();
+                        psInput.normal = vsOutputs[0].normal * clip.x + vsOutputs[1].normal * clip.y + vsOutputs[2].normal * clip.z;
+
+                        Color psOutput = shader->fragmentShader(psInput, texture);
+
+                        frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
                     }
                 }
             }
