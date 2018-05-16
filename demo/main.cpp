@@ -8,8 +8,8 @@
 #ifdef WIN32
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
 {
-    int argc;
-    LPWSTR argv = CommandLineToArgvW(cmdLine, &argc);
+    int argc = 0;
+    const char** argv = nullptr;
 #else
 int main(int argc, const char* argv[])
 {

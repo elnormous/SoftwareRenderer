@@ -6,18 +6,18 @@
 #include "BMP.hpp"
 #include "File.hpp"
 
-#define BITMAPFILEHEADER_TYPE_BM    0x4D42
+static const int BITMAPFILEHEADER_TYPE_BM = 0x4D42;
 
-typedef struct                       /**** BMP file header structure ****/
+struct BitmapFileHeader              /**** BMP file header structure ****/
 {
     unsigned short bfType;           /* Magic number for file */
     unsigned int   bfSize;           /* Size of file */
     unsigned short bfReserved1;      /* Reserved */
     unsigned short bfReserved2;      /* ... */
     unsigned int   bfOffBits;        /* Offset to bitmap data */
-} BITMAPFILEHEADER;
+};
 
-typedef struct                       /**** BMP file info structure ****/
+struct BitmapInfoHeader              /**** BMP file info structure ****/
 {
     unsigned int   biSize;           /* Size of info header */
     int            biWidth;          /* Width of image */
@@ -30,28 +30,28 @@ typedef struct                       /**** BMP file info structure ****/
     int            biYPelsPerMeter;  /* Y pixels per meter */
     unsigned int   biClrUsed;        /* Number of colors used */
     unsigned int   biClrImportant;   /* Number of important colors */
-} BITMAPINFOHEADER;
+};
 
-typedef struct                       /**** Colormap entry structure ****/
+struct RGBQuad                      /**** Colormap entry structure ****/
 {
     unsigned char rgbBlue;          /* Blue value */
     unsigned char rgbGreen;         /* Green value */
     unsigned char rgbRed;           /* Red value */
     unsigned char rgbReserved;      /* Reserved */
-} RGBQUAD;
+};
 
-typedef enum
+enum Compression
 {
-    BI_RGB = 0x0000,
-    BI_RLE8 = 0x0001,
-    BI_RLE4 = 0x0002,
-    BI_BITFIELDS = 0x0003,
-    BI_JPEG = 0x0004,
-    BI_PNG = 0x0005,
-    BI_CMYK = 0x000B,
-    BI_CMYKRLE8 = 0x000C,
-    BI_CMYKRLE4 = 0x000D
-} Compression;
+    RGB = 0x0000,
+    RLE8 = 0x0001,
+    RLE4 = 0x0002,
+    BITFIELDS = 0x0003,
+    JPEG = 0x0004,
+    PNG = 0x0005,
+    CMYK = 0x000B,
+    CMYKRLE8 = 0x000C,
+    CMYKRLE4 = 0x000D
+};
 
 namespace sr
 {
@@ -85,7 +85,7 @@ namespace sr
             return false;
         }
 
-        BITMAPFILEHEADER header;
+        BitmapFileHeader header;
 
         f.read(&header.bfType, sizeof(header.bfType));
 
@@ -100,7 +100,7 @@ namespace sr
         f.read(&header.bfReserved2, sizeof(header.bfReserved2));
         f.read(&header.bfOffBits, sizeof(header.bfOffBits));
 
-        BITMAPINFOHEADER infoHeader;
+        BitmapInfoHeader infoHeader;
         f.read(&infoHeader.biSize, sizeof(infoHeader.biSize));
 
         uint32_t offset = 0;
@@ -135,7 +135,7 @@ namespace sr
             offset += sizeof(infoHeader.biCompression);
         }
 
-        if (infoHeader.biCompression != BI_RGB)
+        if (infoHeader.biCompression != RGB)
         {
             std::cerr << "Compression not supported" << std::endl;
             return false;
@@ -173,7 +173,7 @@ namespace sr
 
         f.seek(header.bfOffBits, File::Seek::BEGIN);
 
-        data.resize(infoHeader.biWidth * std::abs(infoHeader.biHeight) * sizeof(RGBQUAD));
+        data.resize(infoHeader.biWidth * std::abs(infoHeader.biHeight) * sizeof(RGBQuad));
         std::fill(data.begin(), data.end(), 255);
 
         if (infoHeader.biHeight > 0) // bottom to top
@@ -182,7 +182,7 @@ namespace sr
             {
                 for (int x = 0; x < infoHeader.biWidth; ++x)
                 {
-                    f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQUAD)], infoHeader.biBitCount / 8);
+                    f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace sr
             {
                 for (int x = 0; x < infoHeader.biWidth; ++x)
                 {
-                    f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQUAD)], infoHeader.biBitCount / 8);
+                    f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
                 }
             }
         }
@@ -213,7 +213,7 @@ namespace sr
             return 0;
         }
 
-        BITMAPFILEHEADER header;
+        BitmapFileHeader header;
         header.bfType = BITMAPFILEHEADER_TYPE_BM;
         header.bfSize = width  * height * 4 + 14 + 40;
         header.bfReserved1 = 0;
@@ -226,7 +226,7 @@ namespace sr
         f.write(&header.bfReserved2, sizeof(header.bfReserved2));
         f.write(&header.bfOffBits, sizeof(header.bfOffBits));
 
-        BITMAPINFOHEADER infoHeader;
+        BitmapInfoHeader infoHeader;
         infoHeader.biSize = 40;
         infoHeader.biWidth = (int)width;
         infoHeader.biHeight = -(int)height;

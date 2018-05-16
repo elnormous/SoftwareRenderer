@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <cassert>
 #include <iostream>
 #include "Renderer.hpp"
 #include "Box2.hpp"
