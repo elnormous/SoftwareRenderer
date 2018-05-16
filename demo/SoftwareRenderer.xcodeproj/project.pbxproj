@@ -49,6 +49,7 @@
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		30971FB2206BDA1C000D196D /* WindowMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowMacOS.hpp; sourceTree = "<group>"; };
 		30C9637920A7DF2C00B54158 /* sr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sr.xcodeproj; path = ../build/sr.xcodeproj; sourceTree = "<group>"; };
+		30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureShader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 				306944DF205E00A900C4969C /* Window.hpp */,
 				30971FB2206BDA1C000D196D /* WindowMacOS.hpp */,
 				306944E0205E00A900C4969C /* WindowMacOS.mm */,
+				30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */,
 			);
 			name = demo;
 			sourceTree = "<group>";

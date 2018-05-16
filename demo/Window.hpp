@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include "sr.hpp"
+#include "TextureShader.hpp"
 
 class Application;
 
@@ -37,6 +38,6 @@ protected:
 
     sr::Renderer renderer;
 
-    sr::Shader shader;
+    TextureShader shader;
     sr::Buffer texture;
 };

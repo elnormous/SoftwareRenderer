@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30345EEA20A8E09C00B9B963 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345EE820A8E09C00B9B963 /* Shader.cpp */; };
 		30345EEB20A8E09C00B9B963 /* Shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345EE920A8E09C00B9B963 /* Shader.hpp */; };
 		30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345EEF20A8F0CE00B9B963 /* Matrix4.cpp */; };
 		30345EFA20A8F0CF00B9B963 /* Matrix4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345EF020A8F0CE00B9B963 /* Matrix4.hpp */; };
@@ -58,7 +57,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		30345EE820A8E09C00B9B963 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		30345EE920A8E09C00B9B963 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		30345EED20A8E12600B9B963 /* sr.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sr.hpp; sourceTree = "<group>"; };
 		30345EEF20A8F0CE00B9B963 /* Matrix4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix4.cpp; sourceTree = "<group>"; };
@@ -158,7 +156,6 @@
 				30DFA45420AA660B007BEB42 /* Rect.hpp */,
 				30C9638320A7E0C200B54158 /* Renderer.cpp */,
 				30C9638420A7E0C200B54158 /* Renderer.hpp */,
-				30345EE820A8E09C00B9B963 /* Shader.cpp */,
 				30345EE920A8E09C00B9B963 /* Shader.hpp */,
 				30345F1F20A8F48E00B9B963 /* Size2.cpp */,
 				30345F1E20A8F48E00B9B963 /* Size2.hpp */,
@@ -301,7 +298,6 @@
 				30345F1520A8F3BF00B9B963 /* Color.cpp in Sources */,
 				30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */,
 				30DFA45720AA660F007BEB42 /* Rect.cpp in Sources */,
-				30345EEA20A8E09C00B9B963 /* Shader.cpp in Sources */,
 				30345F1C20A8F45300B9B963 /* Box2.cpp in Sources */,
 				30345F0520A8F0F300B9B963 /* Quaternion.cpp in Sources */,
 				30345F1920A8F43D00B9B963 /* Box3.cpp in Sources */,
