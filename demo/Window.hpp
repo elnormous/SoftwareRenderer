@@ -37,5 +37,6 @@ protected:
 
     sr::Renderer renderer;
 
+    sr::Shader shader;
     sr::Buffer texture;
 };

@@ -73,40 +73,26 @@ namespace sr
 
     bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
     {
+        if (!shader) return false;
+
         uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(frameBuffer.getData().data());
         float* depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
 
         for (uint32_t i = 0; i < indices.size(); i += 3)
         {
-            uint32_t currentIndices[3] = {
-                indices[i + 0],
-                indices[i + 1],
-                indices[i + 2]
-            };
-
-            Vertex currentVertices[3] = {
-                vertices[currentIndices[0]],
-                vertices[currentIndices[1]],
-                vertices[currentIndices[2]]
-            };
-
-            Vector4 clipPositions[3] = {
-                vertices[currentIndices[0]].position,
-                vertices[currentIndices[1]].position,
-                vertices[currentIndices[2]].position
-            };
+            Shader::VSOutput vsOutputs[3];
 
             // vertex shader step
-            for (sr::Vector4& clipPosition : clipPositions)
+            for (uint32_t c = 0; c < 3; ++c)
             {
-                // transform to clip space
-                clipPosition = modelViewProjection * clipPosition;
+                uint32_t index = indices[i + c];
+                vsOutputs[c] = shader->vertexShader(modelViewProjection, vertices[index]);
             }
 
             Vector4 ndcPositions[3] = {
-                clipPositions[0],
-                clipPositions[1],
-                clipPositions[2]
+                vsOutputs[0].position,
+                vsOutputs[1].position,
+                vsOutputs[2].position
             };
 
             for (sr::Vector4& ndcPosition : ndcPositions)
@@ -149,10 +135,10 @@ namespace sr
                                             viewportPositions[2],
                                             Vector2(screenX, screenY));
 
-                    Vector3 clip = Vector3(s.x / clipPositions[0].w, s.y / clipPositions[1].w, s.z / clipPositions[2].w);
+                    Vector3 clip = Vector3(s.x / vsOutputs[0].position.w, s.y / vsOutputs[1].position.w, s.z / vsOutputs[2].position.w);
                     clip = clip / (clip.x + clip.y + clip.z);
 
-                    float depth = clipPositions[0].z * clip.x + clipPositions[1].z * clip.y + clipPositions[2].z * clip.z;
+                    float depth = vsOutputs[0].position.z * clip.x + vsOutputs[1].position.z * clip.y + vsOutputs[2].position.z * clip.z;
 
                     if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F && depthBufferData[screenY * depthBuffer.getWidth() + screenX] > depth)
                     {
@@ -160,15 +146,15 @@ namespace sr
 
                         // pixel shader step
                         float finalRGBA[4] = {
-                            currentVertices[0].color.normR() * clip.x + currentVertices[1].color.normR() * clip.y + currentVertices[2].color.normR() * clip.z,
-                            currentVertices[0].color.normG() * clip.x + currentVertices[1].color.normG() * clip.y + currentVertices[2].color.normG() * clip.z,
-                            currentVertices[0].color.normB() * clip.x + currentVertices[1].color.normB() * clip.y + currentVertices[2].color.normB() * clip.z,
-                            currentVertices[0].color.normA() * clip.x + currentVertices[1].color.normA() * clip.y + currentVertices[2].color.normA() * clip.z,
+                            vsOutputs[0].color.normR() * clip.x + vsOutputs[1].color.normR() * clip.y + vsOutputs[2].color.normR() * clip.z,
+                            vsOutputs[0].color.normG() * clip.x + vsOutputs[1].color.normG() * clip.y + vsOutputs[2].color.normG() * clip.z,
+                            vsOutputs[0].color.normB() * clip.x + vsOutputs[1].color.normB() * clip.y + vsOutputs[2].color.normB() * clip.z,
+                            vsOutputs[0].color.normA() * clip.x + vsOutputs[1].color.normA() * clip.y + vsOutputs[2].color.normA() * clip.z,
                         };
 
                         Vector2 texCoords(
-                            clamp(currentVertices[0].texCoords[0].x * clip.x + currentVertices[1].texCoords[0].x * clip.y + currentVertices[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
-                            clamp(currentVertices[0].texCoords[0].y * clip.x + currentVertices[1].texCoords[0].y * clip.y + currentVertices[2].texCoords[0].y * clip.z, 0.0F, 1.0F)
+                            clamp(vsOutputs[0].texCoords[0].x * clip.x + vsOutputs[1].texCoords[0].x * clip.y + vsOutputs[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
+                            clamp(vsOutputs[0].texCoords[0].y * clip.x + vsOutputs[1].texCoords[0].y * clip.y + vsOutputs[2].texCoords[0].y * clip.z, 0.0F, 1.0F)
                         );
 
                         if (texture)
