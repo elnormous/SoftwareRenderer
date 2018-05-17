@@ -7,17 +7,20 @@
 #include <Windows.h>
 #include "Window.hpp"
 
-class WindowWindows: public Window
+namespace demo
 {
-public:
-    WindowWindows(Application& initApplication);
-    virtual ~WindowWindows();
-    virtual bool init(int argc, const char** argv) override;
+    class WindowWindows: public Window
+    {
+    public:
+        WindowWindows(Application& initApplication);
+        virtual ~WindowWindows();
+        virtual bool init(int argc, const char** argv) override;
 
-    void didResize();
+        void didResize();
 
-    HWND getWindow() const { return window; }
-private:
-    ATOM windowClass;
-    HWND window;
-};
+        HWND getWindow() const { return window; }
+    private:
+        ATOM windowClass;
+        HWND window;
+    };
+}

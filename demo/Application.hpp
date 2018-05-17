@@ -7,24 +7,26 @@
 #include <memory>
 #include "Window.hpp"
 
-class Application
+namespace demo
 {
-public:
-    Application(int initArgc, const char** initArgv);
-    ~Application();
+    class Application
+    {
+    public:
+        Application(int initArgc, const char** initArgv);
+        ~Application();
 
-    Application(const Application&) = delete;
-    Application& operator=(const Application&) = delete;
-    Application(Application&&) = delete;
-    Application& operator=(Application&&) = delete;
+        Application(const Application&) = delete;
+        Application& operator=(const Application&) = delete;
+        Application(Application&&) = delete;
+        Application& operator=(Application&&) = delete;
 
-    bool init();
-    bool run();
+        bool run();
 
-    std::string getResourcePath() const;
+        std::string getResourcePath() const;
 
-private:
-    std::unique_ptr<Window> window;
-    int argc;
-    const char** argv;
-};
+    private:
+        std::unique_ptr<Window> window;
+        int argc;
+        const char** argv;
+    };
+}

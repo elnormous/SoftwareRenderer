@@ -8,7 +8,7 @@
 
 static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    WindowWindows* windowWindows = (WindowWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
+    demo::WindowWindows* windowWindows = (demo::WindowWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
     if (!windowWindows) return DefWindowProcW(window, msg, wParam, lParam);
 
     switch (msg)
@@ -54,75 +54,78 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
 
 static const LPCWSTR WINDOW_CLASS_NAME = L"SoftwareRenderer";
 
-WindowWindows::WindowWindows(Application& initApplication):
-    Window(initApplication)
+namespace demo
 {
-}
-
-WindowWindows::~WindowWindows()
-{
-    if (window) DestroyWindow(window);
-    if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
-}
-
-bool WindowWindows::init(int argc, const char** argv)
-{
-    HINSTANCE instance = GetModuleHandleW(NULL);
-
-    WNDCLASSEXW wc;
-    wc.cbSize = sizeof(wc);
-    wc.style = CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc = windowProc;
-    wc.cbClsExtra = 0;
-    wc.cbWndExtra = 0;
-    wc.hInstance = instance;
-    // Application icon should be the first resource
-    //wc.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(101));
-    wc.hIcon = NULL;
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
-    wc.lpszMenuName = NULL;
-    wc.lpszClassName = WINDOW_CLASS_NAME;
-    wc.hIconSm = NULL;
-
-    windowClass = RegisterClassExW(&wc);
-    if (!windowClass)
+    WindowWindows::WindowWindows(Application& initApplication):
+        Window(initApplication)
     {
-        std::cerr << "Failed to register window class" << std::endl;
-        return false;
     }
 
-    DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
-    DWORD windowExStyle = WS_EX_APPWINDOW;
-
-    window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, instance, NULL);
-
-    if (!window)
+    WindowWindows::~WindowWindows()
     {
-        std::cerr << "Failed to create window" << std::endl;
-        return false;
+        if (window) DestroyWindow(window);
+        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
     }
 
-    RECT clientRect;
-    GetClientRect(window, &clientRect);
+    bool WindowWindows::init(int argc, const char** argv)
+    {
+        HINSTANCE instance = GetModuleHandleW(NULL);
 
-    width = clientRect.right - clientRect.left;
-    height = clientRect.bottom - clientRect.top;
+        WNDCLASSEXW wc;
+        wc.cbSize = sizeof(wc);
+        wc.style = CS_HREDRAW | CS_VREDRAW;
+        wc.lpfnWndProc = windowProc;
+        wc.cbClsExtra = 0;
+        wc.cbWndExtra = 0;
+        wc.hInstance = instance;
+        // Application icon should be the first resource
+        //wc.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(101));
+        wc.hIcon = NULL;
+        wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+        wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
+        wc.lpszMenuName = NULL;
+        wc.lpszClassName = WINDOW_CLASS_NAME;
+        wc.hIconSm = NULL;
 
-    ShowWindow(window, SW_SHOW);
-    SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
+        windowClass = RegisterClassExW(&wc);
+        if (!windowClass)
+        {
+            std::cerr << "Failed to register window class" << std::endl;
+            return false;
+        }
 
-    return Window::init(argc, argv);
-}
+        DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
+        DWORD windowExStyle = WS_EX_APPWINDOW;
 
-void WindowWindows::didResize()
-{
-    RECT clientRect;
-    GetClientRect(window, &clientRect);
+        window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
+            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, instance, NULL);
 
-    width = clientRect.right - clientRect.left;
-    height = clientRect.bottom - clientRect.top;
+        if (!window)
+        {
+            std::cerr << "Failed to create window" << std::endl;
+            return false;
+        }
 
-    onResize();
+        RECT clientRect;
+        GetClientRect(window, &clientRect);
+
+        width = clientRect.right - clientRect.left;
+        height = clientRect.bottom - clientRect.top;
+
+        ShowWindow(window, SW_SHOW);
+        SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
+
+        return Window::init(argc, argv);
+    }
+
+    void WindowWindows::didResize()
+    {
+        RECT clientRect;
+        GetClientRect(window, &clientRect);
+
+        width = clientRect.right - clientRect.left;
+        height = clientRect.bottom - clientRect.top;
+
+        onResize();
+    }
 }

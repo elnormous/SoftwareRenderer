@@ -8,40 +8,43 @@
 #include "sr.hpp"
 #include "TextureShader.hpp"
 
-class Application;
-
-class Window
+namespace demo
 {
-public:
-    Window(Application& initApplication);
+    class Application;
 
-    Window(const Window&) = delete;
-    Window& operator=(const Window&) = delete;
-    Window(Window&&) = delete;
-    Window& operator=(Window&&) = delete;
-    virtual ~Window();
+    class Window
+    {
+    public:
+        Window(Application& initApplication);
 
-    virtual bool init(int argc, const char** argv);
+        Window(const Window&) = delete;
+        Window& operator=(const Window&) = delete;
+        Window(Window&&) = delete;
+        Window& operator=(Window&&) = delete;
+        virtual ~Window();
 
-    const sr::Buffer& render();
+        virtual bool init(int argc, const char** argv);
 
-protected:
-    void onResize();
+        const sr::Buffer& render();
 
-    Application& application;
-    uint32_t width;
-    uint32_t height;
+    protected:
+        void onResize();
 
-    sr::Matrix4 projection;
-    sr::Matrix4 view;
-    sr::Matrix4 model;
-    float rotationY = 0.0F;
+        Application& application;
+        uint32_t width;
+        uint32_t height;
 
-    sr::Renderer renderer;
+        sr::Matrix4 projection;
+        sr::Matrix4 view;
+        sr::Matrix4 model;
+        float rotationY = 0.0F;
 
-    sr::BlendState blendState;
-    sr::DepthState depthState;
+        sr::Renderer renderer;
 
-    TextureShader shader;
-    sr::Buffer texture;
-};
+        sr::BlendState blendState;
+        sr::DepthState depthState;
+
+        TextureShader shader;
+        sr::Buffer texture;
+    };
+}

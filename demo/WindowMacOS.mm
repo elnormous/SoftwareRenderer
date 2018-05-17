@@ -7,7 +7,7 @@
 
 @interface WindowDelegate: NSObject<NSWindowDelegate>
 {
-    WindowMacOS* window;
+    demo::WindowMacOS* window;
 }
 
 @end
@@ -33,7 +33,7 @@
 
 @interface Canvas: NSView
 {
-    Window* window;
+    demo::Window* window;
     NSInteger width;
     NSInteger height;
     size_t componentsPerPixel;
@@ -136,72 +136,75 @@ static const void* getBytePointer(void* info)
 
 @end
 
-WindowMacOS::WindowMacOS(Application& initApplication):
-    Window(initApplication)
+namespace demo
 {
-}
+    WindowMacOS::WindowMacOS(Application& initApplication):
+        Window(initApplication)
+    {
+    }
 
-WindowMacOS::~WindowMacOS()
-{
-    [timer release];
-    [content release];
-    window.delegate = nil;
-    [window release];
-}
+    WindowMacOS::~WindowMacOS()
+    {
+        [timer release];
+        [content release];
+        window.delegate = nil;
+        [window release];
+    }
 
-bool WindowMacOS::init(int argc, const char** argv)
-{
-    screen = [NSScreen mainScreen];
+    bool WindowMacOS::init(int argc, const char** argv)
+    {
+        screen = [NSScreen mainScreen];
 
-    CGSize windowSize;
-    windowSize.width = round(screen.frame.size.width * 0.6);
-    windowSize.height = round(screen.frame.size.height * 0.6);
+        CGSize windowSize;
+        windowSize.width = round(screen.frame.size.width * 0.6);
+        windowSize.height = round(screen.frame.size.height * 0.6);
 
-    NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0f - windowSize.width / 2.0f),
-                              round(screen.frame.size.height / 2.0f - windowSize.height / 2.0f),
-                              windowSize.width, windowSize.height);
+        NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0f - windowSize.width / 2.0f),
+                                round(screen.frame.size.height / 2.0f - windowSize.height / 2.0f),
+                                windowSize.width, windowSize.height);
 
-    NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+        NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
 
-    window  = [[NSWindow alloc] initWithContentRect:frame
-                                          styleMask:windowStyleMask
-                                            backing:NSBackingStoreBuffered
-                                              defer:NO
-                                             screen:screen];
-    [window setReleasedWhenClosed:NO];
+        window  = [[NSWindow alloc] initWithContentRect:frame
+                                            styleMask:windowStyleMask
+                                                backing:NSBackingStoreBuffered
+                                                defer:NO
+                                                screen:screen];
+        [window setReleasedWhenClosed:NO];
 
-    window.acceptsMouseMovedEvents = YES;
-    windowDelegate = [[WindowDelegate alloc] initWithWindow:this];
-    window.delegate = windowDelegate;
+        window.acceptsMouseMovedEvents = YES;
+        windowDelegate = [[WindowDelegate alloc] initWithWindow:this];
+        window.delegate = windowDelegate;
 
-    [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-    [window setTitle:@"SoftwareRenderer"];
+        [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+        [window setTitle:@"SoftwareRenderer"];
 
-    NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                 styleMask:[window styleMask]];
+        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                    styleMask:[window styleMask]];
 
-    width = static_cast<uint32_t>(windowFrame.size.width);
-    height = static_cast<uint32_t>(windowFrame.size.height);
+        width = static_cast<uint32_t>(windowFrame.size.width);
+        height = static_cast<uint32_t>(windowFrame.size.height);
 
-    content = [[Canvas alloc] initWithFrame:windowFrame andWindow:this];
+        content = [[Canvas alloc] initWithFrame:windowFrame andWindow:this];
 
-    window.contentView = content;
-    [window makeKeyAndOrderFront:nil];
+        window.contentView = content;
+        [window makeKeyAndOrderFront:nil];
 
-    [content setNeedsDisplay:TRUE];
+        [content setNeedsDisplay:TRUE];
 
-    timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
-    return Window::init(argc, argv);
-}
+        return Window::init(argc, argv);
+    }
 
-void WindowMacOS::didResize()
-{
-    NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                 styleMask:[window styleMask]];
+    void WindowMacOS::didResize()
+    {
+        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                    styleMask:[window styleMask]];
 
-    width = static_cast<uint32_t>(windowFrame.size.width);
-    height = static_cast<uint32_t>(windowFrame.size.height);
+        width = static_cast<uint32_t>(windowFrame.size.width);
+        height = static_cast<uint32_t>(windowFrame.size.height);
 
-    onResize();
+        onResize();
+    }
 }

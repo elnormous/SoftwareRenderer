@@ -6,46 +6,44 @@
 #include "Application.hpp"
 #include "WindowWindows.hpp"
 
-Application::Application(int initArgc, const char** initArgv):
-    argc(initArgc),
-    argv(initArgv)
+namespace demo
 {
-}
-
-Application::~Application()
-{
-}
-
-bool Application::init()
-{
-    return true;
-}
-
-bool Application::run()
-{
-    WindowWindows* windowWindows = new WindowWindows(*this);
-    window.reset(windowWindows);
-    if (!windowWindows->init(argc, argv))
-        return false;
-
-    MSG msg;
-    for (;;)
+    Application::Application(int initArgc, const char** initArgv):
+        argc(initArgc),
+        argv(initArgv)
     {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) > 0)
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-
-            if (msg.message == WM_QUIT) return true;
-        }
-
-        InvalidateRect(windowWindows->getWindow(), nullptr, FALSE);
     }
 
-    return true;
-}
+    Application::~Application()
+    {
+    }
 
-std::string Application::getResourcePath() const
-{
-    return "Resources";
+    bool Application::run()
+    {
+        WindowWindows* windowWindows = new WindowWindows(*this);
+        window.reset(windowWindows);
+        if (!windowWindows->init(argc, argv))
+            return false;
+
+        MSG msg;
+        for (;;)
+        {
+            if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) > 0)
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+
+                if (msg.message == WM_QUIT) return true;
+            }
+
+            InvalidateRect(windowWindows->getWindow(), nullptr, FALSE);
+        }
+
+        return true;
+    }
+
+    std::string Application::getResourcePath() const
+    {
+        return "Resources";
+    }
 }

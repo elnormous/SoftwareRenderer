@@ -14,11 +14,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, in
 int main(int argc, const char* argv[])
 {
 #endif
-    Application application(argc, argv);
-    int result;
+    demo::Application application(argc, argv);
 
-    application.init();
-    result = application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
-
-    return result;
+    return application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -7,23 +7,27 @@
 #include <X11/Xlib.h>
 #include "Window.hpp"
 
-class WindowLinux: public Window
+namespace demo
 {
-    WindowLinux(Application& initApplication);
-    virtual ~WindowLinux();
-    virtual bool init(int argc, const char** argv) override;
+    class WindowLinux: public Window
+    {
+    public:
+        WindowLinux(Application& initApplication);
+        virtual ~WindowLinux();
+        virtual bool init(int argc, const char** argv) override;
 
-    void didResize();
+        void didResize();
 
-    inline Display* getDisplay() const { return display; }
-    inline Window getWindow() const { return window; }
-    inline Atom getProtocolsAtom() const { return protocolsAtom; }
-    inline Atom getDeleteAtom() const { return deleteAtom; }
+        inline Display* getDisplay() const { return display; }
+        inline ::Window getWindow() const { return window; }
+        inline Atom getProtocolsAtom() const { return protocolsAtom; }
+        inline Atom getDeleteAtom() const { return deleteAtom; }
 
-private:
-    Display* display;
-    Window window;
-    Atom protocolsAtom;
-    Atom deleteAtom;
-    GC gc;
-};
+    private:
+        Display* display;
+        ::Window window;
+        Atom protocolsAtom;
+        Atom deleteAtom;
+        GC gc;
+    };
+}
