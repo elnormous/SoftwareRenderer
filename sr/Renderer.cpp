@@ -185,9 +185,10 @@ namespace sr
                             Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                             // alpha blend
-                            psOutput.r = psOutput.r * psOutput.a + destColor.r * (1.0F - destColor.a);
-                            psOutput.g = psOutput.g * psOutput.a + destColor.g * (1.0F - destColor.a);
-                            psOutput.b = psOutput.b * psOutput.a + destColor.b * (1.0F - destColor.a);
+                            psOutput.r = psOutput.r * psOutput.a + destColor.r * (1.0F - psOutput.a);
+                            psOutput.g = psOutput.g * psOutput.a + destColor.g * (1.0F - psOutput.a);
+                            psOutput.b = psOutput.b * psOutput.a + destColor.b * (1.0F - psOutput.a);
+                            psOutput.a = 1.0F;
 
                             frameBufferData[screenY * frameBuffer.getWidth() + screenX] = psOutput.getIntValueRaw();
                         }
