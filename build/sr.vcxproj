@@ -18,51 +18,34 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Application.hpp" />
-    <ClInclude Include="TextureShader.hpp" />
-    <ClInclude Include="Window.hpp" />
-    <ClInclude Include="WindowWindows.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ApplicationWindows.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Window.cpp" />
-    <ClCompile Include="WindowWindows.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\build\sr.vcxproj">
-      <Project>{2600b71d-8806-410a-afe9-cef918cfef95}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4E6216F3-C039-4547-9658-378F199432B0}</ProjectGuid>
+    <ProjectGuid>{2600B71D-8806-410A-AFE9-CEF918CFEF95}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SoftwareRenderer</RootNamespace>
+    <RootNamespace>sr</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -86,39 +69,17 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\sr</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\sr</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\sr</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\sr</IncludePath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;UNICODE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,13 +88,10 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;UNICODE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,15 +102,12 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;UNICODE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,17 +118,70 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;UNICODE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\sr\BlendState.hpp" />
+    <ClInclude Include="..\sr\BMP.hpp" />
+    <ClInclude Include="..\sr\Box2.hpp" />
+    <ClInclude Include="..\sr\Box3.hpp" />
+    <ClInclude Include="..\sr\Buffer.hpp" />
+    <ClInclude Include="..\sr\Color.hpp" />
+    <ClInclude Include="..\sr\ConvexVolume.hpp" />
+    <ClInclude Include="..\sr\DepthState.hpp" />
+    <ClInclude Include="..\sr\File.hpp" />
+    <ClInclude Include="..\sr\Material.hpp" />
+    <ClInclude Include="..\sr\MathUtils.hpp" />
+    <ClInclude Include="..\sr\Matrix3.hpp" />
+    <ClInclude Include="..\sr\Matrix4.hpp" />
+    <ClInclude Include="..\sr\MTL.hpp" />
+    <ClInclude Include="..\sr\OBJ.hpp" />
+    <ClInclude Include="..\sr\Plane.hpp" />
+    <ClInclude Include="..\sr\Quaternion.hpp" />
+    <ClInclude Include="..\sr\Rect.hpp" />
+    <ClInclude Include="..\sr\Renderer.hpp" />
+    <ClInclude Include="..\sr\Sampler.hpp" />
+    <ClInclude Include="..\sr\Shader.hpp" />
+    <ClInclude Include="..\sr\Size2.hpp" />
+    <ClInclude Include="..\sr\Size3.hpp" />
+    <ClInclude Include="..\sr\sr.hpp" />
+    <ClInclude Include="..\sr\Vector2.hpp" />
+    <ClInclude Include="..\sr\Vector3.hpp" />
+    <ClInclude Include="..\sr\Vector4.hpp" />
+    <ClInclude Include="..\sr\Vertex.hpp" />
+    <ClInclude Include="..\sr\WAV.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sr\BMP.cpp" />
+    <ClCompile Include="..\sr\Box2.cpp" />
+    <ClCompile Include="..\sr\Box3.cpp" />
+    <ClCompile Include="..\sr\Buffer.cpp" />
+    <ClCompile Include="..\sr\Color.cpp" />
+    <ClCompile Include="..\sr\ConvexVolume.cpp" />
+    <ClCompile Include="..\sr\File.cpp" />
+    <ClCompile Include="..\sr\Material.cpp" />
+    <ClCompile Include="..\sr\Matrix3.cpp" />
+    <ClCompile Include="..\sr\Matrix4.cpp" />
+    <ClCompile Include="..\sr\MTL.cpp" />
+    <ClCompile Include="..\sr\OBJ.cpp" />
+    <ClCompile Include="..\sr\Plane.cpp" />
+    <ClCompile Include="..\sr\Quaternion.cpp" />
+    <ClCompile Include="..\sr\Rect.cpp" />
+    <ClCompile Include="..\sr\Renderer.cpp" />
+    <ClCompile Include="..\sr\Size2.cpp" />
+    <ClCompile Include="..\sr\Size3.cpp" />
+    <ClCompile Include="..\sr\Vector2.cpp" />
+    <ClCompile Include="..\sr\Vector3.cpp" />
+    <ClCompile Include="..\sr\Vector4.cpp" />
+    <ClCompile Include="..\sr\Vertex.cpp" />
+    <ClCompile Include="..\sr\WAV.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

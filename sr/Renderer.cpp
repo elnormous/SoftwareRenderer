@@ -145,7 +145,8 @@ namespace sr
                     Vector3 s = barycentric(viewportPositions[0],
                                             viewportPositions[1],
                                             viewportPositions[2],
-                                            Vector2(screenX, screenY));
+                                            Vector2(static_cast<float>(screenX),
+                                                    static_cast<float>(screenY)));
 
                     Vector3 clip = Vector3(s.x / vsOutputs[0].position.w, s.y / vsOutputs[1].position.w, s.z / vsOutputs[2].position.w);
                     clip = clip / (clip.x + clip.y + clip.z);

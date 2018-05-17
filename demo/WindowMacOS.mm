@@ -141,7 +141,6 @@ static const void* getBytePointer(void* info)
 WindowMacOS::WindowMacOS(Application& initApplication):
     Window(initApplication)
 {
-
 }
 
 WindowMacOS::~WindowMacOS()

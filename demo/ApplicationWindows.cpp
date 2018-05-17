@@ -3,37 +3,36 @@
 //
 
 #include <Strsafe.h>
-#include "application.h"
-#include "window_windows.h"
+#include "Application.hpp"
+#include "WindowWindows.hpp"
 
-void gpMain(GPApplication* application);
-
-int gpApplicationInit(GPApplication* application, int argc, const char** argv)
+Application::Application(int initArgc, const char** initArgv):
+    argc(initArgc),
+    argv(initArgv)
 {
-    application->argc = argc;
-    application->argv = argv;
-
-    return 1;
 }
 
-int gpApplicationDestroy(GPApplication* application)
+Application::~Application()
 {
-    return 1;
 }
 
-int gpApplicationRun(GPApplication* application)
+bool Application::init()
 {
-    if (!gpWindowInit(&application->window, application->argc, application->argv))
-        return 0;
+    return true;
+}
 
-    gpMain(application);
+bool Application::run()
+{
+    WindowWindows* windowWindows = new WindowWindows(*this);
+    window.reset(windowWindows);
+    if (!windowWindows->init(argc, argv))
+        return false;
 
-    GPWindowWindows* windowWindows = (GPWindowWindows*)application->window.opaque;
     MSG msg;
     BOOL ret;
     for (;;)
     {
-        ret = GetMessage(&msg, windowWindows->window, 0, 0);
+        ret = GetMessage(&msg, windowWindows->getWindow(), 0, 0);
 
         if (ret > 0)
         {
@@ -43,8 +42,7 @@ int gpApplicationRun(GPApplication* application)
         else if (ret < 0)
         {
             // error
-            gpWindowDestroy(&application->window);
-            return 0;
+            return false;
         }
         else
         {
@@ -52,7 +50,10 @@ int gpApplicationRun(GPApplication* application)
         }
     }
 
-    gpWindowDestroy(&application->window);
+    return true;
+}
 
-    return 1;
+std::string Application::getResourcePath() const
+{
+    return "Resources";
 }

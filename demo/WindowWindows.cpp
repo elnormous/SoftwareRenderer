@@ -4,12 +4,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "window_windows.h"
-#include "application.h"
+#include "WindowWindows.hpp"
+#include "Application.hpp"
 
 static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    GPWindowWindows* windowWindows = (GPWindowWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
+    WindowWindows* windowWindows = (WindowWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
     if (!windowWindows) return DefWindowProcW(window, msg, wParam, lParam);
 
     switch (msg)
@@ -26,12 +26,19 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
 
 static const LPCWSTR WINDOW_CLASS_NAME = L"SoftwareRenderer";
 
-int gpWindowInit(GPWindow* window, int argc, const char** argv)
+WindowWindows::WindowWindows(Application& initApplication):
+    Window(initApplication)
 {
-    GPWindowWindows* windowWindows = malloc(sizeof(GPWindowWindows));
-    memset(windowWindows, 0, sizeof(GPWindowWindows));
-    window->opaque = windowWindows;
+}
 
+WindowWindows::~WindowWindows()
+{
+    if (window) DestroyWindow(window);
+    if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
+}
+
+bool WindowWindows::init(int argc, const char** argv)
+{
     HINSTANCE instance = GetModuleHandleW(NULL);
 
     WNDCLASSEXW wc;
@@ -50,11 +57,11 @@ int gpWindowInit(GPWindow* window, int argc, const char** argv)
     wc.lpszClassName = WINDOW_CLASS_NAME;
     wc.hIconSm = NULL;
 
-    windowWindows->windowClass = RegisterClassExW(&wc);
-    if (!windowWindows->windowClass)
+    windowClass = RegisterClassExW(&wc);
+    if (!windowClass)
     {
         fprintf(stderr, "Failed to register window class\n");
-        return 0;
+        return false;
     }
 
     DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
@@ -67,35 +74,20 @@ int gpWindowInit(GPWindow* window, int argc, const char** argv)
     int width = CW_USEDEFAULT;
     int height = CW_USEDEFAULT;
 
-    windowWindows->window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
+    window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
         x, y, width, height, NULL, NULL, instance, NULL);
 
-    if (!windowWindows->window)
+    if (!window)
     {
         fprintf(stderr, "Failed to create window\n");
-        return 0;
+        return false;
     }
 
     RECT clientRect;
-    GetClientRect(windowWindows->window, &clientRect);
+    GetClientRect(window, &clientRect);
 
-    ShowWindow(windowWindows->window, SW_SHOW);
-    SetWindowLongPtr(windowWindows->window, GWLP_USERDATA, (LONG_PTR)windowWindows);
+    ShowWindow(window, SW_SHOW);
+    SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-    return 1;
-}
-
-int gpWindowDestroy(GPWindow* window)
-{
-    if (window->opaque)
-    {
-        GPWindowWindows* windowWindows = (GPWindowWindows*)window->opaque;
-
-        if (windowWindows->window) DestroyWindow(windowWindows->window);
-        if (windowWindows->windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
-
-        free(windowWindows);
-    }
-
-    return 1;
+    return true;
 }

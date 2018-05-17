@@ -14,6 +14,7 @@ class Window
 {
 public:
     Window(Application& initApplication);
+
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
     Window(Window&&) = delete;

@@ -5,10 +5,17 @@
 #pragma once
 
 #include <Windows.h>
-#include "window.h"
+#include "Window.hpp"
 
-typedef struct GPWindowWindows
+class WindowWindows: public Window
 {
+public:
+    WindowWindows(Application& initApplication);
+    virtual ~WindowWindows();
+    virtual bool init(int argc, const char** argv) override;
+
+    HWND getWindow() const { return window; }
+private:
     ATOM windowClass;
     HWND window;
-} GPWindowWindows;
+};
