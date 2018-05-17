@@ -39,9 +39,11 @@ namespace demo
 
         Screen* screen = XDefaultScreenOfDisplay(display);
         int screenIndex = XScreenNumberOfScreen(screen);
+        visual = DefaultVisual(display, screenIndex);
+        depth = DefaultDepth(display, screenIndex);
 
-        unsigned int width = XWidthOfScreen(screen) * 0.6f;
-        unsigned int height = XHeightOfScreen(screen) * 0.6f;
+        width = static_cast<uint32_t>(XWidthOfScreen(screen) * 0.6F);
+        height = static_cast<uint32_t>(XHeightOfScreen(screen) * 0.6F);
 
         XSetWindowAttributes swa;
         swa.background_pixel = XWhitePixel(display, screenIndex);
@@ -51,8 +53,7 @@ namespace demo
         window = XCreateWindow(display,
             RootWindow(display, screenIndex),
             0, 0, width, height,
-            0, DefaultDepth(display, screenIndex), InputOutput,
-            DefaultVisual(display, screenIndex),
+            0, depth, InputOutput, visual,
             CWBorderPixel | CWBackPixel | CWEventMask, &swa);
 
         XSetStandardProperties(display,
@@ -68,15 +69,28 @@ namespace demo
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
 
-        return true;
+        return Window::init(argc, argv);
     }
 
     void WindowLinux::draw()
     {
         render();
+
+        const uint8_t* data = renderer.getFrameBuffer().getData().data();
+        XImage* image = XCreateImage(display, visual, depth, ZPixmap, 0,
+                                     const_cast<char*>(reinterpret_cast<const char*>(data)),
+                                     width, height, 32, 0);
+
+        XPutImage(display, window, gc, image, 0, 0, 0, 0, width, height);
+        XFlush(display);
+        XFree(image);
     }
 
-    void WindowLinux::didResize()
+    void WindowLinux::didResize(int width, int height)
     {
+        width = static_cast<uint32_t>(width);
+        height = static_cast<uint32_t>(height);
+
+        onResize();
     }
 }

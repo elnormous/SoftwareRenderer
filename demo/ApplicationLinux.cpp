@@ -35,24 +35,29 @@ namespace demo
 
         while (running)
         {
-            XNextEvent(windowLinux->getDisplay(), &event);
-
-            switch (event.type)
+            while (XPending(windowLinux->getDisplay()))
             {
-                case ClientMessage:
-                    if (event.xclient.message_type == windowLinux->getProtocolsAtom() &&
-                        event.xclient.data.l[0] == windowLinux->getDeleteAtom())
-                        running = 0;
-                    break;
-                case KeyPress:
-                    break;
-                case Expose:
-                    windowLinux->draw();
-                    break;
-                case ConfigureNotify:
-                    windowLinux->didResize();
-                    break;
+                XNextEvent(windowLinux->getDisplay(), &event);
+
+                switch (event.type)
+                {
+                    case ClientMessage:
+                        if (event.xclient.message_type == windowLinux->getProtocolsAtom() &&
+                            event.xclient.data.l[0] == windowLinux->getDeleteAtom())
+                            running = 0;
+                        break;
+                    case KeyPress:
+                        break;
+                    case Expose:
+                        windowLinux->draw();
+                        break;
+                    case ConfigureNotify:
+                        windowLinux->didResize(event.xconfigure.width, event.xconfigure.height);
+                        break;
+                }
             }
+
+            windowLinux->draw();
         }
 
         return 1;
