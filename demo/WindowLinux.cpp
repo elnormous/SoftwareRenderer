@@ -46,7 +46,7 @@ namespace demo
         XSetWindowAttributes swa;
         swa.background_pixel = XWhitePixel(display, screenIndex);
         swa.border_pixel = 0;
-        swa.event_mask = KeyPress;
+        swa.event_mask = KeyPressMask | ExposureMask | StructureNotifyMask;
 
         window = XCreateWindow(display,
             RootWindow(display, screenIndex),
@@ -69,5 +69,13 @@ namespace demo
         XSetForeground(display, gc, 0);
 
         return true;
+    }
+
+    void WindowLinux::draw()
+    {
+    }
+
+    void WindowLinux::didResize()
+    {
     }
 }

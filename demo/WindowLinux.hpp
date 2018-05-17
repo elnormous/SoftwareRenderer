@@ -16,6 +16,7 @@ namespace demo
         virtual ~WindowLinux();
         virtual bool init(int argc, const char** argv) override;
 
+        void draw();
         void didResize();
 
         inline Display* getDisplay() const { return display; }

@@ -46,6 +46,12 @@ namespace demo
                     break;
                 case KeyPress:
                     break;
+                case Expose:
+                    windowLinux->draw();
+                    break;
+                case ConfigureNotify:
+                    windowLinux->didResize();
+                    break;
             }
         }
 
