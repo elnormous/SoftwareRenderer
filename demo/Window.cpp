@@ -105,7 +105,6 @@ namespace demo
         };
 
         renderer.drawTriangles(indices, vertices, modelViewProjection);
-        return renderer.getFrameBuffer();
     }
 
     void Window::onResize()
