@@ -73,6 +73,7 @@ namespace demo
 
     void WindowLinux::draw()
     {
+        render();
     }
 
     void WindowLinux::didResize()

@@ -25,7 +25,7 @@ namespace demo
 
         virtual bool init(int argc, const char** argv);
 
-        const sr::Buffer& render();
+        void render();
 
     protected:
         void onResize();

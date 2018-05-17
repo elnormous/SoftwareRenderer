@@ -15,24 +15,7 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
     {
         case WM_PAINT:
         {
-            const sr::Buffer& buffer = windowWindows->render();
-
-            BITMAPINFO info;
-            ZeroMemory(&info, sizeof(BITMAPINFO));
-            info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-            info.bmiHeader.biWidth = buffer.getWidth();
-            info.bmiHeader.biHeight = -(int)buffer.getHeight();
-            info.bmiHeader.biPlanes = 1;
-            info.bmiHeader.biBitCount = 32;
-            info.bmiHeader.biCompression = BI_RGB;
-            info.bmiHeader.biSizeImage = buffer.getWidth() * buffer.getHeight() * 4;
-
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(window, &ps);
-
-            SetDIBitsToDevice(hdc, 0, 0, buffer.getWidth(), buffer.getHeight(), 0, 0, 0, buffer.getHeight(), buffer.getData().data(), &info, DIB_RGB_COLORS);
-
-            EndPaint(window, &ps);
+            windowWindows->draw();
             break;
         }
 
@@ -116,6 +99,30 @@ namespace demo
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
         return Window::init(argc, argv);
+    }
+
+    void WindowWindows::draw()
+    {
+        render();
+
+        const sr::Buffer& buffer = renderer.getBuffer();
+
+        BITMAPINFO info;
+        ZeroMemory(&info, sizeof(BITMAPINFO));
+        info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        info.bmiHeader.biWidth = buffer.getWidth();
+        info.bmiHeader.biHeight = -(int)buffer.getHeight();
+        info.bmiHeader.biPlanes = 1;
+        info.bmiHeader.biBitCount = 32;
+        info.bmiHeader.biCompression = BI_RGB;
+        info.bmiHeader.biSizeImage = buffer.getWidth() * buffer.getHeight() * 4;
+
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(window, &ps);
+
+        SetDIBitsToDevice(hdc, 0, 0, buffer.getWidth(), buffer.getHeight(), 0, 0, 0, buffer.getHeight(), buffer.getData().data(), &info, DIB_RGB_COLORS);
+
+        EndPaint(window, &ps);
     }
 
     void WindowWindows::didResize()

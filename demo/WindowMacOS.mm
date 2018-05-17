@@ -33,48 +33,18 @@
 
 @interface Canvas: NSView
 {
-    demo::Window* window;
-    NSInteger width;
-    NSInteger height;
-    size_t componentsPerPixel;
-    size_t bitsPerComponent;
-    CGColorSpaceRef colorSpace;
-    CGDataProviderRef provider;
+    demo::WindowMacOS* window;
 }
 
 @end
 
-static const void* getBytePointer(void* info)
-{
-    demo::Window* window = static_cast<demo::Window*>(info);
-    const sr::Buffer& buffer = window->render();
-
-    return buffer.getData().data();
-}
-
 @implementation Canvas
 
--(id)initWithFrame:(NSRect)frameRect andWindow:(demo::Window*)initWindow
+-(id)initWithFrame:(NSRect)frameRect andWindow:(demo::WindowMacOS*)initWindow
 {
     if (self = [super initWithFrame:frameRect])
     {
         window = initWindow;
-        width = frameRect.size.width;
-        height = frameRect.size.height;
-        componentsPerPixel = 4;
-        bitsPerComponent = sizeof(uint8_t) * 8;
-
-        CGDataProviderDirectCallbacks providerCallbacks = {
-            0,
-            getBytePointer,
-            nullptr,
-            nullptr,
-            nullptr
-        };
-
-        colorSpace = CGColorSpaceCreateDeviceRGB();
-
-        provider = CGDataProviderCreateDirect(window, width * height * componentsPerPixel, &providerCallbacks);
     }
 
     return self;
@@ -82,59 +52,35 @@ static const void* getBytePointer(void* info)
 
 -(void)dealloc
 {
-    CGDataProviderRelease(provider);
-    CGColorSpaceRelease(colorSpace);
-
     [super dealloc];
 }
 
 -(void)setFrameSize:(NSSize)newSize
 {
     [super setFrameSize:newSize];
-
-    CGDataProviderRelease(provider);
-
-    width = newSize.width;
-    height = newSize.height;
-
-    CGDataProviderDirectCallbacks providerCallbacks = {
-        0,
-        getBytePointer,
-        nullptr,
-        nullptr,
-        nullptr
-    };
-    
-    provider = CGDataProviderCreateDirect(window, width * height * componentsPerPixel, &providerCallbacks);
 }
 
 -(void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
 
-    CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
-                                     bitsPerComponent * componentsPerPixel,
-                                     componentsPerPixel * width,
-                                     colorSpace,
-                                     kCGBitmapByteOrderDefault | kCGImageAlphaLast,
-                                     provider, NULL, FALSE, kCGRenderingIntentDefault);
-
-    CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
-    CGContextFlush(context);
-
-    CGImageRelease(image);
+    window->draw();
 }
 
 -(void)draw:(NSTimer*)timer
 {
-    NSValue* userInfo = timer.userInfo;
-
     [self setNeedsDisplay:YES];
 }
 
 @end
+
+static const void* getBytePointer(void* info)
+{
+    sr::Renderer* renderer = static_cast<sr::Renderer*>(info);
+    const sr::Buffer& buffer = renderer->getFrameBuffer();
+
+    return buffer.getData().data();
+}
 
 namespace demo
 {
@@ -145,6 +91,9 @@ namespace demo
 
     WindowMacOS::~WindowMacOS()
     {
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpace);
+
         [timer release];
         [content release];
         window.delegate = nil;
@@ -187,6 +136,20 @@ namespace demo
 
         content = [[Canvas alloc] initWithFrame:windowFrame andWindow:this];
 
+        componentsPerPixel = 4;
+        bitsPerComponent = sizeof(uint8_t) * 8;
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+        provider = CGDataProviderCreateDirect(&renderer, width * height * componentsPerPixel, &providerCallbacks);
+
         window.contentView = content;
         [window makeKeyAndOrderFront:nil];
 
@@ -197,6 +160,25 @@ namespace demo
         return Window::init(argc, argv);
     }
 
+    void WindowMacOS::draw()
+    {
+        render();
+
+        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+                                         bitsPerComponent * componentsPerPixel,
+                                         componentsPerPixel * width,
+                                         colorSpace,
+                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
+
+        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+
+        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+        CGContextFlush(context);
+
+        CGImageRelease(image);
+    }
+
     void WindowMacOS::didResize()
     {
         NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
@@ -204,6 +186,18 @@ namespace demo
 
         width = static_cast<uint32_t>(windowFrame.size.width);
         height = static_cast<uint32_t>(windowFrame.size.height);
+
+        CGDataProviderRelease(provider);
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        provider = CGDataProviderCreateDirect(&renderer, width * height * componentsPerPixel, &providerCallbacks);
 
         onResize();
     }

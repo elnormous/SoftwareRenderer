@@ -40,7 +40,7 @@ namespace demo
         return true;
     }
 
-    const sr::Buffer& Window::render()
+    void Window::render()
     {
         rotationY += 0.05F;
         sr::Matrix4::createRotationY(rotationY, model);

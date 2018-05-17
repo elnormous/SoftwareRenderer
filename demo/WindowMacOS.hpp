@@ -16,6 +16,7 @@ namespace demo
         virtual ~WindowMacOS();
         virtual bool init(int argc, const char** argv) override;
 
+        void draw();
         void didResize();
 
     private:
@@ -24,5 +25,10 @@ namespace demo
         NSView* content = nil;
         NSObject<NSWindowDelegate>* windowDelegate = nil;
         NSTimer* timer = nil;
+
+        size_t componentsPerPixel;
+        size_t bitsPerComponent;
+        CGColorSpaceRef colorSpace;
+        CGDataProviderRef provider;
     };
 }

@@ -16,6 +16,7 @@ namespace demo
         virtual ~WindowWindows();
         virtual bool init(int argc, const char** argv) override;
 
+        void draw();
         void didResize();
 
         HWND getWindow() const { return window; }
