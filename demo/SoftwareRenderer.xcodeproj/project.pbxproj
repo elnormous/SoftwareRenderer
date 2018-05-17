@@ -16,8 +16,6 @@
 		306944DC205DF43400C4969C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.cpp */; };
 		306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* ApplicationMacOS.mm */; };
 		306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* WindowMacOS.mm */; };
-		306944E52068654C00C4969C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEAB20425CEC0073390E /* IOKit.framework */; };
-		306944E62068655200C4969C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3071DEA920425CE50073390E /* Foundation.framework */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +57,6 @@
 			files = (
 				30345F4620AA1BE300B9B963 /* libsr.a in Frameworks */,
 				306944E82068655900C4969C /* Cocoa.framework in Frameworks */,
-				306944E62068655200C4969C /* Foundation.framework in Frameworks */,
-				306944E52068654C00C4969C /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

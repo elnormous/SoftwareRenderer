@@ -5,3 +5,8 @@ demo/SoftwareRenderer.xcodeproj/xcuserdata
 x64/
 build/sr.xcodeproj/project.xcworkspace
 build/sr.xcodeproj/xcuserdata
+libsr.a
+*.d
+*.o
+SoftwareRenderer
+demo/SoftwareRenderer.app
