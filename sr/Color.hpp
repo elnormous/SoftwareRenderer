@@ -85,14 +85,13 @@ namespace sr
 
         inline uint32_t getIntValueRaw() const
         {
-            uint8_t result[4] = {
-                static_cast<uint8_t>(r * 255.0F),
-                static_cast<uint8_t>(g * 255.0F),
-                static_cast<uint8_t>(b * 255.0F),
-                static_cast<uint8_t>(a * 255.0F)
-            };
-
-            return *reinterpret_cast<const uint32_t*>(result);
+            uint32_t result;
+            uint8_t* bytes = reinterpret_cast<uint8_t*>(&result);
+            bytes[0] = static_cast<uint8_t>(r * 255.0F);
+            bytes[1] = static_cast<uint8_t>(g * 255.0F);
+            bytes[2] = static_cast<uint8_t>(b * 255.0F);
+            bytes[3] = static_cast<uint8_t>(a * 255.0F);
+            return result;
         }
     };
 } // namespace sr
