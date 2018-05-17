@@ -29,25 +29,17 @@ bool Application::run()
         return false;
 
     MSG msg;
-    BOOL ret;
     for (;;)
     {
-        ret = GetMessage(&msg, windowWindows->getWindow(), 0, 0);
-
-        if (ret > 0)
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) > 0)
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+
+            if (msg.message == WM_QUIT) return true;
         }
-        else if (ret < 0)
-        {
-            // error
-            return false;
-        }
-        else
-        {
-            break;
-        }
+
+        InvalidateRect(windowWindows->getWindow(), nullptr, FALSE);
     }
 
     return true;

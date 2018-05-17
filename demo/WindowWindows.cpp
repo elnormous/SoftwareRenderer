@@ -2,8 +2,7 @@
 //  SoftwareRenderer
 //
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 #include "WindowWindows.hpp"
 #include "Application.hpp"
 
@@ -14,9 +13,38 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
 
     switch (msg)
     {
+        case WM_PAINT:
+        {
+            const sr::Buffer& buffer = windowWindows->render();
+
+            BITMAPINFO info;
+            ZeroMemory(&info, sizeof(BITMAPINFO));
+            info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+            info.bmiHeader.biWidth = buffer.getWidth();
+            info.bmiHeader.biHeight = -(int)buffer.getHeight();
+            info.bmiHeader.biPlanes = 1;
+            info.bmiHeader.biBitCount = 32;
+            info.bmiHeader.biCompression = BI_RGB;
+            info.bmiHeader.biSizeImage = buffer.getWidth() * buffer.getHeight() * 4;
+
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(window, &ps);
+
+            SetDIBitsToDevice(hdc, 0, 0, buffer.getWidth(), buffer.getHeight(), 0, 0, 0, buffer.getHeight(), buffer.getData().data(), &info, DIB_RGB_COLORS);
+
+            EndPaint(window, &ps);
+            break;
+        }
+
         case WM_SIZE:
         {
-            // TODO: resize back buffer
+            windowWindows->didResize();
+            break;
+        }
+
+        case WM_DESTROY:
+        {
+            PostQuitMessage(0);
             break;
         }
     }
@@ -60,34 +88,41 @@ bool WindowWindows::init(int argc, const char** argv)
     windowClass = RegisterClassExW(&wc);
     if (!windowClass)
     {
-        fprintf(stderr, "Failed to register window class\n");
+        std::cerr << "Failed to register window class" << std::endl;
         return false;
     }
 
     DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
-
-    int x = CW_USEDEFAULT;
-    int y = CW_USEDEFAULT;
-
     DWORD windowExStyle = WS_EX_APPWINDOW;
 
-    int width = CW_USEDEFAULT;
-    int height = CW_USEDEFAULT;
-
     window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
-        x, y, width, height, NULL, NULL, instance, NULL);
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, instance, NULL);
 
     if (!window)
     {
-        fprintf(stderr, "Failed to create window\n");
+        std::cerr << "Failed to create window" << std::endl;
         return false;
     }
 
     RECT clientRect;
     GetClientRect(window, &clientRect);
 
+    width = clientRect.right - clientRect.left;
+    height = clientRect.bottom - clientRect.top;
+
     ShowWindow(window, SW_SHOW);
     SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-    return true;
+    return Window::init(argc, argv);
+}
+
+void WindowWindows::didResize()
+{
+    RECT clientRect;
+    GetClientRect(window, &clientRect);
+
+    width = clientRect.right - clientRect.left;
+    height = clientRect.bottom - clientRect.top;
+
+    onResize();
 }

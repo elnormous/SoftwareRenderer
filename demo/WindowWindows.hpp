@@ -14,6 +14,8 @@ public:
     virtual ~WindowWindows();
     virtual bool init(int argc, const char** argv) override;
 
+    void didResize();
+
     HWND getWindow() const { return window; }
 private:
     ATOM windowClass;
