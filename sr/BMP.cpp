@@ -210,7 +210,7 @@ namespace sr
         if (!f.isOpen())
         {
             std::cerr << "Failed to open " << filename << std::endl;
-            return 0;
+            return false;
         }
 
         BitmapFileHeader header;

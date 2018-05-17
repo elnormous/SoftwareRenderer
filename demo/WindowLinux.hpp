@@ -5,13 +5,25 @@
 #pragma once
 
 #include <X11/Xlib.h>
-#include "window.h"
+#include "Window.hpp"
 
-typedef struct GPWindowLinux
+class WindowLinux: public Window
 {
+    WindowLinux(Application& initApplication);
+    virtual ~WindowLinux();
+    virtual bool init(int argc, const char** argv) override;
+
+    void didResize();
+
+    inline Display* getDisplay() const { return display; }
+    inline Window getWindow() const { return window; }
+    inline Atom getProtocolsAtom() const { return protocolsAtom; }
+    inline Atom getDeleteAtom() const { return deleteAtom; }
+
+private:
     Display* display;
     Window window;
     Atom protocolsAtom;
     Atom deleteAtom;
     GC gc;
-} GPWindowLinux;
+};

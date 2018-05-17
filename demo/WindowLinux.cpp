@@ -2,79 +2,69 @@
 //  SoftwareRenderer
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
 #include <X11/Xutil.h>
 #include "window_linux.h"
 #include "application.h"
 
-int gpWindowInit(GPWindow* window, int argc, const char** argv)
+WindowLinux::WindowLinux(Application& initApplication):
+    Window(initApplication)
 {
-    GPWindowLinux* windowLinux = malloc(sizeof(GPWindowLinux));
-    memset(windowLinux, 0, sizeof(GPWindowLinux));
-    window->opaque = windowLinux;
+}
 
-    windowLinux->display = XOpenDisplay(NULL);
+WindowLinux::~WindowLinux()
+{
+    if (gc) XFreeGC(display, gc);
 
-    if (!windowLinux->display)
+    if (display)
     {
-        fprintf(stderr, "Failed to open display\n");
-        return 0;
+        if (window)
+            XDestroyWindow(display, window);
+
+        XCloseDisplay(display);
+    }
+}
+
+bool WindowLinux::init(int argc, const char** argv)
+{
+    display = XOpenDisplay(NULL);
+
+    if (!display)
+    {
+        std::cerr << "Failed to open display" << std::endl;
+        return false;
     }
 
-    Screen* screen = XDefaultScreenOfDisplay(windowLinux->display);
+    Screen* screen = XDefaultScreenOfDisplay(display);
     int screenIndex = XScreenNumberOfScreen(screen);
 
     unsigned int width = XWidthOfScreen(screen) * 0.6f;
     unsigned int height = XHeightOfScreen(screen) * 0.6f;
 
     XSetWindowAttributes swa;
-    swa.background_pixel = XWhitePixel(windowLinux->display, screenIndex);
+    swa.background_pixel = XWhitePixel(display, screenIndex);
     swa.border_pixel = 0;
     swa.event_mask = KeyPress;
 
-    windowLinux->window = XCreateWindow(windowLinux->display,
-        RootWindow(windowLinux->display, screenIndex),
+    window = XCreateWindow(display,
+        RootWindow(display, screenIndex),
         0, 0, width, height,
-        0, DefaultDepth(windowLinux->display, screenIndex), InputOutput,
-        DefaultVisual(windowLinux->display, screenIndex),
+        0, DefaultDepth(display, screenIndex), InputOutput,
+        DefaultVisual(display, screenIndex),
         CWBorderPixel | CWBackPixel | CWEventMask, &swa);
 
-    XSetStandardProperties(windowLinux->display,
-        windowLinux->window, "SoftwareRenderer", "SoftwareRenderer", None,
+    XSetStandardProperties(display,
+        window, "SoftwareRenderer", "SoftwareRenderer", None,
         argv, argc, NULL);
 
-    XMapWindow(windowLinux->display, windowLinux->window);
+    XMapWindow(display, window);
 
-    windowLinux->protocolsAtom = XInternAtom(windowLinux->display, "WM_PROTOCOLS", False);
-    windowLinux->deleteAtom = XInternAtom(windowLinux->display, "WM_DELETE_WINDOW", False);
-    XSetWMProtocols(windowLinux->display, windowLinux->window, &windowLinux->deleteAtom, 1);
+    protocolsAtom = XInternAtom(display, "WM_PROTOCOLS", False);
+    deleteAtom = XInternAtom(display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(display, window, &deleteAtom, 1);
 
-    windowLinux->gc = XCreateGC(windowLinux->display, windowLinux->window, 0, 0);
-    XSetForeground(windowLinux->display, windowLinux->gc, 0);
+    gc = XCreateGC(display, window, 0, 0);
+    XSetForeground(display, gc, 0);
 
-    return 1;
-}
-
-int gpWindowDestroy(GPWindow* window)
-{
-    if (window->opaque)
-    {
-        GPWindowLinux* windowLinux = (GPWindowLinux*)window->opaque;
-
-        if (windowLinux->gc) XFreeGC(windowLinux->display, windowLinux->gc);
-
-        if (windowLinux->display)
-        {
-            if (windowLinux->window)
-                XDestroyWindow(windowLinux->display, windowLinux->window);
-
-            XCloseDisplay(windowLinux->display);
-        }
-
-        free(windowLinux);
-    }
-
-    return 1;
+    return true;
 }
