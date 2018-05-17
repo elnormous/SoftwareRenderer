@@ -92,7 +92,7 @@ namespace sr
                 static_cast<uint8_t>(a * 255.0F)
             };
 
-            return *reinterpret_cast<const uint32_t*>(&result);
+            return *reinterpret_cast<const uint32_t*>(result);
         }
     };
 } // namespace sr
