@@ -131,8 +131,6 @@ static const void* getBytePointer(void* info)
 {
     NSValue* userInfo = timer.userInfo;
 
-    Window* window = static_cast<Window*>(userInfo.pointerValue);
-
     [self setNeedsDisplay:YES];
 }
 
