@@ -14,7 +14,7 @@
 
 @implementation WindowDelegate
 
--(id)initWithWindow:(WindowMacOS*)initWindow
+-(id)initWithWindow:(demo::WindowMacOS*)initWindow
 {
     if (self = [super init])
     {
@@ -46,7 +46,7 @@
 
 static const void* getBytePointer(void* info)
 {
-    Window* window = static_cast<Window*>(info);
+    demo::Window* window = static_cast<demo::Window*>(info);
     const sr::Buffer& buffer = window->render();
 
     return buffer.getData().data();
@@ -54,7 +54,7 @@ static const void* getBytePointer(void* info)
 
 @implementation Canvas
 
--(id)initWithFrame:(NSRect)frameRect andWindow:(Window*)initWindow
+-(id)initWithFrame:(NSRect)frameRect andWindow:(demo::Window*)initWindow
 {
     if (self = [super initWithFrame:frameRect])
     {
