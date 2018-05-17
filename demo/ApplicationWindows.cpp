@@ -28,7 +28,7 @@ namespace demo
         MSG msg;
         for (;;)
         {
-            for (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) > 0)
+            while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) > 0)
             {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
