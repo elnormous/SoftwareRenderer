@@ -105,7 +105,7 @@ namespace demo
     {
         render();
 
-        const sr::Buffer& buffer = renderer.getBuffer();
+        const sr::Buffer& buffer = renderer.getFrameBuffer();
 
         BITMAPINFO info;
         ZeroMemory(&info, sizeof(BITMAPINFO));
