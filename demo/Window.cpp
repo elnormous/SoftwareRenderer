@@ -58,22 +58,22 @@ namespace demo
 
         std::vector<sr::Vertex> vertices = {
             // front
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000A0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00A0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0x0000FFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000FF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00FF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0x0000FFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // back
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // left
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // right
             sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
@@ -82,23 +82,23 @@ namespace demo
             sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // bottom
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // top
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
         };
 
         std::vector<uint32_t> indices = {
-            16, 17, 18, 17, 19, 18, // bottom
-            20, 21, 22, 21, 23, 22, // top
             0, 1, 2, 1, 3, 2, // front
             4, 5, 6, 5, 7, 6, // back
+            16, 17, 18, 17, 19, 18, // bottom
+            20, 21, 22, 21, 23, 22, // top
             8, 9, 10, 9, 11, 10, // left
             12, 13, 14, 13, 15, 14 // right
         };

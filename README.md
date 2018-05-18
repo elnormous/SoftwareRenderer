@@ -9,5 +9,7 @@ With this project, I am trying to implement the GPU rendering pipeline in softwa
 * Texture mapping
 * Custom shader support (via extending the Shader class)
 
-This is a sample output of the renderer (a semi-transparent box):
+# Showcase
+
+The demonstration app is in the demo directory and it can be built for macOS (Xcode project or Makefile), Linux (Makefile) and Windows (Visual Studio project or Makefile). This is a sample output of the renderer (a box with one side transparent and another colored):
 ![SR sample](https://elviss.lv/files/sr_sample.png)
