@@ -48,6 +48,11 @@ namespace sr
         viewport = newViewport;
     }
 
+    void Renderer::setScissorRect(const Rect& newScissorRect)
+    {
+        scissorRect = newScissorRect;
+    }
+
     void Renderer::setBlendState(const BlendState& newBlendState)
     {
         blendState = newBlendState;
@@ -133,10 +138,10 @@ namespace sr
                 if (viewportPosition.y > boundingBox.max.y) boundingBox.max.y = viewportPosition.y;
             }
 
-            boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
-            boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1));
-            boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
-            boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1));
+            boundingBox.min.x = clamp(boundingBox.min.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1) * scissorRect.position.x);
+            boundingBox.max.x = clamp(boundingBox.max.x, 0.0F, static_cast<float>(frameBuffer.getWidth() - 1) * (scissorRect.position.x + scissorRect.size.width));
+            boundingBox.min.y = clamp(boundingBox.min.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1) * scissorRect.position.y);
+            boundingBox.max.y = clamp(boundingBox.max.y, 0.0F, static_cast<float>(frameBuffer.getHeight() - 1) * (scissorRect.position.y + scissorRect.size.height));
 
             for (uint32_t screenY = static_cast<uint32_t>(boundingBox.min.y); screenY <= static_cast<uint32_t>(boundingBox.max.y); ++screenY)
             {

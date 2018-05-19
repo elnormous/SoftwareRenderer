@@ -44,6 +44,7 @@
 		30345F3720A9B8D600B9B963 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F3520A9B8D600B9B963 /* Vertex.cpp */; };
 		30345F3820A9B8D600B9B963 /* Vertex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3620A9B8D600B9B963 /* Vertex.hpp */; };
 		30345F3D20AA0AB000B9B963 /* OBJ.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3B20AA0AB000B9B963 /* OBJ.hpp */; };
+		30813CCB20B0BC0D002DDF7C /* OBJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F3A20AA0AB000B9B963 /* OBJ.cpp */; };
 		30C9638520A7E0C200B54158 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C9638320A7E0C200B54158 /* Renderer.cpp */; };
 		30C9638620A7E0C200B54158 /* Renderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30C9638420A7E0C200B54158 /* Renderer.hpp */; };
 		30DFA45620AA660F007BEB42 /* Rect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA45420AA660B007BEB42 /* Rect.hpp */; };
@@ -296,6 +297,7 @@
 				30345F0220A8F0CF00B9B963 /* Vector2.cpp in Sources */,
 				30345F2420A8F48E00B9B963 /* Size3.cpp in Sources */,
 				30345F1120A8F33F00B9B963 /* Plane.cpp in Sources */,
+				30813CCB20B0BC0D002DDF7C /* OBJ.cpp in Sources */,
 				30DFA45B20AB1B0D007BEB42 /* MTL.cpp in Sources */,
 				30345F2F20A9AA2D00B9B963 /* BMP.cpp in Sources */,
 				30DFA46320AB2357007BEB42 /* File.cpp in Sources */,

@@ -26,6 +26,7 @@ namespace sr
         void setShader(const Shader& newShader);
         void setTexture(const Buffer& newTexture, uint32_t level);
         void setViewport(const Rect& newViewport);
+        void setScissorRect(const Rect& newScissorRect);
         void setBlendState(const BlendState& newBlendState);
         void setDepthState(const DepthState& newDepthState);
 
@@ -40,6 +41,7 @@ namespace sr
         Buffer depthBuffer;
 
         Rect viewport;
+        Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
         const Buffer* textures[2];
         BlendState blendState;
