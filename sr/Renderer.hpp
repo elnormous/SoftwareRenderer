@@ -26,6 +26,16 @@ namespace sr
 
         void setShader(const Shader& newShader);
         void setTexture(const Buffer& newTexture, uint32_t level);
+        void setAddressModeX(Sampler::AddressMode addressMode, uint32_t level)
+        {
+            samplers[level].setAddressModeX(addressMode);
+        }
+
+        void setAddressModeY(Sampler::AddressMode addressMode, uint32_t level)
+        {
+            samplers[level].setAddressModeY(addressMode);
+        }
+
         void setViewport(const Rect& newViewport);
         void setScissorRect(const Rect& newScissorRect);
         void setBlendState(const BlendState& newBlendState);

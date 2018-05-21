@@ -172,11 +172,11 @@ namespace sr
                         psInput.color.b = vsOutputs[0].color.b * clip.x + vsOutputs[1].color.b * clip.y + vsOutputs[2].color.b * clip.z;
                         psInput.color.a = vsOutputs[0].color.a * clip.x + vsOutputs[1].color.a * clip.y + vsOutputs[2].color.a * clip.z;
 
-                        psInput.texCoords[0] = Vector2(clamp(vsOutputs[0].texCoords[0].x * clip.x + vsOutputs[1].texCoords[0].x * clip.y + vsOutputs[2].texCoords[0].x * clip.z, 0.0F, 1.0F),
-                                                       clamp(vsOutputs[0].texCoords[0].y * clip.x + vsOutputs[1].texCoords[0].y * clip.y + vsOutputs[2].texCoords[0].y * clip.z, 0.0F, 1.0F));
+                        psInput.texCoords[0] = Vector2(vsOutputs[0].texCoords[0].x * clip.x + vsOutputs[1].texCoords[0].x * clip.y + vsOutputs[2].texCoords[0].x * clip.z,
+                                                       vsOutputs[0].texCoords[0].y * clip.x + vsOutputs[1].texCoords[0].y * clip.y + vsOutputs[2].texCoords[0].y * clip.z);
 
-                        psInput.texCoords[1] = Vector2(clamp(vsOutputs[0].texCoords[1].x * clip.x + vsOutputs[1].texCoords[1].x * clip.y + vsOutputs[2].texCoords[1].x * clip.z, 0.0F, 1.0F),
-                                                       clamp(vsOutputs[0].texCoords[1].y * clip.x + vsOutputs[1].texCoords[1].y * clip.y + vsOutputs[2].texCoords[1].y * clip.z, 0.0F, 1.0F));
+                        psInput.texCoords[1] = Vector2(vsOutputs[0].texCoords[1].x * clip.x + vsOutputs[1].texCoords[1].x * clip.y + vsOutputs[2].texCoords[1].x * clip.z,
+                                                       vsOutputs[0].texCoords[1].y * clip.x + vsOutputs[1].texCoords[1].y * clip.y + vsOutputs[2].texCoords[1].y * clip.z);
 
                         psInput.normal = vsOutputs[0].normal * clip.x + vsOutputs[1].normal * clip.y + vsOutputs[2].normal * clip.z;
 

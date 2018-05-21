@@ -55,6 +55,8 @@ namespace demo
 
         renderer.setShader(shader);
         renderer.setTexture(texture, 0);
+        renderer.setAddressModeX(sr::Sampler::AddressMode::REPEAT, 0);
+        renderer.setAddressModeY(sr::Sampler::AddressMode::REPEAT, 0);
 
         std::vector<sr::Vertex> vertices = {
             // front
@@ -77,9 +79,9 @@ namespace demo
 
             // right
             sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(4.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(4.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // bottom
             sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
