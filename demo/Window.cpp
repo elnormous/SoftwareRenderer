@@ -73,15 +73,15 @@ namespace demo
 
             // left
             sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(4.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(4.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // right
             sr::Vertex(sr::Vector4(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(4.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(4.0F, 4.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
 
             // bottom
             sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
