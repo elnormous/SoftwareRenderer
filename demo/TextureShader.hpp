@@ -25,26 +25,9 @@ namespace demo
             return result;
         }
 
-        virtual sr::Color fragmentShader(VSOutput input, const sr::Buffer* texture[2]) const
+        virtual sr::Color fragmentShader(VSOutput input, sr::Sampler samplers[2]) const
         {
-            sr::Color sampleColor;
-
-            if (texture[0])
-            {
-                uint32_t textureX = static_cast<uint32_t>(input.texCoords[0].x * (texture[0]->getWidth() - 1));
-                uint32_t textureY = static_cast<uint32_t>(input.texCoords[0].y * (texture[0]->getHeight() - 1));
-
-                if (texture[0]->getType() == sr::Buffer::Type::RGB)
-                {
-                    const uint8_t* rgb = &texture[0]->getData()[(textureY * texture[0]->getWidth() + textureX) * 3];
-                    sampleColor = sr::Color(rgb[0], rgb[1], rgb[2], 255);
-                }
-                else if (texture[0]->getType() == sr::Buffer::Type::RGBA)
-                {
-                    const uint8_t* rgba = &texture[0]->getData()[(textureY * texture[0]->getWidth() + textureX) * 4];
-                    sampleColor = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
-                }
-            }
+            sr::Color sampleColor = samplers[0].get(input.texCoords[0]);
 
             sr::Color result;
             result.r = input.color.r * sampleColor.r;

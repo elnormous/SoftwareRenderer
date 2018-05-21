@@ -22,6 +22,6 @@ namespace sr
         };
 
         virtual VSOutput vertexShader(const Matrix4& modelViewProjection, const Vertex& vertex) const = 0;
-        virtual Color fragmentShader(VSOutput input, const Buffer* texture[2]) const = 0;
+        virtual Color fragmentShader(VSOutput input, Sampler samplers[2]) const = 0;
     };
 }

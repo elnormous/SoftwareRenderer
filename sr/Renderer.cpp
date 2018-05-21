@@ -12,7 +12,6 @@ namespace sr
 {
     Renderer::Renderer()
     {
-        std::fill(std::begin(textures), std::end(textures), nullptr);
     }
 
     bool Renderer::init(uint32_t width, uint32_t height)
@@ -40,7 +39,7 @@ namespace sr
     {
         assert(level < 2);
 
-        textures[level] = &newTexture;
+        samplers[level] = Sampler(&newTexture);
     }
 
     void Renderer::setViewport(const Rect& newViewport)
@@ -181,7 +180,7 @@ namespace sr
 
                         psInput.normal = vsOutputs[0].normal * clip.x + vsOutputs[1].normal * clip.y + vsOutputs[2].normal * clip.z;
 
-                        Color psOutput = shader->fragmentShader(psInput, textures);
+                        Color psOutput = shader->fragmentShader(psInput, samplers);
 
                         if (blendState.enabled)
                         {

@@ -10,6 +10,7 @@
 #include "DepthState.hpp"
 #include "Matrix4.hpp"
 #include "Rect.hpp"
+#include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Vertex.hpp"
 
@@ -43,7 +44,7 @@ namespace sr
         Rect viewport;
         Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
-        const Buffer* textures[2];
+        Sampler samplers[2];
         BlendState blendState;
         DepthState depthState;
     };
