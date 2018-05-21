@@ -6,7 +6,7 @@ With this project, I am trying to implement the GPU rendering pipeline in softwa
 * Indexed triangle rasterization
 * Depth testing
 * Alpha blending
-* Texture mapping
+* Texture sampling with clamp and repeat address modes
 * Custom shader support (via extending the Shader class)
 
 # Showcase
