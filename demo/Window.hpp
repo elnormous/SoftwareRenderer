@@ -46,5 +46,8 @@ namespace demo
 
         TextureShader shader;
         sr::Buffer texture;
+
+        std::vector<uint32_t> indices;
+        std::vector<sr::Vertex> vertices;
     };
 }

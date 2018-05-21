@@ -22,43 +22,8 @@ namespace demo
 
         depthState.read = true;
         depthState.write = true;
-    }
 
-    Window::~Window()
-    {
-    }
-
-    bool Window::init(int argc, const char** argv)
-    {
-        renderer.init(width, height);
-
-        sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
-                                    1.0F, 1000.0F, projection);
-
-        view.translate(0.0F, 0.0F, 100.0F);
-
-        return true;
-    }
-
-    void Window::render()
-    {
-        rotationY += 0.05F;
-        sr::Matrix4::createRotationY(rotationY, model);
-
-        sr::Matrix4 modelViewProjection = projection * view * model;
-
-        renderer.setViewport(sr::Rect(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
-        renderer.setBlendState(blendState);
-        renderer.setDepthState(depthState);
-
-        renderer.clear(sr::Color(255, 255, 255, 255), 1000.0F);
-
-        renderer.setShader(shader);
-        renderer.setTexture(texture, 0);
-        renderer.setAddressModeX(sr::Sampler::AddressMode::REPEAT, 0);
-        renderer.setAddressModeY(sr::Sampler::AddressMode::REPEAT, 0);
-
-        std::vector<sr::Vertex> vertices = {
+        vertices = {
             // front
             sr::Vertex(sr::Vector4(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000FF, sr::Vector2(0.0F, 0.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
             sr::Vertex(sr::Vector4(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00FF, sr::Vector2(0.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F)),
@@ -96,7 +61,7 @@ namespace demo
             sr::Vertex(sr::Vector4(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2(1.0F, 1.0F), sr::Vector3(0.0F, 0.0F, 1.0F))
         };
 
-        std::vector<uint32_t> indices = {
+        indices = {
             0, 1, 2, 1, 3, 2, // front
             4, 5, 6, 5, 7, 6, // back
             16, 17, 18, 17, 19, 18, // bottom
@@ -104,6 +69,41 @@ namespace demo
             8, 9, 10, 9, 11, 10, // left
             12, 13, 14, 13, 15, 14 // right
         };
+    }
+
+    Window::~Window()
+    {
+    }
+
+    bool Window::init(int argc, const char** argv)
+    {
+        renderer.init(width, height);
+
+        sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
+                                    1.0F, 1000.0F, projection);
+
+        view.translate(0.0F, 0.0F, 100.0F);
+
+        return true;
+    }
+
+    void Window::render()
+    {
+        rotationY += 0.05F;
+        sr::Matrix4::createRotationY(rotationY, model);
+
+        sr::Matrix4 modelViewProjection = projection * view * model;
+
+        renderer.setViewport(sr::Rect(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
+        renderer.setBlendState(blendState);
+        renderer.setDepthState(depthState);
+
+        renderer.clear(sr::Color(255, 255, 255, 255), 1000.0F);
+
+        renderer.setShader(shader);
+        renderer.setTexture(texture, 0);
+        renderer.setAddressModeX(sr::Sampler::AddressMode::REPEAT, 0);
+        renderer.setAddressModeY(sr::Sampler::AddressMode::REPEAT, 0);
 
         renderer.drawTriangles(indices, vertices, modelViewProjection);
     }
