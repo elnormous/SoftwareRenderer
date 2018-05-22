@@ -152,11 +152,11 @@ namespace sr
                                             Vector2(static_cast<float>(screenX),
                                                     static_cast<float>(screenY)));
 
-                    Vector3 clip = Vector3(s.x / vsOutputs[0].position.w, s.y / vsOutputs[1].position.w, s.z / vsOutputs[2].position.w);
-                    clip = clip / (clip.x + clip.y + clip.z);
-
                     if (s.x >= 0.0F && s.y >= 0.0F && s.z >= 0.0F)
                     {
+                        Vector3 clip = Vector3(s.x / vsOutputs[0].position.w, s.y / vsOutputs[1].position.w, s.z / vsOutputs[2].position.w);
+                        clip /= (clip.x + clip.y + clip.z);
+
                         float depth = vsOutputs[0].position.z * clip.x + vsOutputs[1].position.z * clip.y + vsOutputs[2].position.z * clip.z;
 
                         if (depthState.read && depthBufferData[screenY * depthBuffer.getWidth() + screenX] < depth)
