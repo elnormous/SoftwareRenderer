@@ -68,21 +68,15 @@ namespace sr
         float* depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
         uint32_t rgba = color.getIntValueRaw();
 
-        for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
-        {
-            for (uint32_t x = 0; x < frameBuffer.getWidth(); ++x)
-            {
-                frameBufferData[y * frameBuffer.getWidth() + x] = rgba;
-            }
-        }
+        uint32_t frameBufferSize = frameBuffer.getWidth() * frameBuffer.getHeight();
 
-        for (uint32_t y = 0; y < frameBuffer.getHeight(); ++y)
-        {
-            for (uint32_t x = 0; x < frameBuffer.getWidth(); ++x)
-            {
-                depthBufferData[y * frameBuffer.getWidth() + x] = depth;
-            }
-        }
+        for (uint32_t p = 0; p < frameBufferSize; ++p)
+            frameBufferData[p] = rgba;
+
+        uint32_t depthBufferSize = depthBuffer.getWidth() * depthBuffer.getHeight();
+
+        for (uint32_t p = 0; p < depthBufferSize; ++p)
+            depthBufferData[p] = depth;
 
         return true;
     }
