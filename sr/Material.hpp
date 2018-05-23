@@ -27,7 +27,7 @@ namespace sr
 
         //BlendState* blendState = nullptr;
         Shader* shader = nullptr;
-        Buffer* textures[2];
+        Texture* textures[2];
         //CullMode cullMode = CullMode::BACK;
         Color diffuseColor = Color::WHITE;
         float opacity = 1.0F;

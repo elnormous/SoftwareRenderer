@@ -14,8 +14,15 @@ namespace sr
     class Vertex final
     {
     public:
-        Vertex();
-        Vertex(const Vector4& initPosition, Color initColor, const Vector2& initTexCoord, const Vector3& initNormal);
+        Vertex()
+        {
+        }
+
+        Vertex(const Vector4& initPosition, Color initColor, const Vector2& initTexCoord, const Vector3& initNormal):
+            position(initPosition), color(initColor), normal(initNormal)
+        {
+            texCoords[0] = initTexCoord;
+        }
 
         Vector4 position;
         Color color;
