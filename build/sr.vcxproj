@@ -151,6 +151,7 @@
     <ClInclude Include="..\sr\Size2.hpp" />
     <ClInclude Include="..\sr\Size3.hpp" />
     <ClInclude Include="..\sr\sr.hpp" />
+    <ClInclude Include="..\sr\Texture.hpp" />
     <ClInclude Include="..\sr\Vector2.hpp" />
     <ClInclude Include="..\sr\Vector3.hpp" />
     <ClInclude Include="..\sr\Vector4.hpp" />
