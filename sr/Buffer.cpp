@@ -24,57 +24,6 @@ namespace sr
         }
     }
 
-    Buffer::Buffer(const Buffer& other)
-    {
-        type = other.type;
-        width = other.width;
-        height = other.height;
-        data = other.data;
-    }
-
-    Buffer& Buffer::operator=(const Buffer& other)
-    {
-        type = other.type;
-        width = other.width;
-        height = other.height;
-        data = other.data;
-
-        return *this;
-    }
-
-    Buffer::Buffer(Buffer&& other)
-    {
-        type = other.type;
-        width = other.width;
-        height = other.height;
-        data = std::move(other.data);
-
-        other.type = Type::NONE;
-        other.width = 0;
-        other.height = 0;
-    }
-
-    Buffer& Buffer::operator=(Buffer&& other)
-    {
-        if (&other != this)
-        {
-            type = other.type;
-            width = other.width;
-            height = other.height;
-            data = std::move(other.data);
-
-            other.type = Type::NONE;
-            other.width = 0;
-            other.height = 0;
-        }
-
-        return *this;
-    }
-
-    Buffer::~Buffer()
-    {
-    }
-
     bool Buffer::init(Type initType, uint32_t initWidth, uint32_t initHeight)
     {
         type = initType;
