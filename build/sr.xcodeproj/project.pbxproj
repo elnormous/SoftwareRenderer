@@ -98,6 +98,7 @@
 		30345F3620A9B8D600B9B963 /* Vertex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		30345F3A20AA0AB000B9B963 /* OBJ.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OBJ.cpp; sourceTree = "<group>"; };
 		30345F3B20AA0AB000B9B963 /* OBJ.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OBJ.hpp; sourceTree = "<group>"; };
+		306DA56B20B4E9A3003F7501 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		30C9637220A7DEFF00B54158 /* libsr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsr.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C9638320A7E0C200B54158 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		30C9638420A7E0C200B54158 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 				30345F2020A8F48E00B9B963 /* Size3.cpp */,
 				30345F2120A8F48E00B9B963 /* Size3.hpp */,
 				30345EED20A8E12600B9B963 /* sr.hpp */,
+				306DA56B20B4E9A3003F7501 /* Texture.hpp */,
 				30345EF820A8F0CF00B9B963 /* Vector2.cpp */,
 				30345EF220A8F0CF00B9B963 /* Vector2.hpp */,
 				30345EF120A8F0CE00B9B963 /* Vector3.cpp */,
