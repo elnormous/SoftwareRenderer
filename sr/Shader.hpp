@@ -15,10 +15,10 @@ namespace sr
     public:
         struct VSOutput
         {
-            Vector4 position;
+            Vector4F position;
             Color color;
-            Vector2 texCoords[2];
-            Vector3 normal;
+            Vector2F texCoords[2];
+            Vector3F normal;
         };
 
         virtual VSOutput vertexShader(const Matrix4& modelViewProjection, const Vertex& vertex) const = 0;

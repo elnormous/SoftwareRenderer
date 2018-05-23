@@ -3,8 +3,7 @@
 //
 
 #include "Color.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -78,38 +77,38 @@ namespace sr
         return *this;
     }
 
-    Color::Color(const Vector3& vec)
+    Color::Color(const Vector3F& vec)
     {
-        r = vec.x;
-        g = vec.y;
-        b = vec.z;
+        r = vec.v[0];
+        g = vec.v[1];
+        b = vec.v[2];
         a = 0;
     }
 
-    Color& Color::operator=(const Vector3& vec)
+    Color& Color::operator=(const Vector3F& vec)
     {
-        r = vec.x;
-        g = vec.y;
-        b = vec.z;
+        r = vec.v[0];
+        g = vec.v[1];
+        b = vec.v[2];
         a = 0;
 
         return *this;
     }
 
-    Color::Color(const Vector4& vec)
+    Color::Color(const Vector4F& vec)
     {
-        r = vec.x;
-        g = vec.y;
-        b = vec.z;
-        a = vec.w;
+        r = vec.v[0];
+        g = vec.v[1];
+        b = vec.v[2];
+        a = vec.v[3];
     }
 
-    Color& Color::operator=(const Vector4& vec)
+    Color& Color::operator=(const Vector4F& vec)
     {
-        r = vec.x;
-        g = vec.y;
-        b = vec.z;
-        a = vec.w;
+        r = vec.v[0];
+        g = vec.v[1];
+        b = vec.v[2];
+        a = vec.v[3];
 
         return *this;
     }

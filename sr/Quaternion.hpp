@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Matrix4.hpp"
-#include "Vector3.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -180,41 +180,41 @@ namespace sr
 
         float getNorm();
         void normalize();
-        void rotate(float angle, Vector3 axis);
-        void getRotation(float& angle, Vector3& axis);
+        void rotate(float angle, Vector3F axis);
+        void getRotation(float& angle, Vector3F& axis);
 
-        void setEulerAngles(const Vector3& angles);
-        Vector3 getEulerAngles() const;
+        void setEulerAngles(const Vector3F& angles);
+        Vector3F getEulerAngles() const;
         float getEulerAngleX() const;
         float getEulerAngleY() const;
         float getEulerAngleZ() const;
 
-        inline Vector3 operator*(const Vector3& vector) const
+        inline Vector3F operator*(const Vector3F& vector) const
         {
             return rotateVector(vector);
         }
 
-        inline Vector3 rotateVector(const Vector3& vector) const
+        inline Vector3F rotateVector(const Vector3F& vector) const
         {
-            Vector3 q(x, y, z);
-            Vector3 t = 2.0F * Vector3::cross(q, vector);
-            Vector3 result = vector + (w * t) + Vector3::cross(q, t);
+            Vector3F q(x, y, z);
+            Vector3F t = 2.0F * Vector3F::cross(q, vector);
+            Vector3F result = vector + (w * t) + Vector3F::cross(q, t);
             return result;
         }
 
-        inline Vector3 getRightVector() const
+        inline Vector3F getRightVector() const
         {
-            return rotateVector(Vector3::UNIT_X);
+            return rotateVector(Vector3F(1.0F, 0.0F, 0.0F));
         }
 
-        inline Vector3 getUpVector() const
+        inline Vector3F getUpVector() const
         {
-            return rotateVector(Vector3::UNIT_Y);
+            return rotateVector(Vector3F(0.0F, 1.0F, 0.0F));
         }
 
-        inline Vector3 getForwardVector() const
+        inline Vector3F getForwardVector() const
         {
-            return rotateVector(Vector3::UNIT_Z);
+            return rotateVector(Vector3F(0.0F, 0.0F, 1.0F));
         }
 
         Matrix4 getMatrix() const

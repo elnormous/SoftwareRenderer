@@ -36,7 +36,7 @@ namespace sr
             d = -d;
         }
 
-        float dot(const Vector4& vec) const;
+        float dot(const Vector4F& vec) const;
         void normalize();
 
         inline bool operator==(const Plane& plane) const

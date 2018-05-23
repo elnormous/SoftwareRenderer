@@ -48,9 +48,6 @@
     <ClInclude Include="..\sr\MathUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Matrix3.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Matrix4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,13 +84,7 @@
     <ClInclude Include="..\sr\sr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Vector2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sr\Vector3.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sr\Vector4.hpp">
+    <ClInclude Include="..\sr\Vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\Vertex.hpp">
@@ -122,9 +113,6 @@
     <ClCompile Include="..\sr\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sr\Matrix3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sr\Matrix4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -150,15 +138,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sr\Size3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\Vector2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\Vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\Vector4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sr\WAV.cpp">

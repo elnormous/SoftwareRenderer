@@ -7,12 +7,10 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include "Vector.hpp"
 
 namespace sr
 {
-    class Vector3;
-    class Vector4;
-
     class Color
     {
     public:
@@ -69,11 +67,11 @@ namespace sr
         {
         }
 
-        Color(const Vector3& vec);
-        Color& operator=(const Vector3& vec);
+        Color(const Vector3F& vec);
+        Color& operator=(const Vector3F& vec);
 
-        Color(const Vector4& vec);
-        Color& operator=(const Vector4& vec);
+        Color(const Vector4F& vec);
+        Color& operator=(const Vector4F& vec);
 
         inline uint32_t getIntValue() const
         {

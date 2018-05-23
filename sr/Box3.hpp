@@ -4,7 +4,7 @@
 
 #include <cstdint>
 #include <limits>
-#include "Vector3.hpp"
+#include "Vector.hpp"
 #include "Size3.hpp"
 
 #pragma once
@@ -16,8 +16,8 @@ namespace sr
     class Box3
     {
     public:
-        Vector3 min;
-        Vector3 max;
+        Vector3F min;
+        Vector3F max;
 
         Box3():
             min(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()),
@@ -25,7 +25,7 @@ namespace sr
         {
         }
 
-        Box3(const Vector3& initMin, const Vector3& initMax):
+        Box3(const Vector3F& initMin, const Vector3F& initMax):
             min(initMin), max(initMax)
         {
         }
@@ -35,42 +35,37 @@ namespace sr
         {
         }
 
-        Box3(const Box2& box);
-        Box3& operator=(const Box2& box);
-
-        inline Vector3 getCenter()
+        inline Vector3F getCenter()
         {
-            return Vector3(0.5F * (min.x + max.x),
-                           0.5F * (min.y + max.y),
-                           0.5F * (min.z + max.z));
+            return Vector3F(0.5F * (min.v[0] + max.v[0]),
+                           0.5F * (min.v[1] + max.v[1]),
+                           0.5F * (min.v[2] + max.v[2]));
         }
-
-        void getCorners(Vector3* dst) const;
 
         bool intersects(const Box3& aabb) const
         {
-            return !(aabb.min.x > max.x ||
-                     aabb.max.x < min.x ||
-                     aabb.min.y > max.y ||
-                     aabb.max.y < min.y ||
-                     aabb.min.z > max.z ||
-                     aabb.max.z < min.z);
+            return !(aabb.min.v[0] > max.v[0] ||
+                     aabb.max.v[0] < min.v[0] ||
+                     aabb.min.v[1] > max.v[1] ||
+                     aabb.max.v[1] < min.v[1] ||
+                     aabb.min.v[2] > max.v[2] ||
+                     aabb.max.v[2] < min.v[2]);
         }
 
-        bool containsPoint(const Vector3& point) const
+        bool containsPoint(const Vector3F& point) const
         {
-            if (point.x < min.x) return false;
-            if (point.y < min.y) return false;
-            if (point.z < min.z) return false;
-            if (point.x > max.x) return false;
-            if (point.y > max.y) return false;
-            if (point.z > max.z) return false;
+            if (point.v[0] < min.v[0]) return false;
+            if (point.v[1] < min.v[1]) return false;
+            if (point.v[2] < min.v[2]) return false;
+            if (point.v[0] > max.v[0]) return false;
+            if (point.v[1] > max.v[1]) return false;
+            if (point.v[2] > max.v[2]) return false;
             return true;
         }
 
         void merge(const Box3& box);
 
-        void set(const Vector2& newMin, const Vector2& newMax)
+        void set(const Vector3F& newMin, const Vector3F& newMax)
         {
             min = newMin;
             max = newMax;
@@ -78,47 +73,52 @@ namespace sr
 
         void reset()
         {
-            min.set(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-            max.set(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest());
+            min.v[0] = std::numeric_limits<float>::max();
+            min.v[1] = std::numeric_limits<float>::max();
+            min.v[2] = std::numeric_limits<float>::max();
+
+            max.v[0] = std::numeric_limits<float>::lowest();
+            max.v[1] = std::numeric_limits<float>::lowest();
+            max.v[2] = std::numeric_limits<float>::lowest();
         }
 
         bool isEmpty() const
         {
-            return min.x > max.x || min.y > max.y || min.z > max.z;
+            return min.v[0] > max.v[0] || min.v[1] > max.v[1] || min.v[2] > max.v[2];
         }
 
-        void insertPoint(const Vector3& point)
+        void insertPoint(const Vector3F& point)
         {
-            if (point.x < min.x) min.x = point.x;
-            if (point.x > max.x) max.x = point.x;
-            if (point.y < min.y) min.y = point.y;
-            if (point.y > max.y) max.y = point.y;
-            if (point.z < min.z) min.z = point.z;
-            if (point.z > max.z) max.z = point.z;
+            if (point.v[0] < min.v[0]) min.v[0] = point.v[0];
+            if (point.v[0] > max.v[0]) max.v[0] = point.v[0];
+            if (point.v[1] < min.v[1]) min.v[1] = point.v[1];
+            if (point.v[1] > max.v[1]) max.v[1] = point.v[1];
+            if (point.v[2] < min.v[2]) min.v[2] = point.v[2];
+            if (point.v[2] > max.v[2]) max.v[2] = point.v[2];
         }
 
-        inline Box3 operator+(const Vector3& v) const
+        inline Box3 operator+(const Vector3F& v) const
         {
             Box3 result(*this);
             result += v;
             return result;
         }
 
-        inline Box3& operator+=(const Vector3& v)
+        inline Box3& operator+=(const Vector3F& v)
         {
             min += v;
             max += v;
             return *this;
         }
 
-        inline Box3 operator-(const Vector3& v) const
+        inline Box3 operator-(const Vector3F& v) const
         {
             Box3 result(*this);
             result -= v;
             return result;
         }
 
-        inline Box3& operator-=(const Vector3& v)
+        inline Box3& operator-=(const Vector3F& v)
         {
             min -= v;
             max -= v;
@@ -127,7 +127,7 @@ namespace sr
 
         inline Size3 getSize() const
         {
-            return Size3(max.x - min.x, max.y - min.y, max.z - min.z);
+            return Size3(max.v[0] - min.v[0], max.v[1] - min.v[1], max.v[2] - min.v[2]);
         }
     };
 }

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Vector3.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -26,16 +26,16 @@ namespace sr
         {
         }
 
-        Size3(const Vector3& point):
-            width(point.x), height(point.y), depth(point.z)
+        Size3(const Vector3F& point):
+            width(point.v[0]), height(point.v[1]), depth(point.v[2])
         {
         }
 
-        Size3& operator=(const Vector3& point)
+        Size3& operator=(const Vector3F& point)
         {
-            width = point.x;
-            height = point.y;
-            depth = point.z;
+            width = point.v[0];
+            height = point.v[1];
+            depth = point.v[2];
             return *this;
         }
 
@@ -126,21 +126,21 @@ namespace sr
             depth *= scalar;
         }
 
-        void scale(const Vector3& scale)
+        void scale(const Vector3F& scale)
         {
-            width *= scale.x;
-            height *= scale.y;
-            depth *= scale.z;
+            width *= scale.v[0];
+            height *= scale.v[1];
+            depth *= scale.v[2];
         }
     };
 
-    inline Size3 operator*(const Size3& size, const Vector3& v)
+    inline Size3 operator*(const Size3& size, const Vector3F& v)
     {
-        return Size3(size.width * v.x, size.height * v.y, size.depth * v.z);
+        return Size3(size.width * v.v[0], size.height * v.v[1], size.depth * v.v[2]);
     }
 
-    inline Size3 operator/(const Size3& size, const Vector3& v)
+    inline Size3 operator/(const Size3& size, const Vector3F& v)
     {
-        return Size3(size.width / v.x, size.height / v.y, size.depth / v.z);
+        return Size3(size.width / v.v[0], size.height / v.v[1], size.depth / v.v[2]);
     }
 }

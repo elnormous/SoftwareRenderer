@@ -138,7 +138,6 @@
     <ClInclude Include="..\sr\File.hpp" />
     <ClInclude Include="..\sr\Material.hpp" />
     <ClInclude Include="..\sr\MathUtils.hpp" />
-    <ClInclude Include="..\sr\Matrix3.hpp" />
     <ClInclude Include="..\sr\Matrix4.hpp" />
     <ClInclude Include="..\sr\MTL.hpp" />
     <ClInclude Include="..\sr\OBJ.hpp" />
@@ -152,9 +151,7 @@
     <ClInclude Include="..\sr\Size3.hpp" />
     <ClInclude Include="..\sr\sr.hpp" />
     <ClInclude Include="..\sr\Texture.hpp" />
-    <ClInclude Include="..\sr\Vector2.hpp" />
-    <ClInclude Include="..\sr\Vector3.hpp" />
-    <ClInclude Include="..\sr\Vector4.hpp" />
+    <ClInclude Include="..\sr\Vector.hpp" />
     <ClInclude Include="..\sr\Vertex.hpp" />
     <ClInclude Include="..\sr\WAV.hpp" />
   </ItemGroup>
@@ -164,7 +161,6 @@
     <ClCompile Include="..\sr\Box3.cpp" />
     <ClCompile Include="..\sr\Color.cpp" />
     <ClCompile Include="..\sr\File.cpp" />
-    <ClCompile Include="..\sr\Matrix3.cpp" />
     <ClCompile Include="..\sr\Matrix4.cpp" />
     <ClCompile Include="..\sr\MTL.cpp" />
     <ClCompile Include="..\sr\OBJ.cpp" />
@@ -174,9 +170,6 @@
     <ClCompile Include="..\sr\Renderer.cpp" />
     <ClCompile Include="..\sr\Size2.cpp" />
     <ClCompile Include="..\sr\Size3.cpp" />
-    <ClCompile Include="..\sr\Vector2.cpp" />
-    <ClCompile Include="..\sr\Vector3.cpp" />
-    <ClCompile Include="..\sr\Vector4.cpp" />
     <ClCompile Include="..\sr\WAV.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

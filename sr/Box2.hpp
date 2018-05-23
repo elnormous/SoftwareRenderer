@@ -4,7 +4,7 @@
 
 #include <cstdint>
 #include <limits>
-#include "Vector2.hpp"
+#include "Vector.hpp"
 #include "Size2.hpp"
 
 #pragma once
@@ -14,8 +14,8 @@ namespace sr
     class Box2
     {
     public:
-        Vector2 min;
-        Vector2 max;
+        Vector2F min;
+        Vector2F max;
 
         Box2():
             min(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()),
@@ -23,7 +23,7 @@ namespace sr
         {
         }
 
-        Box2(const Vector2& initMin, const Vector2& initMax):
+        Box2(const Vector2F& initMin, const Vector2F& initMax):
             min(initMin), max(initMax)
         {
         }
@@ -33,34 +33,32 @@ namespace sr
         {
         }
 
-        inline Vector2 getCenter()
+        inline Vector2F getCenter()
         {
-            return Vector2(0.5F * (min.x + max.x),
-                           0.5F * (min.y + max.y));
+            return Vector2F(0.5F * (min.v[0] + max.v[0]),
+                            0.5F * (min.v[1] + max.v[1]));
         }
-
-        void getCorners(Vector2* dst) const;
 
         bool intersects(const Box2& aabb) const
         {
-            return !(aabb.min.x > max.x ||
-                     aabb.max.x < min.x ||
-                     aabb.min.y > max.y ||
-                     aabb.max.y < min.y);
+            return !(aabb.min.v[0] > max.v[0] ||
+                     aabb.max.v[0] < min.v[0] ||
+                     aabb.min.v[1] > max.v[1] ||
+                     aabb.max.v[1] < min.v[1]);
         }
 
-        bool containsPoint(const Vector2& point) const
+        bool containsPoint(const Vector2F& point) const
         {
-            if (point.x < min.x) return false;
-            if (point.y < min.y) return false;
-            if (point.x > max.x) return false;
-            if (point.y > max.y) return false;
+            if (point.v[0] < min.v[0]) return false;
+            if (point.v[1] < min.v[1]) return false;
+            if (point.v[0] > max.v[0]) return false;
+            if (point.v[1] > max.v[1]) return false;
             return true;
         }
 
         void merge(const Box2& box);
 
-        void set(const Vector2& newMin, const Vector2& newMax)
+        void set(const Vector2F& newMin, const Vector2F& newMax)
         {
             min = newMin;
             max = newMax;
@@ -68,45 +66,48 @@ namespace sr
 
         void reset()
         {
-            min.set(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-            max.set(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest());
+            min.v[0] = std::numeric_limits<float>::max();
+            min.v[1] = std::numeric_limits<float>::max();
+
+            max.v[0] = std::numeric_limits<float>::lowest();
+            max.v[1] = std::numeric_limits<float>::lowest();
         }
 
         bool isEmpty() const
         {
-            return min.x > max.x || min.y > max.y;
+            return min.v[0] > max.v[0] || min.v[1] > max.v[1];
         }
 
-        void insertPoint(const Vector2& point)
+        void insertPoint(const Vector2F& point)
         {
-            if (point.x < min.x) min.x = point.x;
-            if (point.x > max.x) max.x = point.x;
-            if (point.y < min.y) min.y = point.y;
-            if (point.y > max.y) max.y = point.y;
+            if (point.v[0] < min.v[0]) min.v[0] = point.v[0];
+            if (point.v[0] > max.v[0]) max.v[0] = point.v[0];
+            if (point.v[1] < min.v[1]) min.v[1] = point.v[1];
+            if (point.v[1] > max.v[1]) max.v[1] = point.v[1];
         }
 
-        inline Box2 operator+(const Vector2& v) const
+        inline Box2 operator+(const Vector2F& v) const
         {
             Box2 result(*this);
             result += v;
             return result;
         }
 
-        inline Box2& operator+=(const Vector2& v)
+        inline Box2& operator+=(const Vector2F& v)
         {
             min += v;
             max += v;
             return *this;
         }
 
-        inline Box2 operator-(const Vector2& v) const
+        inline Box2 operator-(const Vector2F& v) const
         {
             Box2 result(*this);
             result -= v;
             return result;
         }
 
-        inline Box2& operator-=(const Vector2& v)
+        inline Box2& operator-=(const Vector2F& v)
         {
             min -= v;
             max -= v;
@@ -115,7 +116,7 @@ namespace sr
 
         inline Size2 getSize() const
         {
-            return Size2(max.x - min.x, max.y - min.y);
+            return Size2(max.v[0] - min.v[0], max.v[1] - min.v[1]);
         }
     };
 }

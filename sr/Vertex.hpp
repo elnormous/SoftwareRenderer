@@ -5,9 +5,7 @@
 #pragma once
 
 #include "Color.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -18,15 +16,15 @@ namespace sr
         {
         }
 
-        Vertex(const Vector4& initPosition, Color initColor, const Vector2& initTexCoord, const Vector3& initNormal):
+        Vertex(const Vector4F& initPosition, Color initColor, const Vector2F& initTexCoord, const Vector3F& initNormal):
             position(initPosition), color(initColor), normal(initNormal)
         {
             texCoords[0] = initTexCoord;
         }
 
-        Vector4 position;
+        Vector4F position;
         Color color;
-        Vector2 texCoords[2];
-        Vector3 normal;
+        Vector2F texCoords[2];
+        Vector3F normal;
     };
 }

@@ -6,8 +6,7 @@
 
 #include "ConvexVolume.hpp"
 #include "Plane.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -37,7 +36,7 @@ namespace sr
         float& operator[](size_t index) { return m[index]; }
         float operator[](size_t index) const { return m[index]; }
 
-        static void createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix4& dst);
+        static void createLookAt(const Vector3F& eyePosition, const Vector3F& targetPosition, const Vector3F& up, Matrix4& dst);
         static void createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                                  float targetCenterX, float targetCenterY, float targetCenterZ,
                                  float upX, float upY, float upZ, Matrix4& dst);
@@ -46,18 +45,18 @@ namespace sr
         static void createOrthographicFromSize(float width, float height, float zNearPlane, float zFarPlane, Matrix4& dst);
         static void createOrthographicOffCenter(float left, float right, float bottom, float top,
                                                 float zNearPlane, float zFarPlane, Matrix4& dst);
-        static void createBillboard(const Vector3& objectPosition, const Vector3& cameraPosition,
-                                    const Vector3& cameraUpVector, Matrix4& dst);
-        static void createBillboard(const Vector3& objectPosition, const Vector3& cameraPosition,
-                                    const Vector3& cameraUpVector, const Vector3& cameraForwardVector,
+        static void createBillboard(const Vector3F& objectPosition, const Vector3F& cameraPosition,
+                                    const Vector3F& cameraUpVector, Matrix4& dst);
+        static void createBillboard(const Vector3F& objectPosition, const Vector3F& cameraPosition,
+                                    const Vector3F& cameraUpVector, const Vector3F& cameraForwardVector,
                                     Matrix4& dst);
-        static void createScale(const Vector3& scale, Matrix4& dst);
+        static void createScale(const Vector3F& scale, Matrix4& dst);
         static void createScale(float xScale, float yScale, float zScale, Matrix4& dst);
-        static void createRotation(const Vector3& axis, float angle, Matrix4& dst);
+        static void createRotation(const Vector3F& axis, float angle, Matrix4& dst);
         static void createRotationX(float angle, Matrix4& dst);
         static void createRotationY(float angle, Matrix4& dst);
         static void createRotationZ(float angle, Matrix4& dst);
-        static void createTranslation(const Vector3& translation, Matrix4& dst);
+        static void createTranslation(const Vector3F& translation, Matrix4& dst);
         static void createTranslation(float xTranslation, float yTranslation, float zTranslation, Matrix4& dst);
 
         bool getFrustumLeftPlane(Plane& plane) const
@@ -123,12 +122,12 @@ namespace sr
 
         float determinant() const;
 
-        void getUpVector(Vector3& dst) const;
-        void getDownVector(Vector3& dst) const;
-        void getLeftVector(Vector3& dst) const;
-        void getRightVector(Vector3& dst) const;
-        void getForwardVector(Vector3& dst) const;
-        void getBackVector(Vector3& dst) const;
+        void getUpVector(Vector3F& dst) const;
+        void getDownVector(Vector3F& dst) const;
+        void getLeftVector(Vector3F& dst) const;
+        void getRightVector(Vector3F& dst) const;
+        void getForwardVector(Vector3F& dst) const;
+        void getBackVector(Vector3F& dst) const;
 
         bool invert();
         bool invert(Matrix4& dst) const;
@@ -144,8 +143,8 @@ namespace sr
         void negate();
         void negate(Matrix4& dst) const;
 
-        void rotate(const Vector3& axis, float angle);
-        void rotate(const Vector3& axis, float angle, Matrix4& dst) const;
+        void rotate(const Vector3F& axis, float angle);
+        void rotate(const Vector3F& axis, float angle, Matrix4& dst) const;
         void rotateX(float angle);
         void rotateX(float angle, Matrix4& dst) const;
         void rotateY(float angle);
@@ -157,8 +156,8 @@ namespace sr
         void scale(float value, Matrix4& dst) const;
         void scale(float xScale, float yScale, float zScale);
         void scale(float xScale, float yScale, float zScale, Matrix4& dst) const;
-        void scale(const Vector3& s);
-        void scale(const Vector3& s, Matrix4& dst) const;
+        void scale(const Vector3F& s);
+        void scale(const Vector3F& s, Matrix4& dst) const;
 
         void set(float m11, float m12, float m13, float m14,
                  float m21, float m22, float m23, float m24,
@@ -171,52 +170,52 @@ namespace sr
         void subtract(const Matrix4& matrix);
         static void subtract(const Matrix4& m1, const Matrix4& m2, Matrix4& dst);
 
-        void transformPoint(Vector3& point) const
+        void transformPoint(Vector3F& point) const
         {
-            transformVector(point.x, point.y, point.z, 1.0F, point);
+            transformVector(point.v[0], point.v[1], point.v[2], 1.0F, point);
         }
 
-        void transformPoint(const Vector3& point, Vector3& dst) const
+        void transformPoint(const Vector3F& point, Vector3F& dst) const
         {
-            transformVector(point.x, point.y, point.z, 1.0F, dst);
+            transformVector(point.v[0], point.v[1], point.v[2], 1.0F, dst);
         }
 
-        void transformVector(Vector3& vector) const
+        void transformVector(Vector3F& vector) const
         {
-            Vector4 t;
-            transformVector(Vector4(vector.x, vector.y, vector.z, 0.0F), t);
-            vector = Vector3(t.x, t.y, t.z);
+            Vector4F t;
+            transformVector(Vector4F(vector.v[0], vector.v[1], vector.v[2], 0.0F), t);
+            vector = Vector3F(t.v[0], t.v[1], t.v[2]);
         }
 
-        void transformVector(const Vector3& vector, Vector3& dst) const
+        void transformVector(const Vector3F& vector, Vector3F& dst) const
         {
-            transformVector(vector.x, vector.y, vector.z, 0.0F, dst);
+            transformVector(vector.v[0], vector.v[1], vector.v[2], 0.0F, dst);
         }
 
-        void transformVector(float x, float y, float z, float w, Vector3& dst) const
+        void transformVector(float x, float y, float z, float w, Vector3F& dst) const
         {
-            Vector4 t;
-            transformVector(Vector4(x, y, z, w), t);
-            dst = Vector3(t.x, t.y, t.z);
+            Vector4F t;
+            transformVector(Vector4F(x, y, z, w), t);
+            dst = Vector3F(t.v[0], t.v[1], t.v[2]);
         }
 
-        void transformVector(Vector4& vector) const
+        void transformVector(Vector4F& vector) const
         {
             transformVector(vector, vector);
         }
 
-        void transformVector(const Vector4& vector, Vector4& dst) const;
+        void transformVector(const Vector4F& vector, Vector4F& dst) const;
 
         void translate(float x, float y, float z);
         void translate(float x, float y, float z, Matrix4& dst) const;
-        void translate(const Vector3& t);
-        void translate(const Vector3& t, Matrix4& dst) const;
+        void translate(const Vector3F& t);
+        void translate(const Vector3F& t, Matrix4& dst) const;
 
         void transpose();
         void transpose(Matrix4& dst) const;
 
-        Vector3 getTranslation() const;
-        Vector3 getScale() const;
+        Vector3F getTranslation() const;
+        Vector3F getScale() const;
         Quaternion getRotation() const;
 
         inline Matrix4 operator+(const Matrix4& matrix) const
@@ -306,33 +305,33 @@ namespace sr
         }
 
     private:
-        static void createBillboardHelper(const Vector3& objectPosition, const Vector3& cameraPosition,
-                                          const Vector3& cameraUpVector, const Vector3& cameraForwardVector,
+        static void createBillboardHelper(const Vector3F& objectPosition, const Vector3F& cameraPosition,
+                                          const Vector3F& cameraUpVector, const Vector3F& cameraForwardVector,
                                           Matrix4& dst);
     };
 
-    inline Vector3& operator*=(Vector3& v, const Matrix4& m)
+    inline Vector3F& operator*=(Vector3F& v, const Matrix4& m)
     {
         m.transformVector(v);
         return v;
     }
 
-    inline Vector3 operator*(const Matrix4& m, const Vector3& v)
+    inline Vector3F operator*(const Matrix4& m, const Vector3F& v)
     {
-        Vector3 x;
+        Vector3F x;
         m.transformVector(v, x);
         return x;
     }
 
-    inline Vector4& operator*=(Vector4& v, const Matrix4& m)
+    inline Vector4F& operator*=(Vector4F& v, const Matrix4& m)
     {
         m.transformVector(v);
         return v;
     }
 
-    inline Vector4 operator*(const Matrix4& m, const Vector4& v)
+    inline Vector4F operator*(const Matrix4& m, const Vector4F& v)
     {
-        Vector4 x;
+        Vector4F x;
         m.transformVector(v, x);
         return x;
     }

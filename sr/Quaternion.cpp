@@ -37,50 +37,50 @@ namespace sr
         w *= n;
     }
 
-    void Quaternion::rotate(float angle, Vector3 axis)
+    void Quaternion::rotate(float angle, Vector3F axis)
     {
         axis.normalize();
 
         float cosAngle = cosf(angle / 2.0F);
         float sinAngle = sinf(angle / 2.0F);
 
-        x = axis.x * sinAngle;
-        y = axis.y * sinAngle;
-        z = axis.z * sinAngle;
+        x = axis.v[0] * sinAngle;
+        y = axis.v[1] * sinAngle;
+        z = axis.v[2] * sinAngle;
         w = cosAngle;
     }
 
-    void Quaternion::getRotation(float& angle, Vector3& axis)
+    void Quaternion::getRotation(float& angle, Vector3F& axis)
     {
         angle = 2.0F * acosf(w);
         float s = sqrtf(1.0F - w * w);
         if (s < EPSILON) // too close to zero
         {
-            axis.x = x;
-            axis.y = y;
-            axis.z = z;
+            axis.v[0] = x;
+            axis.v[1] = y;
+            axis.v[2] = z;
         }
         else
         {
-            axis.x = x / s;
-            axis.y = y / s;
-            axis.z = z / s;
+            axis.v[0] = x / s;
+            axis.v[1] = y / s;
+            axis.v[2] = z / s;
         }
     }
 
-    void Quaternion::setEulerAngles(const Vector3& angles)
+    void Quaternion::setEulerAngles(const Vector3F& angles)
     {
         float angle;
 
-        angle = angles.x * 0.5F;
+        angle = angles.v[0] * 0.5F;
         const float sr = sinf(angle);
         const float cr = cosf(angle);
 
-        angle = angles.y * 0.5F;
+        angle = angles.v[1] * 0.5F;
         const float sp = sinf(angle);
         const float cp = cosf(angle);
 
-        angle = angles.z * 0.5F;
+        angle = angles.v[2] * 0.5F;
         const float sy = sinf(angle);
         const float cy = cosf(angle);
 
@@ -95,13 +95,13 @@ namespace sr
         w = cr * cpcy + sr * spsy;
     }
 
-    Vector3 Quaternion::getEulerAngles() const
+    Vector3F Quaternion::getEulerAngles() const
     {
-        Vector3 result;
+        Vector3F result;
 
-        result.x = atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
-        result.y = asinf(-2.0F * (x * z - w * y));
-        result.z = atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
+        result.v[0] = atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
+        result.v[1] = asinf(-2.0F * (x * z - w * y));
+        result.v[2] = atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
         return result;
     }
 

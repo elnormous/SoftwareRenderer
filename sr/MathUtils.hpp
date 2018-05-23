@@ -5,17 +5,10 @@
 #pragma once
 
 #include <cstdint>
-#include "Vector2.hpp"
-#include "Vector3.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
-    const float TAU = 6.28318530717958647692F;
-    const float PI = 3.14159265358979323846F;
-    const float FLOAT_SMALL = 1.0e-37F;
-    const float EPSILON = 1.19209290e-07F;
-    const float SQRT2 = 1.4142135623730950488F;
-
     inline float lerp(float v0, float v1, float t)
     {
         return (1.0F - t) * v0 + t * v1;
@@ -79,24 +72,23 @@ namespace sr
         return hash;
     }
 
-    inline Vector3 barycentric(Vector2 a, Vector2 b, Vector2 c, Vector2 p)
+    inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p)
     {
-        Vector3 s[2];
+        Vector3F s[2];
 
-        s[0].x = c.x - a.x;
-        s[0].y = b.x - a.x;
-        s[0].z = a.x - p.x;
+        s[0].v[0] = c.v[0] - a.v[0];
+        s[0].v[1] = b.v[0] - a.v[0];
+        s[0].v[2] = a.v[0] - p.v[0];
 
-        s[1].x = c.y - a.y;
-        s[1].y = b.y - a.y;
-        s[1].z = a.y - p.y;
+        s[1].v[0] = c.v[1] - a.v[1];
+        s[1].v[1] = b.v[1] - a.v[1];
+        s[1].v[2] = a.v[1] - p.v[1];
 
-        Vector3 u;
-        Vector3::cross(s[0], s[1], u);
+        Vector3F u = Vector3F::cross(s[0], s[1]);
 
-        if (std::abs(u.z) < EPSILON) // degenerate triangle (all three points in a line)
-            return Vector3(-1.0F, 1.0F, 1.0F);
+        if (std::abs(u.v[2]) < EPSILON) // degenerate triangle (all three points in a line)
+            return Vector3F(-1.0F, 1.0F, 1.0F);
 
-        return Vector3(1.0F - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+        return Vector3F(1.0F - (u.v[0] + u.v[1]) / u.v[2], u.v[1] / u.v[2], u.v[0] / u.v[2]);
     }
 }

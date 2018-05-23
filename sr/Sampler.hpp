@@ -6,7 +6,7 @@
 
 #include "Color.hpp"
 #include "Texture.hpp"
-#include "Vector2.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -38,7 +38,7 @@ namespace sr
             addressModeY = addressMode;
         }
 
-        Color sample(Vector2 coord) const
+        Color sample(Vector2F coord) const
         {
             Color result;
 
@@ -48,18 +48,18 @@ namespace sr
 
                 switch (addressModeX)
                 {
-                    case AddressMode::CLAMP: coord.x = clamp(coord.x, 0.0F, 1.0F); break;
-                    case AddressMode::REPEAT: coord.x = fmodf(coord.x, 1.0F); break;
+                    case AddressMode::CLAMP: coord.v[0] = clamp(coord.v[0], 0.0F, 1.0F); break;
+                    case AddressMode::REPEAT: coord.v[0] = fmodf(coord.v[0], 1.0F); break;
                 }
 
                 switch (addressModeY)
                 {
-                    case AddressMode::CLAMP: coord.y = clamp(coord.y, 0.0F, 1.0F); break;
-                    case AddressMode::REPEAT: coord.y = fmodf(coord.y, 1.0F); break;
+                    case AddressMode::CLAMP: coord.v[1] = clamp(coord.v[1], 0.0F, 1.0F); break;
+                    case AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
                 }
 
-                uint32_t textureX = static_cast<uint32_t>(coord.x * (buffer.getWidth() - 1));
-                uint32_t textureY = static_cast<uint32_t>(coord.y * (buffer.getHeight() - 1));
+                uint32_t textureX = static_cast<uint32_t>(coord.v[0] * (buffer.getWidth() - 1));
+                uint32_t textureY = static_cast<uint32_t>(coord.v[1] * (buffer.getHeight() - 1));
 
                 if (buffer.getType() == sr::Buffer::Type::RGB)
                 {

@@ -7,7 +7,7 @@
 #include <vector>
 #include "Box3.hpp"
 #include "Plane.hpp"
-#include "Vector4.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -23,7 +23,7 @@ namespace sr
         {
         }
 
-        bool isPointInside(const Vector4& position)
+        bool isPointInside(const Vector4F& position)
         {
             for (const Plane& plane : planes)
             {
@@ -36,7 +36,7 @@ namespace sr
             return true;
         }
 
-        bool isSphereInside(const Vector4& position, float radius)
+        bool isSphereInside(const Vector4F& position, float radius)
         {
             for (const Plane& plane : planes)
             {
@@ -53,42 +53,42 @@ namespace sr
         {
             for (const Plane& plane : planes)
             {
-                if (plane.dot(Vector4(box.min.x, box.min.y, box.min.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.min.v[0], box.min.v[1], box.min.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.max.x, box.min.y, box.min.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.max.v[0], box.min.v[1], box.min.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.min.x, box.max.y, box.min.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.min.v[0], box.max.v[1], box.min.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.min.x, box.min.y, box.max.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.min.v[0], box.min.v[1], box.max.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.max.x, box.max.y, box.min.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.max.v[0], box.max.v[1], box.min.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.max.x, box.min.y, box.max.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.max.v[0], box.min.v[1], box.max.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.min.x, box.max.y, box.max.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.min.v[0], box.max.v[1], box.max.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }
 
-                if (plane.dot(Vector4(box.max.x, box.max.y, box.max.z, 1.0F)) >= 0.0F)
+                if (plane.dot(Vector4F(box.max.v[0], box.max.v[1], box.max.v[2], 1.0F)) >= 0.0F)
                 {
                     continue;
                 }

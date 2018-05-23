@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Vector2.hpp"
+#include "Vector.hpp"
 
 namespace sr
 {
@@ -25,15 +25,15 @@ namespace sr
         {
         }
 
-        Size2(const Vector2& point):
-            width(point.x), height(point.y)
+        Size2(const Vector2F& point):
+            width(point.v[0]), height(point.v[1])
         {
         }
 
-        Size2& operator=(const Vector2& point)
+        Size2& operator=(const Vector2F& point)
         {
-            width = point.x;
-            height = point.y;
+            width = point.v[0];
+            height = point.v[1];
             return *this;
         }
 
@@ -119,20 +119,20 @@ namespace sr
             height *= scalar;
         }
 
-        void scale(const Vector2& scale)
+        void scale(const Vector2F& scale)
         {
-            width *= scale.x;
-            height *= scale.y;
+            width *= scale.v[0];
+            height *= scale.v[1];
         }
     };
 
-    inline Size2 operator*(const Size2& size, const Vector2& v)
+    inline Size2 operator*(const Size2& size, const Vector2F& v)
     {
-        return Size2(size.width * v.x, size.height * v.y);
+        return Size2(size.width * v.v[0], size.height * v.v[1]);
     }
 
-    inline Size2 operator/(const Size2& size, const Vector2& v)
+    inline Size2 operator/(const Size2& size, const Vector2F& v)
     {
-        return Size2(size.width / v.x, size.height / v.y);
+        return Size2(size.width / v.v[0], size.height / v.v[1]);
     }
 }

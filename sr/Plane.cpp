@@ -3,14 +3,14 @@
 //
 
 #include "Plane.hpp"
-#include "Vector4.hpp"
+#include "Vector.hpp"
 #include "MathUtils.hpp"
 
 namespace sr
 {
-    float Plane::dot(const Vector4& vec) const
+    float Plane::dot(const Vector4F& vec) const
     {
-        return a * vec.x + b * vec.y + c * vec.z + d;
+        return a * vec.v[0] + b * vec.v[1] + c * vec.v[2] + d;
     }
 
     void Plane::normalize()

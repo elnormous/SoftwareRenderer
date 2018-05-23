@@ -13,6 +13,7 @@
 #include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "Vector.hpp"
 #include "Vertex.hpp"
 
 namespace sr

@@ -25,7 +25,6 @@ SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
 	$(ROOT_DIR)/../sr/Box3.cpp \
 	$(ROOT_DIR)/../sr/Color.cpp \
 	$(ROOT_DIR)/../sr/File.cpp \
-	$(ROOT_DIR)/../sr/Matrix3.cpp \
 	$(ROOT_DIR)/../sr/Matrix4.cpp \
 	$(ROOT_DIR)/../sr/MTL.cpp \
 	$(ROOT_DIR)/../sr/OBJ.cpp \
@@ -35,9 +34,6 @@ SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
 	$(ROOT_DIR)/../sr/Renderer.cpp \
 	$(ROOT_DIR)/../sr/Size2.cpp \
 	$(ROOT_DIR)/../sr/Size3.cpp \
-	$(ROOT_DIR)/../sr/Vector2.cpp \
-	$(ROOT_DIR)/../sr/Vector3.cpp \
-	$(ROOT_DIR)/../sr/Vector4.cpp \
 	$(ROOT_DIR)/../sr/WAV.cpp
 
 ifeq ($(platform),windows)
