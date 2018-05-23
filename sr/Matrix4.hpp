@@ -45,11 +45,6 @@ namespace sr
         static void createOrthographicFromSize(float width, float height, float zNearPlane, float zFarPlane, Matrix4& dst);
         static void createOrthographicOffCenter(float left, float right, float bottom, float top,
                                                 float zNearPlane, float zFarPlane, Matrix4& dst);
-        static void createBillboard(const Vector3F& objectPosition, const Vector3F& cameraPosition,
-                                    const Vector3F& cameraUpVector, Matrix4& dst);
-        static void createBillboard(const Vector3F& objectPosition, const Vector3F& cameraPosition,
-                                    const Vector3F& cameraUpVector, const Vector3F& cameraForwardVector,
-                                    Matrix4& dst);
         static void createScale(const Vector3F& scale, Matrix4& dst);
         static void createScale(float xScale, float yScale, float zScale, Matrix4& dst);
         static void createRotation(const Vector3F& axis, float angle, Matrix4& dst);
@@ -303,11 +298,6 @@ namespace sr
                    m[14] != matrix.m[14] ||
                    m[15] != matrix.m[15];
         }
-
-    private:
-        static void createBillboardHelper(const Vector3F& objectPosition, const Vector3F& cameraPosition,
-                                          const Vector3F& cameraUpVector, const Vector3F& cameraForwardVector,
-                                          Matrix4& dst);
     };
 
     inline Vector3F& operator*=(Vector3F& v, const Matrix4& m)

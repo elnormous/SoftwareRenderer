@@ -80,7 +80,7 @@ namespace demo
         renderer.init(width, height);
 
         sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
-                                    1.0F, 1000.0F, projection);
+                                       1.0F, 1000.0F, projection);
 
         view.translate(0.0F, 0.0F, 100.0F);
 
@@ -113,6 +113,6 @@ namespace demo
         renderer.resize(width, height);
 
         sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
-                                    1.0F, 1000.0F, projection);
+                                       1.0F, 1000.0F, projection);
     }
 }
