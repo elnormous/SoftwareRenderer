@@ -8,8 +8,6 @@
 
 namespace sr
 {
-    class Size3;
-
     class Size2
     {
     public:
@@ -36,9 +34,6 @@ namespace sr
             height = point.v[1];
             return *this;
         }
-
-        Size2(const Size3& s);
-        Size2& operator=(const Size3& s);
 
         Size2 operator+(const Size2& size) const
         {

@@ -119,12 +119,6 @@
     <ClCompile Include="..\sr\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sr\Size2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\Size3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sr\WAV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
