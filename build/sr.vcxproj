@@ -162,7 +162,6 @@
     <ClCompile Include="..\sr\Matrix4.cpp" />
     <ClCompile Include="..\sr\MTL.cpp" />
     <ClCompile Include="..\sr\OBJ.cpp" />
-    <ClCompile Include="..\sr\Quaternion.cpp" />
     <ClCompile Include="..\sr\Renderer.cpp" />
     <ClCompile Include="..\sr\Size2.cpp" />
     <ClCompile Include="..\sr\Size3.cpp" />

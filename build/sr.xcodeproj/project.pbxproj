@@ -10,7 +10,6 @@
 		30345EEB20A8E09C00B9B963 /* Shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345EE920A8E09C00B9B963 /* Shader.hpp */; };
 		30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345EEF20A8F0CE00B9B963 /* Matrix4.cpp */; };
 		30345EFA20A8F0CF00B9B963 /* Matrix4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345EF020A8F0CE00B9B963 /* Matrix4.hpp */; };
-		30345F0520A8F0F300B9B963 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F0320A8F0F300B9B963 /* Quaternion.cpp */; };
 		30345F0620A8F0F300B9B963 /* Quaternion.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F0420A8F0F300B9B963 /* Quaternion.hpp */; };
 		30345F0920A8F26A00B9B963 /* MathUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F0820A8F26A00B9B963 /* MathUtils.hpp */; };
 		30345F0E20A8F33F00B9B963 /* ConvexVolume.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F0A20A8F33E00B9B963 /* ConvexVolume.hpp */; };
@@ -47,7 +46,6 @@
 		30345EED20A8E12600B9B963 /* sr.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sr.hpp; sourceTree = "<group>"; };
 		30345EEF20A8F0CE00B9B963 /* Matrix4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix4.cpp; sourceTree = "<group>"; };
 		30345EF020A8F0CE00B9B963 /* Matrix4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix4.hpp; sourceTree = "<group>"; };
-		30345F0320A8F0F300B9B963 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
 		30345F0420A8F0F300B9B963 /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quaternion.hpp; sourceTree = "<group>"; };
 		30345F0820A8F26A00B9B963 /* MathUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MathUtils.hpp; sourceTree = "<group>"; };
 		30345F0A20A8F33E00B9B963 /* ConvexVolume.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConvexVolume.hpp; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 				30345F3A20AA0AB000B9B963 /* OBJ.cpp */,
 				30345F3B20AA0AB000B9B963 /* OBJ.hpp */,
 				30345F0B20A8F33E00B9B963 /* Plane.hpp */,
-				30345F0320A8F0F300B9B963 /* Quaternion.cpp */,
 				30345F0420A8F0F300B9B963 /* Quaternion.hpp */,
 				30DFA45420AA660B007BEB42 /* Rect.hpp */,
 				30C9638320A7E0C200B54158 /* Renderer.cpp */,
@@ -255,7 +252,6 @@
 				30345F3320A9B0C400B9B963 /* WAV.cpp in Sources */,
 				30345F1520A8F3BF00B9B963 /* Color.cpp in Sources */,
 				30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */,
-				30345F0520A8F0F300B9B963 /* Quaternion.cpp in Sources */,
 				30C9638520A7E0C200B54158 /* Renderer.cpp in Sources */,
 				30345F2320A8F48E00B9B963 /* Size2.cpp in Sources */,
 			);

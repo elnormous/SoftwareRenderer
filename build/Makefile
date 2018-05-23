@@ -26,7 +26,6 @@ SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
 	$(ROOT_DIR)/../sr/Matrix4.cpp \
 	$(ROOT_DIR)/../sr/MTL.cpp \
 	$(ROOT_DIR)/../sr/OBJ.cpp \
-	$(ROOT_DIR)/../sr/Quaternion.cpp \
 	$(ROOT_DIR)/../sr/Renderer.cpp \
 	$(ROOT_DIR)/../sr/Size2.cpp \
 	$(ROOT_DIR)/../sr/Size3.cpp \

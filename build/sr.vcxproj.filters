@@ -116,9 +116,6 @@
     <ClCompile Include="..\sr\OBJ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sr\Quaternion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sr\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

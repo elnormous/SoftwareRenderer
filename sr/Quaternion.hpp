@@ -12,9 +12,6 @@ namespace sr
     class Quaternion
     {
     public:
-        static const Quaternion IDENTITY;
-        static const Quaternion ZERO;
-
         float x = 0.0F;
         float y = 0.0F;
         float z = 0.0F;
@@ -178,16 +175,114 @@ namespace sr
             w = w / n2;
         }
 
-        float getNorm();
-        void normalize();
-        void rotate(float angle, Vector3F axis);
-        void getRotation(float& angle, Vector3F& axis);
+        float getNorm()
+        {
+            float n = x * x + y * y + z * z + w * w;
+            if (n == 1.0F) // already normalized
+                return 1.0F;
 
-        void setEulerAngles(const Vector3F& angles);
-        Vector3F getEulerAngles() const;
-        float getEulerAngleX() const;
-        float getEulerAngleY() const;
-        float getEulerAngleZ() const;
+            return sqrtf(n);
+        }
+
+        void normalize()
+        {
+            float n = x * x + y * y + z * z + w * w;
+            if (n == 1.0F) // already normalized
+                return;
+
+            n = sqrtf(n);
+            if (n < EPSILON) // too close to zero
+                return;
+
+            n = 1.0F / n;
+            x *= n;
+            y *= n;
+            z *= n;
+            w *= n;
+        }
+
+        void rotate(float angle, Vector3F axis)
+        {
+            axis.normalize();
+
+            float cosAngle = cosf(angle / 2.0F);
+            float sinAngle = sinf(angle / 2.0F);
+
+            x = axis.v[0] * sinAngle;
+            y = axis.v[1] * sinAngle;
+            z = axis.v[2] * sinAngle;
+            w = cosAngle;
+        }
+
+        void getRotation(float& angle, Vector3F& axis)
+        {
+            angle = 2.0F * acosf(w);
+            float s = sqrtf(1.0F - w * w);
+            if (s < EPSILON) // too close to zero
+            {
+                axis.v[0] = x;
+                axis.v[1] = y;
+                axis.v[2] = z;
+            }
+            else
+            {
+                axis.v[0] = x / s;
+                axis.v[1] = y / s;
+                axis.v[2] = z / s;
+            }
+        }
+
+        void setEulerAngles(const Vector3F& angles)
+        {
+            float angle;
+
+            angle = angles.v[0] * 0.5F;
+            const float sr = sinf(angle);
+            const float cr = cosf(angle);
+
+            angle = angles.v[1] * 0.5F;
+            const float sp = sinf(angle);
+            const float cp = cosf(angle);
+
+            angle = angles.v[2] * 0.5F;
+            const float sy = sinf(angle);
+            const float cy = cosf(angle);
+
+            const float cpcy = cp * cy;
+            const float spcy = sp * cy;
+            const float cpsy = cp * sy;
+            const float spsy = sp * sy;
+
+            x = sr * cpcy - cr * spsy;
+            y = cr * spcy + sr * cpsy;
+            z = cr * cpsy - sr * spcy;
+            w = cr * cpcy + sr * spsy;
+        }
+
+        Vector3F getEulerAngles() const
+        {
+            Vector3F result;
+
+            result.v[0] = atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
+            result.v[1] = asinf(-2.0F * (x * z - w * y));
+            result.v[2] = atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
+            return result;
+        }
+
+        float getEulerAngleX() const
+        {
+            return atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
+        }
+
+        float getEulerAngleY() const
+        {
+            return asinf(-2.0F * (x * z - w * y));
+        }
+
+        float getEulerAngleZ() const
+        {
+            return atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
+        }
 
         inline Vector3F operator*(const Vector3F& vector) const
         {
