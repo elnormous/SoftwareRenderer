@@ -23,15 +23,12 @@
 		30345F2920A8FD1500B9B963 /* Buffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F2720A8FD1500B9B963 /* Buffer.hpp */; };
 		30345F2F20A9AA2D00B9B963 /* BMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2D20A9AA2D00B9B963 /* BMP.cpp */; };
 		30345F3020A9AA2D00B9B963 /* BMP.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F2E20A9AA2D00B9B963 /* BMP.hpp */; };
-		30345F3320A9B0C400B9B963 /* WAV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F3120A9B0C400B9B963 /* WAV.cpp */; };
 		30345F3420A9B0C400B9B963 /* WAV.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3220A9B0C400B9B963 /* WAV.hpp */; };
 		30345F3820A9B8D600B9B963 /* Vertex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3620A9B8D600B9B963 /* Vertex.hpp */; };
 		30345F3D20AA0AB000B9B963 /* OBJ.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3B20AA0AB000B9B963 /* OBJ.hpp */; };
-		30813CCB20B0BC0D002DDF7C /* OBJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F3A20AA0AB000B9B963 /* OBJ.cpp */; };
 		30C9638520A7E0C200B54158 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C9638320A7E0C200B54158 /* Renderer.cpp */; };
 		30C9638620A7E0C200B54158 /* Renderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30C9638420A7E0C200B54158 /* Renderer.hpp */; };
 		30DFA45620AA660F007BEB42 /* Rect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA45420AA660B007BEB42 /* Rect.hpp */; };
-		30DFA45B20AB1B0D007BEB42 /* MTL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DFA45920AB1B0D007BEB42 /* MTL.cpp */; };
 		30DFA45C20AB1B0D007BEB42 /* MTL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA45A20AB1B0D007BEB42 /* MTL.hpp */; };
 		30DFA46320AB2357007BEB42 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DFA46120AB2357007BEB42 /* File.cpp */; };
 		30DFA46420AB2357007BEB42 /* File.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA46220AB2357007BEB42 /* File.hpp */; };
@@ -57,10 +54,8 @@
 		30345F2720A8FD1500B9B963 /* Buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Buffer.hpp; sourceTree = "<group>"; };
 		30345F2D20A9AA2D00B9B963 /* BMP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BMP.cpp; sourceTree = "<group>"; };
 		30345F2E20A9AA2D00B9B963 /* BMP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BMP.hpp; sourceTree = "<group>"; };
-		30345F3120A9B0C400B9B963 /* WAV.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WAV.cpp; sourceTree = "<group>"; };
 		30345F3220A9B0C400B9B963 /* WAV.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WAV.hpp; sourceTree = "<group>"; };
 		30345F3620A9B8D600B9B963 /* Vertex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
-		30345F3A20AA0AB000B9B963 /* OBJ.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OBJ.cpp; sourceTree = "<group>"; };
 		30345F3B20AA0AB000B9B963 /* OBJ.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OBJ.hpp; sourceTree = "<group>"; };
 		306DA56B20B4E9A3003F7501 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		306DA56D20B5DA63003F7501 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
@@ -69,7 +64,6 @@
 		30C9638320A7E0C200B54158 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		30C9638420A7E0C200B54158 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 		30DFA45420AA660B007BEB42 /* Rect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rect.hpp; sourceTree = "<group>"; };
-		30DFA45920AB1B0D007BEB42 /* MTL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MTL.cpp; sourceTree = "<group>"; };
 		30DFA45A20AB1B0D007BEB42 /* MTL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTL.hpp; sourceTree = "<group>"; };
 		30DFA46120AB2357007BEB42 /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
 		30DFA46220AB2357007BEB42 /* File.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = File.hpp; sourceTree = "<group>"; };
@@ -110,9 +104,7 @@
 				30345F0820A8F26A00B9B963 /* MathUtils.hpp */,
 				30345EEF20A8F0CE00B9B963 /* Matrix4.cpp */,
 				30345EF020A8F0CE00B9B963 /* Matrix4.hpp */,
-				30DFA45920AB1B0D007BEB42 /* MTL.cpp */,
 				30DFA45A20AB1B0D007BEB42 /* MTL.hpp */,
-				30345F3A20AA0AB000B9B963 /* OBJ.cpp */,
 				30345F3B20AA0AB000B9B963 /* OBJ.hpp */,
 				30345F0B20A8F33E00B9B963 /* Plane.hpp */,
 				30345F0420A8F0F300B9B963 /* Quaternion.hpp */,
@@ -127,7 +119,6 @@
 				306DA56B20B4E9A3003F7501 /* Texture.hpp */,
 				306DA56D20B5DA63003F7501 /* Vector.hpp */,
 				30345F3620A9B8D600B9B963 /* Vertex.hpp */,
-				30345F3120A9B0C400B9B963 /* WAV.cpp */,
 				30345F3220A9B0C400B9B963 /* WAV.hpp */,
 			);
 			name = sr;
@@ -238,11 +229,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30813CCB20B0BC0D002DDF7C /* OBJ.cpp in Sources */,
-				30DFA45B20AB1B0D007BEB42 /* MTL.cpp in Sources */,
 				30345F2F20A9AA2D00B9B963 /* BMP.cpp in Sources */,
 				30DFA46320AB2357007BEB42 /* File.cpp in Sources */,
-				30345F3320A9B0C400B9B963 /* WAV.cpp in Sources */,
 				30345F1520A8F3BF00B9B963 /* Color.cpp in Sources */,
 				30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */,
 				30C9638520A7E0C200B54158 /* Renderer.cpp in Sources */,

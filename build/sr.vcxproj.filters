@@ -110,16 +110,7 @@
     <ClCompile Include="..\sr\Matrix4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sr\MTL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\OBJ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sr\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sr\WAV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

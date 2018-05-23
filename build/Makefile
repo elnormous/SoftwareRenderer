@@ -24,10 +24,7 @@ SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
 	$(ROOT_DIR)/../sr/Color.cpp \
 	$(ROOT_DIR)/../sr/File.cpp \
 	$(ROOT_DIR)/../sr/Matrix4.cpp \
-	$(ROOT_DIR)/../sr/MTL.cpp \
-	$(ROOT_DIR)/../sr/OBJ.cpp \
-	$(ROOT_DIR)/../sr/Renderer.cpp \
-	$(ROOT_DIR)/../sr/WAV.cpp
+	$(ROOT_DIR)/../sr/Renderer.cpp
 
 ifeq ($(platform),windows)
 CXXFLAGS+=-DNOMINMAX -DWINVER=0x0601 -D_WIN32_WINNT=0x0601

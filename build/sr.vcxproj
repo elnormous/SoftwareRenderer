@@ -160,10 +160,7 @@
     <ClCompile Include="..\sr\Color.cpp" />
     <ClCompile Include="..\sr\File.cpp" />
     <ClCompile Include="..\sr\Matrix4.cpp" />
-    <ClCompile Include="..\sr\MTL.cpp" />
-    <ClCompile Include="..\sr\OBJ.cpp" />
     <ClCompile Include="..\sr\Renderer.cpp" />
-    <ClCompile Include="..\sr\WAV.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
