@@ -104,9 +104,6 @@
     <ClCompile Include="..\sr\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sr\File.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sr\Matrix4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

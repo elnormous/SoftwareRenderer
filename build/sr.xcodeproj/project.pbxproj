@@ -30,7 +30,6 @@
 		30C9638620A7E0C200B54158 /* Renderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30C9638420A7E0C200B54158 /* Renderer.hpp */; };
 		30DFA45620AA660F007BEB42 /* Rect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA45420AA660B007BEB42 /* Rect.hpp */; };
 		30DFA45C20AB1B0D007BEB42 /* MTL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA45A20AB1B0D007BEB42 /* MTL.hpp */; };
-		30DFA46320AB2357007BEB42 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DFA46120AB2357007BEB42 /* File.cpp */; };
 		30DFA46420AB2357007BEB42 /* File.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA46220AB2357007BEB42 /* File.hpp */; };
 		30DFA46820AB2C42007BEB42 /* Material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA46620AB2C42007BEB42 /* Material.hpp */; };
 		30DFA4BC20ACDE48007BEB42 /* Sampler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30DFA4BA20ACDE48007BEB42 /* Sampler.hpp */; };
@@ -65,7 +64,6 @@
 		30C9638420A7E0C200B54158 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 		30DFA45420AA660B007BEB42 /* Rect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rect.hpp; sourceTree = "<group>"; };
 		30DFA45A20AB1B0D007BEB42 /* MTL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTL.hpp; sourceTree = "<group>"; };
-		30DFA46120AB2357007BEB42 /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
 		30DFA46220AB2357007BEB42 /* File.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = File.hpp; sourceTree = "<group>"; };
 		30DFA46620AB2C42007BEB42 /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
 		30DFA4BA20ACDE48007BEB42 /* Sampler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sampler.hpp; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 				306DA56E20B60AB6003F7501 /* Constants.hpp */,
 				30345F0A20A8F33E00B9B963 /* ConvexVolume.hpp */,
 				30DFA4BE20ACE6C4007BEB42 /* DepthState.hpp */,
-				30DFA46120AB2357007BEB42 /* File.cpp */,
 				30DFA46220AB2357007BEB42 /* File.hpp */,
 				30DFA46620AB2C42007BEB42 /* Material.hpp */,
 				30345F0820A8F26A00B9B963 /* MathUtils.hpp */,
@@ -230,7 +227,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				30345F2F20A9AA2D00B9B963 /* BMP.cpp in Sources */,
-				30DFA46320AB2357007BEB42 /* File.cpp in Sources */,
 				30345F1520A8F3BF00B9B963 /* Color.cpp in Sources */,
 				30345EF920A8F0CF00B9B963 /* Matrix4.cpp in Sources */,
 				30C9638520A7E0C200B54158 /* Renderer.cpp in Sources */,

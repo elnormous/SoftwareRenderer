@@ -22,7 +22,6 @@ endif
 CXXFLAGS=-c -std=c++11 -Wall -O2
 SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
 	$(ROOT_DIR)/../sr/Color.cpp \
-	$(ROOT_DIR)/../sr/File.cpp \
 	$(ROOT_DIR)/../sr/Matrix4.cpp \
 	$(ROOT_DIR)/../sr/Renderer.cpp
 
