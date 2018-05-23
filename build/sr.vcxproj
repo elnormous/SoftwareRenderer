@@ -156,8 +156,6 @@
     <ClInclude Include="..\sr\WAV.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\sr\BMP.cpp" />
-    <ClCompile Include="..\sr\Color.cpp" />
     <ClCompile Include="..\sr\Matrix4.cpp" />
     <ClCompile Include="..\sr\Renderer.cpp" />
   </ItemGroup>

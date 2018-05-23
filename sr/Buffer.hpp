@@ -121,7 +121,7 @@ namespace sr
 
         inline std::vector<uint8_t>& getData() { return data; }
         inline const std::vector<uint8_t>& getData() const { return data; }
-        inline void setDate(std::vector<uint8_t>& newData) { data = newData; }
+        inline void setDate(const std::vector<uint8_t>& newData) { data = newData; }
 
     private:
         Type type = Type::NONE;
