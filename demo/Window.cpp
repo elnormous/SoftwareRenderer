@@ -16,7 +16,7 @@ namespace demo
 
         sr::BMP bmp;
         bmp.load(application.getResourcePath() + "/cube.bmp");
-        texture = bmp.getBuffer();
+        texture.setLevel(bmp.getBuffer(), 0);
 
         blendState.enabled = true;
 

@@ -16,7 +16,22 @@ namespace sr
         {
         }
 
+        void setLevel(const Buffer& buffer, uint32_t level)
+        {
+            if (level >= levels.size()) levels.resize(level + 1);
+
+            levels[level] = buffer;
+        }
+
+        const Buffer& getLevel(uint32_t level) const
+        {
+            return levels[level];
+        }
+
     private:
-        std::vector<const Buffer> levels;
+        std::vector<Buffer> levels;
+        uint32_t minLOD = 0;
+        uint32_t maxLOD = UINT_MAX;
+        float lodBias = 0.0F;
     };
 }

@@ -26,7 +26,7 @@ namespace sr
         bool resize(uint32_t width, uint32_t height);
 
         void setShader(const Shader& newShader);
-        void setTexture(const Buffer& newTexture, uint32_t level);
+        void setTexture(const Texture& newTexture, uint32_t level);
         void setAddressModeX(Sampler::AddressMode addressMode, uint32_t level)
         {
             samplers[level].setAddressModeX(addressMode);

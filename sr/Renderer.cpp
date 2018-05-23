@@ -35,7 +35,7 @@ namespace sr
         shader = &newShader;
     }
 
-    void Renderer::setTexture(const Buffer& newTexture, uint32_t level)
+    void Renderer::setTexture(const Texture& newTexture, uint32_t level)
     {
         assert(level < 2);
 

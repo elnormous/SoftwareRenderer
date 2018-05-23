@@ -45,7 +45,7 @@ namespace demo
         sr::DepthState depthState;
 
         TextureShader shader;
-        sr::Buffer texture;
+        sr::Texture texture;
 
         std::vector<uint32_t> indices;
         std::vector<sr::Vertex> vertices;
