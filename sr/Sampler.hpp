@@ -38,7 +38,7 @@ namespace sr
             addressModeY = addressMode;
         }
 
-        Color get(Vector2 coord) const
+        Color sample(Vector2 coord) const
         {
             Color result;
 
