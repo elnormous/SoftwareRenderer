@@ -17,6 +17,6 @@ namespace sr
         }
 
     private:
-        std::vector<const Buffer*> levels;
+        std::vector<const Buffer> levels;
     };
 }
