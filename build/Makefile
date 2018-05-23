@@ -21,16 +21,12 @@ else ifeq ($(platform),tvos)
 endif
 CXXFLAGS=-c -std=c++11 -Wall -O2
 SOURCES=$(ROOT_DIR)/../sr/BMP.cpp \
-	$(ROOT_DIR)/../sr/Box2.cpp \
-	$(ROOT_DIR)/../sr/Box3.cpp \
 	$(ROOT_DIR)/../sr/Color.cpp \
 	$(ROOT_DIR)/../sr/File.cpp \
 	$(ROOT_DIR)/../sr/Matrix4.cpp \
 	$(ROOT_DIR)/../sr/MTL.cpp \
 	$(ROOT_DIR)/../sr/OBJ.cpp \
-	$(ROOT_DIR)/../sr/Plane.cpp \
 	$(ROOT_DIR)/../sr/Quaternion.cpp \
-	$(ROOT_DIR)/../sr/Rect.cpp \
 	$(ROOT_DIR)/../sr/Renderer.cpp \
 	$(ROOT_DIR)/../sr/Size2.cpp \
 	$(ROOT_DIR)/../sr/Size3.cpp \
