@@ -22,13 +22,10 @@
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="TextureShader.hpp" />
     <ClInclude Include="Window.hpp" />
-    <ClInclude Include="WindowWindows.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationWindows.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Window.cpp" />
-    <ClCompile Include="WindowWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\sr.vcxproj">

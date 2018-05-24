@@ -19,20 +19,16 @@ CXX=em++
 endif
 CXXFLAGS=-c -std=c++11 -Wall -O2 -I$(ROOT_DIR)/../sr
 LDFLAGS=-O2 -L$(ROOT_DIR)/../build -lsr
-SOURCES=$(ROOT_DIR)/Window.cpp \
-	$(ROOT_DIR)/main.cpp
+SOURCES=$(ROOT_DIR)/Window.cpp
 ifeq ($(platform),windows)
 LDFLAGS+=-u WinMain
-SOURCES+=$(ROOT_DIR)/ApplicationWindows.cpp \
-	$(ROOT_DIR)/WindowWindows.cpp
+SOURCES+=$(ROOT_DIR)/ApplicationWindows.cpp
 else ifeq ($(platform),linux)
 LDFLAGS+=-lpthread -lX11
-SOURCES+=$(ROOT_DIR)/ApplicationLinux.cpp \
-	$(ROOT_DIR)/WindowLinux.cpp
+SOURCES+=$(ROOT_DIR)/ApplicationLinux.cpp
 else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
-SOURCES+=$(ROOT_DIR)/ApplicationMacOS.mm \
-	$(ROOT_DIR)/WindowMacOS.mm
+SOURCES+=$(ROOT_DIR)/ApplicationMacOS.mm
 else ifeq ($(platform),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0

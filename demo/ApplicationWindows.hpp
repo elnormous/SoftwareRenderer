@@ -5,6 +5,7 @@
 #pragma once
 
 #include <Windows.h>
+#include "Application.hpp"
 #include "Window.hpp"
 
 namespace demo

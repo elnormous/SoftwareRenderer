@@ -13,9 +13,7 @@
 		30345F4D20AA1C0600B9B963 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
 		30345F4F20AA1C7A00B9B963 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
-		306944DC205DF43400C4969C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300984F2202D38FF00BB0340 /* main.cpp */; };
-		306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944A6205DF13900C4969C /* ApplicationMacOS.mm */; };
-		306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* WindowMacOS.mm */; };
+		306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* ApplicationMacOS.mm */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,22 +28,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		300984F2202D38FF00BB0340 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		30345F2A20A9062200B9B963 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		30345F4920AA1C0600B9B963 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
-		306944A6205DF13900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306944B2205DF40A00C4969C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		306944B7205DF40A00C4969C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		306944DF205E00A900C4969C /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
-		306944E0205E00A900C4969C /* WindowMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WindowMacOS.mm; sourceTree = "<group>"; };
+		306944E0205E00A900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944E72068655900C4969C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3071DEA920425CE50073390E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		30971FB2206BDA1C000D196D /* WindowMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowMacOS.hpp; sourceTree = "<group>"; };
+		30971FB2206BDA1C000D196D /* ApplicationMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ApplicationMacOS.hpp; sourceTree = "<group>"; };
 		30C9637920A7DF2C00B54158 /* sr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sr.xcodeproj; path = ../build/sr.xcodeproj; sourceTree = "<group>"; };
 		30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureShader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,14 +82,12 @@
 			isa = PBXGroup;
 			children = (
 				306944A8205DF15A00C4969C /* Application.hpp */,
-				306944A6205DF13900C4969C /* ApplicationMacOS.mm */,
-				300984F2202D38FF00BB0340 /* main.cpp */,
 				30345F4720AA1BF300B9B963 /* Resources */,
 				30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */,
 				30345F2A20A9062200B9B963 /* Window.cpp */,
 				306944DF205E00A900C4969C /* Window.hpp */,
-				30971FB2206BDA1C000D196D /* WindowMacOS.hpp */,
-				306944E0205E00A900C4969C /* WindowMacOS.mm */,
+				30971FB2206BDA1C000D196D /* ApplicationMacOS.hpp */,
+				306944E0205E00A900C4969C /* ApplicationMacOS.mm */,
 			);
 			name = demo;
 			sourceTree = "<group>";
@@ -223,9 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				306944DC205DF43400C4969C /* main.cpp in Sources */,
-				306944DE205DF43400C4969C /* ApplicationMacOS.mm in Sources */,
-				306944E1205E00A900C4969C /* WindowMacOS.mm in Sources */,
+				306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */,
 				30345F2B20A9062200B9B963 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

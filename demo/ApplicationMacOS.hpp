@@ -5,6 +5,7 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
+#include "Application.hpp"
 #include "Window.hpp"
 
 namespace demo

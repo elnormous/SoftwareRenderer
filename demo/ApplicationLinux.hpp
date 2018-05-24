@@ -5,6 +5,7 @@
 #pragma once
 
 #include <X11/Xlib.h>
+#include "Application.hpp"
 #include "Window.hpp"
 
 namespace demo
