@@ -156,7 +156,6 @@
     <ClInclude Include="..\sr\WAV.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\sr\Matrix4.cpp" />
     <ClCompile Include="..\sr\Renderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

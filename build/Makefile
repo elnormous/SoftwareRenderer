@@ -20,8 +20,7 @@ else ifeq ($(platform),ios)
 else ifeq ($(platform),tvos)
 endif
 CXXFLAGS=-c -std=c++11 -Wall -O2
-SOURCES=$(ROOT_DIR)/../sr/Matrix4.cpp \
-	$(ROOT_DIR)/../sr/Renderer.cpp
+SOURCES=$(ROOT_DIR)/../sr/Renderer.cpp
 
 ifeq ($(platform),windows)
 CXXFLAGS+=-DNOMINMAX -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
