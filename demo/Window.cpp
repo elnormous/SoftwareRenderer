@@ -17,6 +17,7 @@ namespace demo
         sr::BMP bmp;
         bmp.load(application.getResourcePath() + "/cube.bmp");
         texture.setLevel(bmp.getBuffer(), 0);
+        texture.generateMipMaps();
 
         blendState.enabled = true;
 

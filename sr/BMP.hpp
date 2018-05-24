@@ -65,7 +65,7 @@ namespace sr
         Buffer getBuffer() const
         {
             Buffer buffer;
-            buffer.init(sr::Buffer::Type::RGBA, width, height);
+            buffer.init(sr::Buffer::Type::RGBA8, width, height);
             buffer.setDate(data);
 
             return buffer;
@@ -73,7 +73,7 @@ namespace sr
 
         bool setBuffer(const Buffer& buffer)
         {
-            if (buffer.getType() != sr::Buffer::Type::RGBA) return false;
+            if (buffer.getType() != sr::Buffer::Type::RGBA8) return false;
 
             width = buffer.getWidth();
             height = buffer.getHeight();

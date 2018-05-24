@@ -16,7 +16,7 @@ namespace sr
 
     bool Renderer::init(uint32_t width, uint32_t height)
     {
-        if (!frameBuffer.init(Buffer::Type::RGBA, width, height)) return false;
+        if (!frameBuffer.init(Buffer::Type::RGBA8, width, height)) return false;
         if (!depthBuffer.init(Buffer::Type::FLOAT32, width, height)) return false;
 
         return true;

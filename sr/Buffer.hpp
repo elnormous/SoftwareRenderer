@@ -15,12 +15,23 @@ namespace sr
         enum class Type
         {
             NONE,
-            RGB,
-            RGBA,
+            R8,
+            A8,
+            RGBA8,
             FLOAT32
         };
 
-        Buffer() {}
+        Buffer(Type initType = Type::NONE,
+               uint32_t initWidth = 0,
+               uint32_t initHeight = 0):
+            type(initType),
+            width(initWidth),
+            height(initHeight)
+        {
+            uint32_t pixelSize = getPixelSize(type);
+            if (pixelSize != 0) data.resize(width * height * pixelSize);
+        }
+
         Buffer(const Buffer& other)
         {
             type = other.type;
@@ -74,10 +85,11 @@ namespace sr
         {
             switch (type)
             {
-                case Buffer::Type::RGB:
-                    return sizeof(uint8_t) * 3;
+                case Buffer::Type::R8:
+                case Buffer::Type::A8:
+                    return sizeof(uint8_t) * 1;
                     break;
-                case Buffer::Type::RGBA:
+                case Buffer::Type::RGBA8:
                     return sizeof(uint8_t) * 4;
                     break;
                 case Buffer::Type::FLOAT32:

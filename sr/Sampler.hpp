@@ -63,15 +63,35 @@ namespace sr
                     uint32_t textureX = static_cast<uint32_t>(coord.v[0] * (buffer.getWidth() - 1));
                     uint32_t textureY = static_cast<uint32_t>(coord.v[1] * (buffer.getHeight() - 1));
 
-                    if (buffer.getType() == sr::Buffer::Type::RGB)
+                    switch (buffer.getType())
                     {
-                        const uint8_t* rgb = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 3];
-                        result = sr::Color(rgb[0], rgb[1], rgb[2], 255);
-                    }
-                    else if (buffer.getType() == sr::Buffer::Type::RGBA)
-                    {
-                        const uint8_t* rgba = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 4];
-                        result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+                        case sr::Buffer::Type::R8:
+                        {
+                            const uint8_t* r = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 1];
+                            result = sr::Color(*r, *r, *r, 255);
+                            break;
+                        }
+                        case sr::Buffer::Type::A8:
+                        {
+                            const uint8_t* a = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 1];
+                            result = sr::Color(0, 0, 0, *a);
+                            break;
+                        }
+                        case sr::Buffer::Type::RGBA8:
+                        {
+                            const uint8_t* rgba = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 4];
+                            result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+                            break;
+                        }
+                        case sr::Buffer::Type::FLOAT32:
+                        {
+                            float f = reinterpret_cast<const float*>(buffer.getData().data())[textureY * buffer.getWidth() + textureX];
+                            result.r = result.g = result.b = f;
+                            result.a = 1.0F;
+                            break;
+                        }
+                        default:
+                            return result;
                     }
                 }
             }
