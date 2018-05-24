@@ -118,6 +118,7 @@ namespace sr
         inline Type getType() const { return type; }
         inline uint32_t getWidth() const { return width; }
         inline uint32_t getHeight() const { return height; }
+        inline bool isEmpty() const { return data.empty(); }
 
         inline std::vector<uint8_t>& getData() { return data; }
         inline const std::vector<uint8_t>& getData() const { return data; }

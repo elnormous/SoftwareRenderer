@@ -17,16 +17,21 @@ namespace sr
         {
         }
 
-        void setLevel(const Buffer& buffer, uint32_t level)
+        inline size_t getLevelCount() const
+        {
+            return levels.size();
+        }
+
+        inline const Buffer& getLevel(uint32_t level) const
+        {
+            return levels[level];
+        }
+
+        inline void setLevel(const Buffer& buffer, uint32_t level)
         {
             if (level >= levels.size()) levels.resize(level + 1);
 
             levels[level] = buffer;
-        }
-
-        const Buffer& getLevel(uint32_t level) const
-        {
-            return levels[level];
         }
 
     private:
