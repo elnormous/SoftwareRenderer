@@ -18,7 +18,7 @@ CC=emcc
 CXX=em++
 endif
 CXXFLAGS=-c -std=c++11 -Wall -O2 -I$(ROOT_DIR)/../sr
-LDFLAGS=-O2 -L$(ROOT_DIR)/../build -lsr
+LDFLAGS=-O2
 SOURCES=$(ROOT_DIR)/Window.cpp
 ifeq ($(platform),windows)
 LDFLAGS+=-u WinMain
@@ -91,7 +91,7 @@ else ifeq ($(platform),tvos)
 	cp -f $(ROOT_DIR)/Resources/* $(ROOT_DIR)/$(EXECUTABLE).app
 endif
 
-$(ROOT_DIR)/$(EXECUTABLE): sr $(OBJECTS)
+$(ROOT_DIR)/$(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
 
 -include $(DEPENDENCIES)
@@ -102,13 +102,8 @@ $(ROOT_DIR)/$(EXECUTABLE): sr $(OBJECTS)
 %.o: %.mm
 	$(CXX) -fno-objc-arc $(CXXFLAGS) -MMD -MP $< -o $@
 
-.PHONY: sr
-sr:
-	$(MAKE) -f $(ROOT_DIR)/../build/Makefile debug=$(debug) platform=$(platform) $(target)
-
 .PHONY: clean
 clean:
-	$(MAKE) -f $(ROOT_DIR)/../build/Makefile clean
 ifeq ($(platform),windows)
 	-del /f /q "$(ROOT_DIR)\$(EXECUTABLE).exe" "$(ROOT_DIR)\*.o" "$(ROOT_DIR)\*.d" "$(ROOT_DIR)\*.js.mem" "$(ROOT_DIR)\*.js" "$(ROOT_DIR)\*.hpp.gch"
 else
