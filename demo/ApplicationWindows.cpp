@@ -104,22 +104,22 @@ namespace demo
     {
         render();
 
-        const sr::Buffer& buffer = renderer.getFrameBuffer();
+        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
 
         BITMAPINFO info;
         ZeroMemory(&info, sizeof(BITMAPINFO));
         info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-        info.bmiHeader.biWidth = buffer.getWidth();
-        info.bmiHeader.biHeight = -(int)buffer.getHeight();
+        info.bmiHeader.biWidth = frameBuffer.getWidth();
+        info.bmiHeader.biHeight = -static_cast<int>(frameBuffer.getHeight());
         info.bmiHeader.biPlanes = 1;
         info.bmiHeader.biBitCount = 32;
         info.bmiHeader.biCompression = BI_RGB;
-        info.bmiHeader.biSizeImage = buffer.getWidth() * buffer.getHeight() * 4;
+        info.bmiHeader.biSizeImage = frameBuffer.getWidth() * frameBuffer.getHeight() * 4;
 
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(window, &ps);
 
-        SetDIBitsToDevice(hdc, 0, 0, buffer.getWidth(), buffer.getHeight(), 0, 0, 0, buffer.getHeight(), buffer.getData().data(), &info, DIB_RGB_COLORS);
+        SetDIBitsToDevice(hdc, 0, 0, frameBuffer.getWidth(), frameBuffer.getHeight(), 0, 0, 0, frameBuffer.getHeight(), frameBuffer.getData().data(), &info, DIB_RGB_COLORS);
 
         EndPaint(window, &ps);
     }
