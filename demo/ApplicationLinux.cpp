@@ -75,7 +75,7 @@ namespace demo
     {
         render();
 
-        const uint8_t* data = renderer.getFrameBuffer().getData().data();
+        const uint8_t* data = renderTarget.getFrameBuffer().getData().data();
         XImage* image = XCreateImage(display, visual, depth, ZPixmap, 0,
                                      const_cast<char*>(reinterpret_cast<const char*>(data)),
                                      width, height, 32, 0);
