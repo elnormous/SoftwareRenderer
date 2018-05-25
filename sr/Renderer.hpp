@@ -23,9 +23,6 @@ namespace sr
     public:
         Renderer();
 
-        bool init(uint32_t width, uint32_t height);
-        bool resize(uint32_t width, uint32_t height);
-
         void setShader(const Shader& newShader);
         void setTexture(const Texture& newTexture, uint32_t level);
         void setAddressModeX(Sampler::AddressMode addressMode, uint32_t level)
@@ -46,10 +43,11 @@ namespace sr
         bool clear(Color color, float depth);
         bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection);
 
-        inline const RenderTarget& getBackBuffer() const { return backBuffer; }
+        inline RenderTarget* getRenderTarget() const { return renderTarget; }
+        inline void setRenderTarget(RenderTarget* newRenderTarget) { renderTarget = newRenderTarget; }
 
     private:
-        RenderTarget backBuffer;
+        RenderTarget* renderTarget = nullptr;
         Rect viewport;
         Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;

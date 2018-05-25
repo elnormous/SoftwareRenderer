@@ -64,18 +64,18 @@ namespace sr
         inline uint32_t getWidth() const { return width; }
         inline uint32_t getHeight() const { return height; }
 
-        const std::vector<uint8_t>& getBuffer() const
+        const std::vector<uint8_t>& getData() const
         {
             return data;
         }
 
-        bool setBuffer(uint32_t newWidth,
-                       uint32_t newHeight,
-                       const std::vector<uint8_t>& buffer)
+        bool setData(uint32_t newWidth,
+                     uint32_t newHeight,
+                     const std::vector<uint8_t>& newData)
         {
             width = newWidth;
             height = newHeight;
-            data = buffer;
+            data = newData;
 
             return true;
         }

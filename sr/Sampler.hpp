@@ -44,7 +44,7 @@ namespace sr
 
             if (texture && texture->getLevelCount())
             {
-                const std::vector<uint8_t>& buffer = texture->getLevel(0);
+                const std::vector<uint8_t>& buffer = texture->getData(0);
 
                 if (!buffer.empty())
                 {

@@ -14,20 +14,6 @@ namespace sr
     {
     }
 
-    bool Renderer::init(uint32_t width, uint32_t height)
-    {
-        if (!backBuffer.init(width, height)) return false;
-
-        return true;
-    }
-
-    bool Renderer::resize(uint32_t width, uint32_t height)
-    {
-        if (!backBuffer.resize(width, height)) return false;
-
-        return true;
-    }
-
     void Renderer::setShader(const Shader& newShader)
     {
         shader = &newShader;
@@ -62,16 +48,18 @@ namespace sr
 
     bool Renderer::clear(Color color, float depth)
     {
-        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(backBuffer.getFrameBuffer().getLevel(0).data());
-        float* depthBufferData = reinterpret_cast<float*>(backBuffer.getDepthBuffer().getLevel(0).data());
+        if (!renderTarget) return false;
+
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getLevel(0).data());
+        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getLevel(0).data());
         uint32_t rgba = color.getIntValueRaw();
 
-        uint32_t frameBufferSize = backBuffer.getFrameBuffer().getWidth() * backBuffer.getFrameBuffer().getHeight();
+        uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
         for (uint32_t p = 0; p < frameBufferSize; ++p)
             frameBufferData[p] = rgba;
 
-        uint32_t depthBufferSize = backBuffer.getDepthBuffer().getWidth() * backBuffer.getDepthBuffer().getHeight();
+        uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
 
         for (uint32_t p = 0; p < depthBufferSize; ++p)
             depthBufferData[p] = depth;
@@ -81,10 +69,11 @@ namespace sr
 
     bool Renderer::drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
     {
+        if (!renderTarget) return false;
         if (!shader) return false;
 
-        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(backBuffer.getFrameBuffer().getLevel(0).data());
-        float* depthBufferData = reinterpret_cast<float*>(backBuffer.getDepthBuffer().getLevel(0).data());
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getLevel(0).data());
+        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getLevel(0).data());
 
         for (uint32_t i = 0; i < indices.size(); i += 3)
         {
@@ -129,10 +118,10 @@ namespace sr
                 if (viewportPosition.v[1] > boundingBox.max.v[1]) boundingBox.max.v[1] = viewportPosition.v[1];
             }
 
-            boundingBox.min.v[0] = clamp(boundingBox.min.v[0], 0.0F, static_cast<float>(backBuffer.getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
-            boundingBox.max.v[0] = clamp(boundingBox.max.v[0], 0.0F, static_cast<float>(backBuffer.getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.width));
-            boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(backBuffer.getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
-            boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(backBuffer.getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.height));
+            boundingBox.min.v[0] = clamp(boundingBox.min.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
+            boundingBox.max.v[0] = clamp(boundingBox.max.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.width));
+            boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
+            boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.height));
 
             for (uint32_t screenY = static_cast<uint32_t>(boundingBox.min.v[1]); screenY <= static_cast<uint32_t>(boundingBox.max.v[1]); ++screenY)
             {
@@ -151,10 +140,10 @@ namespace sr
 
                         float depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
 
-                        if (depthState.read && depthBufferData[screenY * backBuffer.getDepthBuffer().getWidth() + screenX] < depth)
+                        if (depthState.read && depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] < depth)
                             continue; // discard the pixel
 
-                        if (depthState.write) depthBufferData[screenY * backBuffer.getDepthBuffer().getWidth() + screenX] = depth;
+                        if (depthState.write) depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
 
                         Shader::VSOutput psInput;
                         //psInput.position = clip;
@@ -177,7 +166,7 @@ namespace sr
 
                         if (blendState.enabled)
                         {
-                            uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * backBuffer.getFrameBuffer().getWidth() + screenX]);
+                            uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
 
                             Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
@@ -187,10 +176,10 @@ namespace sr
                             psOutput.b = psOutput.b * psOutput.a + destColor.b * (1.0F - psOutput.a);
                             psOutput.a = 1.0F;
 
-                            frameBufferData[screenY * backBuffer.getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
+                            frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
                         }
                         else
-                            frameBufferData[screenY * backBuffer.getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
+                            frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
                     }
                 }
             }

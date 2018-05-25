@@ -158,12 +158,12 @@ namespace sr
             return levels[level];
         }
 
-        inline const std::vector<uint8_t>& getLevel(uint32_t level) const
+        inline const std::vector<uint8_t>& getData(uint32_t level = 0) const
         {
             return levels[level];
         }
 
-        inline bool setLevel(const std::vector<uint8_t>& buffer, uint32_t level)
+        inline bool setData(const std::vector<uint8_t>& buffer, uint32_t level = 0)
         {
             uint32_t pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0) return false;

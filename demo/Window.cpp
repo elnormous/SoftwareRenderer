@@ -17,7 +17,7 @@ namespace demo
         sr::BMP bmp;
         bmp.load(application.getResourcePath() + "/cube.bmp");
         texture.init(sr::Texture::PixelFormat::RGBA8, bmp.getWidth(), bmp.getHeight());
-        texture.setLevel(bmp.getBuffer(), 0);
+        texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
 
         blendState.enabled = true;
@@ -79,7 +79,7 @@ namespace demo
 
     bool Window::init(int argc, const char** argv)
     {
-        renderer.init(width, height);
+        renderTarget.init(width, height);
 
         sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
                                        1.0F, 1000.0F, projection);
@@ -91,6 +91,8 @@ namespace demo
 
     void Window::render()
     {
+        renderer.setRenderTarget(&renderTarget);
+
         rotationY += 0.05F;
         sr::Matrix4::createRotationY(rotationY, model);
 
@@ -112,7 +114,7 @@ namespace demo
 
     void Window::onResize()
     {
-        renderer.resize(width, height);
+        renderTarget.resize(width, height);
 
         sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
                                        1.0F, 1000.0F, projection);

@@ -39,6 +39,7 @@ namespace demo
         sr::Matrix4 model;
         float rotationY = 0.0F;
 
+        sr::RenderTarget renderTarget;
         sr::Renderer renderer;
 
         sr::BlendState blendState;
