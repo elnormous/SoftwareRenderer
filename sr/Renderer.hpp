@@ -5,11 +5,11 @@
 #pragma once
 
 #include "BlendState.hpp"
-#include "Buffer.hpp"
 #include "Color.hpp"
 #include "DepthState.hpp"
 #include "Matrix4.hpp"
 #include "Rect.hpp"
+#include "RenderTarget.hpp"
 #include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
@@ -46,13 +46,10 @@ namespace sr
         bool clear(Color color, float depth);
         bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection);
 
-        inline const Buffer& getFrameBuffer() const { return frameBuffer; }
-        inline const Buffer& getDepthBuffer() const { return depthBuffer; }
+        inline const RenderTarget& getBackBuffer() const { return backBuffer; }
 
     private:
-        Buffer frameBuffer;
-        Buffer depthBuffer;
-
+        RenderTarget backBuffer;
         Rect viewport;
         Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;

@@ -5,9 +5,9 @@
 #pragma once
 
 #include <memory>
-#include "Renderer.hpp"
-#include "Buffer.hpp"
 #include "Color.hpp"
+#include "Shader.hpp"
+#include "Texture.hpp"
 
 namespace sr
 {

@@ -18,7 +18,6 @@
 		30345F1D20A8F45300B9B963 /* Box2.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F1B20A8F45300B9B963 /* Box2.hpp */; };
 		30345F2220A8F48E00B9B963 /* Size2.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F1E20A8F48E00B9B963 /* Size2.hpp */; };
 		30345F2520A8F48E00B9B963 /* Size3.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F2120A8F48E00B9B963 /* Size3.hpp */; };
-		30345F2920A8FD1500B9B963 /* Buffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F2720A8FD1500B9B963 /* Buffer.hpp */; };
 		30345F3020A9AA2D00B9B963 /* BMP.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F2E20A9AA2D00B9B963 /* BMP.hpp */; };
 		30345F3420A9B0C400B9B963 /* WAV.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3220A9B0C400B9B963 /* WAV.hpp */; };
 		30345F3820A9B8D600B9B963 /* Vertex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30345F3620A9B8D600B9B963 /* Vertex.hpp */; };
@@ -45,11 +44,11 @@
 		30345F1B20A8F45300B9B963 /* Box2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Box2.hpp; sourceTree = "<group>"; };
 		30345F1E20A8F48E00B9B963 /* Size2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Size2.hpp; sourceTree = "<group>"; };
 		30345F2120A8F48E00B9B963 /* Size3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Size3.hpp; sourceTree = "<group>"; };
-		30345F2720A8FD1500B9B963 /* Buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Buffer.hpp; sourceTree = "<group>"; };
 		30345F2E20A9AA2D00B9B963 /* BMP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BMP.hpp; sourceTree = "<group>"; };
 		30345F3220A9B0C400B9B963 /* WAV.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WAV.hpp; sourceTree = "<group>"; };
 		30345F3620A9B8D600B9B963 /* Vertex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		30345F3B20AA0AB000B9B963 /* OBJ.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OBJ.hpp; sourceTree = "<group>"; };
+		306A7D0820B87A25002C47F1 /* RenderTarget.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderTarget.hpp; sourceTree = "<group>"; };
 		306DA56B20B4E9A3003F7501 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		306DA56D20B5DA63003F7501 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
 		306DA56E20B60AB6003F7501 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
@@ -83,12 +82,12 @@
 				30345F2E20A9AA2D00B9B963 /* BMP.hpp */,
 				30345F1B20A8F45300B9B963 /* Box2.hpp */,
 				30345F1620A8F43D00B9B963 /* Box3.hpp */,
-				30345F2720A8FD1500B9B963 /* Buffer.hpp */,
 				30345F1220A8F3BE00B9B963 /* Color.hpp */,
 				306DA56E20B60AB6003F7501 /* Constants.hpp */,
 				30345F0A20A8F33E00B9B963 /* ConvexVolume.hpp */,
 				30DFA4BE20ACE6C4007BEB42 /* DepthState.hpp */,
 				30DFA46220AB2357007BEB42 /* File.hpp */,
+				306A7D0820B87A25002C47F1 /* RenderTarget.hpp */,
 				30DFA46620AB2C42007BEB42 /* Material.hpp */,
 				30345F0820A8F26A00B9B963 /* MathUtils.hpp */,
 				30345EF020A8F0CE00B9B963 /* Matrix4.hpp */,
@@ -146,7 +145,6 @@
 				30345F3820A9B8D600B9B963 /* Vertex.hpp in Headers */,
 				30345F1820A8F43D00B9B963 /* Box3.hpp in Headers */,
 				30345F1D20A8F45300B9B963 /* Box2.hpp in Headers */,
-				30345F2920A8FD1500B9B963 /* Buffer.hpp in Headers */,
 				30DFA46820AB2C42007BEB42 /* Material.hpp in Headers */,
 				30DFA45C20AB1B0D007BEB42 /* MTL.hpp in Headers */,
 				30345F3D20AA0AB000B9B963 /* OBJ.hpp in Headers */,

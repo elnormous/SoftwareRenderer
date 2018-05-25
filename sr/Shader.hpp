@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "Buffer.hpp"
 #include "Matrix4.hpp"
+#include "Sampler.hpp"
 #include "Vertex.hpp"
 
 namespace sr

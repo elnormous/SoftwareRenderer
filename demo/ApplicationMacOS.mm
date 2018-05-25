@@ -124,9 +124,9 @@
 static const void* getBytePointer(void* info)
 {
     sr::Renderer* renderer = static_cast<sr::Renderer*>(info);
-    const sr::Buffer& buffer = renderer->getFrameBuffer();
+    const std::vector<uint8_t>& buffer = renderer->getBackBuffer().getFrameBuffer().getLevel(0);
 
-    return buffer.getData().data();
+    return buffer.data();
 }
 
 namespace demo

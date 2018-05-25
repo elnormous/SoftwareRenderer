@@ -131,7 +131,6 @@
     <ClInclude Include="..\sr\BMP.hpp" />
     <ClInclude Include="..\sr\Box2.hpp" />
     <ClInclude Include="..\sr\Box3.hpp" />
-    <ClInclude Include="..\sr\Buffer.hpp" />
     <ClInclude Include="..\sr\Color.hpp" />
     <ClInclude Include="..\sr\ConvexVolume.hpp" />
     <ClInclude Include="..\sr\DepthState.hpp" />
@@ -145,6 +144,7 @@
     <ClInclude Include="..\sr\Quaternion.hpp" />
     <ClInclude Include="..\sr\Rect.hpp" />
     <ClInclude Include="..\sr\Renderer.hpp" />
+    <ClInclude Include="..\sr\RenderTarget.hpp" />
     <ClInclude Include="..\sr\Sampler.hpp" />
     <ClInclude Include="..\sr\Shader.hpp" />
     <ClInclude Include="..\sr\Size2.hpp" />

@@ -6,17 +6,48 @@
 
 #include <climits>
 #include <vector>
-#include "Buffer.hpp"
 
 namespace sr
 {
     class Texture
     {
     public:
-        Texture(uint32_t initWidth = 0,
-                uint32_t initHeight = 0):
+        enum class PixelFormat
+        {
+            NONE,
+            R8,
+            A8,
+            RGBA8,
+            FLOAT32
+        };
+
+        static uint32_t getPixelSize(PixelFormat pixelFormat)
+        {
+            switch (pixelFormat)
+            {
+                case PixelFormat::R8:
+                case PixelFormat::A8:
+                    return sizeof(uint8_t) * 1;
+                    break;
+                case PixelFormat::RGBA8:
+                    return sizeof(uint8_t) * 4;
+                    break;
+                case PixelFormat::FLOAT32:
+                    return sizeof(float);
+                    break;
+                default:
+                    return 0;
+            }
+        }
+
+        Texture(PixelFormat initPixelFormat = PixelFormat::NONE,
+                uint32_t initWidth = 0,
+                uint32_t initHeight = 0,
+                bool initMipMaps = false):
+            pixelFormat(initPixelFormat),
             width(initWidth),
-            height(initHeight)
+            height(initHeight),
+            mipMaps(initMipMaps)
         {
             for (uint32_t i = 0; i < 256; ++i)
             {
@@ -24,23 +55,96 @@ namespace sr
                 GAMMA_DECODE[i] = roundf(powf(i / 255.0F, GAMMA) * 255.0F);
             }
 
-            uint32_t newWidth = width;
-            uint32_t newHeight = height;
+            uint32_t pixelSize = getPixelSize(pixelFormat);
 
-            levels.push_back(Buffer(Buffer::Type::RGBA8, newWidth, newHeight));
-
-            while (newWidth > 1 || newHeight > 1)
+            if (pixelSize > 0 && width > 0 && height > 0)
             {
-                newWidth >>= 1;
-                newHeight >>= 1;
+                levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
 
-                if (newWidth < 1) newWidth = 1;
-                if (newHeight < 1) newHeight = 1;
+                if (mipMaps)
+                {
+                    uint32_t newWidth = width;
+                    uint32_t newHeight = height;
 
-                levels.push_back(Buffer(Buffer::Type::RGBA8, newWidth, newHeight));
+                    while (newWidth > 1 || newHeight > 1)
+                    {
+                        newWidth >>= 1;
+                        newHeight >>= 1;
+
+                        if (newWidth < 1) newWidth = 1;
+                        if (newHeight < 1) newHeight = 1;
+
+                        levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
+                    }
+                }
             }
         }
 
+        bool init(PixelFormat initPixelFormat, uint32_t initWidth, uint32_t initHeight, bool initMipMaps = false)
+        {
+            pixelFormat = initPixelFormat;
+            width = initWidth;
+            height = initHeight;
+            mipMaps = initMipMaps;
+
+            uint32_t pixelSize = getPixelSize(pixelFormat);
+            if (pixelSize == 0) return false;
+
+            levels.clear();
+            levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
+
+            if (mipMaps)
+            {
+                uint32_t newWidth = width;
+                uint32_t newHeight = height;
+
+                while (newWidth > 1 || newHeight > 1)
+                {
+                    newWidth >>= 1;
+                    newHeight >>= 1;
+
+                    if (newWidth < 1) newWidth = 1;
+                    if (newHeight < 1) newHeight = 1;
+
+                    levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
+                }
+            }
+
+            return true;
+        }
+
+        bool resize(uint32_t newWidth, uint32_t newHeight)
+        {
+            width = newWidth;
+            height = newHeight;
+
+            uint32_t pixelSize = getPixelSize(pixelFormat);
+            if (pixelSize == 0) return false;
+
+            levels.clear();
+            levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
+
+            if (mipMaps)
+            {
+                uint32_t newWidth = width;
+                uint32_t newHeight = height;
+
+                while (newWidth > 1 || newHeight > 1)
+                {
+                    newWidth >>= 1;
+                    newHeight >>= 1;
+
+                    if (newWidth < 1) newWidth = 1;
+                    if (newHeight < 1) newHeight = 1;
+
+                    levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
+                }
+            }
+
+            return true;
+        }
+
+        inline PixelFormat getPixelFormat() const { return pixelFormat; }
         inline uint32_t getWidth() const { return width; }
         inline uint32_t getHeight() const { return height; }
 
@@ -49,27 +153,34 @@ namespace sr
             return levels.size();
         }
 
-        inline const Buffer& getLevel(uint32_t level) const
+        inline std::vector<uint8_t>& getLevel(uint32_t level)
         {
             return levels[level];
         }
 
-        inline void setLevel(const Buffer& buffer, uint32_t level)
+        inline const std::vector<uint8_t>& getLevel(uint32_t level) const
         {
-            if (level == 0)
-            {
-                width = buffer.getWidth();
-                height = buffer.getHeight();
+            return levels[level];
+        }
 
-                levels.clear();
-            }
+        inline bool setLevel(const std::vector<uint8_t>& buffer, uint32_t level)
+        {
+            uint32_t pixelSize = getPixelSize(pixelFormat);
+            if (pixelSize == 0) return false;
+
+            if (buffer.size() != width * height * pixelSize) return false;
 
             if (level >= levels.size()) levels.resize(level + 1);
             levels[level] = buffer;
+
+            return true;
         }
 
         bool generateMipMaps()
         {
+            uint32_t pixelSize = getPixelSize(pixelFormat);
+            if (pixelSize == 0) return false;
+
             if (levels.empty()) return false;
 
             uint32_t newWidth = width;
@@ -77,7 +188,6 @@ namespace sr
             uint32_t previousWidth = width;
             uint32_t previousHeight = height;
             size_t level = 1;
-            Buffer::Type pixelType = levels[0].getType();
 
             while (newWidth > 1 || newHeight > 1)
             {
@@ -88,24 +198,24 @@ namespace sr
                 if (newHeight < 1) newHeight = 1;
 
                 if (level >= levels.size())
-                    levels.push_back(Buffer(Buffer::Type::RGBA8, newWidth, newHeight));
+                    levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
 
-                switch (pixelType)
+                switch (pixelFormat)
                 {
-                    case Buffer::Type::RGBA8:
+                    case PixelFormat::RGBA8:
                         imageRGBA8Downsample2x2(previousWidth, previousHeight, previousWidth * 4,
-                                                levels[level - 1].getData().data(),
-                                                levels[level].getData().data());
+                                                levels[level - 1].data(),
+                                                levels[level].data());
                         break;
-                    case Buffer::Type::R8:
+                    case PixelFormat::R8:
                         imageR8Downsample2x2(previousWidth, previousHeight, previousWidth * 1,
-                                             levels[level - 1].getData().data(),
-                                             levels[level].getData().data());
+                                             levels[level - 1].data(),
+                                             levels[level].data());
                     break;
-                    case Buffer::Type::A8:
+                    case PixelFormat::A8:
                         imageA8Downsample2x2(previousWidth, previousHeight, previousWidth * 1,
-                                             levels[level - 1].getData().data(),
-                                             levels[level].getData().data());
+                                             levels[level - 1].data(),
+                                             levels[level].data());
                         break;
                     default:
                         return false;
@@ -411,12 +521,14 @@ namespace sr
             }
         }
 
+        PixelFormat pixelFormat = PixelFormat::NONE;
         static constexpr float GAMMA = 2.2F;
         uint8_t GAMMA_ENCODE[256];
         float GAMMA_DECODE[256];
         uint32_t width = 0;
         uint32_t height = 0;
-        std::vector<Buffer> levels;
+        bool mipMaps = false;
+        std::vector<std::vector<uint8_t>> levels;
         uint32_t minLOD = 0;
         uint32_t maxLOD = UINT_MAX;
         float lodBias = 0.0F;

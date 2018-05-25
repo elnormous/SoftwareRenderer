@@ -44,9 +44,9 @@ namespace sr
 
             if (texture && texture->getLevelCount())
             {
-                const Buffer& buffer = texture->getLevel(0);
+                const std::vector<uint8_t>& buffer = texture->getLevel(0);
 
-                if (!buffer.isEmpty())
+                if (!buffer.empty())
                 {
                     switch (addressModeX)
                     {
@@ -60,32 +60,32 @@ namespace sr
                         case AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
                     }
 
-                    uint32_t textureX = static_cast<uint32_t>(coord.v[0] * (buffer.getWidth() - 1));
-                    uint32_t textureY = static_cast<uint32_t>(coord.v[1] * (buffer.getHeight() - 1));
+                    uint32_t textureX = static_cast<uint32_t>(coord.v[0] * (texture->getWidth() - 1));
+                    uint32_t textureY = static_cast<uint32_t>(coord.v[1] * (texture->getHeight() - 1));
 
-                    switch (buffer.getType())
+                    switch (texture->getPixelFormat())
                     {
-                        case sr::Buffer::Type::R8:
+                        case Texture::PixelFormat::R8:
                         {
-                            const uint8_t* r = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 1];
+                            const uint8_t* r = &buffer[(textureY * texture->getWidth() + textureX) * 1];
                             result = sr::Color(*r, *r, *r, 255);
                             break;
                         }
-                        case sr::Buffer::Type::A8:
+                        case Texture::PixelFormat::A8:
                         {
-                            const uint8_t* a = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 1];
+                            const uint8_t* a = &buffer[(textureY * texture->getWidth() + textureX) * 1];
                             result = sr::Color(0, 0, 0, *a);
                             break;
                         }
-                        case sr::Buffer::Type::RGBA8:
+                        case Texture::PixelFormat::RGBA8:
                         {
-                            const uint8_t* rgba = &buffer.getData()[(textureY * buffer.getWidth() + textureX) * 4];
+                            const uint8_t* rgba = &buffer[(textureY * texture->getWidth() + textureX) * 4];
                             result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
                             break;
                         }
-                        case sr::Buffer::Type::FLOAT32:
+                        case Texture::PixelFormat::FLOAT32:
                         {
-                            float f = reinterpret_cast<const float*>(buffer.getData().data())[textureY * buffer.getWidth() + textureX];
+                            float f = reinterpret_cast<const float*>(buffer.data())[textureY * texture->getWidth() + textureX];
                             result.r = result.g = result.b = f;
                             result.a = 1.0F;
                             break;

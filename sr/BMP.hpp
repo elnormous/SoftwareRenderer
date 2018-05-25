@@ -7,7 +7,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Buffer.hpp"
 #include "File.hpp"
 
 namespace sr
@@ -62,22 +61,21 @@ namespace sr
             CMYKRLE4 = 0x000D
         };
 
-        Buffer getBuffer() const
-        {
-            Buffer buffer;
-            buffer.init(sr::Buffer::Type::RGBA8, width, height);
-            buffer.setDate(data);
+        inline uint32_t getWidth() const { return width; }
+        inline uint32_t getHeight() const { return height; }
 
-            return buffer;
+        const std::vector<uint8_t>& getBuffer() const
+        {
+            return data;
         }
 
-        bool setBuffer(const Buffer& buffer)
+        bool setBuffer(uint32_t newWidth,
+                       uint32_t newHeight,
+                       const std::vector<uint8_t>& buffer)
         {
-            if (buffer.getType() != sr::Buffer::Type::RGBA8) return false;
-
-            width = buffer.getWidth();
-            height = buffer.getHeight();
-            data = buffer.getData();
+            width = newWidth;
+            height = newHeight;
+            data = buffer;
 
             return true;
         }
