@@ -18,7 +18,7 @@ namespace demo
         virtual bool init(int argc, const char** argv) override;
 
         void draw();
-        void didResize(int width, int height);
+        void didResize(int newWidth, int newHeight);
 
         inline Display* getDisplay() const { return display; }
         inline ::Window getWindow() const { return window; }

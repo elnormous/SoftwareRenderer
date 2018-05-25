@@ -15,10 +15,10 @@ namespace demo
 
     WindowLinux::~WindowLinux()
     {
-        if (gc) XFreeGC(display, gc);
-
         if (display)
         {
+            if (gc) XFreeGC(display, gc);
+
             if (window)
                 XDestroyWindow(display, window);
 
@@ -75,20 +75,23 @@ namespace demo
     {
         render();
 
-        const uint8_t* data = renderTarget.getFrameBuffer().getData().data();
+        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
+
+        const uint8_t* data = frameBuffer.getData().data();
         XImage* image = XCreateImage(display, visual, depth, ZPixmap, 0,
                                      const_cast<char*>(reinterpret_cast<const char*>(data)),
-                                     width, height, 32, 0);
+                                     frameBuffer.getWidth(), frameBuffer.getHeight(), 32, 0);
 
-        XPutImage(display, window, gc, image, 0, 0, 0, 0, width, height);
+        XPutImage(display, window, gc, image, 0, 0, 0, 0,
+                  frameBuffer.getWidth(), frameBuffer.getHeight());
         XFlush(display);
         XFree(image);
     }
 
-    void WindowLinux::didResize(int width, int height)
+    void WindowLinux::didResize(int newWidth, int newHeight)
     {
-        width = static_cast<uint32_t>(width);
-        height = static_cast<uint32_t>(height);
+        width = static_cast<uint32_t>(newWidth);
+        height = static_cast<uint32_t>(newHeight);
 
         onResize();
     }
