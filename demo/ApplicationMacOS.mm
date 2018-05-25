@@ -124,9 +124,8 @@
 static const void* getBytePointer(void* info)
 {
     sr::RenderTarget* renderTarget = static_cast<sr::RenderTarget*>(info);
-    const std::vector<uint8_t>& buffer = renderTarget->getFrameBuffer().getLevel(0);
 
-    return buffer.data();
+    return renderTarget->getFrameBuffer().getData().data();
 }
 
 namespace demo
@@ -229,7 +228,7 @@ namespace demo
     void WindowMacOS::didResize()
     {
         NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                    styleMask:[window styleMask]];
+                                                     styleMask:[window styleMask]];
 
         width = static_cast<uint32_t>(windowFrame.size.width);
         height = static_cast<uint32_t>(windowFrame.size.height);
@@ -244,7 +243,7 @@ namespace demo
             nullptr
         };
 
-        provider = CGDataProviderCreateDirect(&renderer, width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
 
         onResize();
     }

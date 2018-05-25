@@ -50,8 +50,8 @@ namespace sr
     {
         if (!renderTarget) return false;
 
-        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getLevel(0).data());
-        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getLevel(0).data());
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
         uint32_t rgba = color.getIntValueRaw();
 
         uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
@@ -72,8 +72,8 @@ namespace sr
         if (!renderTarget) return false;
         if (!shader) return false;
 
-        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getLevel(0).data());
-        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getLevel(0).data());
+        uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+        float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
         for (uint32_t i = 0; i < indices.size(); i += 3)
         {

@@ -153,7 +153,7 @@ namespace sr
             return levels.size();
         }
 
-        inline std::vector<uint8_t>& getLevel(uint32_t level)
+        inline std::vector<uint8_t>& getData(uint32_t level = 0)
         {
             return levels[level];
         }
