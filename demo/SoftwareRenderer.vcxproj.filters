@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="sr">
+      <UniqueIdentifier>{eab7caca-519d-4590-b637-9b8f8b31efa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp">
@@ -23,6 +26,90 @@
     </ClInclude>
     <ClInclude Include="Window.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Material.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\MathUtils.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Matrix4.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\MTL.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\OBJ.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Plane.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Quaternion.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Rect.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Renderer.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\RenderTarget.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Sampler.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Shader.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Size2.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Size3.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\sr.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Texture.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Vector.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Vertex.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\WAV.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\BlendState.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\BMP.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Box2.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Box3.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Color.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\Constants.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\ConvexVolume.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\DepthState.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sr\File.hpp">
+      <Filter>sr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

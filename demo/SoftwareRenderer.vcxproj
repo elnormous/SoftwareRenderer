@@ -19,6 +19,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\sr\BlendState.hpp" />
+    <ClInclude Include="..\sr\BMP.hpp" />
+    <ClInclude Include="..\sr\Box2.hpp" />
+    <ClInclude Include="..\sr\Box3.hpp" />
+    <ClInclude Include="..\sr\Color.hpp" />
+    <ClInclude Include="..\sr\Constants.hpp" />
+    <ClInclude Include="..\sr\ConvexVolume.hpp" />
+    <ClInclude Include="..\sr\DepthState.hpp" />
+    <ClInclude Include="..\sr\File.hpp" />
+    <ClInclude Include="..\sr\Material.hpp" />
+    <ClInclude Include="..\sr\MathUtils.hpp" />
+    <ClInclude Include="..\sr\Matrix4.hpp" />
+    <ClInclude Include="..\sr\MTL.hpp" />
+    <ClInclude Include="..\sr\OBJ.hpp" />
+    <ClInclude Include="..\sr\Plane.hpp" />
+    <ClInclude Include="..\sr\Quaternion.hpp" />
+    <ClInclude Include="..\sr\Rect.hpp" />
+    <ClInclude Include="..\sr\Renderer.hpp" />
+    <ClInclude Include="..\sr\RenderTarget.hpp" />
+    <ClInclude Include="..\sr\Sampler.hpp" />
+    <ClInclude Include="..\sr\Shader.hpp" />
+    <ClInclude Include="..\sr\Size2.hpp" />
+    <ClInclude Include="..\sr\Size3.hpp" />
+    <ClInclude Include="..\sr\sr.hpp" />
+    <ClInclude Include="..\sr\Texture.hpp" />
+    <ClInclude Include="..\sr\Vector.hpp" />
+    <ClInclude Include="..\sr\Vertex.hpp" />
+    <ClInclude Include="..\sr\WAV.hpp" />
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="TextureShader.hpp" />
     <ClInclude Include="Window.hpp" />
