@@ -21,6 +21,8 @@ namespace sr
             FLOAT32
         };
 
+        static constexpr float GAMMA = 2.2F;
+
         static uint32_t getPixelSize(PixelFormat pixelFormat)
         {
             switch (pixelFormat)
@@ -49,12 +51,6 @@ namespace sr
             height(initHeight),
             mipMaps(initMipMaps)
         {
-            for (uint32_t i = 0; i < 256; ++i)
-            {
-                GAMMA_ENCODE[i] = static_cast<uint8_t>(roundf(powf(i / 255.0F, 1.0F / GAMMA) * 255.0F));
-                GAMMA_DECODE[i] = roundf(powf(i / 255.0F, GAMMA) * 255.0F);
-            }
-
             uint32_t pixelSize = getPixelSize(pixelFormat);
 
             if (pixelSize > 0 && width > 0 && height > 0)
@@ -301,12 +297,12 @@ namespace sr
                     for (uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                     {
                         float r = 0.0F;
-                        r += GAMMA_DECODE[pixel[0]];
-                        r += GAMMA_DECODE[pixel[1]];
-                        r += GAMMA_DECODE[pixel[pitch + 0]];
-                        r += GAMMA_DECODE[pixel[pitch + 1]];
+                        r += powf(pixel[0] / 255.0F, GAMMA);
+                        r += powf(pixel[1] / 255.0F, GAMMA);
+                        r += powf(pixel[pitch + 0] / 255.0F, GAMMA);
+                        r += powf(pixel[pitch + 1] / 255.0F, GAMMA);
                         r /= 4.0F;
-                        dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
+                        dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
                     }
                 }
             }
@@ -320,10 +316,10 @@ namespace sr
                     const uint8_t* pixel = src;
 
                     float r = 0.0F;
-                    r += GAMMA_DECODE[pixel[0]];
-                    r += GAMMA_DECODE[pixel[pitch + 0]];
+                    r += powf(pixel[0] / 255.0F, GAMMA);
+                    r += powf(pixel[pitch + 0] / 255.0F, GAMMA);
                     r /= 2.0F;
-                    dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
+                    dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
                 }
             }
             else if (dstWidth > 0)
@@ -332,10 +328,10 @@ namespace sr
                 for (uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                 {
                     float r = 0.0F;
-                    r += GAMMA_DECODE[pixel[0]];
-                    r += GAMMA_DECODE[pixel[1]];
+                    r += powf(pixel[0] / 255.0F, GAMMA);
+                    r += powf(pixel[1] / 255.0F, GAMMA);
                     r /= 2.0F;
-                    dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
+                    dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
                 }
             }
         }
@@ -362,36 +358,36 @@ namespace sr
 
                         if (pixel[3] > 0)
                         {
-                            r += GAMMA_DECODE[pixel[0]];
-                            g += GAMMA_DECODE[pixel[1]];
-                            b += GAMMA_DECODE[pixel[2]];
+                            r += powf(pixel[0] / 255.0F, GAMMA);
+                            g += powf(pixel[1] / 255.0F, GAMMA);
+                            b += powf(pixel[2] / 255.0F, GAMMA);
                             pixels += 1.0F;
                         }
                         a += pixel[3];
 
                         if (pixel[7] > 0)
                         {
-                            r += GAMMA_DECODE[pixel[4]];
-                            g += GAMMA_DECODE[pixel[5]];
-                            b += GAMMA_DECODE[pixel[6]];
+                            r += powf(pixel[4] / 255.0F, GAMMA);
+                            g += powf(pixel[5] / 255.0F, GAMMA);
+                            b += powf(pixel[6] / 255.0F, GAMMA);
                             pixels += 1.0F;
                         }
                         a += pixel[7];
 
                         if (pixel[pitch + 3] > 0)
                         {
-                            r += GAMMA_DECODE[pixel[pitch + 0]];
-                            g += GAMMA_DECODE[pixel[pitch + 1]];
-                            b += GAMMA_DECODE[pixel[pitch + 2]];
+                            r += powf(pixel[pitch + 0] / 255.0F, GAMMA);
+                            g += powf(pixel[pitch + 1] / 255.0F, GAMMA);
+                            b += powf(pixel[pitch + 2] / 255.0F, GAMMA);
                             pixels += 1.0F;
                         }
                         a += pixel[pitch + 3];
 
                         if (pixel[pitch + 7] > 0)
                         {
-                            r += GAMMA_DECODE[pixel[pitch + 4]];
-                            g += GAMMA_DECODE[pixel[pitch + 5]];
-                            b += GAMMA_DECODE[pixel[pitch + 6]];
+                            r += powf(pixel[pitch + 4] / 255.0F, GAMMA);
+                            g += powf(pixel[pitch + 5] / 255.0F, GAMMA);
+                            b += powf(pixel[pitch + 6] / 255.0F, GAMMA);
                             pixels += 1.0F;
                         }
                         a += pixel[pitch + 7];
@@ -402,9 +398,9 @@ namespace sr
                             g /= pixels;
                             b /= pixels;
                             a *= 0.25F;
-                            dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
-                            dst[1] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(g))];
-                            dst[2] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(b))];
+                            dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
+                            dst[1] = static_cast<uint8_t>(roundf(powf(g, 1.0F / GAMMA) * 255.0F));
+                            dst[2] = static_cast<uint8_t>(roundf(powf(b, 1.0F / GAMMA) * 255.0F));
                             dst[3] = static_cast<uint8_t>(a);
                         }
                         else
@@ -434,18 +430,18 @@ namespace sr
 
                     if (pixel[3] > 0)
                     {
-                        r += GAMMA_DECODE[pixel[0]];
-                        g += GAMMA_DECODE[pixel[1]];
-                        b += GAMMA_DECODE[pixel[2]];
+                        r += powf(pixel[0] / 255.0F, GAMMA);
+                        g += powf(pixel[1] / 255.0F, GAMMA);
+                        b += powf(pixel[2] / 255.0F, GAMMA);
                         pixels += 1.0F;
                     }
                     a = pixel[3];
 
                     if (pixel[pitch + 3] > 0)
                     {
-                        r += GAMMA_DECODE[pixel[pitch + 0]];
-                        g += GAMMA_DECODE[pixel[pitch + 1]];
-                        b += GAMMA_DECODE[pixel[pitch + 2]];
+                        r += powf(pixel[pitch + 0] / 255.0F, GAMMA);
+                        g += powf(pixel[pitch + 1] / 255.0F, GAMMA);
+                        b += powf(pixel[pitch + 2] / 255.0F, GAMMA);
                         pixels += 1.0F;
                     }
                     a += pixel[pitch + 3];
@@ -456,9 +452,9 @@ namespace sr
                         g /= pixels;
                         b /= pixels;
                         a *= 0.5F;
-                        dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
-                        dst[1] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(g))];
-                        dst[2] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(b))];
+                        dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
+                        dst[1] = static_cast<uint8_t>(roundf(powf(g, 1.0F / GAMMA) * 255.0F));
+                        dst[2] = static_cast<uint8_t>(roundf(powf(b, 1.0F / GAMMA) * 255.0F));
                         dst[3] = static_cast<uint8_t>(a);
                     }
                     else
@@ -483,18 +479,18 @@ namespace sr
 
                     if (pixel[3] > 0)
                     {
-                        r += GAMMA_DECODE[pixel[0]];
-                        g += GAMMA_DECODE[pixel[1]];
-                        b += GAMMA_DECODE[pixel[2]];
+                        r += powf(pixel[0] / 255.0F, GAMMA);
+                        g += powf(pixel[1] / 255.0F, GAMMA);
+                        b += powf(pixel[2] / 255.0F, GAMMA);
                         pixels += 1.0F;
                     }
                     a += pixel[3];
 
                     if (pixel[7] > 0)
                     {
-                        r += GAMMA_DECODE[pixel[4]];
-                        g += GAMMA_DECODE[pixel[5]];
-                        b += GAMMA_DECODE[pixel[6]];
+                        r += powf(pixel[4] / 255.0F, GAMMA);
+                        g += powf(pixel[5] / 255.0F, GAMMA);
+                        b += powf(pixel[6] / 255.0F, GAMMA);
                         pixels += 1.0F;
                     }
                     a += pixel[7];
@@ -505,9 +501,9 @@ namespace sr
                         g /= pixels;
                         b /= pixels;
                         a *= 0.5F;
-                        dst[0] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(r))];
-                        dst[1] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(g))];
-                        dst[2] = GAMMA_ENCODE[static_cast<uint8_t>(roundf(b))];
+                        dst[0] = static_cast<uint8_t>(roundf(powf(r, 1.0F / GAMMA) * 255.0F));
+                        dst[1] = static_cast<uint8_t>(roundf(powf(g, 1.0F / GAMMA) * 255.0F));
+                        dst[2] = static_cast<uint8_t>(roundf(powf(b, 1.0F / GAMMA) * 255.0F));
                         dst[3] = static_cast<uint8_t>(a);
                     }
                     else
@@ -522,9 +518,6 @@ namespace sr
         }
 
         PixelFormat pixelFormat = PixelFormat::NONE;
-        static constexpr float GAMMA = 2.2F;
-        uint8_t GAMMA_ENCODE[256];
-        float GAMMA_DECODE[256];
         uint32_t width = 0;
         uint32_t height = 0;
         bool mipMaps = false;
