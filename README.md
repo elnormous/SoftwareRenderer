@@ -8,6 +8,7 @@ With this project, I am trying to implement the GPU rendering pipeline in softwa
 * Alpha blending
 * Texture sampling with clamp and repeat address modes
 * Custom shader support (via extending the Shader class)
+* Point and linear texture filtering
 
 # Usage
 
@@ -16,4 +17,4 @@ Just include the headers from the sr directory in your project and build. You ca
 # Showcase
 
 The demonstration app is in the demo directory and it can be built for macOS (Xcode project or Makefile), Linux (Makefile) and Windows (Visual Studio project or Makefile). This is a sample output of the renderer (a box with one side transparent and another colored):
-![SR sample](https://elviss.lv/files/sr_sample.png)
+![SR sample](https://elviss.lv/files/sr_sample_filtered.png)
