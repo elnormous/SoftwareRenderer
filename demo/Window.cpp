@@ -20,6 +20,10 @@ namespace demo
         texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
 
+        sampler.setAddressModeX(sr::Sampler::AddressMode::REPEAT);
+        sampler.setAddressModeY(sr::Sampler::AddressMode::REPEAT);
+        sampler.setFilter(sr::Sampler::Filter::LINEAR);
+
         blendState.enabled = true;
 
         depthState.read = true;
@@ -106,9 +110,7 @@ namespace demo
 
         renderer.setShader(shader);
         renderer.setTexture(texture, 0);
-        renderer.setAddressModeX(sr::Sampler::AddressMode::REPEAT, 0);
-        renderer.setAddressModeY(sr::Sampler::AddressMode::REPEAT, 0);
-        renderer.setFilter(sr::Sampler::Filter::LINEAR, 0);
+        renderer.setSampler(sampler, 0);
 
         renderer.drawTriangles(indices, vertices, modelViewProjection);
     }

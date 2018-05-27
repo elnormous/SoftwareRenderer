@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Matrix4.hpp"
-#include "Sampler.hpp"
+#include "Texture.hpp"
 #include "Vertex.hpp"
 
 namespace sr
@@ -22,6 +22,6 @@ namespace sr
         };
 
         virtual VSOutput vertexShader(const Matrix4& modelViewProjection, const Vertex& vertex) const = 0;
-        virtual Color fragmentShader(VSOutput input, Sampler samplers[2]) const = 0;
+        virtual Color fragmentShader(VSOutput input, Sampler* samplers[2], Texture* textures[2]) const = 0;
     };
 }

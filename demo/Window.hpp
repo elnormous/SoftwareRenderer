@@ -46,6 +46,7 @@ namespace demo
         sr::DepthState depthState;
 
         TextureShader shader;
+        sr::Sampler sampler;
         sr::Texture texture;
 
         std::vector<uint32_t> indices;

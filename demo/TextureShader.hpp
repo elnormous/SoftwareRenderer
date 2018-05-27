@@ -25,9 +25,9 @@ namespace demo
             return result;
         }
 
-        virtual sr::Color fragmentShader(VSOutput input, sr::Sampler samplers[2]) const
+        virtual sr::Color fragmentShader(VSOutput input, sr::Sampler* samplers[2], sr::Texture* textures[2]) const
         {
-            sr::Color sampleColor = samplers[0].sample(input.texCoords[0]);
+            sr::Color sampleColor = textures[0]->sample(samplers[0], input.texCoords[0]);
 
             sr::Color result;
             result.r = input.color.r * sampleColor.r;

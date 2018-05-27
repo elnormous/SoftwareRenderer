@@ -39,26 +39,18 @@ namespace sr
             shader = &newShader;
         }
 
-        void setTexture(const Texture& newTexture, uint32_t level)
+        void setTexture(Texture& newTexture, uint32_t level)
         {
             assert(level < 2);
 
-            samplers[level] = Sampler(&newTexture);
+            textures[level] = &newTexture;
         }
 
-        void setAddressModeX(Sampler::AddressMode addressMode, uint32_t level)
+        void setSampler(Sampler& newSampler, uint32_t level)
         {
-            samplers[level].setAddressModeX(addressMode);
-        }
+            assert(level < 2);
 
-        void setAddressModeY(Sampler::AddressMode addressMode, uint32_t level)
-        {
-            samplers[level].setAddressModeY(addressMode);
-        }
-
-        void setFilter(Sampler::Filter filter, uint32_t level)
-        {
-            samplers[level].setFilter(filter);
+            samplers[level] = &newSampler;
         }
 
         void setViewport(const Rect& newViewport)
@@ -197,7 +189,7 @@ namespace sr
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                            Color psOutput = shader->fragmentShader(psInput, samplers);
+                            Color psOutput = shader->fragmentShader(psInput, samplers, textures);
 
                             if (blendState.enabled)
                             {
@@ -228,7 +220,8 @@ namespace sr
         Rect viewport;
         Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
-        Sampler samplers[2];
+        Sampler* samplers[2];
+        Texture* textures[2];
         BlendState blendState;
         DepthState depthState;
     };
