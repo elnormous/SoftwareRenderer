@@ -172,6 +172,46 @@ namespace sr
             return true;
         }
 
+        inline Color getPixel(uint32_t x, uint32_t y, uint32_t level) const
+        {
+            Color result;
+
+            const std::vector<uint8_t>& buffer = levels[level];
+
+            switch (pixelFormat)
+            {
+                case Texture::PixelFormat::R8:
+                {
+                    const uint8_t* r = &buffer[(y * width + x) * 1];
+                    result = sr::Color(*r, *r, *r, 255);
+                    break;
+                }
+                case Texture::PixelFormat::A8:
+                {
+                    const uint8_t* a = &buffer[(y * width + x) * 1];
+                    result = sr::Color(0, 0, 0, *a);
+                    break;
+                }
+                case Texture::PixelFormat::RGBA8:
+                {
+                    const uint8_t* rgba = &buffer[(y * width + x) * 4];
+                    result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+                    break;
+                }
+                case Texture::PixelFormat::FLOAT32:
+                {
+                    float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
+                    result.r = result.g = result.b = f;
+                    result.a = 1.0F;
+                    break;
+                }
+                default:
+                    return result;
+            }
+
+            return result;
+        }
+
         bool generateMipMaps()
         {
             uint32_t pixelSize = getPixelSize(pixelFormat);

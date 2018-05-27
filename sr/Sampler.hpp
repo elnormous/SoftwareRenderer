@@ -19,6 +19,12 @@ namespace sr
             REPEAT
         };
 
+        enum class Filter
+        {
+            POINT,
+            LINEAR
+        };
+
         Sampler()
         {
         }
@@ -28,14 +34,19 @@ namespace sr
         {
         }
 
-        void setAddressModeX(AddressMode addressMode)
+        inline void setAddressModeX(AddressMode addressMode)
         {
             addressModeX = addressMode;
         }
 
-        void setAddressModeY(AddressMode addressMode)
+        inline void setAddressModeY(AddressMode addressMode)
         {
             addressModeY = addressMode;
+        }
+
+        inline void setFilter(Filter newFilter)
+        {
+            filter = newFilter;
         }
 
         Color sample(Vector2F coord) const
@@ -44,55 +55,55 @@ namespace sr
 
             if (texture && texture->getLevelCount())
             {
-                const std::vector<uint8_t>& buffer = texture->getData(0);
-
-                if (!buffer.empty())
+                switch (addressModeX)
                 {
-                    switch (addressModeX)
-                    {
-                        case AddressMode::CLAMP: coord.v[0] = clamp(coord.v[0], 0.0F, 1.0F); break;
-                        case AddressMode::REPEAT: coord.v[0] = fmodf(coord.v[0], 1.0F); break;
-                    }
+                    case AddressMode::CLAMP: coord.v[0] = clamp(coord.v[0], 0.0F, 1.0F); break;
+                    case AddressMode::REPEAT: coord.v[0] = fmodf(coord.v[0], 1.0F); break;
+                }
 
-                    switch (addressModeY)
-                    {
-                        case AddressMode::CLAMP: coord.v[1] = clamp(coord.v[1], 0.0F, 1.0F); break;
-                        case AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
-                    }
+                switch (addressModeY)
+                {
+                    case AddressMode::CLAMP: coord.v[1] = clamp(coord.v[1], 0.0F, 1.0F); break;
+                    case AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
+                }
 
-                    uint32_t textureX = static_cast<uint32_t>(coord.v[0] * (texture->getWidth() - 1));
-                    uint32_t textureY = static_cast<uint32_t>(coord.v[1] * (texture->getHeight() - 1));
+                float coordX = coord.v[0] * (texture->getWidth() - 1);
+                float coordY = coord.v[1] * (texture->getHeight() - 1);
 
-                    switch (texture->getPixelFormat())
-                    {
-                        case Texture::PixelFormat::R8:
-                        {
-                            const uint8_t* r = &buffer[(textureY * texture->getWidth() + textureX) * 1];
-                            result = sr::Color(*r, *r, *r, 255);
-                            break;
-                        }
-                        case Texture::PixelFormat::A8:
-                        {
-                            const uint8_t* a = &buffer[(textureY * texture->getWidth() + textureX) * 1];
-                            result = sr::Color(0, 0, 0, *a);
-                            break;
-                        }
-                        case Texture::PixelFormat::RGBA8:
-                        {
-                            const uint8_t* rgba = &buffer[(textureY * texture->getWidth() + textureX) * 4];
-                            result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
-                            break;
-                        }
-                        case Texture::PixelFormat::FLOAT32:
-                        {
-                            float f = reinterpret_cast<const float*>(buffer.data())[textureY * texture->getWidth() + textureX];
-                            result.r = result.g = result.b = f;
-                            result.a = 1.0F;
-                            break;
-                        }
-                        default:
-                            return result;
-                    }
+                if (filter == Filter::POINT)
+                {
+                    uint32_t textureX = static_cast<uint32_t>(roundf(coordX));
+                    uint32_t textureY = static_cast<uint32_t>(roundf(coordY));
+                    result = texture->getPixel(textureX, textureY, 0);
+                }
+                else
+                {
+                    uint32_t textureX0 = static_cast<uint32_t>(coordX - 0.5F);
+                    uint32_t textureX1 = textureX0 + 1;
+                    uint32_t textureY0 = static_cast<uint32_t>(coordY - 0.5F);
+                    uint32_t textureY1 = textureY0 + 1;
+
+                    textureX0 = clamp(textureX0, 0U, texture->getWidth() - 1);
+                    textureX1 = clamp(textureX1, 0U, texture->getWidth() - 1);
+                    textureY0 = clamp(textureY0, 0U, texture->getHeight() - 1);
+                    textureY1 = clamp(textureY1, 0U, texture->getHeight() - 1);
+
+                    Color color[4] = {
+                        texture->getPixel(textureX0, textureY0, 0),
+                        texture->getPixel(textureX1, textureY0, 0),
+                        texture->getPixel(textureX0, textureY1, 0),
+                        texture->getPixel(textureX1, textureY1, 0)
+                    };
+
+                    float x0 = coordX - (textureX0 + 0.5F);
+                    float y0 = coordY - (textureY0 + 0.5F);
+                    float x1 = (textureX0 + 1.5F) - coordX;
+                    float y1 = (textureY0 + 1.5F) - coordY;
+
+                    result.r = color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0;
+                    result.g = color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0;
+                    result.b = color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0;
+                    result.a = color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0;
                 }
             }
 
@@ -103,5 +114,6 @@ namespace sr
         const Texture* texture = nullptr;
         AddressMode addressModeX = AddressMode::CLAMP;
         AddressMode addressModeY = AddressMode::CLAMP;
+        Filter filter = Filter::POINT;
     };
 }

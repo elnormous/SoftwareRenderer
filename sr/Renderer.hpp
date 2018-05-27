@@ -56,6 +56,11 @@ namespace sr
             samplers[level].setAddressModeY(addressMode);
         }
 
+        void setFilter(Sampler::Filter filter, uint32_t level)
+        {
+            samplers[level].setFilter(filter);
+        }
+
         void setViewport(const Rect& newViewport)
         {
             viewport = newViewport;

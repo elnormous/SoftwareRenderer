@@ -108,6 +108,7 @@ namespace demo
         renderer.setTexture(texture, 0);
         renderer.setAddressModeX(sr::Sampler::AddressMode::REPEAT, 0);
         renderer.setAddressModeY(sr::Sampler::AddressMode::REPEAT, 0);
+        renderer.setFilter(sr::Sampler::Filter::LINEAR, 0);
 
         renderer.drawTriangles(indices, vertices, modelViewProjection);
     }
