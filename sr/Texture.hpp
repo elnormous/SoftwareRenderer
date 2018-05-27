@@ -276,12 +276,14 @@ namespace sr
                 {
                     case Sampler::AddressMode::CLAMP: coord.v[0] = clamp(coord.v[0], 0.0F, 1.0F); break;
                     case Sampler::AddressMode::REPEAT: coord.v[0] = fmodf(coord.v[0], 1.0F); break;
+                    case Sampler::AddressMode::MIRROR: coord.v[0] = 1.0F - 2.0F * fabsf(fmodf(coord.v[0] / 2.0F, 1.0F) - 0.5F); break;
                 }
 
                 switch (sampler->getAddressModeY())
                 {
                     case Sampler::AddressMode::CLAMP: coord.v[1] = clamp(coord.v[1], 0.0F, 1.0F); break;
                     case Sampler::AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
+                    case Sampler::AddressMode::MIRROR: coord.v[1] = 1.0F - 2.0F * fabsf(fmodf(coord.v[1] / 2.0F, 1.0F) - 0.5F); break;
                 }
 
                 float coordX = coord.v[0] * (width - 1);

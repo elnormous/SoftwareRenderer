@@ -15,7 +15,8 @@ namespace sr
         enum AddressMode
         {
             CLAMP,
-            REPEAT
+            REPEAT,
+            MIRROR
         };
 
         enum class Filter
