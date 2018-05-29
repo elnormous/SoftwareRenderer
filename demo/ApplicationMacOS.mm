@@ -155,16 +155,16 @@ namespace demo
         windowSize.height = round(screen.frame.size.height * 0.6);
 
         NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0f - windowSize.width / 2.0f),
-                                round(screen.frame.size.height / 2.0f - windowSize.height / 2.0f),
-                                windowSize.width, windowSize.height);
+                                  round(screen.frame.size.height / 2.0f - windowSize.height / 2.0f),
+                                  windowSize.width, windowSize.height);
 
         NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
 
         window  = [[NSWindow alloc] initWithContentRect:frame
-                                            styleMask:windowStyleMask
+                                              styleMask:windowStyleMask
                                                 backing:NSBackingStoreBuffered
-                                                defer:NO
-                                                screen:screen];
+                                                  defer:NO
+                                                 screen:screen];
         [window setReleasedWhenClosed:NO];
 
         window.acceptsMouseMovedEvents = YES;
