@@ -111,7 +111,7 @@
     <ClInclude Include="..\sr\File.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ObjRenderer\ApplicationWindows.hpp">
+    <ClInclude Include="ApplicationWindows.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

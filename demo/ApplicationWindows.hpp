@@ -22,7 +22,7 @@ namespace demo
 
         HWND getWindow() const { return window; }
     private:
-        ATOM windowClass;
-        HWND window;
+        ATOM windowClass = 0;
+        HWND window = 0;
     };
 }

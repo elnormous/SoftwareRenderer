@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ObjRenderer\ApplicationWindows.hpp" />
     <ClInclude Include="..\sr\BlendState.hpp" />
     <ClInclude Include="..\sr\BMP.hpp" />
     <ClInclude Include="..\sr\Box2.hpp" />
@@ -49,6 +48,7 @@
     <ClInclude Include="..\sr\Vertex.hpp" />
     <ClInclude Include="..\sr\WAV.hpp" />
     <ClInclude Include="Application.hpp" />
+    <ClInclude Include="ApplicationWindows.hpp" />
     <ClInclude Include="TextureShader.hpp" />
     <ClInclude Include="Window.hpp" />
   </ItemGroup>
