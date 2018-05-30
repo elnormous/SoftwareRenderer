@@ -151,7 +151,7 @@ namespace demo
         return 1;
     }
 
-    std::string Application::getResourcePath() const
+    std::string Application::getResourcePath()
     {
         return "Resources";
     }

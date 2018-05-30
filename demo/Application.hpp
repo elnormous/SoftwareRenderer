@@ -22,7 +22,7 @@ namespace demo
 
         bool run();
 
-        std::string getResourcePath() const;
+        static std::string getResourcePath();
 
     private:
         std::unique_ptr<Window> window;

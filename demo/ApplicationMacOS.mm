@@ -291,7 +291,7 @@ namespace demo
         return true;
     }
 
-    std::string Application::getResourcePath() const
+    std::string Application::getResourcePath()
     {
         CFBundleRef bundle = CFBundleGetMainBundle(); // [NSBundle mainBundle]
         CFURLRef path = CFBundleCopyResourcesDirectoryURL(bundle); // [bundle resourceURL]

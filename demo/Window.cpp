@@ -15,7 +15,7 @@ namespace demo
         model.setIdentity();
 
         sr::BMP bmp;
-        bmp.load(application.getResourcePath() + "/cube.bmp");
+        bmp.load(Application::getResourcePath() + "/cube.bmp");
         texture.init(sr::Texture::PixelFormat::RGBA8, bmp.getWidth(), bmp.getHeight());
         texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
