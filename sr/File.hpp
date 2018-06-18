@@ -127,64 +127,80 @@ namespace sr
 #endif
         }
 
-        bool read(void* buffer, uint32_t size) const
+        uint32_t read(void* buffer, uint32_t size) const
+        {
+#if defined(_WIN32)
+            if (file == INVALID_HANDLE_VALUE)
+                throw std::runtime_error("File is not open");
+
+            DWORD n;
+            if (!ReadFile(file, buffer, size, &n, nullptr))
+                throw std::runtime_error("Failed to read from file");
+
+            return static_cast<uint32_t>(n);
+#else
+            if (fd == -1)
+                throw std::runtime_error("File is not open");
+
+            ssize_t ret = ::read(fd, buffer, size);
+
+            if (ret == -1)
+                throw std::runtime_error("Failed to read from file");
+
+            return static_cast<uint32_t>(ret);
+#endif
+        }
+
+        void readAll(void* buffer, uint32_t size) const
         {
             uint8_t* dest = static_cast<uint8_t*>(buffer);
-            uint32_t bytesRead;
 
-            for (; size > 0; size -= bytesRead, dest += bytesRead)
+            while (size > 0)
             {
-                if (!read(dest, size, bytesRead)) return false;
-                if (bytesRead == 0) return false;
-            }
+                uint32_t bytesRead = read(dest, size);
 
-            return true;
+                if (bytesRead == 0)
+                    throw std::runtime_error("End of file reached");
+
+                size -= bytesRead;
+                dest += bytesRead;
+            }
         }
 
-        bool read(void* buffer, uint32_t size, uint32_t& bytesRead) const
+        uint32_t write(const void* buffer, uint32_t size) const
         {
 #if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE) return false;
+            if (file == INVALID_HANDLE_VALUE)
+                throw std::runtime_error("File is not open");
+
             DWORD n;
-            BOOL ret = ReadFile(file, buffer, size, &n, nullptr);
-            bytesRead = static_cast<uint32_t>(n);
-            return ret != 0;
+            if (!WriteFile(file, buffer, size, &n, nullptr))
+                throw std::runtime_error("Failed to write to file");
+
+            return static_cast<uint32_t>(n);
 #else
-            if (fd == -1) return false;
-            ssize_t ret = ::read(fd, buffer, size);
-            bytesRead = static_cast<uint32_t>(ret);
-            return ret != -1;
+            if (fd == -1)
+                throw std::runtime_error("File is not open");
+
+            ssize_t ret = ::write(fd, buffer, size);
+
+            if (ret == -1)
+                throw std::runtime_error("Failed to write to file");
+
+            return static_cast<uint32_t>(ret);
 #endif
         }
 
-        bool write(const void* buffer, uint32_t size) const
+        void writeAll(const void* buffer, uint32_t size) const
         {
             const uint8_t* src = static_cast<const uint8_t*>(buffer);
-            uint32_t bytesWritten;
 
-            for (; size > 0; size -= bytesWritten, src += bytesWritten)
+            while (size > 0)
             {
-                if (!write(src, size, bytesWritten)) return false;
-                if (bytesWritten == 0) return false;
+                uint32_t bytesWritten = write(src, size);
+                size -= bytesWritten;
+                src += bytesWritten;
             }
-
-            return true;
-        }
-
-        bool write(const void* buffer, uint32_t size, uint32_t& bytesWritten) const
-        {
-#if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE) return false;
-            DWORD n;
-            BOOL ret = WriteFile(file, buffer, size, &n, nullptr);
-            bytesWritten = static_cast<uint32_t>(n);
-            return ret != 0;
-#else
-            if (fd == -1) return false;
-            ssize_t ret = ::write(fd, buffer, size);
-            bytesWritten = static_cast<uint32_t>(ret);
-            return ret != -1;
-#endif
         }
 
         bool seek(int32_t offset, int method) const

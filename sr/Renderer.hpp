@@ -94,7 +94,7 @@ namespace sr
                 depthBufferData[p] = depth;
         }
 
-        bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
+        void drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
         {
             if (!renderTarget)
                 throw std::runtime_error("No render target set");
@@ -213,8 +213,6 @@ namespace sr
                     }
                 }
             }
-
-            return true;
         }
 
     private:
