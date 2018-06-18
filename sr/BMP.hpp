@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include "File.hpp"
@@ -80,25 +80,16 @@ namespace sr
             return true;
         }
 
-        bool load(const std::string& filename)
+        void load(const std::string& filename)
         {
             File f(filename, File::Mode::READ);
-
-            if (!f.isOpen())
-            {
-                std::cerr << "Failed to open " << filename << std::endl;
-                return false;
-            }
 
             BitmapFileHeader header;
 
             f.read(&header.bfType, sizeof(header.bfType));
 
             if (header.bfType != BITMAPFILEHEADER_TYPE_BM)
-            {
-                std::cerr << "Bad bitmap file" << std::endl;
-                return false;
-            }
+                throw std::runtime_error("Bad bitmap file");
 
             f.read(&header.bfSize, sizeof(header.bfSize));
             f.read(&header.bfReserved1, sizeof(header.bfReserved1));
@@ -141,10 +132,7 @@ namespace sr
             }
 
             if (infoHeader.biCompression != RGB)
-            {
-                std::cerr << "Compression not supported" << std::endl;
-                return false;
-            }
+                throw std::runtime_error("Compression not supported");
 
             if (offset + sizeof(infoHeader.biSizeImage) < infoHeader.biSize)
             {
@@ -204,19 +192,11 @@ namespace sr
 
             width = static_cast<uint32_t>(infoHeader.biWidth);
             height = static_cast<uint32_t>(std::abs(infoHeader.biHeight));
-
-            return true;
         }
 
-        bool save(const std::string& filename)
+        void save(const std::string& filename)
         {
             File f(filename, File::Mode::WRITE);
-
-            if (!f.isOpen())
-            {
-                std::cerr << "Failed to open " << filename << std::endl;
-                return false;
-            }
 
             BitmapFileHeader header;
             header.bfType = BITMAPFILEHEADER_TYPE_BM;
@@ -257,8 +237,6 @@ namespace sr
             f.write(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant));
 
             f.write(data.data(), static_cast<uint32_t>(data.size()));
-
-            return true;
         }
 
     private:

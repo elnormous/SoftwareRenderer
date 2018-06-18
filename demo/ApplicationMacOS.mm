@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <stdexcept>
 #include "ApplicationMacOS.hpp"
 
 @interface AppDelegate: NSObject<NSApplicationDelegate>
@@ -304,7 +305,7 @@ namespace demo
             return resourceDirectory;
         }
         else
-            std::cerr << "Failed to get current directory" << std::endl;
+            throw std::runtime_error("Failed to get current directory");
 
         return "";
     }

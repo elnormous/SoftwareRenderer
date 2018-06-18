@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <stdexcept>
 #include <string>
 
 #if defined(_WIN32)
@@ -76,7 +77,7 @@ namespace sr
             return *this;
         }
 
-        bool open(const std::string& filename, int mode)
+        void open(const std::string& filename, int mode)
         {
 #if defined(_WIN32)
             DWORD access = 0;
@@ -87,9 +88,11 @@ namespace sr
 
             WCHAR buffer[MAX_PATH];
             if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer, MAX_PATH) == 0)
-                return false;
+                throw std::runtime_error("Failed to convert UTF-8 to wide char");
+
             file = CreateFileW(buffer, access, 0, nullptr, createDisposition, FILE_ATTRIBUTE_NORMAL, nullptr);
-            return file != INVALID_HANDLE_VALUE;
+            if (file == INVALID_HANDLE_VALUE)
+                throw std::runtime_error("Failed to open " + filename);
 #else
             int access = 0;
             if ((mode & READ) && (mode & WRITE)) access |= O_RDWR;
@@ -99,18 +102,19 @@ namespace sr
             if (mode & APPEND) access |= O_APPEND;
 
             fd = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-            return fd != -1;
+            if (fd == -1)
+                throw std::runtime_error("Failed to open " + filename);
 #endif
         }
 
-        bool close()
+        void close()
         {
 #if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE) return false;
-            return CloseHandle(file) != 0;
+            if (file != INVALID_HANDLE_VALUE)
+                CloseHandle(file);
 #else
-            if (fd == -1) return false;
-            return ::close(fd) == 0;
+            if (fd != -1)
+                ::close(fd);
 #endif
         }
 

@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <stdexcept>
 #include <Strsafe.h>
 #include "ApplicationWindows.hpp"
 
@@ -71,10 +72,7 @@ namespace demo
 
         windowClass = RegisterClassExW(&wc);
         if (!windowClass)
-        {
-            std::cerr << "Failed to register window class" << std::endl;
-            return false;
-        }
+            throw std::runtime_error("Failed to register window class");
 
         DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
         DWORD windowExStyle = WS_EX_APPWINDOW;
@@ -83,10 +81,7 @@ namespace demo
             CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, instance, NULL);
 
         if (!window)
-        {
-            std::cerr << "Failed to create window" << std::endl;
-            return false;
-        }
+            throw std::runtime_error("Failed to create window");
 
         RECT clientRect;
         GetClientRect(window, &clientRect);

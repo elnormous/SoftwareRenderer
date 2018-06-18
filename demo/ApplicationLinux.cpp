@@ -2,7 +2,7 @@
 //  SoftwareRenderer
 //
 
-#include <iostream>
+#include <stdexcept>
 #include <X11/Xutil.h>
 #include "ApplicationLinux.hpp"
 
@@ -31,10 +31,7 @@ namespace demo
         display = XOpenDisplay(NULL);
 
         if (!display)
-        {
-            std::cerr << "Failed to open display" << std::endl;
-            return false;
-        }
+            throw std::runtime_error("Failed to open display");
 
         Screen* screen = XDefaultScreenOfDisplay(display);
         int screenIndex = XScreenNumberOfScreen(screen);
@@ -109,10 +106,7 @@ namespace demo
     bool Application::run()
     {
         if (!XInitThreads())
-        {
-            std::cerr << "Failed to initialize thread support" << std::endl;
-            return false;
-        }
+            throw std::runtime_error("Failed to initialize thread support");
 
         WindowLinux* windowLinux = new WindowLinux(*this);
         window.reset(windowLinux);
@@ -148,7 +142,7 @@ namespace demo
             windowLinux->draw();
         }
 
-        return 1;
+        return true;
     }
 
     std::string Application::getResourcePath()
