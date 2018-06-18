@@ -15,7 +15,7 @@ namespace demo
     public:
         WindowMacOS(Application& initApplication);
         virtual ~WindowMacOS();
-        virtual bool init(int argc, const char** argv) override;
+        virtual void init(int argc, const char** argv) override;
 
         void draw();
         void didResize();

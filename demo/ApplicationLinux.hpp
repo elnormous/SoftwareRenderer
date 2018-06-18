@@ -15,7 +15,7 @@ namespace demo
     public:
         WindowLinux(Application& initApplication);
         virtual ~WindowLinux();
-        virtual bool init(int argc, const char** argv) override;
+        virtual void init(int argc, const char** argv) override;
 
         void draw();
         void didResize(int newWidth, int newHeight);

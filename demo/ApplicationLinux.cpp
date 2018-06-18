@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <iostream>
 #include <stdexcept>
 #include <X11/Xutil.h>
 #include "ApplicationLinux.hpp"
@@ -26,7 +27,7 @@ namespace demo
         }
     }
 
-    bool WindowLinux::init(int argc, const char** argv)
+    void WindowLinux::init(int argc, const char** argv)
     {
         display = XOpenDisplay(NULL);
 
@@ -65,7 +66,7 @@ namespace demo
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
 
-        return Window::init(argc, argv);
+        Window::init(argc, argv);
     }
 
     void WindowLinux::draw()
@@ -103,7 +104,7 @@ namespace demo
     {
     }
 
-    bool Application::run()
+    void Application::run()
     {
         if (!XInitThreads())
             throw std::runtime_error("Failed to initialize thread support");
@@ -141,8 +142,6 @@ namespace demo
 
             windowLinux->draw();
         }
-
-        return true;
     }
 
     std::string Application::getResourcePath()
@@ -153,7 +152,19 @@ namespace demo
 
 int main(int argc, const char* argv[])
 {
-    demo::Application application(argc, argv);
-
-    return application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
+    try
+    {
+        demo::Application application(argc, argv);
+        application.run();
+        return EXIT_SUCCESS;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what();
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }

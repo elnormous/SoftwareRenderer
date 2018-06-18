@@ -20,7 +20,7 @@ namespace demo
         Application(Application&&) = delete;
         Application& operator=(Application&&) = delete;
 
-        bool run();
+        void run();
 
         static std::string getResourcePath();
 

@@ -15,7 +15,7 @@ namespace demo
     public:
         WindowWindows(Application& initApplication);
         virtual ~WindowWindows();
-        virtual bool init(int argc, const char** argv) override;
+        virtual void init(int argc, const char** argv) override;
 
         void draw();
         void didResize();

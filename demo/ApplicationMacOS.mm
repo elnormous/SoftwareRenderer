@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <iostream>
 #include <stdexcept>
 #include "ApplicationMacOS.hpp"
 
@@ -147,7 +148,7 @@ namespace demo
         [window release];
     }
 
-    bool WindowMacOS::init(int argc, const char** argv)
+    void WindowMacOS::init(int argc, const char** argv)
     {
         screen = [NSScreen mainScreen];
 
@@ -204,7 +205,7 @@ namespace demo
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
-        return Window::init(argc, argv);
+        Window::init(argc, argv);
     }
 
     void WindowMacOS::draw()
@@ -259,7 +260,7 @@ namespace demo
     {
     }
 
-    bool Application::run()
+    void Application::run()
     {
         NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
@@ -288,8 +289,6 @@ namespace demo
         [sharedApplication run];
 
         [pool release];
-
-        return true;
     }
 
     std::string Application::getResourcePath()
@@ -313,7 +312,19 @@ namespace demo
 
 int main(int argc, const char* argv[])
 {
-    demo::Application application(argc, argv);
-
-    return application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
+    try
+    {
+        demo::Application application(argc, argv);
+        application.run();
+        return EXIT_SUCCESS;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what();
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }

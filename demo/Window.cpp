@@ -81,7 +81,7 @@ namespace demo
     {
     }
 
-    bool Window::init(int argc, const char** argv)
+    void Window::init(int argc, const char** argv)
     {
         renderTarget.init(width, height);
 
@@ -89,8 +89,6 @@ namespace demo
                                        1.0F, 1000.0F, projection);
 
         view.translate(0.0F, 0.0F, 100.0F);
-
-        return true;
     }
 
     void Window::render()

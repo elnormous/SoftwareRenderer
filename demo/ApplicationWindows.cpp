@@ -2,6 +2,7 @@
 //  SoftwareRenderer
 //
 
+#include <iostream>
 #include <stdexcept>
 #include <Strsafe.h>
 #include "ApplicationWindows.hpp"
@@ -50,7 +51,7 @@ namespace demo
         if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
     }
 
-    bool WindowWindows::init(int argc, const char** argv)
+    void WindowWindows::init(int argc, const char** argv)
     {
         HINSTANCE instance = GetModuleHandleW(NULL);
 
@@ -92,7 +93,7 @@ namespace demo
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-        return Window::init(argc, argv);
+        Window::init(argc, argv);
     }
 
     void WindowWindows::draw()
@@ -140,12 +141,11 @@ namespace demo
     {
     }
 
-    bool Application::run()
+    void Application::run()
     {
         WindowWindows* windowWindows = new WindowWindows(*this);
         window.reset(windowWindows);
-        if (!windowWindows->init(argc, argv))
-            return false;
+        windowWindows->init(argc, argv);
 
         MSG msg;
         for (;;)
@@ -155,13 +155,11 @@ namespace demo
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
 
-                if (msg.message == WM_QUIT) return true;
+                if (msg.message == WM_QUIT) return;
             }
 
             InvalidateRect(windowWindows->getWindow(), nullptr, FALSE);
         }
-
-        return true;
     }
 
     std::string Application::getResourcePath()
@@ -172,10 +170,22 @@ namespace demo
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
 {
-    int argc = 0;
-    const char** argv = nullptr;
+    try
+    {
+        int argc = 0;
+        const char** argv = nullptr;
 
-    demo::Application application(argc, argv);
-
-    return application.run() ? EXIT_SUCCESS : EXIT_FAILURE;
+        demo::Application application(argc, argv);
+        application.run();
+        return EXIT_SUCCESS;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what();
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
