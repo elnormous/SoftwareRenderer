@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cassert>
+#include <stdexcept>
 #include "BlendState.hpp"
 #include "Color.hpp"
 #include "DepthState.hpp"
@@ -73,9 +74,10 @@ namespace sr
             depthState = newDepthState;
         }
 
-        bool clear(Color color, float depth)
+        void clear(Color color, float depth)
         {
-            if (!renderTarget) return false;
+            if (!renderTarget)
+                throw std::runtime_error("No render target set");
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
@@ -90,14 +92,14 @@ namespace sr
 
             for (uint32_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
-
-            return true;
         }
 
         bool drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
         {
-            if (!renderTarget) return false;
-            if (!shader) return false;
+            if (!renderTarget)
+                throw std::runtime_error("No render target set");
+            if (!shader)
+                throw std::runtime_error("No shader set");
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());

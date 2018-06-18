@@ -5,6 +5,7 @@
 #pragma once
 
 #include <climits>
+#include <stdexcept>
 #include <vector>
 #include "Sampler.hpp"
 
@@ -77,7 +78,7 @@ namespace sr
             }
         }
 
-        bool init(PixelFormat initPixelFormat, uint32_t initWidth, uint32_t initHeight, bool initMipMaps = false)
+        void init(PixelFormat initPixelFormat, uint32_t initWidth, uint32_t initHeight, bool initMipMaps = false)
         {
             pixelFormat = initPixelFormat;
             width = initWidth;
@@ -85,7 +86,8 @@ namespace sr
             mipMaps = initMipMaps;
 
             uint32_t pixelSize = getPixelSize(pixelFormat);
-            if (pixelSize == 0) return false;
+            if (pixelSize == 0)
+                throw std::runtime_error("Invalid pixel format");
 
             levels.clear();
             levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
@@ -106,17 +108,16 @@ namespace sr
                     levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
                 }
             }
-
-            return true;
         }
 
-        bool resize(uint32_t newWidth, uint32_t newHeight)
+        void resize(uint32_t newWidth, uint32_t newHeight)
         {
             width = newWidth;
             height = newHeight;
 
             uint32_t pixelSize = getPixelSize(pixelFormat);
-            if (pixelSize == 0) return false;
+            if (pixelSize == 0)
+                throw std::runtime_error("Invalid pixel format");
 
             levels.clear();
             levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
@@ -137,8 +138,6 @@ namespace sr
                     levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
                 }
             }
-
-            return true;
         }
 
         inline PixelFormat getPixelFormat() const { return pixelFormat; }
@@ -160,17 +159,17 @@ namespace sr
             return levels[level];
         }
 
-        inline bool setData(const std::vector<uint8_t>& buffer, uint32_t level = 0)
+        inline void setData(const std::vector<uint8_t>& buffer, uint32_t level = 0)
         {
             uint32_t pixelSize = getPixelSize(pixelFormat);
-            if (pixelSize == 0) return false;
+            if (pixelSize == 0)
+                throw std::runtime_error("Invalid pixel format");
 
-            if (buffer.size() != width * height * pixelSize) return false;
+            if (buffer.size() != width * height * pixelSize)
+                throw std::runtime_error("Invalid buffer size");
 
             if (level >= levels.size()) levels.resize(level + 1);
             levels[level] = buffer;
-
-            return true;
         }
 
         inline Color getPixel(uint32_t x, uint32_t y, uint32_t level) const
@@ -213,12 +212,14 @@ namespace sr
             return result;
         }
 
-        bool generateMipMaps()
+        void generateMipMaps()
         {
             uint32_t pixelSize = getPixelSize(pixelFormat);
-            if (pixelSize == 0) return false;
+            if (pixelSize == 0)
+                throw std::runtime_error("Invalid pixel format");
 
-            if (levels.empty()) return false;
+            if (levels.empty())
+                throw std::runtime_error("Base image not provided");
 
             uint32_t newWidth = width;
             uint32_t newHeight = height;
@@ -255,15 +256,13 @@ namespace sr
                                              levels[level].data());
                         break;
                     default:
-                        return false;
+                        throw std::runtime_error("Invalid pixel format");
                 }
 
                 previousWidth = newWidth;
                 previousHeight = newHeight;
                 ++level;
             }
-
-            return true;
         }
 
         Color sample(const Sampler* sampler, Vector2F coord) const

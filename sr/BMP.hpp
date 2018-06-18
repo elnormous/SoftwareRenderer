@@ -69,15 +69,13 @@ namespace sr
             return data;
         }
 
-        bool setData(uint32_t newWidth,
+        void setData(uint32_t newWidth,
                      uint32_t newHeight,
                      const std::vector<uint8_t>& newData)
         {
             width = newWidth;
             height = newHeight;
             data = newData;
-
-            return true;
         }
 
         void load(const std::string& filename)

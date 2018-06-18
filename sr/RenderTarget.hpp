@@ -16,20 +16,16 @@ namespace sr
         {
         }
 
-        bool init(uint32_t initWidth, uint32_t initHeight)
+        void init(uint32_t initWidth, uint32_t initHeight)
         {
-            if (!frameBuffer.init(Texture::PixelFormat::RGBA8, initWidth, initHeight)) return false;
-            if (!depthBuffer.init(Texture::PixelFormat::FLOAT32, initWidth, initHeight)) return false;
-
-            return true;
+            frameBuffer.init(Texture::PixelFormat::RGBA8, initWidth, initHeight);
+            depthBuffer.init(Texture::PixelFormat::FLOAT32, initWidth, initHeight);
         }
 
-        bool resize(uint32_t newWidth, uint32_t newHeight)
+        void resize(uint32_t newWidth, uint32_t newHeight)
         {
-            if (!frameBuffer.resize(newWidth, newHeight)) return false;
-            if (!depthBuffer.resize(newWidth, newHeight)) return false;
-
-            return true;
+            frameBuffer.resize(newWidth, newHeight);
+            depthBuffer.resize(newWidth, newHeight);
         }
 
         Texture& getFrameBuffer() { return frameBuffer; }

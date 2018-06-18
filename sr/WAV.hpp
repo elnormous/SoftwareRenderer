@@ -11,14 +11,12 @@ namespace sr
     class WAV
     {
     public:
-        bool load(const std::string& filename)
+        void load(const std::string& filename)
         {
-            return true;
         }
 
-        bool save(const std::string& filename)
+        void save(const std::string& filename)
         {
-            return true;
         }
     };
 }
