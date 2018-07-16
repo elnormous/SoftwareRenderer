@@ -118,7 +118,7 @@ namespace demo
                 {
                     case ClientMessage:
                         if (event.xclient.message_type == windowLinux->getProtocolsAtom() &&
-                            event.xclient.data.l[0] == windowLinux->getDeleteAtom())
+                            static_cast<Atom>(event.xclient.data.l[0]) == windowLinux->getDeleteAtom())
                             running = 0;
                         break;
                     case KeyPress:
