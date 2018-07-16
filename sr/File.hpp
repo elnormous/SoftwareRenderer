@@ -40,45 +40,6 @@ namespace sr
 
         File(const std::string& filename, int mode)
         {
-            open(filename, mode);
-        }
-
-        ~File()
-        {
-            close();
-        }
-
-        File(File&& other)
-        {
-#if defined(_WIN32)
-            file = other.file;
-            other.file = nullptr;
-#else
-            fd = other.fd;
-            other.fd = -1;
-#endif
-        }
-
-        File& operator=(File&& other)
-        {
-            if (&other != this)
-            {
-#if defined(_WIN32)
-                if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
-                file = other.file;
-                other.file = nullptr;
-#else
-                if (fd != -1) ::close(fd);
-                fd = other.fd;
-                other.fd = -1;
-#endif
-            }
-
-            return *this;
-        }
-
-        void open(const std::string& filename, int mode)
-        {
 #if defined(_WIN32)
             DWORD access = 0;
             if (mode & READ) access |= GENERIC_READ;
@@ -107,15 +68,42 @@ namespace sr
 #endif
         }
 
-        void close()
+        ~File()
         {
 #if defined(_WIN32)
-            if (file != INVALID_HANDLE_VALUE)
-                CloseHandle(file);
+            if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
 #else
-            if (fd != -1)
-                ::close(fd);
+            if (fd != -1) close(fd);
 #endif
+        }
+
+        File(File&& other)
+        {
+#if defined(_WIN32)
+            file = other.file;
+            other.file = nullptr;
+#else
+            fd = other.fd;
+            other.fd = -1;
+#endif
+        }
+
+        File& operator=(File&& other)
+        {
+            if (&other != this)
+            {
+#if defined(_WIN32)
+                if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
+                file = other.file;
+                other.file = nullptr;
+#else
+                if (fd != -1) close(fd);
+                fd = other.fd;
+                other.fd = -1;
+#endif
+            }
+
+            return *this;
         }
 
         inline bool isOpen() const

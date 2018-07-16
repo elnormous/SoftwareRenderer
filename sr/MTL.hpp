@@ -11,7 +11,9 @@ namespace sr
     class MTL
     {
     public:
-        void load(const std::string& filename)
+        MTL() {}
+
+        MTL(const std::string& filename)
         {
         }
     };

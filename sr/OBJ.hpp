@@ -11,7 +11,9 @@ namespace sr
     class OBJ
     {
     public:
-        void load(const std::string& filename)
+        OBJ() {}
+
+        OBJ(const std::string& filename)
         {
         }
     };
