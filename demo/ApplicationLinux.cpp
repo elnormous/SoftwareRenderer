@@ -27,7 +27,7 @@ namespace demo
         }
     }
 
-    void WindowLinux::init(int argc, const char** argv)
+    void WindowLinux::init()
     {
         display = XOpenDisplay(NULL);
 
@@ -55,7 +55,7 @@ namespace demo
 
         XSetStandardProperties(display,
             window, "SoftwareRenderer", "SoftwareRenderer", None,
-            const_cast<char**>(argv), argc, NULL);
+            nullptr, 0, NULL);
 
         XMapWindow(display, window);
 
@@ -66,7 +66,7 @@ namespace demo
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
 
-        Window::init(argc, argv);
+        Window::init();
     }
 
     void WindowLinux::draw()
@@ -94,9 +94,7 @@ namespace demo
         onResize();
     }
 
-    Application::Application(int initArgc, const char** initArgv):
-        argc(initArgc),
-        argv(initArgv)
+    Application::Application()
     {
     }
 
@@ -111,7 +109,7 @@ namespace demo
 
         WindowLinux* windowLinux = new WindowLinux(*this);
         window.reset(windowLinux);
-        windowLinux->init(argc, argv);
+        windowLinux->init();
 
         int running = 1;
         XEvent event;
@@ -150,11 +148,11 @@ namespace demo
     }
 }
 
-int main(int argc, const char* argv[])
+int main()
 {
     try
     {
-        demo::Application application(argc, argv);
+        demo::Application application;
         application.run();
         return EXIT_SUCCESS;
     }

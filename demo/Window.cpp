@@ -81,7 +81,7 @@ namespace demo
     {
     }
 
-    void Window::init(int argc, const char** argv)
+    void Window::init()
     {
         renderTarget = sr::RenderTarget(width, height);
 

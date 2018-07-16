@@ -51,7 +51,7 @@ namespace demo
         if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
     }
 
-    void WindowWindows::init(int argc, const char** argv)
+    void WindowWindows::init()
     {
         HINSTANCE instance = GetModuleHandleW(NULL);
 
@@ -93,7 +93,7 @@ namespace demo
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-        Window::init(argc, argv);
+        Window::init();
     }
 
     void WindowWindows::draw()
@@ -131,9 +131,7 @@ namespace demo
         onResize();
     }
 
-    Application::Application(int initArgc, const char** initArgv):
-        argc(initArgc),
-        argv(initArgv)
+    Application::Application()
     {
     }
 
@@ -145,7 +143,7 @@ namespace demo
     {
         WindowWindows* windowWindows = new WindowWindows(*this);
         window.reset(windowWindows);
-        windowWindows->init(argc, argv);
+        windowWindows->init();
 
         MSG msg;
         for (;;)
@@ -168,14 +166,11 @@ namespace demo
     }
 }
 
-int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
     try
     {
-        int argc = 0;
-        const char** argv = nullptr;
-
-        demo::Application application(argc, argv);
+        demo::Application application;
         application.run();
         return EXIT_SUCCESS;
     }

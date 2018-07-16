@@ -12,7 +12,7 @@ namespace demo
     class Application
     {
     public:
-        Application(int initArgc, const char** initArgv);
+        Application();
         ~Application();
 
         Application(const Application&) = delete;
@@ -26,7 +26,5 @@ namespace demo
 
     private:
         std::unique_ptr<Window> window;
-        int argc;
-        const char** argv;
     };
 }

@@ -148,7 +148,7 @@ namespace demo
         [window release];
     }
 
-    void WindowMacOS::init(int argc, const char** argv)
+    void WindowMacOS::init()
     {
         screen = [NSScreen mainScreen];
 
@@ -205,7 +205,7 @@ namespace demo
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
-        Window::init(argc, argv);
+        Window::init();
     }
 
     void WindowMacOS::draw()
@@ -250,9 +250,7 @@ namespace demo
         onResize();
     }
 
-    Application::Application(int initArgc, const char** initArgv):
-        argc(initArgc),
-        argv(initArgv)
+    Application::Application()
     {
     }
 
@@ -284,7 +282,7 @@ namespace demo
 
         WindowMacOS* windowMacOS = new WindowMacOS(*this);
         window.reset(windowMacOS);
-        windowMacOS->init(argc, argv);
+        windowMacOS->init();
 
         [sharedApplication run];
 
@@ -310,11 +308,11 @@ namespace demo
     }
 }
 
-int main(int argc, const char* argv[])
+int main()
 {
     try
     {
-        demo::Application application(argc, argv);
+        demo::Application application;
         application.run();
         return EXIT_SUCCESS;
     }
