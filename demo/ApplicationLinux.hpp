@@ -15,7 +15,6 @@ namespace demo
     public:
         WindowLinux(Application& initApplication);
         virtual ~WindowLinux();
-        virtual void init() override;
 
         void draw();
         void didResize(int newWidth, int newHeight);

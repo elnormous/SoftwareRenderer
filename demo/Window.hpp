@@ -23,7 +23,7 @@ namespace demo
         Window& operator=(Window&&) = delete;
         virtual ~Window();
 
-        virtual void init();
+        void init();
 
         void render();
 

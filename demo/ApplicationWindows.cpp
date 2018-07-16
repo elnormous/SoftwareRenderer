@@ -43,16 +43,6 @@ namespace demo
     WindowWindows::WindowWindows(Application& initApplication):
         Window(initApplication)
     {
-    }
-
-    WindowWindows::~WindowWindows()
-    {
-        if (window) DestroyWindow(window);
-        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
-    }
-
-    void WindowWindows::init()
-    {
         HINSTANCE instance = GetModuleHandleW(NULL);
 
         WNDCLASSEXW wc;
@@ -93,7 +83,13 @@ namespace demo
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-        Window::init();
+        init();
+    }
+
+    WindowWindows::~WindowWindows()
+    {
+        if (window) DestroyWindow(window);
+        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
     }
 
     void WindowWindows::draw()
@@ -143,7 +139,6 @@ namespace demo
     {
         WindowWindows* windowWindows = new WindowWindows(*this);
         window.reset(windowWindows);
-        windowWindows->init();
 
         MSG msg;
         for (;;)

@@ -12,23 +12,6 @@ namespace demo
     WindowLinux::WindowLinux(Application& initApplication):
         Window(initApplication)
     {
-    }
-
-    WindowLinux::~WindowLinux()
-    {
-        if (display)
-        {
-            if (gc) XFreeGC(display, gc);
-
-            if (window)
-                XDestroyWindow(display, window);
-
-            XCloseDisplay(display);
-        }
-    }
-
-    void WindowLinux::init()
-    {
         display = XOpenDisplay(NULL);
 
         if (!display)
@@ -66,7 +49,20 @@ namespace demo
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
 
-        Window::init();
+        init();
+    }
+
+    WindowLinux::~WindowLinux()
+    {
+        if (display)
+        {
+            if (gc) XFreeGC(display, gc);
+
+            if (window)
+                XDestroyWindow(display, window);
+
+            XCloseDisplay(display);
+        }
     }
 
     void WindowLinux::draw()
@@ -109,7 +105,6 @@ namespace demo
 
         WindowLinux* windowLinux = new WindowLinux(*this);
         window.reset(windowLinux);
-        windowLinux->init();
 
         int running = 1;
         XEvent event;

@@ -135,21 +135,6 @@ namespace demo
     WindowMacOS::WindowMacOS(Application& initApplication):
         Window(initApplication)
     {
-    }
-
-    WindowMacOS::~WindowMacOS()
-    {
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpace);
-
-        [timer release];
-        [content release];
-        window.delegate = nil;
-        [window release];
-    }
-
-    void WindowMacOS::init()
-    {
         screen = [NSScreen mainScreen];
 
         CGSize windowSize;
@@ -205,7 +190,18 @@ namespace demo
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
-        Window::init();
+        init();
+    }
+
+    WindowMacOS::~WindowMacOS()
+    {
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpace);
+
+        [timer release];
+        [content release];
+        window.delegate = nil;
+        [window release];
     }
 
     void WindowMacOS::draw()
@@ -282,7 +278,6 @@ namespace demo
 
         WindowMacOS* windowMacOS = new WindowMacOS(*this);
         window.reset(windowMacOS);
-        windowMacOS->init();
 
         [sharedApplication run];
 
