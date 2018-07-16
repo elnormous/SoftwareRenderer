@@ -48,8 +48,6 @@ namespace demo
 
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
-
-        init();
     }
 
     WindowLinux::~WindowLinux()
@@ -105,6 +103,7 @@ namespace demo
 
         WindowLinux* windowLinux = new WindowLinux(*this);
         window.reset(windowLinux);
+        window->setup();
 
         int running = 1;
         XEvent event;

@@ -189,8 +189,6 @@ namespace demo
         [content setNeedsDisplay:TRUE];
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
-
-        init();
     }
 
     WindowMacOS::~WindowMacOS()
@@ -278,6 +276,7 @@ namespace demo
 
         WindowMacOS* windowMacOS = new WindowMacOS(*this);
         window.reset(windowMacOS);
+        window->setup();
 
         [sharedApplication run];
 

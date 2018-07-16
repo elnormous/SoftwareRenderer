@@ -82,8 +82,6 @@ namespace demo
 
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
-
-        init();
     }
 
     WindowWindows::~WindowWindows()
@@ -139,6 +137,7 @@ namespace demo
     {
         WindowWindows* windowWindows = new WindowWindows(*this);
         window.reset(windowWindows);
+        window->setup();
 
         MSG msg;
         for (;;)

@@ -81,7 +81,7 @@ namespace demo
     {
     }
 
-    void Window::init()
+    void Window::setup()
     {
         renderTarget = sr::RenderTarget(width, height);
 
