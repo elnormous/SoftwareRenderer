@@ -78,38 +78,6 @@ namespace sr
             }
         }
 
-        void init(PixelFormat initPixelFormat, uint32_t initWidth, uint32_t initHeight, bool initMipMaps = false)
-        {
-            pixelFormat = initPixelFormat;
-            width = initWidth;
-            height = initHeight;
-            mipMaps = initMipMaps;
-
-            uint32_t pixelSize = getPixelSize(pixelFormat);
-            if (pixelSize == 0)
-                throw std::runtime_error("Invalid pixel format");
-
-            levels.clear();
-            levels.push_back(std::vector<uint8_t>(width * height * pixelSize));
-
-            if (mipMaps)
-            {
-                uint32_t newWidth = width;
-                uint32_t newHeight = height;
-
-                while (newWidth > 1 || newHeight > 1)
-                {
-                    newWidth >>= 1;
-                    newHeight >>= 1;
-
-                    if (newWidth < 1) newWidth = 1;
-                    if (newHeight < 1) newHeight = 1;
-
-                    levels.push_back(std::vector<uint8_t>(newWidth * newHeight * pixelSize));
-                }
-            }
-        }
-
         void resize(uint32_t newWidth, uint32_t newHeight)
         {
             width = newWidth;

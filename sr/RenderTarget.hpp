@@ -16,12 +16,6 @@ namespace sr
         {
         }
 
-        void init(uint32_t initWidth, uint32_t initHeight)
-        {
-            frameBuffer.init(Texture::PixelFormat::RGBA8, initWidth, initHeight);
-            depthBuffer.init(Texture::PixelFormat::FLOAT32, initWidth, initHeight);
-        }
-
         void resize(uint32_t newWidth, uint32_t newHeight)
         {
             frameBuffer.resize(newWidth, newHeight);

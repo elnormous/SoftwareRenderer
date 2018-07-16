@@ -16,7 +16,7 @@ namespace demo
 
         sr::BMP bmp;
         bmp.load(Application::getResourcePath() + "/cube.bmp");
-        texture.init(sr::Texture::PixelFormat::RGBA8, bmp.getWidth(), bmp.getHeight());
+        texture = sr::Texture(sr::Texture::PixelFormat::RGBA8, bmp.getWidth(), bmp.getHeight());
         texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
 
@@ -83,7 +83,7 @@ namespace demo
 
     void Window::init(int argc, const char** argv)
     {
-        renderTarget.init(width, height);
+        renderTarget = sr::RenderTarget(width, height);
 
         sr::Matrix4::createPerspective(sr::TAU / 6.0F, static_cast<float>(width) / static_cast<float>(height),
                                        1.0F, 1000.0F, projection);
