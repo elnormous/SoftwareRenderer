@@ -61,24 +61,9 @@ namespace sr
             CMYKRLE4 = 0x000D
         };
 
-        inline uint32_t getWidth() const { return width; }
-        inline uint32_t getHeight() const { return height; }
+        BMP() {}
 
-        const std::vector<uint8_t>& getData() const
-        {
-            return data;
-        }
-
-        void setData(uint32_t newWidth,
-                     uint32_t newHeight,
-                     const std::vector<uint8_t>& newData)
-        {
-            width = newWidth;
-            height = newHeight;
-            data = newData;
-        }
-
-        void load(const std::string& filename)
+        BMP(const std::string& filename)
         {
             File f(filename, File::Mode::READ);
 
@@ -190,6 +175,23 @@ namespace sr
 
             width = static_cast<uint32_t>(infoHeader.biWidth);
             height = static_cast<uint32_t>(std::abs(infoHeader.biHeight));
+        }
+
+        inline uint32_t getWidth() const { return width; }
+        inline uint32_t getHeight() const { return height; }
+
+        const std::vector<uint8_t>& getData() const
+        {
+            return data;
+        }
+
+        void setData(uint32_t newWidth,
+                     uint32_t newHeight,
+                     const std::vector<uint8_t>& newData)
+        {
+            width = newWidth;
+            height = newHeight;
+            data = newData;
         }
 
         void save(const std::string& filename)

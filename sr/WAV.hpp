@@ -11,7 +11,9 @@ namespace sr
     class WAV
     {
     public:
-        void load(const std::string& filename)
+        WAV() {}
+
+        WAV(const std::string& filename)
         {
         }
 
