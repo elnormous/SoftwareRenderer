@@ -8,25 +8,24 @@
 
 namespace demo
 {
-    WindowHaiku::WindowHaiku(Application& initApplication):
-        Window(initApplication)
+    ApplicationHaiku::ApplicationHaiku()
     {
         // TODO: implement
     }
 
-    WindowHaiku::~WindowHaiku()
+    ApplicationHaiku::~ApplicationHaiku()
     {
         // TODO: implement
     }
 
-    void WindowHaiku::draw()
+    void ApplicationHaiku::draw()
     {
         render();
 
         // TODO: implement
     }
 
-    void WindowHaiku::didResize(int newWidth, int newHeight)
+    void ApplicationHaiku::didResize(int newWidth, int newHeight)
     {
         width = static_cast<uint32_t>(newWidth);
         height = static_cast<uint32_t>(newHeight);
@@ -34,15 +33,7 @@ namespace demo
         onResize();
     }
 
-    Application::Application()
-    {
-    }
-
-    Application::~Application()
-    {
-    }
-
-    void Application::run()
+    void ApplicationHaiku::run()
     {
         // TODO: implement
     }
@@ -57,7 +48,7 @@ int main()
 {
     try
     {
-        demo::Application application;
+        demo::ApplicationHaiku application;
         application.run();
         return EXIT_SUCCESS;
     }
