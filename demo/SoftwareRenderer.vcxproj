@@ -50,11 +50,10 @@
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="ApplicationWindows.hpp" />
     <ClInclude Include="TextureShader.hpp" />
-    <ClInclude Include="Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplicationWindows.cpp" />
-    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E6216F3-C039-4547-9658-378F199432B0}</ProjectGuid>
