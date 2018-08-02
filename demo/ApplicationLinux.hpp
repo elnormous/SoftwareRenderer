@@ -9,7 +9,7 @@
 
 namespace demo
 {
-    class ApplicationLinux: public Window
+    class ApplicationLinux: public Application
     {
     public:
         ApplicationLinux();
