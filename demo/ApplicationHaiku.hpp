@@ -11,7 +11,7 @@ namespace demo
     class ApplicationHaiku: public Application
     {
     public:
-        ApplicationHaiku(Application& initApplication);
+        ApplicationHaiku();
         virtual ~ApplicationHaiku();
 
         void draw();
