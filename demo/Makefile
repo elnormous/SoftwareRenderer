@@ -8,9 +8,10 @@ else
 
 	ifeq ($(shell uname -s),Linux)
 		platform=linux
-	endif
-	ifeq ($(shell uname -s),Darwin)
+	else ifeq ($(shell uname -s),Darwin)
 		platform=macos
+	else ifeq ($(shell uname -s),Haiku)
+		platform=haiku
 	endif
 endif
 ifeq ($(platform),emscripten)
@@ -29,6 +30,8 @@ SOURCES+=$(ROOT_DIR)/ApplicationLinux.cpp
 else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
 SOURCES+=$(ROOT_DIR)/ApplicationMacOS.mm
+else ifeq ($(platform),haiku)
+SOURCES+=$(ROOT_DIR)/ApplicationHaiku.cpp
 else ifeq ($(platform),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
