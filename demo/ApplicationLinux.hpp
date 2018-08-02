@@ -6,23 +6,19 @@
 
 #include <X11/Xlib.h>
 #include "Application.hpp"
-#include "Window.hpp"
 
 namespace demo
 {
-    class WindowLinux: public Window
+    class ApplicationLinux: public Window
     {
     public:
-        WindowLinux(Application& initApplication);
-        virtual ~WindowLinux();
+        ApplicationLinux();
+        virtual ~ApplicationLinux();
 
         void draw();
         void didResize(int newWidth, int newHeight);
 
-        inline Display* getDisplay() const { return display; }
-        inline ::Window getWindow() const { return window; }
-        inline Atom getProtocolsAtom() const { return protocolsAtom; }
-        inline Atom getDeleteAtom() const { return deleteAtom; }
+        virtual void run() override;
 
     private:
         Visual* visual;

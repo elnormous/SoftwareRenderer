@@ -6,18 +6,19 @@
 
 #import <Cocoa/Cocoa.h>
 #include "Application.hpp"
-#include "Window.hpp"
 
 namespace demo
 {
-    class WindowMacOS: public Window
+    class ApplicationMacOS: public Application
     {
     public:
-        WindowMacOS(Application& initApplication);
-        virtual ~WindowMacOS();
+        ApplicationMacOS();
+        virtual ~ApplicationMacOS();
 
         void draw();
         void didResize();
+
+        virtual void run() override;
 
     private:
         NSScreen* screen = nil;

@@ -2,13 +2,11 @@
 //  SoftwareRenderer
 //
 
-#include "Window.hpp"
 #include "Application.hpp"
 
 namespace demo
 {
-    Window::Window(Application& initApplication):
-        application(initApplication)
+    Application::Application()
     {
         projection.setIdentity();
         view.setIdentity();
@@ -76,11 +74,11 @@ namespace demo
         };
     }
 
-    Window::~Window()
+    Application::~Application()
     {
     }
 
-    void Window::setup()
+    void Application::setup()
     {
         renderTarget = sr::RenderTarget(width, height);
 
@@ -90,7 +88,7 @@ namespace demo
         view.translate(0.0F, 0.0F, 100.0F);
     }
 
-    void Window::render()
+    void Application::render()
     {
         renderer.setRenderTarget(&renderTarget);
 
@@ -112,7 +110,7 @@ namespace demo
         renderer.drawTriangles(indices, vertices, modelViewProjection);
     }
 
-    void Window::onResize()
+    void Application::onResize()
     {
         renderTarget.resize(width, height);
 

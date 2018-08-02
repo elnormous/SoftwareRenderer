@@ -19,7 +19,7 @@ CXX=em++
 endif
 CXXFLAGS=-c -std=c++11 -Wall -O2 -I$(ROOT_DIR)/../sr
 LDFLAGS=-O2
-SOURCES=$(ROOT_DIR)/Window.cpp
+SOURCES=$(ROOT_DIR)/Application.cpp
 ifeq ($(platform),windows)
 LDFLAGS+=-u WinMain
 SOURCES+=$(ROOT_DIR)/ApplicationWindows.cpp

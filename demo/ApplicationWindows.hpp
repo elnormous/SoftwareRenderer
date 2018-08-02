@@ -6,20 +6,20 @@
 
 #include <Windows.h>
 #include "Application.hpp"
-#include "Window.hpp"
 
 namespace demo
 {
-    class WindowWindows: public Window
+    class ApplicationWindows: public Application
     {
     public:
-        WindowWindows(Application& initApplication);
-        virtual ~WindowWindows();
+        ApplicationWindows();
+        virtual ~ApplicationWindows();
 
         void draw();
         void didResize();
 
-        HWND getWindow() const { return window; }
+        virtual void run() override;
+
     private:
         ATOM windowClass = 0;
         HWND window = 0;

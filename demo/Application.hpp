@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include <cstdint>
 #include <memory>
-#include "Window.hpp"
+#include "sr.hpp"
+#include "TextureShader.hpp"
 
 namespace demo
 {
@@ -20,11 +22,35 @@ namespace demo
         Application(Application&&) = delete;
         Application& operator=(Application&&) = delete;
 
-        void run();
+        virtual void run() = 0;
+        void setup();
+
+        void render();
 
         static std::string getResourcePath();
 
-    private:
-        std::unique_ptr<Window> window;
+    protected:
+        void onResize();
+
+        uint32_t width;
+        uint32_t height;
+
+        sr::Matrix4 projection;
+        sr::Matrix4 view;
+        sr::Matrix4 model;
+        float rotationY = 0.0F;
+
+        sr::RenderTarget renderTarget;
+        sr::Renderer renderer;
+
+        sr::BlendState blendState;
+        sr::DepthState depthState;
+
+        TextureShader shader;
+        sr::Sampler sampler;
+        sr::Texture texture;
+
+        std::vector<uint32_t> indices;
+        std::vector<sr::Vertex> vertices;
     };
 }

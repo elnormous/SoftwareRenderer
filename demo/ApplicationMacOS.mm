@@ -56,44 +56,44 @@
 
 @interface WindowDelegate: NSObject<NSWindowDelegate>
 {
-    demo::WindowMacOS* window;
+    demo::ApplicationMacOS* application;
 }
 
 @end
 
 @implementation WindowDelegate
 
--(id)initWithWindow:(demo::WindowMacOS*)initWindow
+-(id)initWithWindow:(demo::ApplicationMacOS*)initApplication
 {
     if (self = [super init])
     {
-        window = initWindow;
+        application = initApplication;
     }
 
     return self;
 }
 
--(void)windowDidResize:(NSNotification*)notification
+-(void)windowDidResize:(__unused NSNotification*)notification
 {
-    window->didResize();
+    application->didResize();
 }
 
 @end
 
 @interface Canvas: NSView
 {
-    demo::WindowMacOS* window;
+    demo::ApplicationMacOS* application;
 }
 
 @end
 
 @implementation Canvas
 
--(id)initWithFrame:(NSRect)frameRect andWindow:(demo::WindowMacOS*)initWindow
+-(id)initWithFrame:(NSRect)frameRect andWindow:(demo::ApplicationMacOS*)initApplication
 {
     if (self = [super initWithFrame:frameRect])
     {
-        window = initWindow;
+        application = initApplication;
     }
 
     return self;
@@ -113,10 +113,10 @@
 {
     [super drawRect:dirtyRect];
 
-    window->draw();
+    application->draw();
 }
 
--(void)draw:(NSTimer*)timer
+-(void)draw:(__unused NSTimer*)timer
 {
     [self setNeedsDisplay:YES];
 }
@@ -132,9 +132,86 @@ static const void* getBytePointer(void* info)
 
 namespace demo
 {
-    WindowMacOS::WindowMacOS(Application& initApplication):
-        Window(initApplication)
+    ApplicationMacOS::ApplicationMacOS()
     {
+    }
+
+    ApplicationMacOS::~ApplicationMacOS()
+    {
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpace);
+
+        [timer release];
+        [content release];
+        window.delegate = nil;
+        [window release];
+    }
+
+    void ApplicationMacOS::draw()
+    {
+        render();
+
+        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+                                         bitsPerComponent * componentsPerPixel,
+                                         componentsPerPixel * width,
+                                         colorSpace,
+                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
+
+        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+
+        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+        CGContextFlush(context);
+
+        CGImageRelease(image);
+    }
+
+    void ApplicationMacOS::didResize()
+    {
+        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                     styleMask:[window styleMask]];
+
+        width = static_cast<uint32_t>(windowFrame.size.width);
+        height = static_cast<uint32_t>(windowFrame.size.height);
+
+        CGDataProviderRelease(provider);
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
+
+        onResize();
+    }
+
+    void ApplicationMacOS::run()
+    {
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+        NSApplication* sharedApplication = [NSApplication sharedApplication];
+        [sharedApplication activateIgnoringOtherApps:YES];
+        [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
+
+        NSMenu* mainMenu = [[[NSMenu alloc] initWithTitle:@"Main Menu"] autorelease];
+
+        NSMenuItem* mainMenuItem = [[[NSMenuItem alloc] init] autorelease];
+        [mainMenu addItem:mainMenuItem];
+
+        NSMenu* subMenu = [[[NSMenu alloc] init] autorelease];
+        [mainMenuItem setSubmenu:subMenu];
+
+        NSMenuItem* quitItem = [[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(handleQuit:) keyEquivalent:@"q"] autorelease];
+        [quitItem setTarget: [sharedApplication delegate]];
+        [subMenu addItem:quitItem];
+
+        sharedApplication.mainMenu = mainMenu;
+
+        // create window
         screen = [NSScreen mainScreen];
 
         CGSize windowSize;
@@ -162,7 +239,7 @@ namespace demo
         [window setTitle:@"SoftwareRenderer"];
 
         NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                    styleMask:[window styleMask]];
+                                                     styleMask:[window styleMask]];
 
         width = static_cast<uint32_t>(windowFrame.size.width);
         height = static_cast<uint32_t>(windowFrame.size.height);
@@ -189,94 +266,8 @@ namespace demo
         [content setNeedsDisplay:TRUE];
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
-    }
 
-    WindowMacOS::~WindowMacOS()
-    {
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpace);
-
-        [timer release];
-        [content release];
-        window.delegate = nil;
-        [window release];
-    }
-
-    void WindowMacOS::draw()
-    {
-        render();
-
-        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
-                                         bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * width,
-                                         colorSpace,
-                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
-                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
-
-        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-
-        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
-        CGContextFlush(context);
-
-        CGImageRelease(image);
-    }
-
-    void WindowMacOS::didResize()
-    {
-        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                     styleMask:[window styleMask]];
-
-        width = static_cast<uint32_t>(windowFrame.size.width);
-        height = static_cast<uint32_t>(windowFrame.size.height);
-
-        CGDataProviderRelease(provider);
-
-        CGDataProviderDirectCallbacks providerCallbacks = {
-            0,
-            getBytePointer,
-            nullptr,
-            nullptr,
-            nullptr
-        };
-
-        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
-
-        onResize();
-    }
-
-    Application::Application()
-    {
-    }
-
-    Application::~Application()
-    {
-    }
-
-    void Application::run()
-    {
-        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-        NSApplication* sharedApplication = [NSApplication sharedApplication];
-        [sharedApplication activateIgnoringOtherApps:YES];
-        [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
-
-        NSMenu* mainMenu = [[[NSMenu alloc] initWithTitle:@"Main Menu"] autorelease];
-
-        NSMenuItem* mainMenuItem = [[[NSMenuItem alloc] init] autorelease];
-        [mainMenu addItem:mainMenuItem];
-
-        NSMenu* subMenu = [[[NSMenu alloc] init] autorelease];
-        [mainMenuItem setSubmenu:subMenu];
-
-        NSMenuItem* quitItem = [[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(handleQuit:) keyEquivalent:@"q"] autorelease];
-        [quitItem setTarget: [sharedApplication delegate]];
-        [subMenu addItem:quitItem];
-
-        sharedApplication.mainMenu = mainMenu;
-
-        WindowMacOS* windowMacOS = new WindowMacOS(*this);
-        window.reset(windowMacOS);
-        window->setup();
+        setup();
 
         [sharedApplication run];
 
@@ -306,7 +297,7 @@ int main()
 {
     try
     {
-        demo::Application application;
+        demo::ApplicationMacOS application;
         application.run();
         return EXIT_SUCCESS;
     }

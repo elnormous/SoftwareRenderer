@@ -9,20 +9,20 @@
 
 static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    demo::WindowWindows* windowWindows = (demo::WindowWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
-    if (!windowWindows) return DefWindowProcW(window, msg, wParam, lParam);
+    demo::ApplicationWindows* applicationWindows = (demo::ApplicationWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
+    if (!applicationWindows) return DefWindowProcW(window, msg, wParam, lParam);
 
     switch (msg)
     {
         case WM_PAINT:
         {
-            windowWindows->draw();
+            applicationWindows->draw();
             break;
         }
 
         case WM_SIZE:
         {
-            windowWindows->didResize();
+            applicationWindows->didResize();
             break;
         }
 
@@ -40,8 +40,7 @@ static const LPCWSTR WINDOW_CLASS_NAME = L"SoftwareRenderer";
 
 namespace demo
 {
-    WindowWindows::WindowWindows(Application& initApplication):
-        Window(initApplication)
+    ApplicationWindows::ApplicationWindows()
     {
         HINSTANCE instance = GetModuleHandleW(NULL);
 
@@ -84,13 +83,13 @@ namespace demo
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
     }
 
-    WindowWindows::~WindowWindows()
+    ApplicationWindows::~ApplicationWindows()
     {
         if (window) DestroyWindow(window);
         if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
     }
 
-    void WindowWindows::draw()
+    void ApplicationWindows::draw()
     {
         render();
 
@@ -114,7 +113,7 @@ namespace demo
         EndPaint(window, &ps);
     }
 
-    void WindowWindows::didResize()
+    void ApplicationWindows::didResize()
     {
         RECT clientRect;
         GetClientRect(window, &clientRect);
@@ -125,19 +124,9 @@ namespace demo
         onResize();
     }
 
-    Application::Application()
+    void ApplicationWindows::run()
     {
-    }
-
-    Application::~Application()
-    {
-    }
-
-    void Application::run()
-    {
-        WindowWindows* windowWindows = new WindowWindows(*this);
-        window.reset(windowWindows);
-        window->setup();
+        setup();
 
         MSG msg;
         for (;;)
@@ -150,7 +139,7 @@ namespace demo
                 if (msg.message == WM_QUIT) return;
             }
 
-            InvalidateRect(windowWindows->getWindow(), nullptr, FALSE);
+            InvalidateRect(window, nullptr, FALSE);
         }
     }
 
@@ -164,7 +153,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
     try
     {
-        demo::Application application;
+        demo::ApplicationWindows application;
         application.run();
         return EXIT_SUCCESS;
     }

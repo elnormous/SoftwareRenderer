@@ -9,9 +9,11 @@
 
 namespace demo
 {
-    WindowLinux::WindowLinux(Application& initApplication):
-        Window(initApplication)
+    ApplicationLinux::ApplicationLinux()
     {
+        if (!XInitThreads())
+            throw std::runtime_error("Failed to initialize thread support");
+
         display = XOpenDisplay(NULL);
 
         if (!display)
@@ -50,7 +52,7 @@ namespace demo
         XSetForeground(display, gc, 0);
     }
 
-    WindowLinux::~WindowLinux()
+    ApplicationLinux::~ApplicationLinux()
     {
         if (display)
         {
@@ -63,7 +65,7 @@ namespace demo
         }
     }
 
-    void WindowLinux::draw()
+    void ApplicationLinux::draw()
     {
         render();
 
@@ -80,7 +82,7 @@ namespace demo
         XFree(image);
     }
 
-    void WindowLinux::didResize(int newWidth, int newHeight)
+    void ApplicationLinux::didResize(int newWidth, int newHeight)
     {
         width = static_cast<uint32_t>(newWidth);
         height = static_cast<uint32_t>(newHeight);
@@ -88,51 +90,38 @@ namespace demo
         onResize();
     }
 
-    Application::Application()
+    void ApplicationLinux::run()
     {
-    }
-
-    Application::~Application()
-    {
-    }
-
-    void Application::run()
-    {
-        if (!XInitThreads())
-            throw std::runtime_error("Failed to initialize thread support");
-
-        WindowLinux* windowLinux = new WindowLinux(*this);
-        window.reset(windowLinux);
-        window->setup();
+        setup();
 
         int running = 1;
         XEvent event;
 
         while (running)
         {
-            while (XPending(windowLinux->getDisplay()))
+            while (XPending(display))
             {
-                XNextEvent(windowLinux->getDisplay(), &event);
+                XNextEvent(display, &event);
 
                 switch (event.type)
                 {
                     case ClientMessage:
-                        if (event.xclient.message_type == windowLinux->getProtocolsAtom() &&
-                            static_cast<Atom>(event.xclient.data.l[0]) == windowLinux->getDeleteAtom())
+                        if (event.xclient.message_type == protocolsAtom &&
+                            static_cast<Atom>(event.xclient.data.l[0]) == deleteAtom)
                             running = 0;
                         break;
                     case KeyPress:
                         break;
                     case Expose:
-                        windowLinux->draw();
+                        draw();
                         break;
                     case ConfigureNotify:
-                        windowLinux->didResize(event.xconfigure.width, event.xconfigure.height);
+                        didResize(event.xconfigure.width, event.xconfigure.height);
                         break;
                 }
             }
 
-            windowLinux->draw();
+            draw();
         }
     }
 
@@ -146,7 +135,7 @@ int main()
 {
     try
     {
-        demo::Application application;
+        demo::ApplicationLinux application;
         application.run();
         return EXIT_SUCCESS;
     }
