@@ -134,65 +134,6 @@ namespace demo
 {
     ApplicationMacOS::ApplicationMacOS()
     {
-    }
-
-    ApplicationMacOS::~ApplicationMacOS()
-    {
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpace);
-
-        [timer release];
-        [content release];
-        window.delegate = nil;
-        [window release];
-    }
-
-    void ApplicationMacOS::draw()
-    {
-        render();
-
-        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
-                                         bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * width,
-                                         colorSpace,
-                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
-                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
-
-        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-
-        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
-        CGContextFlush(context);
-
-        CGImageRelease(image);
-    }
-
-    void ApplicationMacOS::didResize()
-    {
-        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                     styleMask:[window styleMask]];
-
-        width = static_cast<uint32_t>(windowFrame.size.width);
-        height = static_cast<uint32_t>(windowFrame.size.height);
-
-        CGDataProviderRelease(provider);
-
-        CGDataProviderDirectCallbacks providerCallbacks = {
-            0,
-            getBytePointer,
-            nullptr,
-            nullptr,
-            nullptr
-        };
-
-        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
-
-        onResize();
-    }
-
-    void ApplicationMacOS::run()
-    {
-        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
         NSApplication* sharedApplication = [NSApplication sharedApplication];
         [sharedApplication activateIgnoringOtherApps:YES];
         [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
@@ -266,12 +207,67 @@ namespace demo
         [content setNeedsDisplay:TRUE];
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+    }
 
+    ApplicationMacOS::~ApplicationMacOS()
+    {
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpace);
+
+        [timer release];
+        [content release];
+        window.delegate = nil;
+        [window release];
+    }
+
+    void ApplicationMacOS::draw()
+    {
+        render();
+
+        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+                                         bitsPerComponent * componentsPerPixel,
+                                         componentsPerPixel * width,
+                                         colorSpace,
+                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
+
+        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+
+        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+        CGContextFlush(context);
+
+        CGImageRelease(image);
+    }
+
+    void ApplicationMacOS::didResize()
+    {
+        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                     styleMask:[window styleMask]];
+
+        width = static_cast<uint32_t>(windowFrame.size.width);
+        height = static_cast<uint32_t>(windowFrame.size.height);
+
+        CGDataProviderRelease(provider);
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
+
+        onResize();
+    }
+
+    void ApplicationMacOS::run()
+    {
         setup();
 
+        NSApplication* sharedApplication = [NSApplication sharedApplication];
         [sharedApplication run];
-
-        [pool release];
     }
 
     std::string Application::getResourcePath()
@@ -297,8 +293,13 @@ int main()
 {
     try
     {
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
         demo::ApplicationMacOS application;
         application.run();
+
+        [pool release];
+
         return EXIT_SUCCESS;
     }
     catch (const std::exception& e)
