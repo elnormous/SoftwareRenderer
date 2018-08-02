@@ -4,28 +4,29 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "ApplicationHaiku.hpp"
 
 namespace demo
 {
-    WindowLinux::WindowLinux(Application& initApplication):
+    WindowHaiku::WindowHaiku(Application& initApplication):
         Window(initApplication)
     {
         // TODO: implement
     }
 
-    WindowLinux::~WindowLinux()
+    WindowHaiku::~WindowHaiku()
     {
         // TODO: implement
     }
 
-    void WindowLinux::draw()
+    void WindowHaiku::draw()
     {
         render();
 
         // TODO: implement
     }
 
-    void WindowLinux::didResize(int newWidth, int newHeight)
+    void WindowHaiku::didResize(int newWidth, int newHeight)
     {
         width = static_cast<uint32_t>(newWidth);
         height = static_cast<uint32_t>(newHeight);
