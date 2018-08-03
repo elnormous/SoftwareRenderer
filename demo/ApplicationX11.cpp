@@ -5,11 +5,11 @@
 #include <iostream>
 #include <stdexcept>
 #include <X11/Xutil.h>
-#include "ApplicationLinux.hpp"
+#include "ApplicationX11.hpp"
 
 namespace demo
 {
-    ApplicationLinux::ApplicationLinux()
+    ApplicationX11::ApplicationX11()
     {
         if (!XInitThreads())
             throw std::runtime_error("Failed to initialize thread support");
@@ -52,7 +52,7 @@ namespace demo
         XSetForeground(display, gc, 0);
     }
 
-    ApplicationLinux::~ApplicationLinux()
+    ApplicationX11::~ApplicationX11()
     {
         if (display)
         {
@@ -65,7 +65,7 @@ namespace demo
         }
     }
 
-    void ApplicationLinux::draw()
+    void ApplicationX11::draw()
     {
         render();
 
@@ -82,7 +82,7 @@ namespace demo
         XFree(image);
     }
 
-    void ApplicationLinux::didResize(int newWidth, int newHeight)
+    void ApplicationX11::didResize(int newWidth, int newHeight)
     {
         width = static_cast<uint32_t>(newWidth);
         height = static_cast<uint32_t>(newHeight);
@@ -90,7 +90,7 @@ namespace demo
         onResize();
     }
 
-    void ApplicationLinux::run()
+    void ApplicationX11::run()
     {
         setup();
 
@@ -135,7 +135,7 @@ int main()
 {
     try
     {
-        demo::ApplicationLinux application;
+        demo::ApplicationX11 application;
         application.run();
         return EXIT_SUCCESS;
     }

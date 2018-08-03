@@ -26,7 +26,7 @@ LDFLAGS+=-u WinMain
 SOURCES+=$(ROOT_DIR)/ApplicationWindows.cpp
 else ifeq ($(platform),linux)
 LDFLAGS+=-lpthread -lX11
-SOURCES+=$(ROOT_DIR)/ApplicationLinux.cpp
+SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
 SOURCES+=$(ROOT_DIR)/ApplicationMacOS.mm

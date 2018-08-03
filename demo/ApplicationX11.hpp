@@ -9,11 +9,11 @@
 
 namespace demo
 {
-    class ApplicationLinux: public Application
+    class ApplicationX11: public Application
     {
     public:
-        ApplicationLinux();
-        virtual ~ApplicationLinux();
+        ApplicationX11();
+        virtual ~ApplicationX11();
 
         void draw();
         void didResize(int newWidth, int newHeight);
