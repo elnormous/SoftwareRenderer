@@ -4,13 +4,18 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <Window.h>
 #include "ApplicationHaiku.hpp"
 
 namespace demo
 {
-    ApplicationHaiku::ApplicationHaiku()
+    ApplicationHaiku::ApplicationHaiku():
+    	BApplication("application/x-vnd.SoftwareRenderer")
     {
-        // TODO: implement
+        BRect frame(100, 100, 400, 400);
+        window = new BWindow(frame, "SoftwareRenderer", B_TITLED_WINDOW,
+                             B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE);
+        window->Show();
     }
 
     ApplicationHaiku::~ApplicationHaiku()
@@ -35,8 +40,12 @@ namespace demo
 
     void ApplicationHaiku::run()
     {
-        // TODO: implement
+    	Run();
     }
+
+	void ApplicationHaiku::MessageReceived(BMessage* msg)
+	{
+	}
 
     std::string Application::getResourcePath()
     {

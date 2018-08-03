@@ -31,6 +31,7 @@ else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
 SOURCES+=$(ROOT_DIR)/ApplicationMacOS.mm
 else ifeq ($(platform),haiku)
+LDFLAGS+=-lbe
 SOURCES+=$(ROOT_DIR)/ApplicationHaiku.cpp
 else ifeq ($(platform),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0

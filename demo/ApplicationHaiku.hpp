@@ -4,11 +4,12 @@
 
 #pragma once
 
+#include <Application.h>
 #include "Application.hpp"
 
 namespace demo
 {
-    class ApplicationHaiku: public Application
+    class ApplicationHaiku: public Application, public BApplication
     {
     public:
         ApplicationHaiku();
@@ -19,6 +20,10 @@ namespace demo
 
         virtual void run() override;
 
+        virtual void MessageReceived(BMessage* msg) override;
+
     private:
+        int32 count = 0;
+    	BWindow* window = nullptr;
     };
 }
