@@ -30,11 +30,6 @@ namespace demo
             application.draw();
         }
 
-        virtual void Pulse() override
-        {
-            printf("Pulse2\n");
-        }
-
     private:
         ApplicationHaiku& application;
     };
@@ -67,7 +62,6 @@ namespace demo
         render();
 
         const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
-
         bitmap->ImportBits(frameBuffer.getData().data(), frameBuffer.getWidth() * frameBuffer.getHeight() * 4,
                            frameBuffer.getWidth() * 4, 0, B_RGB32);
 
@@ -90,16 +84,17 @@ namespace demo
         setup();
         window->Show();
         SetPulseRate(100000);
-        //view->SetPulseRate(100000);
 
         Run();
     }
 
     void ApplicationHaiku::Pulse()
     {
-        printf("Pulse\n");
-        //view->Invalidate();
-        //draw();
+    	if (window->Lock())
+    	{
+            view->Invalidate();
+            window->Unlock();
+    	}
     }
 
     std::string Application::getResourcePath()
