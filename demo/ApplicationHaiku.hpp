@@ -10,6 +10,7 @@
 namespace demo
 {
     class AppWindow;
+    class AppView;
 
     class ApplicationHaiku: public Application, public BApplication
     {
@@ -18,13 +19,15 @@ namespace demo
         virtual ~ApplicationHaiku();
 
         void draw();
-        void didResize(int newWidth, int newHeight);
+        void didResize(float newWidth, float newHeight);
 
         virtual void run() override;
 
         virtual void MessageReceived(BMessage* msg) override;
 
     private:
-        AppWindow* window = nullptr;
+        BWindow* window = nullptr;
+        AppView* view = nullptr;
+        BBitmap* bitmap = nullptr;
     };
 }

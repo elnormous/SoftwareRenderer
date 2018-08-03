@@ -5,66 +5,94 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <Bitmap.h>
 #include <Window.h>
 #include "ApplicationHaiku.hpp"
 
 namespace demo
 {
-    class AppWindow: public BWindow
+    class AppView: public BView
     {
     public:
-        AppWindow(const BRect& frame, const std::string& title):
-            BWindow(frame, title.c_str(), B_TITLED_WINDOW,
-                    B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE)
+        AppView(ApplicationHaiku& initApplication, const BRect& frame, const std::string& title):
+            BView(frame, title.c_str(), B_FOLLOW_ALL_SIDES, B_WILL_DRAW | B_FRAME_EVENTS),
+            application(initApplication)
         {
         }
 
         virtual void FrameResized(float newWidth, float newHeight) override
         {
+            application.didResize(newWidth, newHeight);
         }
+
+        virtual void Draw(BRect) override
+        {
+            application.draw();
+        }
+
+    private:
+        ApplicationHaiku& application;
     };
 
     ApplicationHaiku::ApplicationHaiku():
         BApplication("application/x-vnd.SoftwareRenderer")
     {
-        BRect frame(100, 100, 400, 400);
-        window = new AppWindow(frame, "SoftwareRenderer");
-        window->Show();
+        BRect frame(100, 100, 100 + 640, 100 + 480);
+        window = new BWindow(frame, "SoftwareRenderer", B_TITLED_WINDOW,
+                             B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE);
 
-        width = 400;
-        height = 400;
+        BRect bounds = window->Bounds();
+
+        view = new AppView(*this, bounds, "render");
+        window->AddChild(view);
+
+        bitmap = new BBitmap(bounds, 0, B_RGB32);
+
+        width = static_cast<uint32_t>(bounds.Width());
+        height = static_cast<uint32_t>(bounds.Height());
     }
 
     ApplicationHaiku::~ApplicationHaiku()
     {
+        if (bitmap) delete bitmap;
     }
 
     void ApplicationHaiku::draw()
     {
         render();
 
-        // TODO: implement
+        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
+
+        bitmap->ImportBits(frameBuffer.getData().data(), frameBuffer.getWidth() * frameBuffer.getHeight() * 4,
+                           frameBuffer.getWidth() * 4, 0, B_RGB32);
+
+        view->DrawBitmap(bitmap, bitmap->Bounds(), view->Bounds(), 0);
     }
 
-    void ApplicationHaiku::didResize(int newWidth, int newHeight)
+    void ApplicationHaiku::didResize(float newWidth, float newHeight)
     {
         width = static_cast<uint32_t>(newWidth);
         height = static_cast<uint32_t>(newHeight);
 
+        if (bitmap) delete bitmap;
+        bitmap = new BBitmap(BRect(0, 0, newWidth, newHeight), 0, B_RGB32);
+
         onResize();
+
+        // TODO: remove
+        //view->Invalidate();
     }
 
     void ApplicationHaiku::run()
     {
         setup();
+        window->Show();
 
         Run();
     }
 
     void ApplicationHaiku::MessageReceived(BMessage* msg)
     {
-        printf("%ld\n", msg->what);
-
         switch (msg->what)
         {
             //case A:
