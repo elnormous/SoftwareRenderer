@@ -9,6 +9,8 @@
 
 namespace demo
 {
+    class AppWindow;
+
     class ApplicationHaiku: public Application, public BApplication
     {
     public:
@@ -23,7 +25,6 @@ namespace demo
         virtual void MessageReceived(BMessage* msg) override;
 
     private:
-        int32 count = 0;
-    	BWindow* window = nullptr;
+        AppWindow* window = nullptr;
     };
 }
