@@ -30,6 +30,11 @@ namespace demo
             application.draw();
         }
 
+        virtual void Pulse() override
+        {
+            printf("Pulse2\n");
+        }
+
     private:
         ApplicationHaiku& application;
     };
@@ -78,29 +83,23 @@ namespace demo
         bitmap = new BBitmap(BRect(0, 0, newWidth, newHeight), 0, B_RGB32);
 
         onResize();
-
-        // TODO: remove
-        //view->Invalidate();
     }
 
     void ApplicationHaiku::run()
     {
         setup();
         window->Show();
+        SetPulseRate(100000);
+        //view->SetPulseRate(100000);
 
         Run();
     }
 
-    void ApplicationHaiku::MessageReceived(BMessage* msg)
+    void ApplicationHaiku::Pulse()
     {
-        switch (msg->what)
-        {
-            //case A:
-            //    break;
-            default:
-                BApplication::MessageReceived(msg);
-                break;
-        }
+        printf("Pulse\n");
+        //view->Invalidate();
+        //draw();
     }
 
     std::string Application::getResourcePath()

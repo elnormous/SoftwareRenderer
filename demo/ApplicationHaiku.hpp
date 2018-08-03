@@ -23,7 +23,7 @@ namespace demo
 
         virtual void run() override;
 
-        virtual void MessageReceived(BMessage* msg) override;
+        virtual void Pulse() override;
 
     private:
         BWindow* window = nullptr;
