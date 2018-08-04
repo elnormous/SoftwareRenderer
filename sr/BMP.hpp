@@ -155,22 +155,14 @@ namespace sr
             if (infoHeader.biHeight > 0) // bottom to top
             {
                 for (int y = infoHeader.biHeight - 1; y >= 0; --y)
-                {
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                    {
                         f.readAll(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
-                    }
-                }
             }
             else // top to bottom
             {
                 for (int y = 0; y < std::abs(infoHeader.biHeight); ++y)
-                {
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                    {
                         f.readAll(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
-                    }
-                }
             }
 
             width = static_cast<uint32_t>(infoHeader.biWidth);
@@ -213,8 +205,8 @@ namespace sr
 
             BitmapInfoHeader infoHeader;
             infoHeader.biSize = 40;
-            infoHeader.biWidth = (int)width;
-            infoHeader.biHeight = -(int)height;
+            infoHeader.biWidth = static_cast<int>(width);
+            infoHeader.biHeight = -static_cast<int>(height);
             infoHeader.biPlanes = 1;
             infoHeader.biBitCount = 32;
             infoHeader.biCompression = 0;

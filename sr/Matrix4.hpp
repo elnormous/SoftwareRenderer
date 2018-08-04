@@ -54,7 +54,7 @@ namespace sr
                            0.0F, 0.0F, 1.0F, 0.0F,
                            0.0F, 0.0F, 0.0F, 1.0F);
         }
-        
+
         static void createLookAt(const Vector3F& eyePosition, const Vector3F& targetPosition, const Vector3F& up, Matrix4& dst)
         {
             createLookAt(eyePosition.v[0], eyePosition.v[1], eyePosition.v[2],
