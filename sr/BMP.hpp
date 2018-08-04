@@ -70,48 +70,48 @@ namespace sr
 
             BitmapFileHeader header;
 
-            f.readAll(&header.bfType, sizeof(header.bfType));
+            f.read(&header.bfType, sizeof(header.bfType), true);
 
             if (header.bfType != BITMAPFILEHEADER_TYPE_BM)
                 throw std::runtime_error("Bad bitmap file");
 
-            f.readAll(&header.bfSize, sizeof(header.bfSize));
-            f.readAll(&header.bfReserved1, sizeof(header.bfReserved1));
-            f.readAll(&header.bfReserved2, sizeof(header.bfReserved2));
-            f.readAll(&header.bfOffBits, sizeof(header.bfOffBits));
+            f.read(&header.bfSize, sizeof(header.bfSize), true);
+            f.read(&header.bfReserved1, sizeof(header.bfReserved1), true);
+            f.read(&header.bfReserved2, sizeof(header.bfReserved2), true);
+            f.read(&header.bfOffBits, sizeof(header.bfOffBits), true);
 
             BitmapInfoHeader infoHeader;
-            f.readAll(&infoHeader.biSize, sizeof(infoHeader.biSize));
+            f.read(&infoHeader.biSize, sizeof(infoHeader.biSize), true);
 
             uint32_t offset = 0;
 
             if (offset + sizeof(infoHeader.biWidth) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biWidth, sizeof(infoHeader.biWidth));
+                f.read(&infoHeader.biWidth, sizeof(infoHeader.biWidth), true);
                 offset += sizeof(infoHeader.biWidth);
             }
 
             if (offset + sizeof(infoHeader.biHeight) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biHeight, sizeof(infoHeader.biHeight));
+                f.read(&infoHeader.biHeight, sizeof(infoHeader.biHeight), true);
                 offset += sizeof(infoHeader.biHeight);
             }
 
             if (offset + sizeof(infoHeader.biPlanes) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes));
+                f.read(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes), true);
                 offset += sizeof(infoHeader.biPlanes);
             }
 
             if (offset + sizeof(infoHeader.biBitCount) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount));
+                f.read(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount), true);
                 offset += sizeof(infoHeader.biBitCount);
             }
 
             if (offset + sizeof(infoHeader.biCompression) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biCompression, sizeof(infoHeader.biCompression));
+                f.read(&infoHeader.biCompression, sizeof(infoHeader.biCompression), true);
                 offset += sizeof(infoHeader.biCompression);
             }
 
@@ -120,31 +120,31 @@ namespace sr
 
             if (offset + sizeof(infoHeader.biSizeImage) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage));
+                f.read(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage), true);
                 offset += sizeof(infoHeader.biSizeImage);
             }
 
             if (offset + sizeof(infoHeader.biXPelsPerMeter) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter));
+                f.read(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter), true);
                 offset += sizeof(infoHeader.biXPelsPerMeter);
             }
 
             if (offset + sizeof(infoHeader.biYPelsPerMeter) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter));
+                f.read(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter), true);
                 offset += sizeof(infoHeader.biYPelsPerMeter);
             }
 
             if (offset + sizeof(infoHeader.biClrUsed) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed));
+                f.read(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed), true);
                 offset += sizeof(infoHeader.biClrUsed);
             }
 
             if (offset + sizeof(infoHeader.biClrImportant) < infoHeader.biSize)
             {
-                f.readAll(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant));
+                f.read(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant), true);
                 offset += sizeof(infoHeader.biClrImportant);
             }
 
@@ -157,13 +157,13 @@ namespace sr
             {
                 for (int y = infoHeader.biHeight - 1; y >= 0; --y)
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                        f.readAll(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
+                        f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8, true);
             }
             else // top to bottom
             {
                 for (int y = 0; y < std::abs(infoHeader.biHeight); ++y)
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                        f.readAll(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8);
+                        f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8, true);
             }
 
             width = static_cast<uint32_t>(infoHeader.biWidth);
@@ -198,11 +198,11 @@ namespace sr
             header.bfReserved2 = 0;
             header.bfOffBits = 14 + 40; // size of BITMAPFILEHEADER + size of BITMAPINFOHEADER
 
-            f.write(&header.bfType, sizeof(header.bfType));
-            f.write(&header.bfSize, sizeof(header.bfSize));
-            f.write(&header.bfReserved1, sizeof(header.bfReserved1));
-            f.write(&header.bfReserved2, sizeof(header.bfReserved2));
-            f.write(&header.bfOffBits, sizeof(header.bfOffBits));
+            f.write(&header.bfType, sizeof(header.bfType), true);
+            f.write(&header.bfSize, sizeof(header.bfSize), true);
+            f.write(&header.bfReserved1, sizeof(header.bfReserved1), true);
+            f.write(&header.bfReserved2, sizeof(header.bfReserved2), true);
+            f.write(&header.bfOffBits, sizeof(header.bfOffBits), true);
 
             BitmapInfoHeader infoHeader;
             infoHeader.biSize = 40;
@@ -217,19 +217,19 @@ namespace sr
             infoHeader.biClrUsed = 0;
             infoHeader.biClrImportant = 0;
 
-            f.write(&infoHeader.biSize, sizeof(infoHeader.biSize));
-            f.write(&infoHeader.biWidth, sizeof(infoHeader.biWidth));
-            f.write(&infoHeader.biHeight, sizeof(infoHeader.biHeight));
-            f.write(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes));
-            f.write(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount));
-            f.write(&infoHeader.biCompression, sizeof(infoHeader.biCompression));
-            f.write(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage));
-            f.write(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter));
-            f.write(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter));
-            f.write(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed));
-            f.write(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant));
+            f.write(&infoHeader.biSize, sizeof(infoHeader.biSize), true);
+            f.write(&infoHeader.biWidth, sizeof(infoHeader.biWidth), true);
+            f.write(&infoHeader.biHeight, sizeof(infoHeader.biHeight), true);
+            f.write(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes), true);
+            f.write(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount), true);
+            f.write(&infoHeader.biCompression, sizeof(infoHeader.biCompression), true);
+            f.write(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage), true);
+            f.write(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter), true);
+            f.write(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter), true);
+            f.write(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed), true);
+            f.write(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant), true);
 
-            f.write(data.data(), static_cast<uint32_t>(data.size()));
+            f.write(data.data(), static_cast<uint32_t>(data.size()), true);
         }
 
     private:

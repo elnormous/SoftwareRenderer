@@ -116,98 +116,114 @@ namespace sr
 #endif
         }
 
-        uint32_t read(void* buffer, uint32_t size) const
+        uint32_t read(void* buffer, uint32_t size, bool all = false) const
+        {
+            if (all)
+            {
+                uint8_t* dest = static_cast<uint8_t*>(buffer);
+                uint32_t remaining = size;
+
+                while (remaining > 0)
+                {
+                    uint32_t bytesRead = read(dest, remaining);
+
+                    if (bytesRead == 0)
+                        throw std::runtime_error("End of file reached");
+
+                    remaining -= bytesRead;
+                    dest += bytesRead;
+                }
+
+                return size;
+            }
+            else
+            {
+#if defined(_WIN32)
+                if (file == INVALID_HANDLE_VALUE)
+                    throw std::runtime_error("File is not open");
+
+                DWORD n;
+                if (!ReadFile(file, buffer, size, &n, nullptr))
+                    throw std::runtime_error("Failed to read from file");
+
+                return static_cast<uint32_t>(n);
+#else
+                if (fd == -1)
+                    throw std::runtime_error("File is not open");
+
+                ssize_t ret = ::read(fd, buffer, size);
+
+                if (ret == -1)
+                    throw std::runtime_error("Failed to read from file");
+
+                return static_cast<uint32_t>(ret);
+#endif
+            }
+        }
+
+        uint32_t write(const void* buffer, uint32_t size, bool all = false)
+        {
+            if (all)
+            {
+                const uint8_t* src = static_cast<const uint8_t*>(buffer);
+                uint32_t remaining = size;
+
+                while (remaining > 0)
+                {
+                    uint32_t bytesWritten = write(src, remaining);
+                    remaining -= bytesWritten;
+                    src += bytesWritten;
+                }
+
+                return size;
+            }
+            else
+            {
+#if defined(_WIN32)
+                if (file == INVALID_HANDLE_VALUE)
+                    throw std::runtime_error("File is not open");
+
+                DWORD n;
+                if (!WriteFile(file, buffer, size, &n, nullptr))
+                    throw std::runtime_error("Failed to write to file");
+
+                return static_cast<uint32_t>(n);
+#else
+                if (fd == -1)
+                    throw std::runtime_error("File is not open");
+
+                ssize_t ret = ::write(fd, buffer, size);
+
+                if (ret == -1)
+                    throw std::runtime_error("Failed to write to file");
+
+                return static_cast<uint32_t>(ret);
+#endif
+            }
+        }
+
+        void seek(int32_t offset, int method) const
         {
 #if defined(_WIN32)
             if (file == INVALID_HANDLE_VALUE)
                 throw std::runtime_error("File is not open");
 
-            DWORD n;
-            if (!ReadFile(file, buffer, size, &n, nullptr))
-                throw std::runtime_error("Failed to read from file");
-
-            return static_cast<uint32_t>(n);
-#else
-            if (fd == -1)
-                throw std::runtime_error("File is not open");
-
-            ssize_t ret = ::read(fd, buffer, size);
-
-            if (ret == -1)
-                throw std::runtime_error("Failed to read from file");
-
-            return static_cast<uint32_t>(ret);
-#endif
-        }
-
-        void readAll(void* buffer, uint32_t size) const
-        {
-            uint8_t* dest = static_cast<uint8_t*>(buffer);
-
-            while (size > 0)
-            {
-                uint32_t bytesRead = read(dest, size);
-
-                if (bytesRead == 0)
-                    throw std::runtime_error("End of file reached");
-
-                size -= bytesRead;
-                dest += bytesRead;
-            }
-        }
-
-        uint32_t write(const void* buffer, uint32_t size) const
-        {
-#if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE)
-                throw std::runtime_error("File is not open");
-
-            DWORD n;
-            if (!WriteFile(file, buffer, size, &n, nullptr))
-                throw std::runtime_error("Failed to write to file");
-
-            return static_cast<uint32_t>(n);
-#else
-            if (fd == -1)
-                throw std::runtime_error("File is not open");
-
-            ssize_t ret = ::write(fd, buffer, size);
-
-            if (ret == -1)
-                throw std::runtime_error("Failed to write to file");
-
-            return static_cast<uint32_t>(ret);
-#endif
-        }
-
-        void writeAll(const void* buffer, uint32_t size) const
-        {
-            const uint8_t* src = static_cast<const uint8_t*>(buffer);
-
-            while (size > 0)
-            {
-                uint32_t bytesWritten = write(src, size);
-                size -= bytesWritten;
-                src += bytesWritten;
-            }
-        }
-
-        bool seek(int32_t offset, int method) const
-        {
-#if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE) return false;
             DWORD moveMethod = 0;
             if (method == BEGIN) moveMethod = FILE_BEGIN;
             else if (method == CURRENT) moveMethod = FILE_CURRENT;
             else if (method == END) moveMethod = FILE_END;
-            return SetFilePointer(file, offset, nullptr, moveMethod) != 0;
+            if (SetFilePointer(file, offset, nullptr, moveMethod) == 0)
+                throw std::runtime_error("Failed to seek file");
 #else
-            if (fd == -1) return false;
+            if (fd == -1)
+                throw std::runtime_error("File is not open");
+
             int whence = 0;
             if (method == BEGIN) whence = SEEK_SET;
             else if (method == CURRENT) whence = SEEK_CUR;
             else if (method == END) whence = SEEK_END;
-            return lseek(fd, offset, whence) != -1;
+            if (lseek(fd, offset, whence) == -1)
+                throw std::runtime_error("Failed to seek file");
 #endif
         }
 
