@@ -229,7 +229,7 @@ namespace demo
                                          componentsPerPixel * width,
                                          colorSpace,
                                          kCGBitmapByteOrderDefault | kCGImageAlphaLast,
-                                         provider, NULL, FALSE, kCGRenderingIntentDefault);
+                                         provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
         CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 

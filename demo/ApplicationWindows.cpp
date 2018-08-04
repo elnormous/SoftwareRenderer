@@ -42,7 +42,7 @@ namespace demo
 {
     ApplicationWindows::ApplicationWindows()
     {
-        HINSTANCE instance = GetModuleHandleW(NULL);
+        HINSTANCE instance = GetModuleHandleW(nullptr);
 
         WNDCLASSEXW wc;
         wc.cbSize = sizeof(wc);
@@ -53,12 +53,12 @@ namespace demo
         wc.hInstance = instance;
         // Application icon should be the first resource
         //wc.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(101));
-        wc.hIcon = NULL;
-        wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+        wc.hIcon = nullptr;
+        wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
         wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
-        wc.lpszMenuName = NULL;
+        wc.lpszMenuName = nullptr;
         wc.lpszClassName = WINDOW_CLASS_NAME;
-        wc.hIconSm = NULL;
+        wc.hIconSm = nullptr;
 
         windowClass = RegisterClassExW(&wc);
         if (!windowClass)
@@ -68,7 +68,7 @@ namespace demo
         DWORD windowExStyle = WS_EX_APPWINDOW;
 
         window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
-            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, instance, NULL);
+            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, nullptr, instance, nullptr);
 
         if (!window)
             throw std::runtime_error("Failed to create window");
@@ -86,7 +86,7 @@ namespace demo
     ApplicationWindows::~ApplicationWindows()
     {
         if (window) DestroyWindow(window);
-        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(NULL));
+        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(nullptr));
     }
 
     void ApplicationWindows::draw()

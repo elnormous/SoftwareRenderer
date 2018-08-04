@@ -14,7 +14,7 @@ namespace demo
         if (!XInitThreads())
             throw std::runtime_error("Failed to initialize thread support");
 
-        display = XOpenDisplay(NULL);
+        display = XOpenDisplay(nullptr);
 
         if (!display)
             throw std::runtime_error("Failed to open display");
@@ -40,7 +40,7 @@ namespace demo
 
         XSetStandardProperties(display,
             window, "SoftwareRenderer", "SoftwareRenderer", None,
-            nullptr, 0, NULL);
+            nullptr, 0, nullptr);
 
         XMapWindow(display, window);
 
