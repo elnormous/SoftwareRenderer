@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cmath>
 #include <stdexcept>
 #include <string>
 #include <vector>
