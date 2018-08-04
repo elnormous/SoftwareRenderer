@@ -8,6 +8,8 @@ else
 
 	ifeq ($(shell uname -s),Linux)
 		platform=linux
+	else ifeq ($(shell uname -s),SunOS)
+		platform=sunos
 	else ifeq ($(shell uname -s),Darwin)
 		platform=macos
 	else ifeq ($(shell uname -s),Haiku)
@@ -25,7 +27,10 @@ ifeq ($(platform),windows)
 LDFLAGS+=-u WinMain
 SOURCES+=$(ROOT_DIR)/ApplicationWindows.cpp
 else ifeq ($(platform),linux)
-LDFLAGS+=-lpthread -lX11
+LDFLAGS+=-lX11
+SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
+else ifeq ($(platform),sunos)
+LDFLAGS+=-lX11
 SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
