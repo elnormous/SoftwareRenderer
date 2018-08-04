@@ -92,8 +92,8 @@ namespace sr
 
             if (mipMaps)
             {
-                uint32_t newWidth = width;
-                uint32_t newHeight = height;
+                newWidth = width;
+                newHeight = height;
 
                 while (newWidth > 1 || newHeight > 1)
                 {
@@ -297,7 +297,7 @@ namespace sr
         }
 
     private:
-        void imageA8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
+        static void imageA8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
         {
             const uint32_t dstWidth  = width >> 1;
             const uint32_t dstHeight = height >> 1;
@@ -352,7 +352,7 @@ namespace sr
             }
         }
 
-        void imageR8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
+        static void imageR8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
         {
             const uint32_t dstWidth  = width >> 1;
             const uint32_t dstHeight = height >> 1;
@@ -407,7 +407,7 @@ namespace sr
             }
         }
 
-        void imageRGBA8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
+        static void imageRGBA8Downsample2x2(uint32_t width, uint32_t height, uint32_t pitch, const uint8_t* src, uint8_t* dst)
         {
             const uint32_t dstWidth  = width >> 1;
             const uint32_t dstHeight = height >> 1;
