@@ -5,14 +5,21 @@ ifeq ($(OS),Windows_NT)
 	platform=windows
 else
 	architecture=$(shell uname -m)
+	os=$(shell uname -s)
 
-	ifeq ($(shell uname -s),Linux)
+	ifeq ($(os),Linux)
 		platform=linux
-	else ifeq ($(shell uname -s),SunOS)
+	else ifeq ($(os),SunOS)
 		platform=sunos
-	else ifeq ($(shell uname -s),Darwin)
+	else ifeq ($(os),FreeBSD)
+		platform=bsd
+	else ifeq ($(os),DragonFly)
+		platform=bsd
+	else ifeq ($(os),NetBSD)
+		platform=bsd
+	else ifeq ($(os),Darwin)
 		platform=macos
-	else ifeq ($(shell uname -s),Haiku)
+	else ifeq ($(os),Haiku)
 		platform=haiku
 	endif
 endif
@@ -30,6 +37,9 @@ else ifeq ($(platform),linux)
 LDFLAGS+=-lX11
 SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),sunos)
+LDFLAGS+=-lX11
+SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
+else ifeq ($(platform),bsd)
 LDFLAGS+=-lX11
 SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),macos)
