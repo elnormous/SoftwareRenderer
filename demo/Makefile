@@ -40,7 +40,8 @@ else ifeq ($(platform),sunos)
 LDFLAGS+=-lX11
 SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),bsd)
-LDFLAGS+=-lX11
+CXXFLAGS+=-I/usr/local/include
+LDFLAGS+=-lX11 -L/usr/local/lib
 SOURCES+=$(ROOT_DIR)/ApplicationX11.cpp
 else ifeq ($(platform),macos)
 LDFLAGS+=-framework Cocoa
