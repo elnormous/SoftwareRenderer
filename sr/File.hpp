@@ -50,7 +50,7 @@ namespace sr
 
             int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
             if (size == 0)
-                throw FileError("Failed to convert UTF-8 to wide char");
+                throw std::runtime_error("Failed to convert UTF-8 to wide char");
 
             std::vector<WCHAR> buffer(size);
             if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer.data(), size) == 0)
