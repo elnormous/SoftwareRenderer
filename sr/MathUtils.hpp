@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef MATHUTILS_H
+#define MATHUTILS_H
 
 #include <cstdint>
 #include "Vector.hpp"
@@ -92,3 +93,5 @@ namespace sr
         return Vector3F(1.0F - (u.v[0] + u.v[1]) / u.v[2], u.v[1] / u.v[2], u.v[0] / u.v[2]);
     }
 }
+
+#endif

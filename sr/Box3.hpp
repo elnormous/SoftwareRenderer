@@ -2,12 +2,13 @@
 //  SoftwareRenderer
 //
 
+#ifndef BOX3_H
+#define BOX3_H
+
 #include <cstdint>
 #include <limits>
 #include "Vector.hpp"
 #include "Size3.hpp"
-
-#pragma once
 
 namespace sr
 {
@@ -142,3 +143,5 @@ namespace sr
         }
     };
 }
+
+#endif

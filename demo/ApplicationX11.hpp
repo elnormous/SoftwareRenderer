@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef APPLICATIONX11_H
+#define APPLICATIONX11_H
 
 #include <X11/Xlib.h>
 #include "Application.hpp"
@@ -30,3 +31,5 @@ namespace demo
         GC gc;
     };
 }
+
+#endif

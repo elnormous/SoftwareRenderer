@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef VERTEX_H
+#define VERTEX_H
 
 #include "Color.hpp"
 #include "Vector.hpp"
@@ -28,3 +29,5 @@ namespace sr
         Vector3F normal;
     };
 }
+
+#endif

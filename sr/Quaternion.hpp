@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef QUATERNION_H
+#define QUATERNION_H
 
 #include "Vector.hpp"
 
@@ -318,3 +319,5 @@ namespace sr
         }
     };
 }
+
+#endif

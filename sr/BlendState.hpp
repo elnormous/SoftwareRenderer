@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef BLENDSTATE_H
+#define BLENDSTATE_H
 
 namespace sr
 {
@@ -12,3 +13,5 @@ namespace sr
         bool enabled = false;
     };
 }
+
+#endif

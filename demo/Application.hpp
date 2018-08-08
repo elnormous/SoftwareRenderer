@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <cstdint>
 #include <memory>
@@ -54,3 +55,5 @@ namespace demo
         std::vector<sr::Vertex> vertices;
     };
 }
+
+#endif

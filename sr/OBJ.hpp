@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef OBJ_H
+#define OBJ_H
 
 #include <string>
 
@@ -18,3 +19,5 @@ namespace sr
         }
     };
 }
+
+#endif

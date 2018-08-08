@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef MATERIAL_H
+#define MATERIAL_H
 
 #include <memory>
 #include "Color.hpp"
@@ -33,3 +34,5 @@ namespace sr
         float opacity = 1.0F;
     };
 }
+
+#endif

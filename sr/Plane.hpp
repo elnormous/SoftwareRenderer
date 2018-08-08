@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef PLANE_H
+#define PLANE_H
 
 #include <cmath>
 #include "Vector.hpp"
@@ -84,3 +85,5 @@ namespace sr
         }
     };
 }
+
+#endif

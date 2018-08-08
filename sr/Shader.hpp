@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef SHADER_H
+#define SHADER_H
 
 #include "Matrix4.hpp"
 #include "Texture.hpp"
@@ -25,3 +26,5 @@ namespace sr
         virtual Color fragmentShader(VSOutput input, Sampler* samplers[2], Texture* textures[2]) const = 0;
     };
 }
+
+#endif

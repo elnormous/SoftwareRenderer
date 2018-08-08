@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef TEXTURESHADER_H
+#define TEXTURESHADER_H
 
 #include "sr.hpp"
 
@@ -39,3 +40,5 @@ namespace demo
         }
     };
 }
+
+#endif

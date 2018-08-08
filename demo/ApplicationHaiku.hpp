@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef APPLICATIONHAIKU_H
+#define APPLICATIONHAIKU_H
 
 #include <Application.h>
 #include "Application.hpp"
@@ -31,3 +32,5 @@ namespace demo
         BBitmap* bitmap = nullptr;
     };
 }
+
+#endif

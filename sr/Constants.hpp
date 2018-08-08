@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 namespace sr
 {
@@ -12,3 +13,5 @@ namespace sr
     const float EPSILON = 1.19209290e-07F;
     const float SQRT2 = 1.4142135623730950488F;
 }
+
+#endif

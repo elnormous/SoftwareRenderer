@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef CONVEXVOLUME_H
+#define CONVEXVOLUME_H
 
 #include <vector>
 #include "Box3.hpp"
@@ -102,3 +103,5 @@ namespace sr
         std::vector<Plane> planes;
     };
 }
+
+#endif

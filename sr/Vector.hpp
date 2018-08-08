@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef _H
+#define _H
 
 #include <cstddef>
 #include <cmath>
@@ -200,3 +201,5 @@ namespace sr
     typedef Vector<3, float> Vector3F;
     typedef Vector<4, float> Vector4F;
 }
+
+#endif

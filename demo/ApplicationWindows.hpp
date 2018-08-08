@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef APPLICATIONWINDOWS_H
+#define APPLICATIONWINDOWS_H
 
 #include <Windows.h>
 #include "Application.hpp"
@@ -25,3 +26,5 @@ namespace demo
         HWND window = 0;
     };
 }
+
+#endif

@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef MATRIX4_H
+#define MATRIX4_H
 
 #include <algorithm>
 #include <cassert>
@@ -1025,3 +1026,5 @@ namespace sr
         return x;
     }
 }
+
+#endif

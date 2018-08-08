@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef SAMPLER_H
+#define SAMPLER_H
 
 #include "Color.hpp"
 #include "Vector.hpp"
@@ -65,3 +66,5 @@ namespace sr
         Filter filter = Filter::POINT;
     };
 }
+
+#endif

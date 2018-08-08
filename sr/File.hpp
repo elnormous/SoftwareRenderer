@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef FILE_H
+#define FILE_H
 
 #include <stdexcept>
 #include <string>
@@ -257,3 +258,5 @@ namespace sr
 #endif
     };
 }
+
+#endif

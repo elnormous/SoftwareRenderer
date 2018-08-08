@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef WAV_H
+#define WAV_H
 
 #include <string>
 
@@ -22,3 +23,5 @@ namespace sr
         }
     };
 }
+
+#endif

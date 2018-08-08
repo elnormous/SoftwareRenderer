@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #include <climits>
 #include <stdexcept>
@@ -598,3 +599,5 @@ namespace sr
         float lodBias = 0.0F;
     };
 }
+
+#endif

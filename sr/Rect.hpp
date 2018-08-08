@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef RECT_H
+#define RECT_H
 
 #include "Vector.hpp"
 #include "Size2.hpp"
@@ -229,3 +230,5 @@ namespace sr
         }
     };
 }
+
+#endif

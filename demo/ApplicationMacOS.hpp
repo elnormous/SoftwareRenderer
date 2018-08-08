@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef APPLICATIONMACOS_H
+#define APPLICATIONMACOS_H
 
 #import <Cocoa/Cocoa.h>
 #include "Application.hpp"
@@ -33,3 +34,5 @@ namespace demo
         CGDataProviderRef provider;
     };
 }
+
+#endif

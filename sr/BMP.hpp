@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef BMP_H
+#define BMP_H
 
 #include <cmath>
 #include <stdexcept>
@@ -238,3 +239,5 @@ namespace sr
         std::vector<uint8_t> data;
     };
 }
+
+#endif

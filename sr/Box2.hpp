@@ -2,12 +2,13 @@
 //  SoftwareRenderer
 //
 
+#ifndef BOX2_H
+#define BOX2_H
+
 #include <cstdint>
 #include <limits>
 #include "Vector.hpp"
 #include "Size2.hpp"
-
-#pragma once
 
 namespace sr
 {
@@ -129,3 +130,5 @@ namespace sr
         }
     };
 }
+
+#endif

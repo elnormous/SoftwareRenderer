@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <cassert>
 #include <stdexcept>
@@ -226,3 +227,5 @@ namespace sr
         DepthState depthState;
     };
 }
+
+#endif

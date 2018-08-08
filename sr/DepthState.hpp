@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef DEPTHSTATE_H
+#define DEPTHSTATE_H
 
 namespace sr
 {
@@ -13,3 +14,5 @@ namespace sr
         bool write = false;
     };
 }
+
+#endif

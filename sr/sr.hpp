@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef SR_H
+#define SR_H
 
 #include "BMP.hpp"
 #include "BlendState.hpp"
@@ -31,3 +32,5 @@
 #include "Vector.hpp"
 #include "Vertex.hpp"
 #include "WAV.hpp"
+
+#endif

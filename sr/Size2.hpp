@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef SIZE2_H
+#define SIZE2_H
 
 #include "Vector.hpp"
 
@@ -131,3 +132,5 @@ namespace sr
         return Size2(size.width / v.v[0], size.height / v.v[1]);
     }
 }
+
+#endif

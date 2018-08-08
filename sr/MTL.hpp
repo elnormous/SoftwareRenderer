@@ -2,7 +2,8 @@
 //  SoftwareRenderer
 //
 
-#pragma once
+#ifndef MTL_H
+#define MTL_H
 
 #include <string>
 
@@ -18,3 +19,5 @@ namespace sr
         }
     };
 }
+
+#endif
