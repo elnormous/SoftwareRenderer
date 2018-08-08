@@ -9,7 +9,6 @@
 
 #if defined(_WIN32)
 #include <Windows.h>
-#include <Shlwapi.h>
 #else
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -57,7 +56,8 @@ namespace sr
             if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer.data(), size) == 0)
                 throw std::runtime_error("Failed to convert UTF-8 to wide char");
 
-            if (buffer.size() > MAX_PATH && PathIsRelativeW(buffer.data()))
+            // relative paths longer than MAX_PATH are not supported
+            if (buffer.size() > MAX_PATH)
                 buffer.insert(buffer.begin(), {L'\\', L'\\', L'?', L'\\'});
 
             file = CreateFileW(buffer.data(), access, 0, nullptr, createDisposition, FILE_ATTRIBUTE_NORMAL, nullptr);
