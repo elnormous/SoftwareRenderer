@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef _H
-#define _H
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <cstddef>
 #include <cmath>
