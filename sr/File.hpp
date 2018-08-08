@@ -48,11 +48,15 @@ namespace sr
             if (mode & APPEND) access |= FILE_APPEND_DATA;
             DWORD createDisposition = (mode & CREATE) ? OPEN_ALWAYS : OPEN_EXISTING;
 
-            WCHAR buffer[MAX_PATH];
-            if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer, MAX_PATH) == 0)
+            int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
+            if (size == 0)
+                throw FileError("Failed to convert UTF-8 to wide char");
+
+            std::vector<WCHAR> buffer(size);
+            if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer.data(), size) == 0)
                 throw std::runtime_error("Failed to convert UTF-8 to wide char");
 
-            file = CreateFileW(buffer, access, 0, nullptr, createDisposition, FILE_ATTRIBUTE_NORMAL, nullptr);
+            file = CreateFileW(buffer.data(), access, 0, nullptr, createDisposition, FILE_ATTRIBUTE_NORMAL, nullptr);
             if (file == INVALID_HANDLE_VALUE)
                 throw std::runtime_error("Failed to open " + filename);
 #else
