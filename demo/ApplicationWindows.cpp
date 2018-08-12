@@ -81,6 +81,8 @@ namespace demo
 
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
+
+        setup();
     }
 
     ApplicationWindows::~ApplicationWindows()
@@ -126,8 +128,6 @@ namespace demo
 
     void ApplicationWindows::run()
     {
-        setup();
-
         MSG msg;
         for (;;)
         {

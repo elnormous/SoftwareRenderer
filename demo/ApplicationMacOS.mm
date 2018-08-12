@@ -207,6 +207,8 @@ namespace demo
         [content setNeedsDisplay:TRUE];
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+
+        setup();
     }
 
     ApplicationMacOS::~ApplicationMacOS()
@@ -264,8 +266,6 @@ namespace demo
 
     void ApplicationMacOS::run()
     {
-        setup();
-
         NSApplication* sharedApplication = [NSApplication sharedApplication];
         [sharedApplication run];
     }

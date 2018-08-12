@@ -50,6 +50,8 @@ namespace demo
 
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
+
+        setup();
     }
 
     ApplicationX11::~ApplicationX11()
@@ -57,9 +59,7 @@ namespace demo
         if (display)
         {
             if (gc) XFreeGC(display, gc);
-
-            if (window)
-                XDestroyWindow(display, window);
+            if (window) XDestroyWindow(display, window);
 
             XCloseDisplay(display);
         }
@@ -92,8 +92,6 @@ namespace demo
 
     void ApplicationX11::run()
     {
-        setup();
-
         int running = 1;
         XEvent event;
 
