@@ -191,7 +191,7 @@ namespace sr
                 return;
 
             n = sqrtf(n);
-            if (n < EPSILON) // too close to zero
+            if (n < std::numeric_limits<float>::min()) // too close to zero
                 return;
 
             n = 1.0F / n;
@@ -218,7 +218,7 @@ namespace sr
         {
             angle = 2.0F * acosf(w);
             float s = sqrtf(1.0F - w * w);
-            if (s < EPSILON) // too close to zero
+            if (s < std::numeric_limits<float>::min()) // too close to zero
             {
                 axis.v[0] = x;
                 axis.v[1] = y;

@@ -6,6 +6,7 @@
 #define PLANE_H
 
 #include <cmath>
+#include <limits>
 #include "Vector.hpp"
 #include "MathUtils.hpp"
 
@@ -50,7 +51,7 @@ namespace sr
                 return;
 
             n = sqrtf(n);
-            if (n < EPSILON) // too close to zero
+            if (n < std::numeric_limits<float>::min()) // too close to zero
                 return;
 
             n = 1.0F / n;
@@ -70,18 +71,14 @@ namespace sr
             return a != plane.a || b != plane.b || c != plane.c || d != plane.d;
         }
 
-        static inline bool makeFrustumPlane(float a, float b, float c, float d, Plane& plane)
+        static inline Plane makeFrustumPlane(float a, float b, float c, float d)
         {
             float n = sqrtf(a * a + b * b + c * c);
-            if (n < EPSILON)
-            {
-                return false;
-            }
+            if (n < std::numeric_limits<float>::min())
+                return Plane();
 
             n = 1.0F / n;
-            plane = Plane(a * n, b * n, c * n, d * n);
-
-            return true;
+            return Plane(a * n, b * n, c * n, d * n);
         }
     };
 }

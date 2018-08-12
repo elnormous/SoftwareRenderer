@@ -159,7 +159,8 @@ namespace sr
 
             T length = sqrt(n);
 
-            if (length < EPSILON) return; // too close to zero
+            if (length < std::numeric_limits<float>::min())  // too close to zero
+                return;
 
             for (size_t i = 0; i < N; ++i)
                 v[i] /= length;

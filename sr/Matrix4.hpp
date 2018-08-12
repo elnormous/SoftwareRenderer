@@ -107,7 +107,7 @@ namespace sr
             assert(zFarPlane != zNearPlane);
 
             float theta = fieldOfView * 0.5F;
-            if (fabsf(fmodf(theta, PI / 2.0F)) < EPSILON)
+            if (fabsf(fmodf(theta, PI / 2.0F)) < std::numeric_limits<float>::min())
             {
                 // invalid field of view value
                 return;
@@ -184,7 +184,7 @@ namespace sr
                 // Not normalized
                 n = sqrtf(n);
                 // Prevent divide too close to zero
-                if (n >= EPSILON)
+                if (n >= std::numeric_limits<float>::min())
                 {
                     n = 1.0F / n;
                     x *= n;
@@ -285,60 +285,48 @@ namespace sr
             dst.m[14] = zTranslation;
         }
 
-        bool getFrustumLeftPlane(Plane& plane) const
+        Plane getFrustumLeftPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12], plane);
+            return Plane::makeFrustumPlane(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12]);
         }
 
-        bool getFrustumRightPlane(Plane& plane) const
+        Plane getFrustumRightPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12], plane);
+            return Plane::makeFrustumPlane(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12]);
         }
 
-        bool getFrustumBottomPlane(Plane& plane) const
+        Plane getFrustumBottomPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13], plane);
+            return Plane::makeFrustumPlane(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13]);
         }
 
-        bool getFrustumTopPlane(Plane& plane) const
+        Plane getFrustumTopPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13], plane);
+            return Plane::makeFrustumPlane(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13]);
         }
 
-        bool getFrustumNearPlane(Plane& plane) const
+        Plane getFrustumNearPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14], plane);
+            return Plane::makeFrustumPlane(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14]);
         }
 
-        bool getFrustumFarPlane(Plane& plane) const
+        Plane getFrustumFarPlane() const
         {
-            return Plane::makeFrustumPlane(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14], plane);
+            return Plane::makeFrustumPlane(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14]);
         }
 
-        bool getFrustum(ConvexVolume& frustum) const
+        ConvexVolume getFrustum() const
         {
-            frustum.planes.clear();
-            Plane plane;
+            ConvexVolume frustum;
 
-            if (!getFrustumLeftPlane(plane)) return false;
-            frustum.planes.push_back(plane);
+            frustum.planes.push_back(getFrustumLeftPlane());
+            frustum.planes.push_back(getFrustumRightPlane());
+            frustum.planes.push_back(getFrustumBottomPlane());
+            frustum.planes.push_back(getFrustumTopPlane());
+            frustum.planes.push_back(getFrustumNearPlane());
+            frustum.planes.push_back(getFrustumFarPlane());
 
-            if (!getFrustumRightPlane(plane)) return false;
-            frustum.planes.push_back(plane);
-
-            if (!getFrustumBottomPlane(plane)) return false;
-            frustum.planes.push_back(plane);
-
-            if (!getFrustumTopPlane(plane)) return false;
-            frustum.planes.push_back(plane);
-
-            if (!getFrustumNearPlane(plane)) return false;
-            frustum.planes.push_back(plane);
-
-            if (!getFrustumFarPlane(plane)) return false;
-            frustum.planes.push_back(plane);
-
-            return true;
+            return frustum;
         }
 
         void add(float scalar)
@@ -452,12 +440,12 @@ namespace sr
             dst.v[2] = m[10];
         }
 
-        bool invert()
+        void invert()
         {
-            return invert(*this);
+            invert(*this);
         }
 
-        bool invert(Matrix4& dst) const
+        void invert(Matrix4& dst) const
         {
             float a0 = m[0] * m[5] - m[1] * m[4];
             float a1 = m[0] * m[6] - m[2] * m[4];
@@ -476,8 +464,8 @@ namespace sr
             float det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
 
             // Close to zero, can't invert
-            if (fabs(det) < EPSILON)
-                return false;
+            if (fabs(det) < std::numeric_limits<float>::min())
+                return;
 
             Matrix4 inverse;
             inverse.m[0]  = m[5] * b5 - m[6] * b4 + m[7] * b3;
@@ -501,8 +489,6 @@ namespace sr
             inverse.m[15] = m[8] * a3 - m[9] * a1 + m[10] * a0;
 
             multiply(inverse, 1.0F / det, dst);
-
-            return true;
         }
 
         inline bool isIdentity() const
