@@ -99,11 +99,6 @@
     return self;
 }
 
--(void)setFrameSize:(NSSize)newSize
-{
-    [super setFrameSize:newSize];
-}
-
 -(void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
