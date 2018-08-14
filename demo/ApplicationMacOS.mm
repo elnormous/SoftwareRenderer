@@ -99,11 +99,6 @@
     return self;
 }
 
--(void)dealloc
-{
-    [super dealloc];
-}
-
 -(void)setFrameSize:(NSSize)newSize
 {
     [super setFrameSize:newSize];

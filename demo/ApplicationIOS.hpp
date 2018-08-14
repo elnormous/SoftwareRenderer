@@ -16,13 +16,20 @@ namespace demo
         ApplicationIOS();
         virtual ~ApplicationIOS();
 
+        void createWindow();
+
         void draw();
-        void didResize();
+        void didResize(CGFloat newWidth, CGFloat newHeight);
 
         void run();
 
     private:
         NSAutoreleasePool* pool = nil;
+
+        UIScreen* screen = nil;
+        UIWindow* window = nil;
+        UIView* view = nil;
+        UIViewController* viewController = nil;
     };
 }
 
