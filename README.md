@@ -16,5 +16,5 @@ Just include the headers from the sr directory in your project and build. You ca
 
 # Showcase
 
-The demonstration app is in the demo directory and it can be built for macOS (Xcode project or GNU makefile), Linux/Solaris/BSD (GNU makefile), Windows (Visual Studio project or GNU makefile) and Haiku (GNU makefile). This is a sample output of the renderer (a box with one side transparent and another colored):
+The demonstration app is in the demo directory and it can be built for macOS/iOS/tvOS (Xcode project or GNU makefile), Linux/Solaris/BSD (GNU makefile), Windows (Visual Studio project or GNU makefile) and Haiku (GNU makefile). This is a sample output of the renderer (a box with one side transparent and another colored):
 ![SR sample](https://elviss.lv/files/sr_sample_filtered.png)
