@@ -19,7 +19,7 @@ namespace demo
         void draw();
         void didResize();
 
-        virtual void run() override;
+        void run();
 
     private:
         ATOM windowClass = 0;

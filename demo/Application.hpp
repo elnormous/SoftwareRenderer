@@ -23,7 +23,6 @@ namespace demo
         Application(Application&&) = delete;
         Application& operator=(Application&&) = delete;
 
-        virtual void run() = 0;
         void setup();
 
         void render();

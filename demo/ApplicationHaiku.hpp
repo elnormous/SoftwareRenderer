@@ -22,7 +22,7 @@ namespace demo
         void draw();
         void didResize(float newWidth, float newHeight);
 
-        virtual void run() override;
+        void run();
 
         virtual void Pulse() override;
 

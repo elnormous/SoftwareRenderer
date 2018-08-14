@@ -19,7 +19,7 @@ namespace demo
         void draw();
         void didResize(int newWidth, int newHeight);
 
-        virtual void run() override;
+        void run();
 
     private:
         Visual* visual;
