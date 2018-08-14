@@ -20,6 +20,9 @@ namespace demo
         void didResize();
 
         void run();
+
+    private:
+        NSAutoreleasePool* pool = nil;
     };
 }
 

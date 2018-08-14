@@ -9,10 +9,12 @@ namespace demo
 {
     ApplicationIOS::ApplicationIOS()
     {
+        pool = [[NSAutoreleasePool alloc] init];
     }
 
     ApplicationIOS::~ApplicationIOS()
     {
+        if (pool) [pool release];
     }
 
     void ApplicationIOS::draw()
@@ -50,12 +52,8 @@ int main()
 {
     try
     {
-        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
         demo::ApplicationIOS application;
         application.run();
-
-        [pool release];
 
         return EXIT_SUCCESS;
     }

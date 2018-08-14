@@ -134,6 +134,8 @@ namespace demo
 {
     ApplicationMacOS::ApplicationMacOS()
     {
+        pool = [[NSAutoreleasePool alloc] init];
+
         NSApplication* sharedApplication = [NSApplication sharedApplication];
         [sharedApplication activateIgnoringOtherApps:YES];
         [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
@@ -220,6 +222,8 @@ namespace demo
         [content release];
         window.delegate = nil;
         [window release];
+
+        if (pool) [pool release];
     }
 
     void ApplicationMacOS::draw()
@@ -293,12 +297,8 @@ int main()
 {
     try
     {
-        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
         demo::ApplicationMacOS application;
         application.run();
-
-        [pool release];
 
         return EXIT_SUCCESS;
     }

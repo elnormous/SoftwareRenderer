@@ -22,6 +22,8 @@ namespace demo
         void run();
 
     private:
+        NSAutoreleasePool* pool = nil;
+
         NSScreen* screen = nil;
         NSWindow* window = nil;
         NSView* content = nil;
