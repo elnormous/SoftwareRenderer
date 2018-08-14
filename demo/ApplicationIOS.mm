@@ -101,12 +101,47 @@ demo:: ApplicationIOS* sharedApplication;
     }
 }
 
--(void)draw:(__unused CADisplayLink*)sender
+@end
+
+@interface Canvas: UIView
 {
-    application->draw();
+    demo::ApplicationIOS* application;
 }
 
 @end
+
+@implementation Canvas
+
+-(id)initWithFrame:(CGRect)frameRect andApplication:(demo::ApplicationIOS*)initApplication
+{
+    if (self = [super initWithFrame:frameRect])
+    {
+        application = initApplication;
+    }
+
+    return self;
+}
+
+-(void)drawRect:(CGRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+
+    application->draw();
+}
+
+-(void)draw:(__unused NSTimer*)timer
+{
+    [self setNeedsDisplay];
+}
+
+@end
+
+static const void* getBytePointer(void* info)
+{
+    sr::RenderTarget* renderTarget = static_cast<sr::RenderTarget*>(info);
+
+    return renderTarget->getFrameBuffer().getData().data();
+}
 
 namespace demo
 {
@@ -118,6 +153,16 @@ namespace demo
 
     ApplicationIOS::~ApplicationIOS()
     {
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpace);
+
+        if (timer) [timer release];
+        if (content) [content release];
+        if (window)
+        {
+            window.rootViewController = nil;
+            [window release];
+        }
         if (pool) [pool release];
     }
 
@@ -140,15 +185,48 @@ namespace demo
         width = static_cast<uint32_t>(windowFrame.size.width * screen.scale);
         height = static_cast<uint32_t>(windowFrame.size.height * screen.scale);
 
-        view = [[UIView alloc] initWithFrame:windowFrame];
-        viewController.view = view;
+        content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
+        content.contentScaleFactor = screen.scale;
+        viewController.view = content;
+
+        componentsPerPixel = 4;
+        bitsPerComponent = sizeof(uint8_t) * 8;
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
 
         [window makeKeyAndVisible];
+
+        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+
+        setup();
     }
 
     void ApplicationIOS::draw()
     {
         render();
+
+        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+                                         bitsPerComponent * componentsPerPixel,
+                                         componentsPerPixel * width,
+                                         colorSpace,
+                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         provider, nullptr, FALSE, kCGRenderingIntentDefault);
+
+        CGContextRef context = UIGraphicsGetCurrentContext();
+
+        CGContextDrawImage(context, [content frame], image);
+        CGContextFlush(context);
+
+        CGImageRelease(image);
     }
 
     void ApplicationIOS::didResize(CGFloat newWidth, CGFloat newHeight)
@@ -156,6 +234,18 @@ namespace demo
         width = static_cast<uint32_t>(newWidth * screen.scale);
         height = static_cast<uint32_t>(newHeight * screen.scale);
 
+        CGDataProviderRelease(provider);
+
+        CGDataProviderDirectCallbacks providerCallbacks = {
+            0,
+            getBytePointer,
+            nullptr,
+            nullptr,
+            nullptr
+        };
+
+        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
+        
         onResize();
     }
 

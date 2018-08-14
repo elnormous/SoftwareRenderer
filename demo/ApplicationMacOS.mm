@@ -231,7 +231,7 @@ namespace demo
 
         CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 
-        CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+        CGContextDrawImage(context, [content frame], image);
         CGContextFlush(context);
 
         CGImageRelease(image);

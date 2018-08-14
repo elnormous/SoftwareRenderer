@@ -28,8 +28,14 @@ namespace demo
 
         UIScreen* screen = nil;
         UIWindow* window = nil;
-        UIView* view = nil;
+        UIView* content = nil;
         UIViewController* viewController = nil;
+        NSTimer* timer = nil;
+
+        size_t componentsPerPixel;
+        size_t bitsPerComponent;
+        CGColorSpaceRef colorSpace;
+        CGDataProviderRef provider;
     };
 }
 
