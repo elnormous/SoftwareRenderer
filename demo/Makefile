@@ -53,12 +53,14 @@ else ifeq ($(platform),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0 \
-	-framework UIKit
+	-framework CoreGraphics -framework Foundation -framework UIKit
+SOURCES+=$(ROOT_DIR)/ApplicationIOS.mm
 else ifeq ($(platform),tvos)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0 \
-	-framework UIKit
+	-framework CoreGraphics -framework Foundation -framework UIKit
+SOURCES+=$(ROOT_DIR)/ApplicationTVOS.mm
 else ifeq ($(platform),emscripten)
 LDFLAGS+=--embed-file Resources -s TOTAL_MEMORY=134217728
 endif

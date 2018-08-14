@@ -12,6 +12,16 @@
 		30345F4D20AA1C0600B9B963 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
 		30345F4F20AA1C7A00B9B963 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		305F942221235C0D00893FF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305F942121235C0D00893FF5 /* CoreGraphics.framework */; };
+		305F94272123726A00893FF5 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Application.cpp */; };
+		305F94292123726A00893FF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305F942121235C0D00893FF5 /* CoreGraphics.framework */; };
+		305F942A2123726A00893FF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D285112122E1E400A4D87F /* UIKit.framework */; };
+		305F942C2123726A00893FF5 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
+		305F942D2123726A00893FF5 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4920AA1C0600B9B963 /* cube.mtl */; };
+		305F942E2123726A00893FF5 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
+		305F942F2123726A00893FF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6D285222122E22D00A4D87F /* Assets.xcassets */; };
+		305F9438212372AF00893FF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305F9436212372AF00893FF5 /* Assets.xcassets */; };
+		305F9439212372AF00893FF5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 305F9437212372AF00893FF5 /* Info.plist */; };
+		305F943C2123730A00893FF5 /* ApplicationTVOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 305F943A2123730900893FF5 /* ApplicationTVOS.mm */; };
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
 		306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* ApplicationMacOS.mm */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
@@ -30,6 +40,11 @@
 		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
 		305F942121235C0D00893FF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererTVOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		305F9436212372AF00893FF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		305F9437212372AF00893FF5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		305F943A2123730900893FF5 /* ApplicationTVOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationTVOS.mm; sourceTree = "<group>"; };
+		305F943B2123730900893FF5 /* ApplicationTVOS.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ApplicationTVOS.hpp; sourceTree = "<group>"; };
 		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306944B2205DF40A00C4969C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +92,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		305F94282123726A00893FF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				305F94292123726A00893FF5 /* CoreGraphics.framework in Frameworks */,
+				305F942A2123726A00893FF5 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		306944AA205DF40A00C4969C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,12 +124,13 @@
 		300984E6202D38FF00BB0340 = {
 			isa = PBXGroup;
 			children = (
-				306A7D0A20B8D8B2002C47F1 /* sr */,
 				300984F1202D38FF00BB0340 /* demo */,
-				306944AE205DF40A00C4969C /* macos */,
-				C6D285182122E22A00A4D87F /* ios */,
-				300984F0202D38FF00BB0340 /* Products */,
 				3071DEA820425CE50073390E /* Frameworks */,
+				C6D285182122E22A00A4D87F /* ios */,
+				306944AE205DF40A00C4969C /* macos */,
+				300984F0202D38FF00BB0340 /* Products */,
+				306A7D0A20B8D8B2002C47F1 /* sr */,
+				305F94352123729200893FF5 /* tvos */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +139,7 @@
 			children = (
 				306944AD205DF40A00C4969C /* SoftwareRenderer.app */,
 				C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */,
+				305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +153,8 @@
 				C6D285312122E29800A4D87F /* ApplicationIOS.mm */,
 				30971FB2206BDA1C000D196D /* ApplicationMacOS.hpp */,
 				306944E0205E00A900C4969C /* ApplicationMacOS.mm */,
+				305F943B2123730900893FF5 /* ApplicationTVOS.hpp */,
+				305F943A2123730900893FF5 /* ApplicationTVOS.mm */,
 				30345F4720AA1BF300B9B963 /* Resources */,
 				30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */,
 			);
@@ -141,6 +169,15 @@
 				30345F4A20AA1C0600B9B963 /* cube.obj */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		305F94352123729200893FF5 /* tvos */ = {
+			isa = PBXGroup;
+			children = (
+				305F9436212372AF00893FF5 /* Assets.xcassets */,
+				305F9437212372AF00893FF5 /* Info.plist */,
+			);
+			path = tvos;
 			sourceTree = "<group>";
 		};
 		306944AE205DF40A00C4969C /* macos */ = {
@@ -212,6 +249,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		305F94242123726A00893FF5 /* SoftwareRendererTVOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRendererTVOS" */;
+			buildPhases = (
+				305F94252123726A00893FF5 /* Sources */,
+				305F94282123726A00893FF5 /* Frameworks */,
+				305F942B2123726A00893FF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SoftwareRendererTVOS;
+			productName = SoftwareRendererIOS;
+			productReference = 305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		306944AC205DF40A00C4969C /* SoftwareRenderer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 306944D1205DF40A00C4969C /* Build configuration list for PBXNativeTarget "SoftwareRenderer" */;
@@ -279,11 +333,25 @@
 			targets = (
 				306944AC205DF40A00C4969C /* SoftwareRenderer */,
 				C6D285162122E22A00A4D87F /* SoftwareRendererIOS */,
+				305F94242123726A00893FF5 /* SoftwareRendererTVOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		305F942B2123726A00893FF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				305F942C2123726A00893FF5 /* cube.obj in Resources */,
+				305F942D2123726A00893FF5 /* cube.mtl in Resources */,
+				305F9439212372AF00893FF5 /* Info.plist in Resources */,
+				305F942E2123726A00893FF5 /* cube.bmp in Resources */,
+				305F942F2123726A00893FF5 /* Assets.xcassets in Resources */,
+				305F9438212372AF00893FF5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		306944AB205DF40A00C4969C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -309,6 +377,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		305F94252123726A00893FF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				305F943C2123730A00893FF5 /* ApplicationTVOS.mm in Sources */,
+				305F94272123726A00893FF5 /* Application.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		306944A9205DF40A00C4969C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +415,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -384,6 +462,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -412,6 +491,55 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		305F94312123726A00893FF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CODE_SIGN_IDENTITY = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = ../sr;
+				INFOPLIST_FILE = tvos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+			};
+			name = Debug;
+		};
+		305F94322123726A00893FF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CODE_SIGN_IDENTITY = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = ../sr;
+				INFOPLIST_FILE = tvos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -481,7 +609,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -506,7 +633,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -524,6 +650,15 @@
 			buildConfigurations = (
 				300984F4202D38FF00BB0340 /* Debug */,
 				300984F5202D38FF00BB0340 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRendererTVOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				305F94312123726A00893FF5 /* Debug */,
+				305F94322123726A00893FF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
