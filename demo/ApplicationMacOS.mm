@@ -89,7 +89,7 @@
 
 @implementation Canvas
 
--(id)initWithFrame:(NSRect)frameRect andWindow:(demo::ApplicationMacOS*)initApplication
+-(id)initWithFrame:(NSRect)frameRect andApplication:(demo::ApplicationMacOS*)initApplication
 {
     if (self = [super initWithFrame:frameRect])
     {
@@ -177,7 +177,7 @@ namespace demo
         width = static_cast<uint32_t>(windowFrame.size.width);
         height = static_cast<uint32_t>(windowFrame.size.height);
 
-        content = [[Canvas alloc] initWithFrame:windowFrame andWindow:this];
+        content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
 
         componentsPerPixel = 4;
         bitsPerComponent = sizeof(uint8_t) * 8;
@@ -208,11 +208,13 @@ namespace demo
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpace);
 
-        [timer release];
-        [content release];
-        window.delegate = nil;
-        [window release];
-
+        if (timer) [timer release];
+        if (content) [content release];
+        if (window)
+        {
+            window.delegate = nil;
+            [window release];
+        }
         if (pool) [pool release];
     }
 
