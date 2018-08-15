@@ -50,6 +50,10 @@ namespace demo
 
         width = static_cast<uint32_t>(bounds.Width());
         height = static_cast<uint32_t>(bounds.Height());
+
+        setup();
+        window->Show();
+        SetPulseRate(100000);
     }
 
     ApplicationHaiku::~ApplicationHaiku()
@@ -81,10 +85,6 @@ namespace demo
 
     void ApplicationHaiku::run()
     {
-        setup();
-        window->Show();
-        SetPulseRate(100000);
-
         Run();
     }
 
