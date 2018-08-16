@@ -7,3 +7,10 @@ x64/
 *.o
 SoftwareRenderer
 demo/SoftwareRenderer.app
+.project
+demo/.gradle
+demo/.settings
+demo/app/.externalNativeBuild
+demo/app/.idea
+demo/app/build
+local.properties
