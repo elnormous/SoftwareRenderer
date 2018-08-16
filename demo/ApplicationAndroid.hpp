@@ -5,6 +5,7 @@
 #ifndef APPLICATIONANDROID_H
 #define APPLICATIONANDROID_H
 
+#include <jni.h>
 #include "Application.hpp"
 
 namespace demo
@@ -12,13 +13,15 @@ namespace demo
     class ApplicationAndroid: public Application
     {
     public:
-        ApplicationAndroid();
+        ApplicationAndroid(JavaVM* initJavaVM);
         virtual ~ApplicationAndroid();
 
-        void draw();
-        void didResize(float newWidth, float newHeight);
+        void init(jint initWidth, jint initHeight);
+        void onDraw(jobject bitmap);
+        void onSizeChanged(jint newWidth, jint newHeight);
 
-        void run();
+    private:
+        JavaVM* javaVM;
     };
 }
 

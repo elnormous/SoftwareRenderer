@@ -5,7 +5,7 @@ demo/SoftwareRenderer.xcodeproj/xcuserdata
 x64/
 *.d
 *.o
-SoftwareRenderer
+demo/SoftwareRenderer
 demo/SoftwareRenderer.app
 .project
 demo/.gradle
