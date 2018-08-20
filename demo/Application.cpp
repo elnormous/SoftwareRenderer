@@ -21,6 +21,12 @@ namespace demo
         sampler.setAddressModeY(sr::Sampler::AddressMode::REPEAT);
         sampler.setFilter(sr::Sampler::Filter::LINEAR);
 
+        blendState.colorBlendSource = sr::BlendState::Factor::SRC_ALPHA;
+        blendState.colorBlendDest = sr::BlendState::Factor::INV_SRC_ALPHA;
+        blendState.colorOperation = sr::BlendState::Operation::ADD;
+        blendState.alphaBlendSource = sr::BlendState::Factor::ONE;
+        blendState.alphaBlendDest = sr::BlendState::Factor::ONE;
+        blendState.alphaOperation = sr::BlendState::Operation::ADD;
         blendState.enabled = true;
 
         depthState.read = true;

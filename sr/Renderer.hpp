@@ -6,6 +6,7 @@
 #define RENDERER_H
 
 #include <cassert>
+#include <algorithm>
 #include <stdexcept>
 #include "BlendState.hpp"
 #include "Color.hpp"
@@ -21,6 +22,40 @@
 
 namespace sr
 {
+    static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha, float destColor, float destAlpha, float blendFactor)
+    {
+        switch (factor)
+        {
+            case BlendState::Factor::ZERO: return 0.0F;
+            case BlendState::Factor::ONE: return 1.0F;
+            case BlendState::Factor::SRC_COLOR: return srcColor;
+            case BlendState::Factor::INV_SRC_COLOR: return 1.0F - srcColor;
+            case BlendState::Factor::SRC_ALPHA: return srcAlpha;
+            case BlendState::Factor::INV_SRC_ALPHA: return 1.0F - srcAlpha;
+            case BlendState::Factor::DEST_ALPHA: return destAlpha;
+            case BlendState::Factor::INV_DEST_ALPHA: return 1.0F - destAlpha;
+            case BlendState::Factor::DEST_COLOR: return destColor;
+            case BlendState::Factor::INV_DEST_COLOR: return 1.0F - destColor;
+            case BlendState::Factor::SRC_ALPHA_SAT: return std::min(srcAlpha, 1.0F - destAlpha);
+            case BlendState::Factor::BLEND_FACTOR: return blendFactor;
+            case BlendState::Factor::INV_BLEND_FACTOR: return 1.0F - blendFactor;
+            default: throw std::runtime_error("Invalid blend factor");
+        }
+    }
+
+    static float getValue(BlendState::Operation operation, float a, float b)
+    {
+        switch (operation)
+        {
+            case BlendState::Operation::ADD: return clamp(a + b, 0.0F, 1.0F);
+            case BlendState::Operation::SUBTRACT: return clamp(a - b, 0.0F, 1.0F);
+            case BlendState::Operation::REV_SUBTRACT: return clamp(b - a, 0.0F, 1.0F);
+            case BlendState::Operation::MIN: return std::min(a, b);
+            case BlendState::Operation::MAX: return std::max(a, b);
+            default: throw std::runtime_error("Invalid blend operation");
+        }
+    }
+
     class Renderer
     {
     public:
@@ -192,24 +227,31 @@ namespace sr
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                            Color psOutput = shader->fragmentShader(psInput, samplers, textures);
+                            Color srcColor = shader->fragmentShader(psInput, samplers, textures);
 
                             if (blendState.enabled)
                             {
                                 uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
-
                                 Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                                 // alpha blend
-                                psOutput.r = psOutput.r * psOutput.a + destColor.r * (1.0F - psOutput.a);
-                                psOutput.g = psOutput.g * psOutput.a + destColor.g * (1.0F - psOutput.a);
-                                psOutput.b = psOutput.b * psOutput.a + destColor.b * (1.0F - psOutput.a);
-                                psOutput.a = 1.0F;
+                                destColor.r = getValue(blendState.colorOperation,
+                                                       srcColor.r * getValue(blendState.colorBlendSource, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r),
+                                                       destColor.r * getValue(blendState.colorBlendDest, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r));
+                                destColor.g = getValue(blendState.colorOperation,
+                                                       srcColor.g * getValue(blendState.colorBlendSource, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g),
+                                                       destColor.g * getValue(blendState.colorBlendDest, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g));
+                                destColor.b = getValue(blendState.colorOperation,
+                                                       srcColor.b * getValue(blendState.colorBlendSource, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b),
+                                                       destColor.b * getValue(blendState.colorBlendDest, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b));
+                                destColor.a = getValue(blendState.alphaOperation,
+                                                       srcColor.a * getValue(blendState.alphaBlendSource, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a),
+                                                       destColor.a * getValue(blendState.alphaBlendDest, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a));
 
-                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
+                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = destColor.getIntValueRaw();
                             }
                             else
-                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = psOutput.getIntValueRaw();
+                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = srcColor.getIntValueRaw();
                         }
                     }
                 }

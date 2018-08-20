@@ -5,6 +5,8 @@
 #ifndef BLENDSTATE_H
 #define BLENDSTATE_H
 
+#include "Color.hpp"
+
 namespace sr
 {
     class BlendState
@@ -43,6 +45,7 @@ namespace sr
         BlendState::Factor alphaBlendDest = BlendState::Factor::ZERO;
         BlendState::Operation alphaOperation = BlendState::Operation::ADD;
         bool enabled = false;
+        Color blendFactor;
     };
 }
 
