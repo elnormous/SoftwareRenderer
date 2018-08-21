@@ -143,8 +143,6 @@ namespace sr
 
         inline Color getPixel(uint32_t x, uint32_t y, uint32_t level) const
         {
-            Color result;
-
             const std::vector<uint8_t>& buffer = levels[level];
 
             switch (pixelFormat)
@@ -152,33 +150,33 @@ namespace sr
                 case Texture::PixelFormat::R8:
                 {
                     const uint8_t* r = &buffer[(y * width + x) * 1];
-                    result = sr::Color(*r, *r, *r, 255);
+                    return sr::Color(*r, *r, *r, 255);
                     break;
                 }
                 case Texture::PixelFormat::A8:
                 {
                     const uint8_t* a = &buffer[(y * width + x) * 1];
-                    result = sr::Color(0, 0, 0, *a);
+                    return sr::Color(0, 0, 0, *a);
                     break;
                 }
                 case Texture::PixelFormat::RGBA8:
                 {
                     const uint8_t* rgba = &buffer[(y * width + x) * 4];
-                    result = sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+                    return sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
                     break;
                 }
                 case Texture::PixelFormat::FLOAT32:
                 {
                     float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
+                    Color result;
                     result.r = result.g = result.b = f;
                     result.a = 1.0F;
+                    return result;
                     break;
                 }
                 default:
-                    return result;
+                    throw std::runtime_error("Invalid pixel format");
             }
-
-            return result;
         }
 
         void generateMipMaps()
@@ -236,8 +234,6 @@ namespace sr
 
         Color sample(const Sampler* sampler, const Vector2F& coord) const
         {
-            Color result;
-
             if (sampler && !levels.empty())
             {
                 float u, v;
@@ -260,7 +256,7 @@ namespace sr
                 {
                     uint32_t textureX = static_cast<uint32_t>(roundf(u));
                     uint32_t textureY = static_cast<uint32_t>(roundf(v));
-                    result = getPixel(textureX, textureY, 0);
+                    return getPixel(textureX, textureY, 0);
                 }
                 else
                 {
@@ -287,14 +283,16 @@ namespace sr
                     float x1 = (textureX0 + 1.5F) - u;
                     float y1 = (textureY0 + 1.5F) - v;
 
+                    Color result;
                     result.r = color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0;
                     result.g = color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0;
                     result.b = color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0;
                     result.a = color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0;
+                    return result;
                 }
             }
 
-            return result;
+            return Color();
         }
 
     private:

@@ -293,8 +293,7 @@ namespace sr
         {
             Vector3F q(x, y, z);
             Vector3F t = 2.0F * Vector3F::cross(q, vector);
-            Vector3F result = vector + (w * t) + Vector3F::cross(q, t);
-            return result;
+            return vector + (w * t) + Vector3F::cross(q, t);
         }
 
         inline Vector3F getRightVector() const
