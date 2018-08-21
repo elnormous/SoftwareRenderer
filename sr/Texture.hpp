@@ -234,40 +234,39 @@ namespace sr
             }
         }
 
-        Color sample(const Sampler* sampler, Vector2F coord) const
+        Color sample(const Sampler* sampler, const Vector2F& coord) const
         {
             Color result;
 
             if (sampler && !levels.empty())
             {
+                float u, v;
+
                 switch (sampler->getAddressModeX())
                 {
-                    case Sampler::AddressMode::CLAMP: coord.v[0] = clamp(coord.v[0], 0.0F, 1.0F); break;
-                    case Sampler::AddressMode::REPEAT: coord.v[0] = fmodf(coord.v[0], 1.0F); break;
-                    case Sampler::AddressMode::MIRROR: coord.v[0] = 1.0F - 2.0F * fabsf(fmodf(coord.v[0] / 2.0F, 1.0F) - 0.5F); break;
+                    case Sampler::AddressMode::CLAMP: u = clamp(coord.v[0], 0.0F, 1.0F) * (width - 1); break;
+                    case Sampler::AddressMode::REPEAT: u = fmodf(coord.v[0], 1.0F) * (width - 1); break;
+                    case Sampler::AddressMode::MIRROR: u = 1.0F - 2.0F * fabsf(fmodf(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1); break;
                 }
 
                 switch (sampler->getAddressModeY())
                 {
-                    case Sampler::AddressMode::CLAMP: coord.v[1] = clamp(coord.v[1], 0.0F, 1.0F); break;
-                    case Sampler::AddressMode::REPEAT: coord.v[1] = fmodf(coord.v[1], 1.0F); break;
-                    case Sampler::AddressMode::MIRROR: coord.v[1] = 1.0F - 2.0F * fabsf(fmodf(coord.v[1] / 2.0F, 1.0F) - 0.5F); break;
+                    case Sampler::AddressMode::CLAMP: v = clamp(coord.v[1], 0.0F, 1.0F) * (height - 1); break;
+                    case Sampler::AddressMode::REPEAT: v = fmodf(coord.v[1], 1.0F) * (height - 1); break;
+                    case Sampler::AddressMode::MIRROR: v = 1.0F - 2.0F * fabsf(fmodf(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1); break;
                 }
-
-                float coordX = coord.v[0] * (width - 1);
-                float coordY = coord.v[1] * (height - 1);
 
                 if (sampler->getFilter() == Sampler::Filter::POINT)
                 {
-                    uint32_t textureX = static_cast<uint32_t>(roundf(coordX));
-                    uint32_t textureY = static_cast<uint32_t>(roundf(coordY));
+                    uint32_t textureX = static_cast<uint32_t>(roundf(u));
+                    uint32_t textureY = static_cast<uint32_t>(roundf(v));
                     result = getPixel(textureX, textureY, 0);
                 }
                 else
                 {
-                    uint32_t textureX0 = static_cast<uint32_t>(coordX - 0.5F);
+                    uint32_t textureX0 = static_cast<uint32_t>(u - 0.5F);
                     uint32_t textureX1 = textureX0 + 1;
-                    uint32_t textureY0 = static_cast<uint32_t>(coordY - 0.5F);
+                    uint32_t textureY0 = static_cast<uint32_t>(v - 0.5F);
                     uint32_t textureY1 = textureY0 + 1;
 
                     textureX0 = clamp(textureX0, 0U, width - 1);
@@ -275,6 +274,7 @@ namespace sr
                     textureY0 = clamp(textureY0, 0U, height - 1);
                     textureY1 = clamp(textureY1, 0U, height - 1);
 
+                    // TODO: calculate mip level
                     Color color[4] = {
                         getPixel(textureX0, textureY0, 0),
                         getPixel(textureX1, textureY0, 0),
@@ -282,10 +282,10 @@ namespace sr
                         getPixel(textureX1, textureY1, 0)
                     };
 
-                    float x0 = coordX - (textureX0 + 0.5F);
-                    float y0 = coordY - (textureY0 + 0.5F);
-                    float x1 = (textureX0 + 1.5F) - coordX;
-                    float y1 = (textureY0 + 1.5F) - coordY;
+                    float x0 = u - (textureX0 + 0.5F);
+                    float y0 = v - (textureY0 + 0.5F);
+                    float x1 = (textureX0 + 1.5F) - u;
+                    float y1 = (textureY0 + 1.5F) - v;
 
                     result.r = color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0;
                     result.g = color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0;
