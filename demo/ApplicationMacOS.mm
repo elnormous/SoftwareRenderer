@@ -151,8 +151,8 @@ namespace demo
         windowSize.width = round(screen.frame.size.width * 0.6);
         windowSize.height = round(screen.frame.size.height * 0.6);
 
-        NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0f - windowSize.width / 2.0f),
-                                  round(screen.frame.size.height / 2.0f - windowSize.height / 2.0f),
+        NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0F - windowSize.width / 2.0F),
+                                  round(screen.frame.size.height / 2.0F - windowSize.height / 2.0F),
                                   windowSize.width, windowSize.height);
 
         NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
