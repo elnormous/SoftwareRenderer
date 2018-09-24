@@ -26,7 +26,8 @@ namespace sr
             READ = 0x01,
             WRITE = 0x02,
             CREATE = 0x04,
-            APPEND = 0x08
+            APPEND = 0x08,
+            TRUNCATE = 0x10
         };
 
         enum Seek
@@ -48,6 +49,10 @@ namespace sr
             if (mode & WRITE) access |= GENERIC_WRITE;
             if (mode & APPEND) access |= FILE_APPEND_DATA;
             DWORD createDisposition = (mode & CREATE) ? OPEN_ALWAYS : OPEN_EXISTING;
+            if (mode & TRUNCATE)
+                createDisposition = (mode & CREATE) ? CREATE_ALWAYS : TRUNCATE_EXISTING;
+            else
+                createDisposition = (mode & CREATE) ? OPEN_ALWAYS : OPEN_EXISTING;
 
             int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
             if (size == 0)
@@ -71,6 +76,7 @@ namespace sr
             else if (mode & WRITE) access |= O_WRONLY;
             if (mode & CREATE) access |= O_CREAT;
             if (mode & APPEND) access |= O_APPEND;
+            if (mode & TRUNCATE) access |= O_TRUNC;
 
             fd = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
             if (fd == -1)
