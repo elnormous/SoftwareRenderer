@@ -21,7 +21,7 @@ namespace demo
         void draw();
         void didResize(CGFloat newWidth, CGFloat newHeight);
 
-        void run();
+        void run(int argc, char* argv[]);
 
     private:
         NSAutoreleasePool* pool = nil;

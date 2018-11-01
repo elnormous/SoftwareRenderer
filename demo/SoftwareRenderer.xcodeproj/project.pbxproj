@@ -20,7 +20,6 @@
 		305F942E2123726A00893FF5 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		305F942F2123726A00893FF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6D285222122E22D00A4D87F /* Assets.xcassets */; };
 		305F9438212372AF00893FF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305F9436212372AF00893FF5 /* Assets.xcassets */; };
-		305F9439212372AF00893FF5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 305F9437212372AF00893FF5 /* Info.plist */; };
 		305F943C2123730A00893FF5 /* ApplicationTVOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 305F943A2123730900893FF5 /* ApplicationTVOS.mm */; };
 		306944B3205DF40A00C4969C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306944B2205DF40A00C4969C /* Assets.xcassets */; };
 		306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* ApplicationMacOS.mm */; };
@@ -345,7 +344,6 @@
 			files = (
 				305F942C2123726A00893FF5 /* cube.obj in Resources */,
 				305F942D2123726A00893FF5 /* cube.mtl in Resources */,
-				305F9439212372AF00893FF5 /* Info.plist in Resources */,
 				305F942E2123726A00893FF5 /* cube.bmp in Resources */,
 				305F942F2123726A00893FF5 /* Assets.xcassets in Resources */,
 				305F9438212372AF00893FF5 /* Assets.xcassets in Resources */,
@@ -563,7 +561,7 @@
 				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;
+				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -588,7 +586,7 @@
 				HEADER_SEARCH_PATHS = ../sr;
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.softwarerenderer;
+				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

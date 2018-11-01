@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include "ApplicationIOS.hpp"
 
-demo:: ApplicationIOS* sharedApplication;
+demo::ApplicationIOS* sharedApplication;
 
 @interface AppDelegate: UIResponder<UIApplicationDelegate>
 
@@ -80,7 +80,6 @@ demo:: ApplicationIOS* sharedApplication;
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    // TODO: add setting to limit orientations
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -249,9 +248,9 @@ namespace demo
         onResize();
     }
 
-    void ApplicationIOS::run()
+    void ApplicationIOS::run(int argc, char* argv[])
     {
-        UIApplicationMain(0, nil, nil, NSStringFromClass([AppDelegate class]));
+        UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 
     std::string Application::getResourcePath()
@@ -273,12 +272,12 @@ namespace demo
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     try
     {
         demo::ApplicationIOS application;
-        application.run();
+        application.run(argc, argv);
 
         return EXIT_SUCCESS;
     }
