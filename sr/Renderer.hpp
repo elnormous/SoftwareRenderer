@@ -7,7 +7,10 @@
 
 #include <cassert>
 #include <algorithm>
+#include <queue>
 #include <stdexcept>
+#include <thread>
+#include <vector>
 #include "BlendState.hpp"
 #include "Color.hpp"
 #include "DepthState.hpp"
@@ -59,7 +62,39 @@ namespace sr
     class Renderer
     {
     public:
-        Renderer() {}
+        Renderer()
+        {
+            for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i)
+                workers.push_back(std::thread(&Renderer::doWork, this));
+        }
+
+        void doWork()
+        {
+            Fragment fragment;
+            Pixel pixel;
+
+            for (;;)
+            {
+                std::unique_lock<std::mutex> lock(fragmentMutex);
+
+                while (fragmentQueue.empty())
+                    fragmentCondition.wait(lock);
+
+                fragment = fragmentQueue.front();
+                fragmentQueue.pop();
+
+                lock.unlock();
+
+                pixel.screenX = fragment.screenX;
+                pixel.screenY = fragment.screenY;
+                pixel.color = shader->fragmentShader(fragment.psInput, samplers, textures);
+
+                lock.lock();
+                pixelQueue.push(pixel);
+                lock.unlock();
+                pixelCondition.notify_all();
+            }
+        }
 
         inline RenderTarget* getRenderTarget() const
         {
@@ -139,6 +174,9 @@ namespace sr
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
+
+            Fragment fragment;
+            Pixel pixel;
 
             for (uint32_t i = 0; i < indices.size(); i += 3)
             {
@@ -227,33 +265,52 @@ namespace sr
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                            Color srcColor = shader->fragmentShader(psInput, samplers, textures);
+                            fragment.screenX = screenX;
+                            fragment.screenY = screenY;
+                            fragment.psInput = psInput;
 
-                            if (blendState.enabled)
-                            {
-                                uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
-                                Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
-
-                                // alpha blend
-                                destColor.r = getValue(blendState.colorOperation,
-                                                       srcColor.r * getValue(blendState.colorBlendSource, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r),
-                                                       destColor.r * getValue(blendState.colorBlendDest, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r));
-                                destColor.g = getValue(blendState.colorOperation,
-                                                       srcColor.g * getValue(blendState.colorBlendSource, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g),
-                                                       destColor.g * getValue(blendState.colorBlendDest, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g));
-                                destColor.b = getValue(blendState.colorOperation,
-                                                       srcColor.b * getValue(blendState.colorBlendSource, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b),
-                                                       destColor.b * getValue(blendState.colorBlendDest, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b));
-                                destColor.a = getValue(blendState.alphaOperation,
-                                                       srcColor.a * getValue(blendState.alphaBlendSource, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a),
-                                                       destColor.a * getValue(blendState.alphaBlendDest, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a));
-
-                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = destColor.getIntValueRaw();
-                            }
-                            else
-                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = srcColor.getIntValueRaw();
+                            std::unique_lock<std::mutex> lock(fragmentMutex);
+                            fragmentQueue.push(fragment);
+                            lock.unlock();
+                            fragmentCondition.notify_all();
                         }
                     }
+                }
+
+                for (;;)
+                {
+                    std::unique_lock<std::mutex> lock(fragmentMutex);
+                    if (fragmentQueue.empty() && pixelQueue.empty()) break;
+                    while (!pixelQueue.empty()) pixelCondition.wait(lock);
+
+                    pixel = pixelQueue.front();
+                    pixelQueue.pop();
+
+                    lock.unlock();
+
+                    if (blendState.enabled)
+                    {
+                        uint8_t* pixelValue = reinterpret_cast<uint8_t*>(&frameBufferData[pixel.screenY * renderTarget->getFrameBuffer().getWidth() + pixel.screenX]);
+                        Color destColor(pixelValue[0], pixelValue[1], pixelValue[2], pixelValue[3]);
+
+                        // alpha blend
+                        destColor.r = getValue(blendState.colorOperation,
+                                               pixel.color.r * getValue(blendState.colorBlendSource, pixel.color.r, pixel.color.a, destColor.r, destColor.a, blendState.blendFactor.r),
+                                               destColor.r * getValue(blendState.colorBlendDest, pixel.color.r, pixel.color.a, destColor.r, destColor.a, blendState.blendFactor.r));
+                        destColor.g = getValue(blendState.colorOperation,
+                                               pixel.color.g * getValue(blendState.colorBlendSource, pixel.color.g, pixel.color.a, destColor.g, destColor.a, blendState.blendFactor.g),
+                                               destColor.g * getValue(blendState.colorBlendDest, pixel.color.g, pixel.color.a, destColor.g, destColor.a, blendState.blendFactor.g));
+                        destColor.b = getValue(blendState.colorOperation,
+                                               pixel.color.b * getValue(blendState.colorBlendSource, pixel.color.b, pixel.color.a, destColor.b, destColor.a, blendState.blendFactor.b),
+                                               destColor.b * getValue(blendState.colorBlendDest, pixel.color.b, pixel.color.a, destColor.b, destColor.a, blendState.blendFactor.b));
+                        destColor.a = getValue(blendState.alphaOperation,
+                                               pixel.color.a * getValue(blendState.alphaBlendSource, pixel.color.a, pixel.color.a, destColor.a, destColor.a, blendState.blendFactor.a),
+                                               destColor.a * getValue(blendState.alphaBlendDest, pixel.color.a, pixel.color.a, destColor.a, destColor.a, blendState.blendFactor.a));
+
+                        frameBufferData[pixel.screenY * renderTarget->getFrameBuffer().getWidth() + pixel.screenX] = destColor.getIntValueRaw();
+                    }
+                    else
+                        frameBufferData[pixel.screenY * renderTarget->getFrameBuffer().getWidth() + pixel.screenX] = pixel.color.getIntValueRaw();
                 }
             }
         }
@@ -267,6 +324,29 @@ namespace sr
         Texture* textures[2];
         BlendState blendState;
         DepthState depthState;
+
+        struct Fragment
+        {
+            uint32_t screenX;
+            uint32_t screenY;
+            Shader::VSOutput psInput;
+        };
+
+        std::queue<Fragment> fragmentQueue;
+        std::mutex fragmentMutex;
+        std::condition_variable fragmentCondition;
+        std::vector<std::thread> workers;
+
+        struct Pixel
+        {
+            uint32_t screenX;
+            uint32_t screenY;
+            Color color;
+        };
+
+        std::queue<Pixel> pixelQueue;
+        std::condition_variable pixelCondition;
+        bool done = false;
     };
 }
 
