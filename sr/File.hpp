@@ -37,9 +37,7 @@ namespace sr
             END
         };
 
-        File()
-        {
-        }
+        File() = default;
 
         File(const std::string& filename, int mode)
         {

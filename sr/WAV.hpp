@@ -12,7 +12,7 @@ namespace sr
     class WAV
     {
     public:
-        WAV() {}
+        WAV() = default;
 
         WAV(const std::string& filename)
         {

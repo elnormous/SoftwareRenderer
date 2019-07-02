@@ -26,9 +26,7 @@ namespace sr
             LINEAR
         };
 
-        Sampler()
-        {
-        }
+        Sampler() = default;
 
         inline AddressMode getAddressModeX() const
         {

@@ -13,9 +13,7 @@ namespace sr
     class Vertex final
     {
     public:
-        Vertex()
-        {
-        }
+        Vertex() = default;
 
         Vertex(const Vector4F& initPosition, Color initColor, const Vector2F& initTexCoord, const Vector3F& initNormal):
             position(initPosition), color(initColor), normal(initNormal)

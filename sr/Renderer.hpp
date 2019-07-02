@@ -59,7 +59,7 @@ namespace sr
     class Renderer
     {
     public:
-        Renderer() {}
+        Renderer() = default;
 
         inline RenderTarget* getRenderTarget() const
         {

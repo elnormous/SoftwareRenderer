@@ -12,7 +12,7 @@ namespace sr
     class OBJ
     {
     public:
-        OBJ() {}
+        OBJ() = default;
 
         OBJ(const std::string& filename)
         {

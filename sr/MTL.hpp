@@ -12,7 +12,7 @@ namespace sr
     class MTL
     {
     public:
-        MTL() {}
+        MTL() = default;
 
         MTL(const std::string& filename)
         {

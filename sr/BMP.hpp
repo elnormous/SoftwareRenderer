@@ -16,7 +16,7 @@ namespace sr
     class BMP
     {
     public:
-        static const int BITMAPFILEHEADER_TYPE_BM = 0x4D42;
+        static constexpr int BITMAPFILEHEADER_TYPE_BM = 0x4D42;
 
         struct BitmapFileHeader              /**** BMP file header structure ****/
         {
@@ -63,7 +63,7 @@ namespace sr
             CMYKRLE4 = 0x000D
         };
 
-        BMP() {}
+        BMP() = default;
 
         BMP(const std::string& filename)
         {
