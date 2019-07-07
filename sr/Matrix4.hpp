@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include "ConvexVolume.hpp"
 #include "Plane.hpp"
 #include "Quaternion.hpp"
@@ -852,9 +853,9 @@ namespace sr
             result.z = sqrtf(std::max(0.0F, 1 - m11 - m22 + m33)) / 2.0F;
             result.w = sqrtf(std::max(0.0F, 1 + m11 + m22 + m33)) / 2.0F;
 
-            result.x *= sgn(result.x * (m32 - m23));
-            result.y *= sgn(result.y * (m13 - m31));
-            result.z *= sgn(result.z * (m21 - m12));
+            result.x = copysign(result.x, m32 - m23);
+            result.y = copysign(result.y, m13 - m31);
+            result.z = copysign(result.z, m21 - m12);
 
             result.normalize();
 

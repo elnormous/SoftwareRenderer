@@ -20,27 +20,6 @@ namespace sr
         return lerp(a, b, t * t * (3 - 2 * t));
     }
 
-    constexpr bool isPOT(uint32_t x) noexcept
-    {
-        return (x != 0) && (((x - 1) & x) == 0);
-    }
-
-    inline uint32_t nextPOT(uint32_t x) noexcept
-    {
-        x = x - 1;
-        x = x | (x >> 1);
-        x = x | (x >> 2);
-        x = x | (x >> 4);
-        x = x | (x >> 8);
-        x = x | (x >>16);
-        return x + 1;
-    }
-
-    template<typename T> inline int sgn(T val) noexcept
-    {
-        return (T(0) < val) - (val < T(0));
-    }
-
     constexpr float degToRad(float x) noexcept
     {
         return x * 0.0174532925F;
