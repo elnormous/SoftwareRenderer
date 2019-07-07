@@ -14,7 +14,7 @@ namespace sr
 {
     class Box2;
 
-    class Box3
+    class Box3 final
     {
     public:
         Vector3F min;

@@ -5,8 +5,8 @@
 #ifndef SR_H
 #define SR_H
 
-#include "BMP.hpp"
 #include "BlendState.hpp"
+#include "BMP.hpp"
 #include "Box2.hpp"
 #include "Box3.hpp"
 #include "Constants.hpp"

@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class BlendState
+    class BlendState final
     {
     public:
         enum class Factor

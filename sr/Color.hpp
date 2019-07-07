@@ -11,7 +11,7 @@
 
 namespace sr
 {
-    class Color
+    class Color final
     {
     public:
         static const uint32_t BLACK = 0x000000ff;

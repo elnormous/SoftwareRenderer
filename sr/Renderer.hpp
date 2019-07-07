@@ -56,7 +56,7 @@ namespace sr
         }
     }
 
-    class Renderer
+    class Renderer final
     {
     public:
         Renderer() = default;

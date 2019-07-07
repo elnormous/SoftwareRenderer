@@ -10,23 +10,22 @@
 
 namespace sr
 {
-    inline float lerp(float v0, float v1, float t)
+    constexpr float lerp(float v0, float v1, float t) noexcept
     {
         return (1.0F - t) * v0 + t * v1;
     }
 
-    inline float smoothStep(float a, float b, float t)
+    constexpr float smoothStep(float a, float b, float t) noexcept
     {
-        float remapSmoothStep = t * t * (3 - 2 * t);
-        return lerp(a, b, remapSmoothStep);
+        return lerp(a, b, t * t * (3 - 2 * t));
     }
 
-    inline bool isPOT(uint32_t x)
+    constexpr bool isPOT(uint32_t x) noexcept
     {
         return (x != 0) && (((x - 1) & x) == 0);
     }
 
-    inline uint32_t nextPOT(uint32_t x)
+    inline uint32_t nextPOT(uint32_t x) noexcept
     {
         x = x - 1;
         x = x | (x >> 1);
@@ -37,23 +36,23 @@ namespace sr
         return x + 1;
     }
 
-    template<typename T> inline int sgn(T val)
+    template<typename T> inline int sgn(T val) noexcept
     {
         return (T(0) < val) - (val < T(0));
     }
 
-    inline float degToRad(float x)
+    constexpr float degToRad(float x) noexcept
     {
         return x * 0.0174532925F;
     }
 
-    inline float radToDeg(float x)
+    constexpr float radToDeg(float x) noexcept
     {
         return x * 57.29577951F;
     }
 
     template<typename T>
-    inline T clamp(T x, T lo, T hi)
+    constexpr T clamp(T x, T lo, T hi) noexcept
     {
         return (x < lo) ? lo : ((x > hi) ? hi : x);
     }
@@ -62,7 +61,7 @@ namespace sr
     static const uint64_t FNV_MULTIPLE = 16777619;
 
     // Fowler / Noll / Vo (FNV) hash
-    inline uint64_t fnvHash(uint64_t s)
+    inline uint64_t fnvHash(uint64_t s) noexcept
     {
         uint64_t hash = INITIAL_FNV;
         for (uint64_t i = 0; i < sizeof(uint64_t); i++)

@@ -12,7 +12,7 @@
 
 namespace sr
 {
-    class Texture
+    class Texture final
     {
     public:
         enum class PixelFormat

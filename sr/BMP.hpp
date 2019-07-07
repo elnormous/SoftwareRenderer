@@ -13,7 +13,7 @@
 
 namespace sr
 {
-    class BMP
+    class BMP final
     {
     public:
         static constexpr int BITMAPFILEHEADER_TYPE_BM = 0x4D42;

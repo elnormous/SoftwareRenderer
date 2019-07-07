@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class Quaternion
+    class Quaternion final
     {
     public:
         float x = 0.0F;

@@ -10,7 +10,7 @@
 
 namespace sr
 {
-    class Sampler
+    class Sampler final
     {
     public:
         enum AddressMode

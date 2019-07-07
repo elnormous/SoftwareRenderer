@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class MTL
+    class MTL final
     {
     public:
         MTL() = default;

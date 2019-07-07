@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class Size2
+    class Size2 final
     {
     public:
         float width = 0.0F;

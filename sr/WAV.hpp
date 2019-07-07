@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class WAV
+    class WAV final
     {
     public:
         WAV() = default;

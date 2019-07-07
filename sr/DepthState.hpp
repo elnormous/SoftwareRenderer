@@ -7,7 +7,7 @@
 
 namespace sr
 {
-    class DepthState
+    class DepthState final
     {
     public:
         bool read = false;

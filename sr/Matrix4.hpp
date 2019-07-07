@@ -14,7 +14,7 @@
 
 namespace sr
 {
-    class Matrix4
+    class Matrix4 final
     {
     public:
         float m[16];

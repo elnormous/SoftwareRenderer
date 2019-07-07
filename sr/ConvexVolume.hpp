@@ -12,7 +12,7 @@
 
 namespace sr
 {
-    class ConvexVolume
+    class ConvexVolume final
     {
     public:
         ConvexVolume()

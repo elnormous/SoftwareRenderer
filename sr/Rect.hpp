@@ -10,7 +10,7 @@
 
 namespace sr
 {
-    class Rect
+    class Rect final
     {
     public:
         Vector2F position;

@@ -9,7 +9,7 @@
 
 namespace sr
 {
-    class OBJ
+    class OBJ final
     {
     public:
         OBJ() = default;

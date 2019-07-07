@@ -12,7 +12,7 @@
 
 namespace sr
 {
-    class Box2
+    class Box2 final
     {
     public:
         Vector2F min;

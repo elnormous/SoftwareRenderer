@@ -14,7 +14,7 @@
 namespace sr
 {
     template<size_t N, typename T>
-    class Vector
+    class Vector final
     {
     public:
         T v[N];
