@@ -17,9 +17,9 @@ namespace demo
         texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
 
-        sampler.setAddressModeX(sr::Sampler::AddressMode::REPEAT);
-        sampler.setAddressModeY(sr::Sampler::AddressMode::REPEAT);
-        sampler.setFilter(sr::Sampler::Filter::LINEAR);
+        sampler.addressModeX = sr::Sampler::AddressMode::REPEAT;
+        sampler.addressModeY = sr::Sampler::AddressMode::REPEAT;
+        sampler.filter = sr::Sampler::Filter::LINEAR;
 
         blendState.colorBlendSource = sr::BlendState::Factor::SRC_ALPHA;
         blendState.colorBlendDest = sr::BlendState::Factor::INV_SRC_ALPHA;

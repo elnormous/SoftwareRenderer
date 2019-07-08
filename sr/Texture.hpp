@@ -26,7 +26,7 @@ namespace sr
 
         static constexpr float GAMMA = 2.2F;
 
-        static uint32_t getPixelSize(PixelFormat pixelFormat)
+        static inline uint32_t getPixelSize(PixelFormat pixelFormat) noexcept
         {
             switch (pixelFormat)
             {
@@ -238,21 +238,21 @@ namespace sr
             {
                 float u, v;
 
-                switch (sampler->getAddressModeX())
+                switch (sampler->addressModeX)
                 {
                     case Sampler::AddressMode::CLAMP: u = clamp(coord.v[0], 0.0F, 1.0F) * (width - 1); break;
                     case Sampler::AddressMode::REPEAT: u = fmodf(coord.v[0], 1.0F) * (width - 1); break;
                     case Sampler::AddressMode::MIRROR: u = 1.0F - 2.0F * fabsf(fmodf(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1); break;
                 }
 
-                switch (sampler->getAddressModeY())
+                switch (sampler->addressModeY)
                 {
                     case Sampler::AddressMode::CLAMP: v = clamp(coord.v[1], 0.0F, 1.0F) * (height - 1); break;
                     case Sampler::AddressMode::REPEAT: v = fmodf(coord.v[1], 1.0F) * (height - 1); break;
                     case Sampler::AddressMode::MIRROR: v = 1.0F - 2.0F * fabsf(fmodf(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1); break;
                 }
 
-                if (sampler->getFilter() == Sampler::Filter::POINT)
+                if (sampler->filter == Sampler::Filter::POINT)
                 {
                     uint32_t textureX = static_cast<uint32_t>(roundf(u));
                     uint32_t textureY = static_cast<uint32_t>(roundf(v));
