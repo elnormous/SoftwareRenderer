@@ -21,6 +21,14 @@ namespace sr
     class File final
     {
     public:
+        #ifdef _WIN32
+                    using Type = HANDLE;
+                    static constexpr Type INVALID = INVALID_HANDLE_VALUE;
+        #else
+                    using Type = int;
+                    static constexpr Type INVALID = -1;
+        #endif
+
         enum Mode
         {
             Read = 0x01,
@@ -75,57 +83,47 @@ namespace sr
                 ((mode & Mode::Append) ? O_APPEND : 0) |
                 ((mode & Mode::Truncate) ? O_TRUNC : 0);
 
-            fd = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-            if (fd == -1)
+            file = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+            if (file == -1)
                 throw std::runtime_error("Failed to open " + filename);
 #endif
         }
 
         ~File()
         {
+            if (file != INVALID)
 #if defined(_WIN32)
-            if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
+                CloseHandle(file);
 #else
-            if (fd != -1) close(fd);
+                close(file);
 #endif
         }
 
-        File(File&& other)
+        File(File&& other) noexcept:
+            file(other.file)
         {
-#if defined(_WIN32)
+            other.file = INVALID;
+        }
+
+        File& operator=(File&& other) noexcept
+        {
+            if (&other == this) return *this;
+
+            if (file != INVALID)
+            #if defined(_WIN32)
+                CloseHandle(file);
+            #else
+                close(file);
+            #endif
             file = other.file;
-            other.file = nullptr;
-#else
-            fd = other.fd;
-            other.fd = -1;
-#endif
-        }
-
-        File& operator=(File&& other)
-        {
-            if (&other != this)
-            {
-#if defined(_WIN32)
-                if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
-                file = other.file;
-                other.file = nullptr;
-#else
-                if (fd != -1) close(fd);
-                fd = other.fd;
-                other.fd = -1;
-#endif
-            }
+            other.file = INVALID;
 
             return *this;
         }
 
-        inline bool isOpen() const
+        inline bool isOpen() const noexcept
         {
-#if defined(_WIN32)
-            return file != INVALID_HANDLE_VALUE;
-#else
-            return fd != -1;
-#endif
+            return file != INVALID;
         }
 
         uint32_t read(void* buffer, uint32_t size, bool all = false) const
@@ -150,20 +148,17 @@ namespace sr
             }
             else
             {
-#if defined(_WIN32)
-                if (file == INVALID_HANDLE_VALUE)
+                if (file == INVALID)
                     throw std::runtime_error("File is not open");
 
+#if defined(_WIN32)
                 DWORD n;
                 if (!ReadFile(file, buffer, size, &n, nullptr))
                     throw std::runtime_error("Failed to read from file");
 
                 return static_cast<uint32_t>(n);
 #else
-                if (fd == -1)
-                    throw std::runtime_error("File is not open");
-
-                const ssize_t ret = ::read(fd, buffer, size);
+                const ssize_t ret = ::read(file, buffer, size);
 
                 if (ret == -1)
                     throw std::runtime_error("Failed to read from file");
@@ -191,20 +186,17 @@ namespace sr
             }
             else
             {
-#if defined(_WIN32)
-                if (file == INVALID_HANDLE_VALUE)
+                if (file == INVALID)
                     throw std::runtime_error("File is not open");
 
+#if defined(_WIN32)
                 DWORD n;
                 if (!WriteFile(file, buffer, size, &n, nullptr))
                     throw std::runtime_error("Failed to write to file");
 
                 return static_cast<uint32_t>(n);
 #else
-                if (fd == -1)
-                    throw std::runtime_error("File is not open");
-
-                const ssize_t ret = ::write(fd, buffer, size);
+                const ssize_t ret = ::write(file, buffer, size);
 
                 if (ret == -1)
                     throw std::runtime_error("Failed to write to file");
@@ -216,10 +208,10 @@ namespace sr
 
         void seek(int32_t offset, int method) const
         {
-#if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE)
+            if (file == INVALID)
                 throw std::runtime_error("File is not open");
 
+#if defined(_WIN32)
             const DWORD moveMethod =
                 (method == Seek::Begin) ? FILE_BEGIN :
                 (method == Seek::Current) ? FILE_CURRENT :
@@ -229,44 +221,34 @@ namespace sr
             if (SetFilePointer(file, offset, nullptr, moveMethod) == 0)
                 throw std::runtime_error("Failed to seek file");
 #else
-            if (fd == -1)
-                throw std::runtime_error("File is not open");
-
             const int whence =
                 (method == Seek::Begin) ? SEEK_SET :
                 (method == Seek::Current) ? SEEK_CUR :
                 (method == Seek::End) ? SEEK_END :
                 throw std::runtime_error("Unsupported seek method");
 
-            if (lseek(fd, offset, whence) == -1)
+            if (lseek(file, offset, whence) == -1)
                 throw std::runtime_error("Failed to seek file");
 #endif
         }
 
         uint32_t getOffset() const
         {
-#if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE)
+            if (file == INVALID)
                 throw std::runtime_error("File is not open");
 
+#if defined(_WIN32)
             DWORD ret = SetFilePointer(file, 0, nullptr, FILE_CURRENT);
             return static_cast<uint32_t>(ret);
 #else
-            if (fd == -1)
-                throw std::runtime_error("File is not open");
-
-            off_t ret = lseek(fd, 0, SEEK_CUR);
+            off_t ret = lseek(file, 0, SEEK_CUR);
             if (ret == -1) return 0;
             return static_cast<uint32_t>(ret);
 #endif
         }
 
     private:
-#if defined(_WIN32)
-        HANDLE file = INVALID_HANDLE_VALUE;
-#else
-        int fd = -1;
-#endif
+        Type file = INVALID;
     };
 }
 
