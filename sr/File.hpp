@@ -42,15 +42,14 @@ namespace sr
         File(const std::string& filename, int mode)
         {
 #if defined(_WIN32)
-            DWORD access = 0;
-            if (mode & Read) access |= GENERIC_READ;
-            if (mode & Write) access |= GENERIC_WRITE;
-            if (mode & Append) access |= FILE_APPEND_DATA;
-            DWORD createDisposition = (mode & Create) ? OPEN_ALWAYS : OPEN_EXISTING;
-            if (mode & Truncate)
-                createDisposition = (mode & Create) ? CREATE_ALWAYS : TRUNCATE_EXISTING;
-            else
-                createDisposition = (mode & Create) ? OPEN_ALWAYS : OPEN_EXISTING;
+            const DWORD access =
+                ((mode & Mode::Read) ? GENERIC_READ : 0) |
+                ((mode & Mode::Write) ? GENERIC_WRITE : 0) |
+                ((mode & Mode::Append) ? FILE_APPEND_DATA : 0);
+
+            const DWORD createDisposition = (mode & Truncate) ?
+                ((mode & Mode::Create) ? CREATE_ALWAYS : TRUNCATE_EXISTING) :
+                ((mode & Mode::Create) ? OPEN_ALWAYS : OPEN_EXISTING);
 
             int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
             if (size == 0)
@@ -68,13 +67,13 @@ namespace sr
             if (file == INVALID_HANDLE_VALUE)
                 throw std::runtime_error("Failed to open " + filename);
 #else
-            int access = 0;
-            if ((mode & Read) && (mode & Write)) access |= O_RDWR;
-            else if (mode & Read) access |= O_RDONLY;
-            else if (mode & Write) access |= O_WRONLY;
-            if (mode & Create) access |= O_CREAT;
-            if (mode & Append) access |= O_APPEND;
-            if (mode & Truncate) access |= O_TRUNC;
+            const int access =
+                ((mode & Mode::Read) && (mode & Mode::Write) ? O_RDWR :
+                 (mode & Mode::Read) ? O_RDONLY :
+                 (mode & Mode::Write) ? O_WRONLY : 0) |
+                ((mode & Mode::Create) ? O_CREAT : 0) |
+                ((mode & Mode::Append) ? O_APPEND : 0) |
+                ((mode & Mode::Truncate) ? O_TRUNC : 0);
 
             fd = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
             if (fd == -1)
@@ -138,7 +137,7 @@ namespace sr
 
                 while (remaining > 0)
                 {
-                    uint32_t bytesRead = read(dest, remaining);
+                    const uint32_t bytesRead = read(dest, remaining);
 
                     if (bytesRead == 0)
                         throw std::runtime_error("End of file reached");
@@ -164,7 +163,7 @@ namespace sr
                 if (fd == -1)
                     throw std::runtime_error("File is not open");
 
-                ssize_t ret = ::read(fd, buffer, size);
+                const ssize_t ret = ::read(fd, buffer, size);
 
                 if (ret == -1)
                     throw std::runtime_error("Failed to read from file");
@@ -183,7 +182,7 @@ namespace sr
 
                 while (remaining > 0)
                 {
-                    uint32_t bytesWritten = write(src, remaining);
+                    const uint32_t bytesWritten = write(src, remaining);
                     remaining -= bytesWritten;
                     src += bytesWritten;
                 }
@@ -205,7 +204,7 @@ namespace sr
                 if (fd == -1)
                     throw std::runtime_error("File is not open");
 
-                ssize_t ret = ::write(fd, buffer, size);
+                const ssize_t ret = ::write(fd, buffer, size);
 
                 if (ret == -1)
                     throw std::runtime_error("Failed to write to file");
@@ -221,20 +220,24 @@ namespace sr
             if (file == INVALID_HANDLE_VALUE)
                 throw std::runtime_error("File is not open");
 
-            DWORD moveMethod = 0;
-            if (method == Begin) moveMethod = FILE_BEGIN;
-            else if (method == Current) moveMethod = FILE_CURRENT;
-            else if (method == End) moveMethod = FILE_END;
+            const DWORD moveMethod =
+                (method == Seek::Begin) ? FILE_BEGIN :
+                (method == Seek::Current) ? FILE_CURRENT :
+                (method == Seek::End) ? FILE_END :
+                throw std::runtime_error("Unsupported seek method");
+
             if (SetFilePointer(file, offset, nullptr, moveMethod) == 0)
                 throw std::runtime_error("Failed to seek file");
 #else
             if (fd == -1)
                 throw std::runtime_error("File is not open");
 
-            int whence = 0;
-            if (method == Begin) whence = SEEK_SET;
-            else if (method == Current) whence = SEEK_CUR;
-            else if (method == End) whence = SEEK_END;
+            const int whence =
+                (method == Seek::Begin) ? SEEK_SET :
+                (method == Seek::Current) ? SEEK_CUR :
+                (method == Seek::End) ? SEEK_END :
+                throw std::runtime_error("Unsupported seek method");
+
             if (lseek(fd, offset, whence) == -1)
                 throw std::runtime_error("Failed to seek file");
 #endif
@@ -243,11 +246,15 @@ namespace sr
         uint32_t getOffset() const
         {
 #if defined(_WIN32)
-            if (file == INVALID_HANDLE_VALUE) return 0;
+            if (file == INVALID_HANDLE_VALUE)
+                throw std::runtime_error("File is not open");
+
             DWORD ret = SetFilePointer(file, 0, nullptr, FILE_CURRENT);
             return static_cast<uint32_t>(ret);
 #else
-            if (fd == -1) return 0;
+            if (fd == -1)
+                throw std::runtime_error("File is not open");
+
             off_t ret = lseek(fd, 0, SEEK_CUR);
             if (ret == -1) return 0;
             return static_cast<uint32_t>(ret);
