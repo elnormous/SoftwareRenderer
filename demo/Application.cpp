@@ -13,20 +13,20 @@ namespace demo
         model.setIdentity();
 
         sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
-        texture = sr::Texture(sr::Texture::PixelFormat::RGBA8, bmp.getWidth(), bmp.getHeight());
+        texture = sr::Texture(sr::Texture::PixelFormat::Rgba8, bmp.getWidth(), bmp.getHeight());
         texture.setData(bmp.getData(), 0);
         texture.generateMipMaps();
 
-        sampler.addressModeX = sr::Sampler::AddressMode::REPEAT;
-        sampler.addressModeY = sr::Sampler::AddressMode::REPEAT;
-        sampler.filter = sr::Sampler::Filter::LINEAR;
+        sampler.addressModeX = sr::Sampler::AddressMode::Repeat;
+        sampler.addressModeY = sr::Sampler::AddressMode::Repeat;
+        sampler.filter = sr::Sampler::Filter::Linear;
 
-        blendState.colorBlendSource = sr::BlendState::Factor::SRC_ALPHA;
-        blendState.colorBlendDest = sr::BlendState::Factor::INV_SRC_ALPHA;
-        blendState.colorOperation = sr::BlendState::Operation::ADD;
-        blendState.alphaBlendSource = sr::BlendState::Factor::ONE;
-        blendState.alphaBlendDest = sr::BlendState::Factor::ONE;
-        blendState.alphaOperation = sr::BlendState::Operation::ADD;
+        blendState.colorBlendSource = sr::BlendState::Factor::SrcAlpha;
+        blendState.colorBlendDest = sr::BlendState::Factor::InvSrcAlpha;
+        blendState.colorOperation = sr::BlendState::Operation::Add;
+        blendState.alphaBlendSource = sr::BlendState::Factor::One;
+        blendState.alphaBlendDest = sr::BlendState::Factor::One;
+        blendState.alphaOperation = sr::BlendState::Operation::Add;
         blendState.enabled = true;
 
         depthState.read = true;

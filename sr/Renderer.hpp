@@ -26,19 +26,19 @@ namespace sr
     {
         switch (factor)
         {
-            case BlendState::Factor::ZERO: return 0.0F;
-            case BlendState::Factor::ONE: return 1.0F;
-            case BlendState::Factor::SRC_COLOR: return srcColor;
-            case BlendState::Factor::INV_SRC_COLOR: return 1.0F - srcColor;
-            case BlendState::Factor::SRC_ALPHA: return srcAlpha;
-            case BlendState::Factor::INV_SRC_ALPHA: return 1.0F - srcAlpha;
-            case BlendState::Factor::DEST_ALPHA: return destAlpha;
-            case BlendState::Factor::INV_DEST_ALPHA: return 1.0F - destAlpha;
-            case BlendState::Factor::DEST_COLOR: return destColor;
-            case BlendState::Factor::INV_DEST_COLOR: return 1.0F - destColor;
-            case BlendState::Factor::SRC_ALPHA_SAT: return std::min(srcAlpha, 1.0F - destAlpha);
-            case BlendState::Factor::BLEND_FACTOR: return blendFactor;
-            case BlendState::Factor::INV_BLEND_FACTOR: return 1.0F - blendFactor;
+            case BlendState::Factor::Zero: return 0.0F;
+            case BlendState::Factor::One: return 1.0F;
+            case BlendState::Factor::SrcColor: return srcColor;
+            case BlendState::Factor::InvSrcColor: return 1.0F - srcColor;
+            case BlendState::Factor::SrcAlpha: return srcAlpha;
+            case BlendState::Factor::InvSrcAlpha: return 1.0F - srcAlpha;
+            case BlendState::Factor::DestAlpha: return destAlpha;
+            case BlendState::Factor::InvDestAlpha: return 1.0F - destAlpha;
+            case BlendState::Factor::DestColor: return destColor;
+            case BlendState::Factor::InvDestColor: return 1.0F - destColor;
+            case BlendState::Factor::SrcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
+            case BlendState::Factor::BlendFactor: return blendFactor;
+            case BlendState::Factor::InvBlendFactor: return 1.0F - blendFactor;
             default: throw std::runtime_error("Invalid blend factor");
         }
     }
@@ -47,11 +47,11 @@ namespace sr
     {
         switch (operation)
         {
-            case BlendState::Operation::ADD: return clamp(a + b, 0.0F, 1.0F);
-            case BlendState::Operation::SUBTRACT: return clamp(a - b, 0.0F, 1.0F);
-            case BlendState::Operation::REV_SUBTRACT: return clamp(b - a, 0.0F, 1.0F);
-            case BlendState::Operation::MIN: return std::min(a, b);
-            case BlendState::Operation::MAX: return std::max(a, b);
+            case BlendState::Operation::Add: return clamp(a + b, 0.0F, 1.0F);
+            case BlendState::Operation::Subtract: return clamp(a - b, 0.0F, 1.0F);
+            case BlendState::Operation::RevSubtract: return clamp(b - a, 0.0F, 1.0F);
+            case BlendState::Operation::Min: return std::min(a, b);
+            case BlendState::Operation::Max: return std::max(a, b);
             default: throw std::runtime_error("Invalid blend operation");
         }
     }

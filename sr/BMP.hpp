@@ -67,7 +67,7 @@ namespace sr
 
         BMP(const std::string& filename)
         {
-            File f(filename, File::Mode::READ);
+            File f(filename, File::Mode::Read);
 
             BitmapFileHeader header;
 
@@ -149,7 +149,7 @@ namespace sr
                 offset += sizeof(infoHeader.biClrImportant);
             }
 
-            f.seek(header.bfOffBits, File::Seek::BEGIN);
+            f.seek(header.bfOffBits, File::Seek::Begin);
 
             data.resize(infoHeader.biWidth * std::abs(infoHeader.biHeight) * sizeof(RGBQuad));
             std::fill(data.begin(), data.end(), 255);
@@ -190,7 +190,7 @@ namespace sr
 
         void save(const std::string& filename)
         {
-            File f(filename, File::Mode::WRITE);
+            File f(filename, File::Mode::Write);
 
             BitmapFileHeader header;
             header.bfType = BITMAPFILEHEADER_TYPE_BM;

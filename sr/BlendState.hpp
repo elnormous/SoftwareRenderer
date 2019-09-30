@@ -14,36 +14,36 @@ namespace sr
     public:
         enum class Factor
         {
-            ZERO,
-            ONE,
-            SRC_COLOR,
-            INV_SRC_COLOR,
-            SRC_ALPHA,
-            INV_SRC_ALPHA,
-            DEST_ALPHA,
-            INV_DEST_ALPHA,
-            DEST_COLOR,
-            INV_DEST_COLOR,
-            SRC_ALPHA_SAT,
-            BLEND_FACTOR,
-            INV_BLEND_FACTOR
+            Zero,
+            One,
+            SrcColor,
+            InvSrcColor,
+            SrcAlpha,
+            InvSrcAlpha,
+            DestAlpha,
+            InvDestAlpha,
+            DestColor,
+            InvDestColor,
+            SrcAlphaSat,
+            BlendFactor,
+            InvBlendFactor
         };
 
         enum class Operation
         {
-            ADD,
-            SUBTRACT,
-            REV_SUBTRACT,
-            MIN,
-            MAX
+            Add,
+            Subtract,
+            RevSubtract,
+            Min,
+            Max
         };
 
-        BlendState::Factor colorBlendSource = BlendState::Factor::ONE;
-        BlendState::Factor colorBlendDest = BlendState::Factor::ZERO;
-        BlendState::Operation colorOperation = BlendState::Operation::ADD;
-        BlendState::Factor alphaBlendSource = BlendState::Factor::ONE;
-        BlendState::Factor alphaBlendDest = BlendState::Factor::ZERO;
-        BlendState::Operation alphaOperation = BlendState::Operation::ADD;
+        BlendState::Factor colorBlendSource = BlendState::Factor::One;
+        BlendState::Factor colorBlendDest = BlendState::Factor::Zero;
+        BlendState::Operation colorOperation = BlendState::Operation::Add;
+        BlendState::Factor alphaBlendSource = BlendState::Factor::One;
+        BlendState::Factor alphaBlendDest = BlendState::Factor::Zero;
+        BlendState::Operation alphaOperation = BlendState::Operation::Add;
         bool enabled = false;
         Color blendFactor;
     };

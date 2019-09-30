@@ -23,18 +23,18 @@ namespace sr
     public:
         enum Mode
         {
-            READ = 0x01,
-            WRITE = 0x02,
-            CREATE = 0x04,
-            APPEND = 0x08,
-            TRUNCATE = 0x10
+            Read = 0x01,
+            Write = 0x02,
+            Create = 0x04,
+            Append = 0x08,
+            Truncate = 0x10
         };
 
         enum Seek
         {
-            BEGIN,
-            CURRENT,
-            END
+            Begin,
+            Current,
+            End
         };
 
         File() = default;
@@ -43,14 +43,14 @@ namespace sr
         {
 #if defined(_WIN32)
             DWORD access = 0;
-            if (mode & READ) access |= GENERIC_READ;
-            if (mode & WRITE) access |= GENERIC_WRITE;
-            if (mode & APPEND) access |= FILE_APPEND_DATA;
-            DWORD createDisposition = (mode & CREATE) ? OPEN_ALWAYS : OPEN_EXISTING;
-            if (mode & TRUNCATE)
-                createDisposition = (mode & CREATE) ? CREATE_ALWAYS : TRUNCATE_EXISTING;
+            if (mode & Read) access |= GENERIC_READ;
+            if (mode & Write) access |= GENERIC_WRITE;
+            if (mode & Append) access |= FILE_APPEND_DATA;
+            DWORD createDisposition = (mode & Create) ? OPEN_ALWAYS : OPEN_EXISTING;
+            if (mode & Truncate)
+                createDisposition = (mode & Create) ? CREATE_ALWAYS : TRUNCATE_EXISTING;
             else
-                createDisposition = (mode & CREATE) ? OPEN_ALWAYS : OPEN_EXISTING;
+                createDisposition = (mode & Create) ? OPEN_ALWAYS : OPEN_EXISTING;
 
             int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
             if (size == 0)
@@ -69,12 +69,12 @@ namespace sr
                 throw std::runtime_error("Failed to open " + filename);
 #else
             int access = 0;
-            if ((mode & READ) && (mode & WRITE)) access |= O_RDWR;
-            else if (mode & READ) access |= O_RDONLY;
-            else if (mode & WRITE) access |= O_WRONLY;
-            if (mode & CREATE) access |= O_CREAT;
-            if (mode & APPEND) access |= O_APPEND;
-            if (mode & TRUNCATE) access |= O_TRUNC;
+            if ((mode & Read) && (mode & Write)) access |= O_RDWR;
+            else if (mode & Read) access |= O_RDONLY;
+            else if (mode & Write) access |= O_WRONLY;
+            if (mode & Create) access |= O_CREAT;
+            if (mode & Append) access |= O_APPEND;
+            if (mode & Truncate) access |= O_TRUNC;
 
             fd = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
             if (fd == -1)
@@ -222,9 +222,9 @@ namespace sr
                 throw std::runtime_error("File is not open");
 
             DWORD moveMethod = 0;
-            if (method == BEGIN) moveMethod = FILE_BEGIN;
-            else if (method == CURRENT) moveMethod = FILE_CURRENT;
-            else if (method == END) moveMethod = FILE_END;
+            if (method == Begin) moveMethod = FILE_BEGIN;
+            else if (method == Current) moveMethod = FILE_CURRENT;
+            else if (method == End) moveMethod = FILE_END;
             if (SetFilePointer(file, offset, nullptr, moveMethod) == 0)
                 throw std::runtime_error("Failed to seek file");
 #else
@@ -232,9 +232,9 @@ namespace sr
                 throw std::runtime_error("File is not open");
 
             int whence = 0;
-            if (method == BEGIN) whence = SEEK_SET;
-            else if (method == CURRENT) whence = SEEK_CUR;
-            else if (method == END) whence = SEEK_END;
+            if (method == Begin) whence = SEEK_SET;
+            else if (method == Current) whence = SEEK_CUR;
+            else if (method == End) whence = SEEK_END;
             if (lseek(fd, offset, whence) == -1)
                 throw std::runtime_error("Failed to seek file");
 #endif
