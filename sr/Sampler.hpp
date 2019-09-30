@@ -13,7 +13,7 @@ namespace sr
     class Sampler final
     {
     public:
-        enum AddressMode
+        enum class AddressMode
         {
             CLAMP,
             REPEAT,
