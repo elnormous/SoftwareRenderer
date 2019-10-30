@@ -198,9 +198,9 @@ namespace sr
         return result;
     }
 
-    typedef Vector<2, float> Vector2F;
-    typedef Vector<3, float> Vector3F;
-    typedef Vector<4, float> Vector4F;
+    using Vector2F = Vector<2, float>;
+    using Vector3F = Vector<3, float>;
+    using Vector4F = Vector<4, float>;
 }
 
 #endif
