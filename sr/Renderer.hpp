@@ -147,7 +147,7 @@ namespace sr
                 // vertex shader step
                 for (uint32_t c = 0; c < 3; ++c)
                 {
-                    uint32_t index = indices[i + c];
+                    const uint32_t index = indices[i + c];
                     vsOutputs[c] = shader->vertexShader(modelViewProjection, vertices[index]);
                 }
 
