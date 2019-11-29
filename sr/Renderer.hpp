@@ -263,8 +263,8 @@ namespace sr
         Rect viewport;
         Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
-        Sampler* samplers[2];
-        Texture* textures[2];
+        Sampler* samplers[2]{nullptr, nullptr};
+        Texture* textures[2]{nullptr, nullptr};
         BlendState blendState;
         DepthState depthState;
     };
