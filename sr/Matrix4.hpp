@@ -108,7 +108,7 @@ namespace sr
             assert(zFarPlane != zNearPlane);
 
             float theta = fieldOfView * 0.5F;
-            if (fabsf(fmodf(theta, PI / 2.0F)) < std::numeric_limits<float>::min())
+            if (fabsf(fmodf(theta, pi / 2.0F)) < std::numeric_limits<float>::min())
             {
                 // invalid field of view value
                 return;
