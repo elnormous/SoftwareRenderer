@@ -15,10 +15,11 @@ namespace sr
     public:
         Vertex() = default;
 
-        Vertex(const Vector4F& initPosition, Color initColor, const Vector2F& initTexCoord, const Vector3F& initNormal):
-            position(initPosition), color(initColor), normal(initNormal)
+        Vertex(const Vector4F& initPosition, Color initColor,
+               const Vector2F& initTexCoord, const Vector3F& initNormal):
+            position(initPosition), color(initColor),
+            texCoords{initTexCoord}, normal(initNormal)
         {
-            texCoords[0] = initTexCoord;
         }
 
         Vector4F position;
