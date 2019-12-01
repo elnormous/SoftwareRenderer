@@ -109,8 +109,8 @@ namespace sr
             return contains(r.position.v[0], r.position.v[1], r.size.v[0], r.size.v[1]);
         }
 
-        constexpr bool intersects(const T x, const T y,
-                                  const T width, const T height) const noexcept
+        bool intersects(const T x, const T y,
+                        const T width, const T height) const noexcept
         {
             T t;
             if ((t = x - position.v[0]) > size.v[0] || -t > width)
