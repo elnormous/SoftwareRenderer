@@ -192,18 +192,20 @@ namespace sr
                 {
                     for (uint32_t screenX = static_cast<uint32_t>(boundingBox.min.v[0]); screenX <= static_cast<uint32_t>(boundingBox.max.v[0]); ++screenX)
                     {
-                        Vector3F s = barycentric(viewportPositions[0],
-                                                 viewportPositions[1],
-                                                 viewportPositions[2],
-                                                 Vector2F(static_cast<float>(screenX),
-                                                          static_cast<float>(screenY)));
+                        const Vector3F s = barycentric(viewportPositions[0],
+                                                       viewportPositions[1],
+                                                       viewportPositions[2],
+                                                       Vector2F(static_cast<float>(screenX),
+                                                                static_cast<float>(screenY)));
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
-                            Vector3F clip = Vector3F(s.v[0] / vsOutputs[0].position.v[3], s.v[1] / vsOutputs[1].position.v[3], s.v[2] / vsOutputs[2].position.v[3]);
+                            Vector3F clip = Vector3F(s.v[0] / vsOutputs[0].position.v[3],
+                                                     s.v[1] / vsOutputs[1].position.v[3],
+                                                     s.v[2] / vsOutputs[2].position.v[3]);
                             clip /= (clip.v[0] + clip.v[1] + clip.v[2]);
 
-                            float depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
+                            const float depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
 
                             if (depthState.read && depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] < depth)
                                 continue; // discard the pixel
@@ -211,7 +213,6 @@ namespace sr
                             if (depthState.write) depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
 
                             Shader::VSOutput psInput;
-                            //psInput.position = clip;
                             psInput.position = Vector4F(clip.v[0], clip.v[1], clip.v[2], 1.0F);
 
                             psInput.color.r = vsOutputs[0].color.r * clip.v[0] + vsOutputs[1].color.r * clip.v[1] + vsOutputs[2].color.r * clip.v[2];
@@ -227,7 +228,7 @@ namespace sr
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                            Color srcColor = shader->fragmentShader(psInput, samplers, textures);
+                            const Color srcColor = shader->fragmentShader(psInput, samplers, textures);
 
                             if (blendState.enabled)
                             {
