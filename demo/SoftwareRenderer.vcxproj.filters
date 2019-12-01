@@ -30,7 +30,7 @@
     <ClInclude Include="..\sr\MathUtils.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Matrix4.hpp">
+    <ClInclude Include="..\sr\Matrix.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\MTL.hpp">
@@ -60,10 +60,7 @@
     <ClInclude Include="..\sr\Shader.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Size2.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sr\Size3.hpp">
+    <ClInclude Include="..\sr\Size.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\sr.hpp">
@@ -87,10 +84,7 @@
     <ClInclude Include="..\sr\BMP.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Box2.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sr\Box3.hpp">
+    <ClInclude Include="..\sr\Box.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\Color.hpp">

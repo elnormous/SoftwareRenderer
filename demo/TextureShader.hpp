@@ -12,7 +12,7 @@ namespace demo
     class TextureShader: public sr::Shader
     {
     public:
-        virtual VSOutput vertexShader(const sr::Matrix4& modelViewProjection, const sr::Vertex& vertex) const override
+        virtual VSOutput vertexShader(const sr::Matrix4F& modelViewProjection, const sr::Vertex& vertex) const override
         {
             VSOutput result;
 

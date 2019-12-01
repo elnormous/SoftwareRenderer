@@ -9,314 +9,332 @@
 
 namespace sr
 {
-    class Quaternion final
+    template <typename T> class Quaternion final
     {
     public:
-        float x = 0.0F;
-        float y = 0.0F;
-        float z = 0.0F;
-        float w = 0.0F;
+        T v[4]{0};
 
-        Quaternion()
+        constexpr Quaternion() noexcept {}
+
+        constexpr Quaternion(const T x, const T y, const T z, const T w) noexcept:
+            v{x, y, z, w}
         {
         }
 
-        Quaternion(float initX, float initY, float initZ, float initW):
-            x(initX), y(initY), z(initZ), w(initW)
+        inline T& operator[](size_t index) noexcept { return v[index]; }
+        constexpr T operator[](size_t index) const noexcept { return v[index]; }
+
+        inline T& x() noexcept { return v[0]; }
+        constexpr T x() const noexcept { return v[0]; }
+
+        inline T& y() noexcept { return v[1]; }
+        constexpr T y() const noexcept { return v[1]; }
+
+        inline T& z() noexcept { return v[2]; }
+        constexpr T z() const noexcept { return v[2]; }
+
+        inline T& w() noexcept { return v[3]; }
+        constexpr T w() const noexcept { return v[3]; }
+
+        static constexpr Quaternion identity() noexcept
         {
+            return Quaternion(0, 0, 0, 1);
         }
 
-        Quaternion(const Quaternion& copy):
-            x(copy.x), y(copy.y), z(copy.z), w(copy.w)
+        constexpr const Quaternion operator*(const Quaternion& q) const noexcept
         {
+            return Quaternion(v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0],
+                              -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1],
+                              v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2],
+                              -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3]);
         }
 
-        Quaternion operator*(const Quaternion& q) const
+        inline Quaternion& operator*=(const Quaternion& q) noexcept
         {
-            return Quaternion( x * q.w + y * q.z - z * q.y + w * q.x,
-                              -x * q.z + y * q.w + z * q.x + w * q.y,
-                               x * q.y - y * q.x + z * q.w + w * q.z,
-                              -x * q.x - y * q.y - z * q.z + w * q.w);
-        }
+            const T tempX = v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0];
+            const T tempY = -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1];
+            const T tempZ = v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2];
+            const T tempW = -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3];
 
-        const Quaternion& operator*=(const Quaternion& q)
-        {
-            float tempX =  x * q.w + y * q.z - z * q.y + w * q.x;
-            float tempY = -x * q.z + y * q.w + z * q.x + w * q.y;
-            float tempZ =  x * q.y - y * q.x + z * q.w + w * q.z;
-            float tempW = -x * q.x - y * q.y - z * q.z + w * q.w;
-
-            x = tempX;
-            y = tempY;
-            z = tempZ;
-            w = tempW;
+            v[0] = tempX;
+            v[1] = tempY;
+            v[2] = tempZ;
+            v[3] = tempW;
 
             return *this;
         }
 
-        Quaternion operator*(float scalar) const
+        constexpr const Quaternion operator*(const T scalar) const noexcept
         {
-            return Quaternion(x * scalar,
-                              y * scalar,
-                              z * scalar,
-                              w * scalar);
+            return Quaternion(v[0] * scalar,
+                              v[1] * scalar,
+                              v[2] * scalar,
+                              v[3] * scalar);
         }
 
-        const Quaternion& operator*=(float scalar)
+        inline Quaternion& operator*=(const T scalar) noexcept
         {
-            x *= scalar;
-            y *= scalar;
-            z *= scalar;
-            w *= scalar;
+            v[0] *= scalar;
+            v[1] *= scalar;
+            v[2] *= scalar;
+            v[3] *= scalar;
 
             return *this;
         }
 
-        Quaternion operator/(float scalar) const
+        constexpr const Quaternion operator/(const T scalar) const noexcept
         {
-            return Quaternion(x / scalar,
-                              y / scalar,
-                              z / scalar,
-                              w / scalar);
+            return Quaternion(v[0] / scalar,
+                              v[1] / scalar,
+                              v[2] / scalar,
+                              v[3] / scalar);
         }
 
-        const Quaternion& operator/=(float scalar)
+        inline Quaternion& operator/=(const T scalar) noexcept
         {
-            x /= scalar;
-            y /= scalar;
-            z /= scalar;
-            w /= scalar;
+            v[0] /= scalar;
+            v[1] /= scalar;
+            v[2] /= scalar;
+            v[3] /= scalar;
 
             return *this;
         }
 
-        inline Quaternion operator-() const
+        constexpr const Quaternion operator-() const noexcept
         {
-            return Quaternion(-x, -y, -z, -w);
+            return Quaternion(-v[0], -v[1], -v[2], -v[3]);
         }
 
-        inline Quaternion operator+(const Quaternion& q) const
+        constexpr const Quaternion operator+(const Quaternion& q) const noexcept
         {
-            Quaternion result(*this);
-            result.x += q.x;
-            result.y += q.y;
-            result.z += q.z;
-            result.w += q.w;
-
-            return result;
+            return Quaternion(v[0] + q.v[0],
+                              v[1] + q.v[1],
+                              v[2] + q.v[2],
+                              v[3] + q.v[3]);
         }
 
-        inline Quaternion& operator+=(const Quaternion& q)
+        inline Quaternion& operator+=(const Quaternion& q) noexcept
         {
-            x += q.x;
-            y += q.y;
-            z += q.z;
-            w += q.w;
+            v[0] += q.v[0];
+            v[1] += q.v[1];
+            v[2] += q.v[2];
+            v[3] += q.v[3];
 
             return *this;
         }
 
-        inline Quaternion operator-(const Quaternion& q) const
+        constexpr const Quaternion operator-(const Quaternion& q) const noexcept
         {
-            Quaternion result(*this);
-            result.x -= q.x;
-            result.y -= q.y;
-            result.z -= q.z;
-            result.w -= q.w;
-
-            return result;
+            return Quaternion(v[0] - q.v[0],
+                              v[1] - q.v[1],
+                              v[2] - q.v[2],
+                              v[3] - q.v[3]);
         }
 
-        inline Quaternion& operator-=(const Quaternion& q)
+        inline Quaternion& operator-=(const Quaternion& q) noexcept
         {
-            x -= q.x;
-            y -= q.y;
-            z -= q.z;
-            w -= q.w;
+            v[0] -= q.v[0];
+            v[1] -= q.v[1];
+            v[2] -= q.v[2];
+            v[3] -= q.v[3];
 
             return *this;
         }
 
-        inline bool operator==(const Quaternion& q) const
+        constexpr bool operator==(const Quaternion& q) const noexcept
         {
-            return x == q.x && y == q.y && z == q.z && w == q.w;
+            return v[0] == q.v[0] && v[1] == q.v[1] && v[2] == q.v[2] && v[3] == q.v[3];
         }
 
-        inline bool operator!=(const Quaternion& q) const
+        constexpr bool operator!=(const Quaternion& q) const noexcept
         {
-            return x != q.x || y != q.y || z != q.z || w != q.w;
+            return v[0] != q.v[0] || v[1] != q.v[1] || v[2] != q.v[2] || v[3] != q.v[3];
         }
 
-        inline void negate()
+        inline void negate() noexcept
         {
-            x = -x;
-            y = -y;
-            z = -z;
-            w = -w;
+            v[0] = -v[0];
+            v[1] = -v[1];
+            v[2] = -v[2];
+            v[3] = -v[3];
         }
 
-        inline void conjugate()
+        inline void conjugate() noexcept
         {
-            x = -x;
-            y = -y;
-            z = -z;
+            v[0] = -v[0];
+            v[1] = -v[1];
+            v[2] = -v[2];
         }
 
-        inline void invert()
+        inline void invert() noexcept
         {
-            float n2 = x * x + y * y + z * z + w * w; // norm squared
+            const T n2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
 
-            if (n2 == 0.0F) return;
+            if (n2 <= std::numeric_limits<T>::min())
+                return;
 
             // conjugate divided by norm squared
-            x = -x / n2;
-            y = -y / n2;
-            z = -z / n2;
-            w = w / n2;
+            v[0] = -v[0] / n2;
+            v[1] = -v[1] / n2;
+            v[2] = -v[2] / n2;
+            v[3] = v[3] / n2;
         }
 
-        float getNorm()
+        inline T getNorm() const noexcept
         {
-            float n = x * x + y * y + z * z + w * w;
-            if (n == 1.0F) // already normalized
-                return 1.0F;
+            const T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (n == T(1)) // already normalized
+                return 1;
 
-            return sqrtf(n);
+            return std::sqrt(n);
         }
 
-        void normalize()
+        void normalize() noexcept
         {
-            float n = x * x + y * y + z * z + w * w;
-            if (n == 1.0F) // already normalized
+            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (n == T(1)) // already normalized
                 return;
 
-            n = sqrtf(n);
-            if (n < std::numeric_limits<float>::min()) // too close to zero
+            n = std::sqrt(n);
+            if (n <= std::numeric_limits<T>::min()) // too close to zero
                 return;
 
-            n = 1.0F / n;
-            x *= n;
-            y *= n;
-            z *= n;
-            w *= n;
+            n = T(1) / n;
+            v[0] *= n;
+            v[1] *= n;
+            v[2] *= n;
+            v[3] *= n;
         }
 
-        void rotate(float angle, Vector3F axis)
+        Quaternion normalized() const noexcept
         {
-            axis.normalize();
+            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (n == T(1)) // already normalized
+                return *this;
 
-            float cosAngle = cosf(angle / 2.0F);
-            float sinAngle = sinf(angle / 2.0F);
+            n = std::sqrt(n);
+            if (n <= std::numeric_limits<T>::min()) // too close to zero
+                return *this;
 
-            x = axis.v[0] * sinAngle;
-            y = axis.v[1] * sinAngle;
-            z = axis.v[2] * sinAngle;
-            w = cosAngle;
+            n = T(1) / n;
+            return *this * n;
         }
 
-        void getRotation(float& angle, Vector3F& axis)
+        void rotate(const T angle, const Vector<3, T>& axis) noexcept
         {
-            angle = 2.0F * acosf(w);
-            float s = sqrtf(1.0F - w * w);
-            if (s < std::numeric_limits<float>::min()) // too close to zero
+            const auto normalizedAxis = axis.normalized();
+
+            const T cosAngle = std::cos(angle / T(2));
+            const T sinAngle = std::sin(angle / T(2));
+
+            v[0] = normalizedAxis.v[0] * sinAngle;
+            v[1] = normalizedAxis.v[1] * sinAngle;
+            v[2] = normalizedAxis.v[2] * sinAngle;
+            v[3] = cosAngle;
+        }
+
+        void getRotation(T& angle, Vector<3, T>& axis) const noexcept
+        {
+            angle = T(2) * std::acos(v[3]);
+            const T s = std::sqrt(T(1) - v[3] * v[3]);
+            if (s <= std::numeric_limits<T>::min()) // too close to zero
             {
-                axis.v[0] = x;
-                axis.v[1] = y;
-                axis.v[2] = z;
+                axis.v[0] = v[0];
+                axis.v[1] = v[1];
+                axis.v[2] = v[2];
             }
             else
             {
-                axis.v[0] = x / s;
-                axis.v[1] = y / s;
-                axis.v[2] = z / s;
+                axis.v[0] = v[0] / s;
+                axis.v[1] = v[1] / s;
+                axis.v[2] = v[2] / s;
             }
         }
 
-        void setEulerAngles(const Vector3F& angles)
+        Vector<3, T> getEulerAngles() const noexcept
         {
-            float angle;
-
-            angle = angles.v[0] * 0.5F;
-            const float sr = sinf(angle);
-            const float cr = cosf(angle);
-
-            angle = angles.v[1] * 0.5F;
-            const float sp = sinf(angle);
-            const float cp = cosf(angle);
-
-            angle = angles.v[2] * 0.5F;
-            const float sy = sinf(angle);
-            const float cy = cosf(angle);
-
-            const float cpcy = cp * cy;
-            const float spcy = sp * cy;
-            const float cpsy = cp * sy;
-            const float spsy = sp * sy;
-
-            x = sr * cpcy - cr * spsy;
-            y = cr * spcy + sr * cpsy;
-            z = cr * cpsy - sr * spcy;
-            w = cr * cpcy + sr * spsy;
-        }
-
-        Vector3F getEulerAngles() const
-        {
-            Vector3F result;
-
-            result.v[0] = atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
-            result.v[1] = asinf(-2.0F * (x * z - w * y));
-            result.v[2] = atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
+            Vector<3, T> result;
+            result.v[0] = std::atan2(2 * (v[1] * v[2] + v[3] * v[0]), v[3] * v[3] - v[0] * v[0] - v[1] * v[1] + v[2] * v[2]);
+            result.v[1] = std::asin(-2 * (v[0] * v[2] - v[3] * v[1]));
+            result.v[2] = std::atan2(2 * (v[0] * v[1] + v[3] * v[2]), v[3] * v[3] + v[0] * v[0] - v[1] * v[1] - v[2] * v[2]);
             return result;
         }
 
-        float getEulerAngleX() const
+        inline T getEulerAngleX() const noexcept
         {
-            return atan2f(2.0F * (y * z + w * x), w * w - x * x - y * y + z * z);
+            return std::atan2(T(2) * (v[1] * v[2] + v[3] * v[0]), v[3] * v[3] - v[0] * v[0] - v[1] * v[1] + v[2] * v[2]);
         }
 
-        float getEulerAngleY() const
+        inline T getEulerAngleY() const noexcept
         {
-            return asinf(-2.0F * (x * z - w * y));
+            return std::asin(T(-2) * (v[0] * v[2] - v[3] * v[1]));
         }
 
-        float getEulerAngleZ() const
+        inline T getEulerAngleZ() const noexcept
         {
-            return atan2f(2.0F * (x * y + w * z), w * w + x * x - y * y - z * z);
+            return std::atan2(T(2) * (v[0] * v[1] + v[3] * v[2]), v[3] * v[3] + v[0] * v[0] - v[1] * v[1] - v[2] * v[2]);
         }
 
-        inline Vector3F operator*(const Vector3F& vector) const
+        void setEulerAngles(const Vector<3, T>& angles) noexcept
+        {
+            T angle = angles.v[0] / T(2);
+            const T sr = std::sin(angle);
+            const T cr = std::cos(angle);
+
+            angle = angles.v[1] / T(2);
+            const T sp = std::sin(angle);
+            const T cp = std::cos(angle);
+
+            angle = angles.v[2] / T(2);
+            const T sy = std::sin(angle);
+            const T cy = std::cos(angle);
+
+            const T cpcy = cp * cy;
+            const T spcy = sp * cy;
+            const T cpsy = cp * sy;
+            const T spsy = sp * sy;
+
+            v[0] = sr * cpcy - cr * spsy;
+            v[1] = cr * spcy + sr * cpsy;
+            v[2] = cr * cpsy - sr * spcy;
+            v[3] = cr * cpcy + sr * spsy;
+        }
+
+        inline const Vector<3, T> operator*(const Vector<3, T>& vector) const noexcept
         {
             return rotateVector(vector);
         }
 
-        inline Vector3F rotateVector(const Vector3F& vector) const
+        inline Vector<3, T> rotateVector(const Vector<3, T>& vector) const noexcept
         {
-            Vector3F q(x, y, z);
-            Vector3F t = 2.0F * Vector3F::cross(q, vector);
-            return vector + (w * t) + Vector3F::cross(q, t);
+            const Vector<3, T> q(v[0], v[1], v[2]);
+            const Vector<3, T> t = T(2) * q.cross(vector);
+            return vector + (v[3] * t) + q.cross(t);
         }
 
-        inline Vector3F getRightVector() const
+        inline Vector<3, T> getRightVector() const noexcept
         {
-            return rotateVector(Vector3F(1.0F, 0.0F, 0.0F));
+            return rotateVector(Vector<3, T>(1, 0, 0));
         }
 
-        inline Vector3F getUpVector() const
+        inline Vector<3, T> getUpVector() const noexcept
         {
-            return rotateVector(Vector3F(0.0F, 1.0F, 0.0F));
+            return rotateVector(Vector<3, T>(0, 1, 0));
         }
 
-        inline Vector3F getForwardVector() const
+        inline Vector<3, T> getForwardVector() const noexcept
         {
-            return rotateVector(Vector3F(0.0F, 0.0F, 1.0F));
+            return rotateVector(Vector<3, T>(0, 0, 1));
         }
 
-        Quaternion& lerp(const Quaternion& q1, const Quaternion& q2, float t)
+        inline Quaternion& lerp(const Quaternion& q1, const Quaternion& q2, T t) noexcept
         {
-            const float scale = 1.0F - t;
-            return (*this = (q1 * scale) + (q2 * t));
+            *this = (q1 * (T(1) - t)) + (q2 * t);
+            return *this;
         }
     };
+
+    using QuaternionF = Quaternion<float>;
 }
 
 #endif

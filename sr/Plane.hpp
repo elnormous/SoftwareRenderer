@@ -6,81 +6,107 @@
 #define PLANE_H
 
 #include <cmath>
+#include <cstddef>
 #include <limits>
 #include "Vector.hpp"
 #include "MathUtils.hpp"
 
 namespace sr
 {
-    class Vector4;
-
-    class Plane final
+    template <typename T> class Plane final
     {
     public:
-        float a = 0.0F;
-        float b = 0.0F;
-        float c = 0.0F;
-        float d = 0.0F;
+        T v[4]{0};
 
-        Plane()
+        constexpr Plane() noexcept {}
+
+        constexpr Plane(const T a, const T b, const T c, const T d) noexcept:
+            v{a, b, c, d}
         {
         }
 
-        Plane(float initA, float initB, float initC, float initD):
-            a(initA), b(initB), c(initC), d(initD)
+        inline T& operator[](size_t index) noexcept { return v[index]; }
+        constexpr T operator[](size_t index) const noexcept { return v[index]; }
+
+        inline T& a() noexcept { return v[0]; }
+        constexpr T a() const noexcept { return v[0]; }
+
+        inline T& b() noexcept { return v[1]; }
+        constexpr T b() const noexcept { return v[1]; }
+
+        inline T& c() noexcept { return v[2]; }
+        constexpr T c() const noexcept { return v[2]; }
+
+        inline T& d() noexcept { return v[3]; }
+        constexpr T d() const noexcept { return v[3]; }
+
+        inline void flip() noexcept
         {
+            v[0] = -v[0];
+            v[1] = -v[1];
+            v[2] = -v[2];
+            v[3] = -v[3];
         }
 
-        void flip()
+        template<size_t N, typename std::enable_if<N >= 3>::type* = nullptr>
+        constexpr T dot(const Vector<N, T>& vec) const noexcept
         {
-            a = -a;
-            b = -b;
-            c = -c;
-            d = -d;
+            return v[0] * vec.v[0] + v[1] * vec.v[1] + v[2] * vec.v[2] + v[3];
         }
 
-        float dot(const Vector4F& vec) const
+        void normalize() noexcept
         {
-            return a * vec.v[0] + b * vec.v[1] + c * vec.v[2] + d;
-        }
-
-        void normalize()
-        {
-            float n = a * a + b * b + c * c + d * d;
-            if (n == 1.0F) // already normalized
+            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (n == T(1)) // already normalized
                 return;
 
-            n = sqrtf(n);
-            if (n < std::numeric_limits<float>::min()) // too close to zero
+            n = std::sqrt(n);
+            if (n <= std::numeric_limits<T>::min()) // too close to zero
                 return;
 
-            n = 1.0F / n;
-            a *= n;
-            b *= n;
-            c *= n;
-            d *= n;
+            n = T(1) / n;
+            v[0] *= n;
+            v[1] *= n;
+            v[2] *= n;
+            v[3] *= n;
         }
 
-        inline bool operator==(const Plane& plane) const
+        Plane normalized() const noexcept
         {
-            return a == plane.a && b == plane.b && c == plane.c && d == plane.d;
+            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (n == T(1)) // already normalized
+                return *this;
+
+            n = std::sqrt(n);
+            if (n <= std::numeric_limits<T>::min()) // too close to zero
+                return *this;
+
+            n = T(1) / n;
+            return Plane(v[0] * n, v[1] * n, v[2] * n, v[3] * n);
         }
 
-        inline bool operator!=(const Plane& plane) const
+        constexpr bool operator==(const Plane& plane) const noexcept
         {
-            return a != plane.a || b != plane.b || c != plane.c || d != plane.d;
+            return v[0] == plane.v[0] && v[1] == plane.v[1] && v[2] == plane.v[2] && v[3] == plane.v[3];
         }
 
-        static inline Plane makeFrustumPlane(float a, float b, float c, float d)
+        constexpr bool operator!=(const Plane& plane) const noexcept
         {
-            float n = sqrtf(a * a + b * b + c * c);
-            if (n < std::numeric_limits<float>::min())
+            return v[0] != plane.v[0] || v[1] != plane.v[1] || v[2] != plane.v[2] || v[3] != plane.v[3];
+        }
+
+        static inline Plane makeFrustumPlane(const T a, const T b, const T c, const T d) noexcept
+        {
+            T n = std::sqrt(a * a + b * b + c * c);
+            if (n <= std::numeric_limits<T>::min()) // too close to zero
                 return Plane();
 
-            n = 1.0F / n;
+            n = T(1) / n;
             return Plane(a * n, b * n, c * n, d * n);
         }
     };
+
+    using PlaneF = Plane<float>;
 }
 
 #endif

@@ -11,7 +11,7 @@
 #include "BlendState.hpp"
 #include "Color.hpp"
 #include "DepthState.hpp"
-#include "Matrix4.hpp"
+#include "Matrix.hpp"
 #include "Rect.hpp"
 #include "RenderTarget.hpp"
 #include "Sampler.hpp"
@@ -90,12 +90,12 @@ namespace sr
             samplers[level] = &newSampler;
         }
 
-        void setViewport(const Rect& newViewport)
+        void setViewport(const RectF& newViewport)
         {
             viewport = newViewport;
         }
 
-        void setScissorRect(const Rect& newScissorRect)
+        void setScissorRect(const RectF& newScissorRect)
         {
             scissorRect = newScissorRect;
         }
@@ -130,7 +130,7 @@ namespace sr
                 depthBufferData[p] = depth;
         }
 
-        void drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4& modelViewProjection)
+        void drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4F& modelViewProjection)
         {
             if (!renderTarget)
                 throw std::runtime_error("No render target set");
@@ -169,12 +169,12 @@ namespace sr
                     Vector2F(ndcPositions[2].v[0], ndcPositions[2].v[1])
                 };
 
-                Box2 boundingBox;
+                Box2F boundingBox;
                 for (sr::Vector2F& viewportPosition : viewportPositions)
                 {
                     // transform to viewport coordinates
-                    viewportPosition.v[0] = viewportPosition.v[0] * viewport.size.width / 2.0F + viewport.position.v[0] + viewport.size.width / 2.0F; // xndc * width / 2 + x + width / 2
-                    viewportPosition.v[1] = viewportPosition.v[1] * viewport.size.height / 2.0F + viewport.position.v[1] + viewport.size.height / 2.0F;  // yndc * height / 2 + y + height / 2
+                    viewportPosition.v[0] = viewportPosition.v[0] * viewport.size.v[0] / 2.0F + viewport.position.v[0] + viewport.size.v[0] / 2.0F; // xndc * width / 2 + x + width / 2
+                    viewportPosition.v[1] = viewportPosition.v[1] * viewport.size.v[1] / 2.0F + viewport.position.v[1] + viewport.size.v[1] / 2.0F;  // yndc * height / 2 + y + height / 2
                     //viewportPosition.v[2] = viewportPosition.v[2] * (1.0F - 0.0F) / 2.0F + (1.0F + 0.0F) / 2.0F; // zndc * (far - near) / 2 + (far + near) / 2
 
                     if (viewportPosition.v[0] < boundingBox.min.v[0]) boundingBox.min.v[0] = viewportPosition.v[0];
@@ -184,9 +184,9 @@ namespace sr
                 }
 
                 boundingBox.min.v[0] = clamp(boundingBox.min.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
-                boundingBox.max.v[0] = clamp(boundingBox.max.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.width));
+                boundingBox.max.v[0] = clamp(boundingBox.max.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
                 boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
-                boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.height));
+                boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
                 for (uint32_t screenY = static_cast<uint32_t>(boundingBox.min.v[1]); screenY <= static_cast<uint32_t>(boundingBox.max.v[1]); ++screenY)
                 {
@@ -260,8 +260,8 @@ namespace sr
 
     private:
         RenderTarget* renderTarget = nullptr;
-        Rect viewport;
-        Rect scissorRect = Rect(0.0F, 0.0F, 1.0F, 1.0F);
+        RectF viewport;
+        RectF scissorRect = RectF(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
         Sampler* samplers[2]{nullptr, nullptr};
         Texture* textures[2]{nullptr, nullptr};

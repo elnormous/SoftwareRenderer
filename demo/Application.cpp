@@ -88,10 +88,9 @@ namespace demo
     {
         renderTarget = sr::RenderTarget(width, height);
 
-        sr::Matrix4::createPerspective(sr::tau / 6.0F, static_cast<float>(width) / static_cast<float>(height),
-                                       1.0F, 1000.0F, projection);
+        projection.setPerspective(sr::tau / 6.0F, static_cast<float>(width) / static_cast<float>(height), 1.0F, 1000.0F);
 
-        view.translate(0.0F, 0.0F, 100.0F);
+        view.setTranslation(0.0F, 0.0F, 100.0F);
     }
 
     void Application::render()
@@ -99,11 +98,11 @@ namespace demo
         renderer.setRenderTarget(&renderTarget);
 
         rotationY += 0.05F;
-        sr::Matrix4::createRotationY(rotationY, model);
+        model.setRotationY(rotationY);
 
-        sr::Matrix4 modelViewProjection = projection * view * model;
+        sr::Matrix4F modelViewProjection = projection * view * model;
 
-        renderer.setViewport(sr::Rect(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
+        renderer.setViewport(sr::RectF(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
         renderer.setBlendState(blendState);
         renderer.setDepthState(depthState);
 
@@ -120,7 +119,6 @@ namespace demo
     {
         renderTarget.resize(width, height);
 
-        sr::Matrix4::createPerspective(sr::tau / 6.0F, static_cast<float>(width) / static_cast<float>(height),
-                                       1.0F, 1000.0F, projection);
+        projection.setPerspective(sr::tau / 6.0F, static_cast<float>(width) / static_cast<float>(height), 1.0F, 1000.0F);
     }
 }

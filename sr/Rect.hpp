@@ -6,229 +6,208 @@
 #define RECT_H
 
 #include "Vector.hpp"
-#include "Size2.hpp"
+#include "Size.hpp"
 
 namespace sr
 {
-    class Rect final
+    template <typename T> class Rect final
     {
     public:
-        Vector2F position;
-        Size2 size;
+        Vector<2, T> position;
+        Size<2, T> size;
 
-        Rect()
-        {
-        }
+        constexpr Rect() noexcept {}
 
-        Rect(float width, float height):
+        constexpr Rect(const T width, const T height) noexcept:
             size(width, height)
         {
         }
 
-        Rect(float initX, float initY, float width, float height):
-            position(initX, initY), size(width, height)
+        constexpr Rect(const T x, const T y,
+                       const T width, const T height) noexcept:
+            position(x, y), size(width, height)
         {
         }
 
-        Rect(const Vector2F& initPosition, float width, float height):
+        Rect(const Vector<2, T>& initPosition,
+             const T width, const T height) noexcept:
             position(initPosition), size(width, height)
         {
         }
 
-        Rect(const Vector2F& initPosition, const Size2& initSize):
+        Rect(const Vector<2, T>& initPosition, const Size<2, T>& initSize) noexcept:
             position(initPosition), size(initSize)
         {
         }
 
-        Rect(const Rect& copy):
-            position(copy.position), size(copy.size)
-        {
-        }
-
-        inline bool isEmpty() const
+        inline bool isEmpty() const noexcept
         {
             return size.isZero();
         }
 
-        void set(float newX, float newY, float newWidth, float newHeight)
+        inline void setPosition(const T x, const T y) noexcept
         {
-            position.v[0] = newX;
-            position.v[1] = newY;
-            size.width = newWidth;
-            size.height = newHeight;
+            position.v[0] = x;
+            position.v[1] = y;
         }
 
-        void set(const Vector2F& newPosition, float newWidth, float newHeight)
-        {
-            position = newPosition;
-            size.width = newWidth;
-            size.height = newHeight;
-        }
-
-        void setPosition(float newX, float newY)
-        {
-            position.v[0] = newX;
-            position.v[1] = newY;
-        }
-
-        void setPosition(const Vector2F& newPosition)
+        inline void setPosition(const Vector<2, T>& newPosition) noexcept
         {
             position = newPosition;
         }
 
-        float left() const
+        constexpr T left() const noexcept
         {
             return position.v[0];
         }
 
-        float bottom() const
+        constexpr T bottom() const noexcept
         {
             return position.v[1];
         }
 
-        float right() const
+        constexpr T right() const noexcept
         {
-            return position.v[0] + size.width;
+            return position.v[0] + size.v[0];
         }
 
-        float top() const
+        constexpr T top() const noexcept
         {
-            return position.v[1] + size.height;
+            return position.v[1] + size.v[1];
         }
 
-        Vector2F bottomLeft() const
+        constexpr Vector<2, T> bottomLeft() const noexcept
         {
             return position;
         }
 
-        Vector2F topRight() const
+        constexpr Vector<2, T> topRight() const noexcept
         {
-            return Vector2F(position.v[0] + size.width, position.v[1] + size.height);
+            return Vector<2, T>(position.v[0] + size.v[0], position.v[1] + size.v[1]);
         }
 
-        bool containsPoint(float x, float y) const
+        constexpr bool containsPoint(const T x, const T y) const noexcept
         {
-            return x >= position.v[0] && x <= (position.v[0] + size.width) &&
-                y >= position.v[1] && y <= (position.v[1] + size.height);
+            return x >= position.v[0] && x <= (position.v[0] + size.v[0]) &&
+                y >= position.v[1] && y <= (position.v[1] + size.v[1]);
         }
 
-        bool containsPoint(const Vector2F& point) const
+        constexpr bool containsPoint(const Vector<2, T>& point) const noexcept
         {
-            return point.v[0] >= position.v[0] && point.v[0] <= (position.v[0] + size.width) &&
-                point.v[1] >= position.v[1] && point.v[1] <= (position.v[1] + size.height);
+            return point.v[0] >= position.v[0] && point.v[0] <= (position.v[0] + size.v[0]) &&
+                point.v[1] >= position.v[1] && point.v[1] <= (position.v[1] + size.v[1]);
         }
 
-        bool contains(float x, float y, float width, float height) const
+        constexpr bool contains(const T x, const T y,
+                                const T width, const T height) const noexcept
         {
             return containsPoint(x, y) && containsPoint(x + width, y + height);
         }
 
-        bool contains(const Rect& r) const
+        constexpr bool contains(const Rect& r) const noexcept
         {
-            return contains(r.position.v[0], r.position.v[1], r.size.width, r.size.height);
+            return contains(r.position.v[0], r.position.v[1], r.size.v[0], r.size.v[1]);
         }
 
-        bool intersects(float x, float y, float width, float height) const
+        constexpr bool intersects(const T x, const T y,
+                                  const T width, const T height) const noexcept
         {
-            float t;
-            if ((t = x - position.v[0]) > size.width || -t > width)
+            T t;
+            if ((t = x - position.v[0]) > size.v[0] || -t > width)
                 return false;
-            if ((t = y - position.v[1]) > size.height || -t > height)
+            if ((t = y - position.v[1]) > size.v[1] || -t > height)
                 return false;
             return true;
         }
 
-        bool intersects(const Rect& r) const
+        constexpr bool intersects(const Rect& r) const noexcept
         {
-            return intersects(r.position.v[0], r.position.v[1], r.size.width, r.size.height);
+            return intersects(r.position.v[0], r.position.v[1], r.size.v[0], r.size.v[1]);
         }
 
-        static bool intersect(const Rect& r1, const Rect& r2, Rect& dst)
+        static bool intersect(const Rect& r1, const Rect& r2, Rect& dst) noexcept
         {
-            float xmin = std::max(r1.position.v[0], r2.position.v[0]);
-            float xmax = std::min(r1.right(), r2.right());
+            const T xmin = std::max(r1.position.v[0], r2.position.v[0]);
+            const T xmax = std::min(r1.right(), r2.right());
             if (xmax > xmin)
             {
-                float ymin = std::max(r1.position.v[1], r2.position.v[1]);
-                float ymax = std::min(r1.bottom(), r2.bottom());
+                const T ymin = std::max(r1.position.v[1], r2.position.v[1]);
+                const T ymax = std::min(r1.bottom(), r2.bottom());
                 if (ymax > ymin)
                 {
-                    dst.set(xmin, ymin, xmax - xmin, ymax - ymin);
+                    dst.position.v[0] = xmin;
+                    dst.position.v[1] = ymin;
+                    dst.size.v[0] = xmax - xmin;
+                    dst.size.v[1] = ymax - ymin;
                     return true;
                 }
             }
 
-            dst.set(0, 0, 0, 0);
+            dst.position.v[0] = dst.position.v[1] = dst.size.v[0] = dst.size.v[1] = 0;
             return false;
         }
 
-        static void combine(const Rect& r1, const Rect& r2, Rect& dst)
+        static void combine(const Rect& r1, const Rect& r2, Rect& dst) noexcept
         {
             dst.position.v[0] = std::min(r1.position.v[0], r2.position.v[0]);
             dst.position.v[1] = std::min(r1.position.v[1], r2.position.v[1]);
-            dst.size.width = std::max(r1.position.v[0] + r1.size.width, r2.position.v[0] + r2.size.width) - dst.position.v[0];
-            dst.size.height = std::max(r1.position.v[1] + r1.size.height, r2.position.v[1] + r2.size.height) - dst.position.v[1];
+            dst.size.v[0] = std::max(r1.position.v[0] + r1.size.v[0], r2.position.v[0] + r2.size.v[0]) - dst.position.v[0];
+            dst.size.v[1] = std::max(r1.position.v[1] + r1.size.v[1], r2.position.v[1] + r2.size.v[1]) - dst.position.v[1];
         }
 
-        void inflate(float horizontalAmount, float verticalAmount)
+        inline void inflate(const T horizontalAmount,
+                            const T verticalAmount) noexcept
         {
             position.v[0] -= horizontalAmount;
             position.v[1] -= verticalAmount;
-            size.width += horizontalAmount * 2;
-            size.height += verticalAmount * 2;
+            size.v[0] += horizontalAmount * T(2);
+            size.v[1] += verticalAmount * T(2);
         }
 
-        Rect& operator=(const Rect& r)
+        constexpr bool operator==(const Rect& other) const noexcept
         {
-            position.v[0] = r.position.v[0];
-            position.v[1] = r.position.v[1];
-            size.width = r.size.width;
-            size.height = r.size.height;
-            return *this;
+            return position.v[0] == other.position.v[0] && size.v[0] == other.size.v[0] &&
+                position.v[1] == other.position.v[1] && size.v[1] == other.size.v[1];
         }
 
-        bool operator==(const Rect& r) const
+        constexpr bool operator!=(const Rect& other) const noexcept
         {
-            return position.v[0] == r.position.v[0] && size.width == r.size.width &&
-                position.v[1] == r.position.v[1] && size.height == r.size.height;
+            return position.v[0] != other.position.v[0] || size.v[0] != other.size.v[0] ||
+                position.v[1] != other.position.v[1] || size.v[1] != other.size.v[1];
         }
 
-        bool operator!=(const Rect& r) const
-        {
-            return position.v[0] != r.position.v[0] || size.width != r.size.width ||
-                position.v[1] != r.position.v[1] || size.height != r.size.height;
-        }
-
-        inline Rect operator*(float scalar) const
+        inline const Rect operator*(const T scalar) const noexcept
         {
             return Rect(position.v[0] * scalar, position.v[1] * scalar,
-                        size.width * scalar, size.height * scalar);
+                        size.v[0] * scalar, size.v[1] * scalar);
         }
 
-        inline Rect& operator*=(float scalar)
+        inline Rect& operator*=(const T scalar) noexcept
         {
             position.v[0] *= scalar;
             position.v[1] *= scalar;
-            size.width *= scalar;
-            size.height *= scalar;
+            size.v[0] *= scalar;
+            size.v[1] *= scalar;
             return *this;
         }
 
-        inline Rect operator/(float scalar) const
+        inline const Rect operator/(const T scalar) const noexcept
         {
             return Rect(position.v[0] / scalar, position.v[1] / scalar,
-                        size.width / scalar, size.height / scalar);
+                        size.v[0] / scalar, size.v[1] / scalar);
         }
 
-        inline Rect& operator/=(float scalar)
+        inline Rect& operator/=(const T scalar) noexcept
         {
             position.v[0] /= scalar;
             position.v[1] /= scalar;
-            size.width /= scalar;
-            size.height /= scalar;
+            size.v[0] /= scalar;
+            size.v[1] /= scalar;
             return *this;
         }
     };
+
+    using RectF = Rect<float>;
 }
 
 #endif

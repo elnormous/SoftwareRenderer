@@ -35,9 +35,9 @@ namespace demo
         uint32_t width;
         uint32_t height;
 
-        sr::Matrix4 projection;
-        sr::Matrix4 view;
-        sr::Matrix4 model;
+        sr::Matrix4F projection;
+        sr::Matrix4F view;
+        sr::Matrix4F model;
         float rotationY = 0.0F;
 
         sr::RenderTarget renderTarget;
