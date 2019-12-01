@@ -10,26 +10,6 @@
 
 namespace sr
 {
-    constexpr float lerp(float v0, float v1, float t) noexcept
-    {
-        return (1.0F - t) * v0 + t * v1;
-    }
-
-    constexpr float smoothStep(float a, float b, float t) noexcept
-    {
-        return lerp(a, b, t * t * (3 - 2 * t));
-    }
-
-    constexpr float degToRad(float x) noexcept
-    {
-        return x * 0.0174532925F;
-    }
-
-    constexpr float radToDeg(float x) noexcept
-    {
-        return x * 57.29577951F;
-    }
-
     template<typename T>
     constexpr T clamp(T x, T lo, T hi) noexcept
     {
