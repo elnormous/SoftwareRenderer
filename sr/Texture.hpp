@@ -53,7 +53,7 @@ namespace sr
             height(initHeight),
             mipMaps(initMipMaps)
         {
-            uint32_t pixelSize = getPixelSize(pixelFormat);
+            const uint32_t pixelSize = getPixelSize(pixelFormat);
 
             if (pixelSize > 0 && width > 0 && height > 0)
             {
@@ -83,7 +83,7 @@ namespace sr
             width = newWidth;
             height = newHeight;
 
-            uint32_t pixelSize = getPixelSize(pixelFormat);
+            const uint32_t pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
                 throw std::runtime_error("Invalid pixel format");
 
@@ -129,7 +129,7 @@ namespace sr
 
         inline void setData(const std::vector<uint8_t>& buffer, uint32_t level = 0)
         {
-            uint32_t pixelSize = getPixelSize(pixelFormat);
+            const uint32_t pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
                 throw std::runtime_error("Invalid pixel format");
 
@@ -180,7 +180,7 @@ namespace sr
 
         void generateMipMaps()
         {
-            uint32_t pixelSize = getPixelSize(pixelFormat);
+            const uint32_t pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
                 throw std::runtime_error("Invalid pixel format");
 
@@ -253,8 +253,8 @@ namespace sr
 
                 if (sampler->filter == Sampler::Filter::Point)
                 {
-                    uint32_t textureX = static_cast<uint32_t>(roundf(u));
-                    uint32_t textureY = static_cast<uint32_t>(roundf(v));
+                    const uint32_t textureX = static_cast<uint32_t>(roundf(u));
+                    const uint32_t textureY = static_cast<uint32_t>(roundf(v));
                     return getPixel(textureX, textureY, 0);
                 }
                 else
@@ -277,10 +277,10 @@ namespace sr
                         getPixel(textureX1, textureY1, 0)
                     };
 
-                    float x0 = u - (textureX0 + 0.5F);
-                    float y0 = v - (textureY0 + 0.5F);
-                    float x1 = (textureX0 + 1.5F) - u;
-                    float y1 = (textureY0 + 1.5F) - v;
+                    const float x0 = u - (textureX0 + 0.5F);
+                    const float y0 = v - (textureY0 + 0.5F);
+                    const float x1 = (textureX0 + 1.5F) - u;
+                    const float y1 = (textureY0 + 1.5F) - v;
 
                     Color result;
                     result.r = color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0;
