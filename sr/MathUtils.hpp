@@ -36,21 +36,6 @@ namespace sr
         return (x < lo) ? lo : ((x > hi) ? hi : x);
     }
 
-    static const uint64_t INITIAL_FNV = 2166136261U;
-    static const uint64_t FNV_MULTIPLE = 16777619;
-
-    // Fowler / Noll / Vo (FNV) hash
-    inline uint64_t fnvHash(uint64_t s) noexcept
-    {
-        uint64_t hash = INITIAL_FNV;
-        for (uint64_t i = 0; i < sizeof(uint64_t); i++)
-        {
-            hash = hash ^ (reinterpret_cast<uint8_t*>(&s)[i]); // xor the low 8 bits
-            hash = hash * FNV_MULTIPLE; // multiply by the magic number
-        }
-        return hash;
-    }
-
     inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p)
     {
         Vector3F s[2];
