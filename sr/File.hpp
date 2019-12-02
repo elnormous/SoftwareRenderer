@@ -5,8 +5,8 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include <stdexcept>
 #include <string>
+#include <system_error>
 
 #if defined(_WIN32)
 #include <Windows.h>
@@ -21,13 +21,13 @@ namespace sr
     class File final
     {
     public:
-        #ifdef _WIN32
-                    using Type = HANDLE;
-                    static constexpr Type INVALID = INVALID_HANDLE_VALUE;
-        #else
-                    using Type = int;
-                    static constexpr Type INVALID = -1;
-        #endif
+#ifdef _WIN32
+            using Type = HANDLE;
+            static constexpr Type INVALID = INVALID_HANDLE_VALUE;
+#else
+            using Type = int;
+            static constexpr Type INVALID = -1;
+#endif
 
         enum Mode
         {
@@ -59,13 +59,13 @@ namespace sr
                 ((mode & Mode::Create) ? CREATE_ALWAYS : TRUNCATE_EXISTING) :
                 ((mode & Mode::Create) ? OPEN_ALWAYS : OPEN_EXISTING);
 
-            int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
+            const int size = MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, nullptr, 0);
             if (size == 0)
-                throw std::runtime_error("Failed to convert UTF-8 to wide char");
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to convert UTF-8 to wide char");
 
             std::vector<WCHAR> buffer(size);
             if (MultiByteToWideChar(CP_UTF8, 0, filename.c_str(), -1, buffer.data(), size) == 0)
-                throw std::runtime_error("Failed to convert UTF-8 to wide char");
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to convert UTF-8 to wide char");
 
             // relative paths longer than MAX_PATH are not supported
             if (buffer.size() > MAX_PATH)
@@ -73,7 +73,7 @@ namespace sr
 
             file = CreateFileW(buffer.data(), access, 0, nullptr, createDisposition, FILE_ATTRIBUTE_NORMAL, nullptr);
             if (file == INVALID_HANDLE_VALUE)
-                throw std::runtime_error("Failed to open " + filename);
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to open " + filename);
 #else
             const int access =
                 ((mode & Mode::Read) && (mode & Mode::Write) ? O_RDWR :
@@ -85,7 +85,7 @@ namespace sr
 
             file = ::open(filename.c_str(), access, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
             if (file == -1)
-                throw std::runtime_error("Failed to open " + filename);
+                throw std::system_error(errno, std::system_category(), "Failed to open " + filename);
 #endif
         }
 
@@ -95,9 +95,55 @@ namespace sr
 #if defined(_WIN32)
                 CloseHandle(file);
 #else
-                close(file);
+                ::close(file);
 #endif
         }
+
+        File(const File& other)
+#if !defined(_WIN32)
+                : file(dup(other.file))
+#endif
+            {
+#if defined(_WIN32)
+                if (!DuplicateHandle(GetCurrentProcess(),
+                                     other.file,
+                                     GetCurrentProcess(),
+                                     &file,
+                                     0,
+                                     FALSE,
+                                     DUPLICATE_SAME_ACCESS))
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
+#else
+                if (file == -1)
+                    throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
+#endif
+            }
+
+            File& operator=(const File& other)
+            {
+                if (&other == this) return *this;
+
+#if defined(_WIN32)
+                if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
+
+                if (!DuplicateHandle(GetCurrentProcess(),
+                                     other.file,
+                                     GetCurrentProcess(),
+                                     &file,
+                                     0,
+                                     FALSE,
+                                     DUPLICATE_SAME_ACCESS))
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
+#else
+                if (file != -1) ::close(file);
+
+                file = dup(other.file);
+                if (file == -1)
+                    throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
+#endif
+
+                return *this;
+            }
 
         File(File&& other) noexcept:
             file(other.file)
@@ -110,11 +156,11 @@ namespace sr
             if (&other == this) return *this;
 
             if (file != INVALID)
-            #if defined(_WIN32)
+#if defined(_WIN32)
                 CloseHandle(file);
-            #else
-                close(file);
-            #endif
+#else
+                ::close(file);
+#endif
             file = other.file;
             other.file = INVALID;
 
@@ -124,6 +170,20 @@ namespace sr
         inline bool isOpen() const noexcept
         {
             return file != INVALID;
+        }
+
+        void close()
+        {
+            if (file != INVALID)
+#if defined(_WIN32)
+                if (!CloseHandle(file))
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to close file");
+#else
+                if (::close(file) == -1)
+                    throw std::system_error(errno, std::system_category(), "Failed to close file");
+#endif
+
+            file = INVALID;
         }
 
         uint32_t read(void* buffer, uint32_t size, bool all = false) const
@@ -154,14 +214,14 @@ namespace sr
 #if defined(_WIN32)
                 DWORD n;
                 if (!ReadFile(file, buffer, size, &n, nullptr))
-                    throw std::runtime_error("Failed to read from file");
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to read from file");
 
                 return static_cast<uint32_t>(n);
 #else
                 const ssize_t ret = ::read(file, buffer, size);
 
                 if (ret == -1)
-                    throw std::runtime_error("Failed to read from file");
+                    throw std::system_error(errno, std::system_category(), "Failed to read from file");
 
                 return static_cast<uint32_t>(ret);
 #endif
@@ -192,14 +252,14 @@ namespace sr
 #if defined(_WIN32)
                 DWORD n;
                 if (!WriteFile(file, buffer, size, &n, nullptr))
-                    throw std::runtime_error("Failed to write to file");
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to write to file");
 
                 return static_cast<uint32_t>(n);
 #else
                 const ssize_t ret = ::write(file, buffer, size);
 
                 if (ret == -1)
-                    throw std::runtime_error("Failed to write to file");
+                    throw std::system_error(errno, std::system_category(), "Failed to write to file");
 
                 return static_cast<uint32_t>(ret);
 #endif
@@ -219,7 +279,7 @@ namespace sr
                 throw std::runtime_error("Unsupported seek method");
 
             if (SetFilePointer(file, offset, nullptr, moveMethod) == 0)
-                throw std::runtime_error("Failed to seek file");
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to seek file");
 #else
             const int whence =
                 (method == Seek::Begin) ? SEEK_SET :
@@ -228,7 +288,7 @@ namespace sr
                 throw std::runtime_error("Unsupported seek method");
 
             if (lseek(file, offset, whence) == -1)
-                throw std::runtime_error("Failed to seek file");
+                throw std::system_error(errno, std::system_category(), "Failed to seek file");
 #endif
         }
 
@@ -239,10 +299,13 @@ namespace sr
 
 #if defined(_WIN32)
             DWORD ret = SetFilePointer(file, 0, nullptr, FILE_CURRENT);
+            if (ret == INVALID_SET_FILE_POINTER)
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to seek file");
             return static_cast<uint32_t>(ret);
 #else
             off_t ret = lseek(file, 0, SEEK_CUR);
-            if (ret == -1) return 0;
+            if (ret == -1)
+                throw std::system_error(errno, std::system_category(), "Failed to seek file");
             return static_cast<uint32_t>(ret);
 #endif
         }
