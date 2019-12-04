@@ -119,12 +119,12 @@ namespace sr
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
             uint32_t rgba = color.getIntValueRaw();
 
-            uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
+            const uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
             for (uint32_t p = 0; p < frameBufferSize; ++p)
                 frameBufferData[p] = rgba;
 
-            uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
+            const uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
 
             for (uint32_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
@@ -142,14 +142,11 @@ namespace sr
 
             for (uint32_t i = 0; i < indices.size(); i += 3)
             {
-                Shader::VSOutput vsOutputs[3];
-
-                // vertex shader step
-                for (uint32_t c = 0; c < 3; ++c)
-                {
-                    const uint32_t index = indices[i + c];
-                    vsOutputs[c] = shader->vertexShader(modelViewProjection, vertices[index]);
-                }
+                const Shader::VSOutput vsOutputs[3] = {
+                    shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
+                    shader->vertexShader(modelViewProjection, vertices[indices[i + 1]]),
+                    shader->vertexShader(modelViewProjection, vertices[indices[i + 2]])
+                };
 
                 Vector4F ndcPositions[3] = {
                     vsOutputs[0].position,
@@ -157,11 +154,9 @@ namespace sr
                     vsOutputs[2].position
                 };
 
+                // transform to normalized device coordinates
                 for (sr::Vector4F& ndcPosition : ndcPositions)
-                {
-                    // transform to normalized device coordinates
                     ndcPosition /= ndcPosition.v[3];
-                }
 
                 Vector2F viewportPositions[3] = {
                     Vector2F(ndcPositions[0].v[0], ndcPositions[0].v[1]),
