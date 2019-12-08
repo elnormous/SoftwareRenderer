@@ -231,21 +231,17 @@ namespace sr
         {
             if (sampler && !levels.empty())
             {
-                float u, v;
+                const float u =
+                    (sampler->addressModeX == Sampler::AddressMode::Clamp) ? clamp(coord.v[0], 0.0F, 1.0F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::Repeat) ? std::fmod(coord.v[0], 1.0F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::Mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1) :
+                    0.0F;
 
-                switch (sampler->addressModeX)
-                {
-                    case Sampler::AddressMode::Clamp: u = clamp(coord.v[0], 0.0F, 1.0F) * (width - 1); break;
-                    case Sampler::AddressMode::Repeat: u = fmodf(coord.v[0], 1.0F) * (width - 1); break;
-                    case Sampler::AddressMode::Mirror: u = 1.0F - 2.0F * fabsf(fmodf(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1); break;
-                }
-
-                switch (sampler->addressModeY)
-                {
-                    case Sampler::AddressMode::Clamp: v = clamp(coord.v[1], 0.0F, 1.0F) * (height - 1); break;
-                    case Sampler::AddressMode::Repeat: v = fmodf(coord.v[1], 1.0F) * (height - 1); break;
-                    case Sampler::AddressMode::Mirror: v = 1.0F - 2.0F * fabsf(fmodf(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1); break;
-                }
+                const float v =
+                    (sampler->addressModeY == Sampler::AddressMode::Clamp) ? clamp(coord.v[1], 0.0F, 1.0F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::Repeat) ? std::fmod(coord.v[1], 1.0F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::Mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1) :
+                    0.0F;
 
                 if (sampler->filter == Sampler::Filter::Point)
                 {
