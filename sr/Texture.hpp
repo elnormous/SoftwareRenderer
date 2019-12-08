@@ -150,19 +150,16 @@ namespace sr
                 {
                     const uint8_t* r = &buffer[(y * width + x) * 1];
                     return sr::Color(*r, *r, *r, 255);
-                    break;
                 }
                 case Texture::PixelFormat::A8:
                 {
                     const uint8_t* a = &buffer[(y * width + x) * 1];
                     return sr::Color(0, 0, 0, *a);
-                    break;
                 }
                 case Texture::PixelFormat::Rgba8:
                 {
                     const uint8_t* rgba = &buffer[(y * width + x) * 4];
                     return sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
-                    break;
                 }
                 case Texture::PixelFormat::Float32:
                 {
@@ -171,7 +168,6 @@ namespace sr
                     result.r = result.g = result.b = f;
                     result.a = 1.0F;
                     return result;
-                    break;
                 }
                 default:
                     throw std::runtime_error("Invalid pixel format");
