@@ -32,13 +32,10 @@ namespace sr
                 case PixelFormat::R8:
                 case PixelFormat::A8:
                     return sizeof(uint8_t) * 1;
-                    break;
                 case PixelFormat::Rgba8:
                     return sizeof(uint8_t) * 4;
-                    break;
                 case PixelFormat::Float32:
                     return sizeof(float);
-                    break;
                 default:
                     return 0;
             }
