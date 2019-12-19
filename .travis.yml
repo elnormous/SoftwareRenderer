@@ -1,0 +1,6 @@
+dist: trusty
+compiler: gcc
+os: linux
+
+script:
+  - make -C demo
