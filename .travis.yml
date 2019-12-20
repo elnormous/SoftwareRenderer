@@ -2,5 +2,12 @@ dist: trusty
 compiler: gcc
 os: linux
 
+addons:
+  sonarcloud:
+    organization: "elnormous-github"
+    token:
+      secure: "XK93Z+39PSnN0kpky696KCJOAC7cZimGZWwYskEsqkDf7Ufh4npK9PdnJ2DGceQDulojFs0Q6YdDwfkGzMSEu09b3ARgGxYjoGACkU82UZ6RZMtKqErWr9mXIbvwQIHFuuREK3L6kc4HKU51WMlSoQ8gkYWwKzpjbMC9uOZd14f8LaYVfnryGcvdOJPvNVpFGSWZJUbQE8BRjIVKtLMHp2Pj/oG56SmDM2wTyhrc11Ucr3LnH7V83aLzieDoPfCAvQOzy32ygKu+4vuEkfFcACReOBIeMDLtsR6hHKYZ2qkZs5CyaBHAyhhEl/OLJX/3hZ3RdVI8ryDrge+opSg+3OPMXXvoYb+BYltbCK8llulhHSeoUxTsTe1ZJmGzI02tAVnVL/52Y8T5PSVhK3cW8iXsKm2BRJRIfjQbsjckGQbWYA9VTh195ucGKfQyLXMDtq7eSODonMHDCL4dxAT11PNyitHA/AygkPZ2t1pQkfeZktNJlLbvijGUYrC/0lqsEC6XIASAHSmaru/THNzKbtoCSC+CRZCCnq8opTUPcvBf2kvDFXtR9t2XUYdOo9255zpHeCVIneugT+FTiSsrjmf/AXbcU5dBtwy0qPnXP0SQsHiJ2jVzzlpmklQE0Pb2fo6CZfTJZsAB08iYtzLWLRm8A8IYheW2nWSzAxcDdow="
+
 script:
-  - make -C demo
+  - build-wrapper-linux-x86-64 --out-dir bw-output make -C demo
+  - sonar-scanner
