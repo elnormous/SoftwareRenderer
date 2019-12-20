@@ -23,7 +23,7 @@ namespace sr
         constexpr Matrix() noexcept {}
 
         template <typename ...A>
-        constexpr Matrix(A... args) noexcept:
+        explicit constexpr Matrix(A... args) noexcept:
             m{static_cast<T>(args)...}
         {
         }
