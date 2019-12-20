@@ -14,7 +14,7 @@ namespace sr
     public:
         WAV() = default;
 
-        WAV(const std::string& filename)
+        explicit WAV(const std::string& filename)
         {
         }
 

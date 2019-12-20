@@ -65,7 +65,7 @@ namespace sr
 
         BMP() = default;
 
-        BMP(const std::string& filename)
+        explicit BMP(const std::string& filename)
         {
             File f(filename, File::Mode::Read);
 
