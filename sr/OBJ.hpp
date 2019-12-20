@@ -14,7 +14,7 @@ namespace sr
     public:
         OBJ() = default;
 
-        OBJ(const std::string& filename)
+        explicit OBJ(const std::string& filename)
         {
         }
     };

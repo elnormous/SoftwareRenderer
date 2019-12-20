@@ -14,7 +14,7 @@ namespace sr
     public:
         MTL() = default;
 
-        MTL(const std::string& filename)
+        explicit MTL(const std::string& filename)
         {
         }
     };
