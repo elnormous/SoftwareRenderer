@@ -101,49 +101,49 @@ namespace sr
 
         File(const File& other)
 #if !defined(_WIN32)
-                : file(dup(other.file))
+            : file(dup(other.file))
 #endif
-            {
+        {
 #if defined(_WIN32)
-                if (!DuplicateHandle(GetCurrentProcess(),
-                                     other.file,
-                                     GetCurrentProcess(),
-                                     &file,
-                                     0,
-                                     FALSE,
-                                     DUPLICATE_SAME_ACCESS))
-                    throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
+            if (!DuplicateHandle(GetCurrentProcess(),
+                                 other.file,
+                                 GetCurrentProcess(),
+                                 &file,
+                                 0,
+                                 FALSE,
+                                 DUPLICATE_SAME_ACCESS))
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
 #else
-                if (file == -1)
-                    throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
+            if (file == -1)
+                throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
 #endif
-            }
+        }
 
-            File& operator=(const File& other)
-            {
-                if (&other == this) return *this;
+        File& operator=(const File& other)
+        {
+            if (&other == this) return *this;
 
 #if defined(_WIN32)
-                if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
+            if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
 
-                if (!DuplicateHandle(GetCurrentProcess(),
-                                     other.file,
-                                     GetCurrentProcess(),
-                                     &file,
-                                     0,
-                                     FALSE,
-                                     DUPLICATE_SAME_ACCESS))
-                    throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
+            if (!DuplicateHandle(GetCurrentProcess(),
+                                 other.file,
+                                 GetCurrentProcess(),
+                                 &file,
+                                 0,
+                                 FALSE,
+                                 DUPLICATE_SAME_ACCESS))
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to duplicate file handle");
 #else
-                if (file != -1) ::close(file);
+            if (file != -1) ::close(file);
 
-                file = dup(other.file);
-                if (file == -1)
-                    throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
+            file = dup(other.file);
+            if (file == -1)
+                throw std::system_error(errno, std::system_category(), "Failed to duplicate file descriptor");
 #endif
 
-                return *this;
-            }
+            return *this;
+        }
 
         File(File&& other) noexcept:
             file(other.file)
