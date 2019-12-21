@@ -227,7 +227,7 @@ namespace sr
 
                             if (blendState.enabled)
                             {
-                                uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
+                                const uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
                                 Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                                 // alpha blend
