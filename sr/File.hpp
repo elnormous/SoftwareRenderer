@@ -175,15 +175,17 @@ namespace sr
         void close()
         {
             if (file != INVALID)
+            {
+                Type f = file;
+                file = INVALID;
 #if defined(_WIN32)
-            if (!CloseHandle(file))
-                throw std::system_error(GetLastError(), std::system_category(), "Failed to close file");
+                if (!CloseHandle(f))
+                    throw std::system_error(GetLastError(), std::system_category(), "Failed to close file");
 #else
-            if (::close(file) == -1)
-                throw std::system_error(errno, std::system_category(), "Failed to close file");
+                if (::close(f) == -1)
+                    throw std::system_error(errno, std::system_category(), "Failed to close file");
 #endif
-
-            file = INVALID;
+            }
         }
 
         uint32_t read(void* buffer, uint32_t size, bool all = false) const
