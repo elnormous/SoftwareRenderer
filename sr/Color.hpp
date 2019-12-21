@@ -56,7 +56,7 @@ namespace sr
         {
         }
 
-        Color(float color[4]) noexcept:
+        Color(const float color[4]) noexcept:
             r(color[0]),
             g(color[1]),
             b(color[2]),
