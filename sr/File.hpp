@@ -176,11 +176,11 @@ namespace sr
         {
             if (file != INVALID)
 #if defined(_WIN32)
-                if (!CloseHandle(file))
-                    throw std::system_error(GetLastError(), std::system_category(), "Failed to close file");
+            if (!CloseHandle(file))
+                throw std::system_error(GetLastError(), std::system_category(), "Failed to close file");
 #else
-                if (::close(file) == -1)
-                    throw std::system_error(errno, std::system_category(), "Failed to close file");
+            if (::close(file) == -1)
+                throw std::system_error(errno, std::system_category(), "Failed to close file");
 #endif
 
             file = INVALID;

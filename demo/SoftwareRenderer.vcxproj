@@ -44,7 +44,6 @@
     <ClInclude Include="..\sr\Texture.hpp" />
     <ClInclude Include="..\sr\Vector.hpp" />
     <ClInclude Include="..\sr\Vertex.hpp" />
-    <ClInclude Include="..\sr\WAV.hpp" />
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="ApplicationWindows.hpp" />
     <ClInclude Include="TextureShader.hpp" />

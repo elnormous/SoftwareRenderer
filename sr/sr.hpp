@@ -29,6 +29,5 @@
 #include "Texture.hpp"
 #include "Vector.hpp"
 #include "Vertex.hpp"
-#include "WAV.hpp"
 
 #endif

@@ -75,9 +75,6 @@
     <ClInclude Include="..\sr\Vertex.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\WAV.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\BlendState.hpp">
       <Filter>sr</Filter>
     </ClInclude>
