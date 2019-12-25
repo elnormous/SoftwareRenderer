@@ -68,9 +68,9 @@ namespace sr
         template <size_t X = N, typename std::enable_if<(X == 3)>::type* = nullptr>
         inline T getAngle(const Vector& axis) const noexcept
         {
-            const T dx = axis.v[0] - v[0] - v[1] * axis.v[2] + v[2] * axis.v[1];
-            const T dy = axis.v[1] - v[1] - v[2] * axis.v[0] + v[0] * axis.v[2];
-            const T dz = axis.v[2] - v[2] - v[0] * axis.v[1] + v[1] * axis.v[0];
+            constexpr T dx = axis.v[0] - v[0] - v[1] * axis.v[2] + v[2] * axis.v[1];
+            constexpr T dy = axis.v[1] - v[1] - v[2] * axis.v[0] + v[0] * axis.v[2];
+            constexpr T dz = axis.v[2] - v[2] - v[0] * axis.v[1] + v[1] * axis.v[0];
 
             return std::atan2(std::sqrt(dx * dx + dy * dy + dz * dz), dot(axis));
         }
@@ -78,9 +78,9 @@ namespace sr
         template <size_t X = N, typename std::enable_if<(X == 4)>::type* = nullptr>
         inline T getAngle(const Vector& axis) const noexcept
         {
-            const T dx = v[3] * axis.v[0] - v[0] * axis.v[3] - v[1] * axis.v[2] + v[2] * axis.v[1];
-            const T dy = v[3] * axis.v[1] - v[1] * axis.v[3] - v[2] * axis.v[0] + v[0] * axis.v[2];
-            const T dz = v[3] * axis.v[2] - v[2] * axis.v[3] - v[0] * axis.v[1] + v[1] * axis.v[0];
+            constexpr T dx = v[3] * axis.v[0] - v[0] * axis.v[3] - v[1] * axis.v[2] + v[2] * axis.v[1];
+            constexpr T dy = v[3] * axis.v[1] - v[1] * axis.v[3] - v[2] * axis.v[0] + v[0] * axis.v[2];
+            constexpr T dz = v[3] * axis.v[2] - v[2] * axis.v[3] - v[0] * axis.v[1] + v[1] * axis.v[0];
 
             return std::atan2(std::sqrt(dx * dx + dy * dy + dz * dz), dot(axis));
         }
@@ -290,10 +290,8 @@ namespace sr
         inline bool operator<(const Vector& vec) const noexcept
         {
             for (size_t i = 0; i < N; ++i)
-            {
                 if (v[i] < vec.v[i]) return true;
                 else if (vec.v[i] < v[i]) return false;
-            }
 
             return false;
         }
