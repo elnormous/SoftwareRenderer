@@ -51,10 +51,10 @@ namespace sr
 
         inline Quaternion& operator*=(const Quaternion& q) noexcept
         {
-            const T tempX = v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0];
-            const T tempY = -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1];
-            const T tempZ = v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2];
-            const T tempW = -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3];
+            constexpr T tempX = v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0];
+            constexpr T tempY = -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1];
+            constexpr T tempZ = v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2];
+            constexpr T tempW = -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3];
 
             v[0] = tempX;
             v[1] = tempY;
@@ -168,8 +168,7 @@ namespace sr
 
         inline void invert() noexcept
         {
-            const T n2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
-
+            constexpr T n2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
             if (n2 <= std::numeric_limits<T>::min())
                 return;
 
@@ -182,7 +181,7 @@ namespace sr
 
         inline T getNorm() const noexcept
         {
-            const T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            constexpr T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
             if (n == T(1)) // already normalized
                 return 1;
 
@@ -191,33 +190,33 @@ namespace sr
 
         void normalize() noexcept
         {
-            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
-            if (n == T(1)) // already normalized
+            constexpr T s = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (s == T(1)) // already normalized
                 return;
 
-            n = std::sqrt(n);
+            const T n = std::sqrt(s);
             if (n <= std::numeric_limits<T>::min()) // too close to zero
                 return;
 
-            n = T(1) / n;
-            v[0] *= n;
-            v[1] *= n;
-            v[2] *= n;
-            v[3] *= n;
+            const T d = T(1) / n;
+            v[0] *= d;
+            v[1] *= d;
+            v[2] *= d;
+            v[3] *= d;
         }
 
         Quaternion normalized() const noexcept
         {
-            T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
-            if (n == T(1)) // already normalized
+            constexpr T s = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            if (s == T(1)) // already normalized
                 return *this;
 
-            n = std::sqrt(n);
+            const T n = std::sqrt(s);
             if (n <= std::numeric_limits<T>::min()) // too close to zero
                 return *this;
 
-            n = T(1) / n;
-            return *this * n;
+            const T d = T(1) / n;
+            return *this * d;
         }
 
         void rotate(const T angle, const Vector<3, T>& axis) noexcept
@@ -277,17 +276,17 @@ namespace sr
 
         void setEulerAngles(const Vector<3, T>& angles) noexcept
         {
-            T angle = angles.v[0] / T(2);
-            const T sr = std::sin(angle);
-            const T cr = std::cos(angle);
+            const T angleR = angles.v[0] / T(2);
+            const T sr = std::sin(angleR);
+            const T cr = std::cos(angleR);
 
-            angle = angles.v[1] / T(2);
-            const T sp = std::sin(angle);
-            const T cp = std::cos(angle);
+            const T angleP = angles.v[1] / T(2);
+            const T sp = std::sin(angleP);
+            const T cp = std::cos(angleP);
 
-            angle = angles.v[2] / T(2);
-            const T sy = std::sin(angle);
-            const T cy = std::cos(angle);
+            const T angleY = angles.v[2] / T(2);
+            const T sy = std::sin(angleY);
+            const T cy = std::cos(angleY);
 
             const T cpcy = cp * cy;
             const T spcy = sp * cy;
