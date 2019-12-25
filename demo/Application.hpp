@@ -16,7 +16,7 @@ namespace demo
     {
     public:
         Application();
-        ~Application();
+        virtual ~Application() {}
 
         Application(const Application&) = delete;
         Application& operator=(const Application&) = delete;

@@ -6,33 +6,16 @@
 
 namespace demo
 {
-    Application::Application()
-    {
-        projection.setIdentity();
-        view.setIdentity();
-        model.setIdentity();
-
-        sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
-        texture = sr::Texture(sr::Texture::PixelFormat::Rgba8, bmp.getWidth(), bmp.getHeight());
-        texture.setData(bmp.getData(), 0);
-        texture.generateMipMaps();
-
-        sampler.addressModeX = sr::Sampler::AddressMode::Repeat;
-        sampler.addressModeY = sr::Sampler::AddressMode::Repeat;
-        sampler.filter = sr::Sampler::Filter::Linear;
-
-        blendState.colorBlendSource = sr::BlendState::Factor::SrcAlpha;
-        blendState.colorBlendDest = sr::BlendState::Factor::InvSrcAlpha;
-        blendState.colorOperation = sr::BlendState::Operation::Add;
-        blendState.alphaBlendSource = sr::BlendState::Factor::One;
-        blendState.alphaBlendDest = sr::BlendState::Factor::One;
-        blendState.alphaOperation = sr::BlendState::Operation::Add;
-        blendState.enabled = true;
-
-        depthState.read = true;
-        depthState.write = true;
-
-        vertices = {
+    Application::Application():
+        indices{
+            0, 1, 2, 1, 3, 2, // front
+            4, 5, 6, 5, 7, 6, // back
+            16, 17, 18, 17, 19, 18, // bottom
+            20, 21, 22, 21, 23, 22, // top
+            8, 9, 10, 9, 11, 10, // left
+            12, 13, 14, 13, 15, 14 // right
+        },
+        vertices{
             // front
             sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFF0000FF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
             sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0x00FF00FF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
@@ -68,20 +51,31 @@ namespace demo
             sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
             sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
             sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F))
-        };
-
-        indices = {
-            0, 1, 2, 1, 3, 2, // front
-            4, 5, 6, 5, 7, 6, // back
-            16, 17, 18, 17, 19, 18, // bottom
-            20, 21, 22, 21, 23, 22, // top
-            8, 9, 10, 9, 11, 10, // left
-            12, 13, 14, 13, 15, 14 // right
-        };
-    }
-
-    Application::~Application()
+        }
     {
+        projection.setIdentity();
+        view.setIdentity();
+        model.setIdentity();
+
+        sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
+        texture = sr::Texture(sr::Texture::PixelFormat::Rgba8, bmp.getWidth(), bmp.getHeight());
+        texture.setData(bmp.getData(), 0);
+        texture.generateMipMaps();
+
+        sampler.addressModeX = sr::Sampler::AddressMode::Repeat;
+        sampler.addressModeY = sr::Sampler::AddressMode::Repeat;
+        sampler.filter = sr::Sampler::Filter::Linear;
+
+        blendState.colorBlendSource = sr::BlendState::Factor::SrcAlpha;
+        blendState.colorBlendDest = sr::BlendState::Factor::InvSrcAlpha;
+        blendState.colorOperation = sr::BlendState::Operation::Add;
+        blendState.alphaBlendSource = sr::BlendState::Factor::One;
+        blendState.alphaBlendDest = sr::BlendState::Factor::One;
+        blendState.alphaOperation = sr::BlendState::Operation::Add;
+        blendState.enabled = true;
+
+        depthState.read = true;
+        depthState.write = true;
     }
 
     void Application::setup()
