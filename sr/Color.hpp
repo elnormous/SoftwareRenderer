@@ -33,7 +33,7 @@ namespace sr
         {
         }
 
-        Color(uint32_t color) noexcept:
+        explicit Color(uint32_t color) noexcept:
             r(static_cast<uint8_t>((color & 0xFF000000) >> 24) / 255.0F),
             g(static_cast<uint8_t>((color & 0x00FF0000) >> 16) / 255.0F),
             b(static_cast<uint8_t>((color & 0x0000FF00) >> 8) / 255.0F),
@@ -56,7 +56,7 @@ namespace sr
         {
         }
 
-        Color(const float color[4]) noexcept:
+        explicit Color(const float color[4]) noexcept:
             r(color[0]),
             g(color[1]),
             b(color[2]),
