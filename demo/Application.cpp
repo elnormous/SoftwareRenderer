@@ -34,40 +34,40 @@ namespace demo
 
         vertices = {
             // front
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), 0xFF0000FF, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), 0x00FF00FF, sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), 0x0000FFFF, sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFF0000FF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0x00FF00FF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0x0000FFFF), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
 
             // back
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
 
             // left
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 4.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(4.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(4.0F, 4.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 4.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(4.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(4.0F, 4.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
 
             // right
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFA0, sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFA0), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFA0), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFA0), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFA0), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
 
             // bottom
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
 
             // top
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
-            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), 0xFFFFFFFF, sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F))
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(0.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 0.0F), sr::Vector3F(0.0F, 0.0F, 1.0F)),
+            sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFF), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F))
         };
 
         indices = {

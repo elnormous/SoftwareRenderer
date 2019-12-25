@@ -21,7 +21,7 @@ namespace sr
         Shader* shader = nullptr;
         Texture* textures[2]{nullptr, nullptr};
         //CullMode cullMode = CullMode::BACK;
-        Color diffuseColor = Color::WHITE;
+        Color diffuseColor{0xFFFFFFFF};
         float opacity = 1.0F;
     };
 }

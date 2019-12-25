@@ -14,16 +14,6 @@ namespace sr
     class Color final
     {
     public:
-        static const uint32_t BLACK = 0x000000ff;
-        static const uint32_t RED = 0xff0000ff;
-        static const uint32_t MAGENTA = 0xff00ffff;
-        static const uint32_t GREEN = 0x00ff00ff;
-        static const uint32_t CYAN = 0x00ffffff;
-        static const uint32_t BLUE = 0x0000ffff;
-        static const uint32_t YELLOW = 0xffff00ff;
-        static const uint32_t WHITE = 0xffffffff;
-        static const uint32_t GRAY = 0x808080ff;
-
         float r = 0.0F;
         float g = 0.0F;
         float b = 0.0F;
