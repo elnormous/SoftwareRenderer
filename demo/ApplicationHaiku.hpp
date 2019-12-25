@@ -17,7 +17,7 @@ namespace demo
     {
     public:
         ApplicationHaiku();
-        virtual ~ApplicationHaiku();
+        ~ApplicationHaiku();
 
         void draw();
         void didResize(float newWidth, float newHeight);

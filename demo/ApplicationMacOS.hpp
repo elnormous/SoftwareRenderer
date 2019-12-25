@@ -14,7 +14,7 @@ namespace demo
     {
     public:
         ApplicationMacOS();
-        virtual ~ApplicationMacOS();
+        ~ApplicationMacOS();
 
         void draw();
         void didResize();

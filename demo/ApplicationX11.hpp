@@ -14,7 +14,7 @@ namespace demo
     {
     public:
         ApplicationX11();
-        virtual ~ApplicationX11();
+        ~ApplicationX11();
 
         void draw();
         void didResize(int newWidth, int newHeight);

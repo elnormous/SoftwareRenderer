@@ -14,7 +14,7 @@ namespace demo
     {
     public:
         ApplicationIOS();
-        virtual ~ApplicationIOS();
+        ~ApplicationIOS();
 
         void createWindow();
 

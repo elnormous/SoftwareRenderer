@@ -14,7 +14,7 @@ namespace demo
     {
     public:
         ApplicationWindows();
-        virtual ~ApplicationWindows();
+        ~ApplicationWindows();
 
         void draw();
         void didResize();
