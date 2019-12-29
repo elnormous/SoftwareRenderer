@@ -29,18 +29,19 @@ namespace sr
         {
         }
 
-        Rect(const Vector<2, T>& initPosition,
-             const T width, const T height) noexcept:
+        constexpr Rect(const Vector<2, T>& initPosition,
+                      const T width, const T height) noexcept:
             position(initPosition), size(width, height)
         {
         }
 
-        Rect(const Vector<2, T>& initPosition, const Size<2, T>& initSize) noexcept:
+        constexpr Rect(const Vector<2, T>& initPosition,
+                       const Size<2, T>& initSize) noexcept:
             position(initPosition), size(initSize)
         {
         }
 
-        inline bool isEmpty() const noexcept
+        constexpr bool isEmpty() const noexcept
         {
             return size.isZero();
         }
@@ -176,7 +177,7 @@ namespace sr
                 position.v[1] != other.position.v[1] || size.v[1] != other.size.v[1];
         }
 
-        inline const Rect operator*(const T scalar) const noexcept
+        constexpr const Rect operator*(const T scalar) const noexcept
         {
             return Rect(position.v[0] * scalar, position.v[1] * scalar,
                         size.v[0] * scalar, size.v[1] * scalar);
@@ -191,7 +192,7 @@ namespace sr
             return *this;
         }
 
-        inline const Rect operator/(const T scalar) const noexcept
+        constexpr const Rect operator/(const T scalar) const noexcept
         {
             return Rect(position.v[0] / scalar, position.v[1] / scalar,
                         size.v[0] / scalar, size.v[1] / scalar);
