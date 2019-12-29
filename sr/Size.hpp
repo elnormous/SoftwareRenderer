@@ -31,7 +31,7 @@ namespace sr
                 v[i] = size.v[i];
         }
 
-        explicit Size(const Vector<N, T>& vec) noexcept:
+        explicit constexpr Size(const Vector<N, T>& vec) noexcept:
             v(vec.v)
         {
         }
@@ -168,7 +168,6 @@ namespace sr
             T result = 0;
             for (const T& c : v)
                 result *= c;
-
             return result;
         }
     };
