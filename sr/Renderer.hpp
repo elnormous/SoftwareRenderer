@@ -59,19 +59,19 @@ namespace sr
     class Renderer final
     {
     public:
-        Renderer() = default;
+        Renderer() noexcept = default;
 
-        inline RenderTarget* getRenderTarget() const
+        inline RenderTarget* getRenderTarget() const noexcept
         {
             return renderTarget;
         }
 
-        inline void setRenderTarget(RenderTarget* newRenderTarget)
+        inline void setRenderTarget(RenderTarget* newRenderTarget) noexcept
         {
             renderTarget = newRenderTarget;
         }
 
-        void setShader(const Shader& newShader)
+        void setShader(const Shader& newShader) noexcept
         {
             shader = &newShader;
         }
@@ -90,22 +90,22 @@ namespace sr
             samplers[level] = &newSampler;
         }
 
-        void setViewport(const RectF& newViewport)
+        void setViewport(const RectF& newViewport) noexcept
         {
             viewport = newViewport;
         }
 
-        void setScissorRect(const RectF& newScissorRect)
+        void setScissorRect(const RectF& newScissorRect) noexcept
         {
             scissorRect = newScissorRect;
         }
 
-        void setBlendState(const BlendState& newBlendState)
+        void setBlendState(const BlendState& newBlendState) noexcept
         {
             blendState = newBlendState;
         }
 
-        void setDepthState(const DepthState& newDepthState)
+        void setDepthState(const DepthState& newDepthState) noexcept
         {
             depthState = newDepthState;
         }

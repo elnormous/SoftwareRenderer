@@ -24,10 +24,10 @@ namespace sr
             depthBuffer.resize(newWidth, newHeight);
         }
 
-        Texture& getFrameBuffer() { return frameBuffer; }
-        const Texture& getFrameBuffer() const { return frameBuffer; }
-        Texture& getDepthBuffer() { return depthBuffer; }
-        const Texture& getDepthBuffer() const { return depthBuffer; }
+        Texture& getFrameBuffer() noexcept { return frameBuffer; }
+        const Texture& getFrameBuffer() const noexcept { return frameBuffer; }
+        Texture& getDepthBuffer() noexcept { return depthBuffer; }
+        const Texture& getDepthBuffer() const noexcept { return depthBuffer; }
 
     private:
         Texture frameBuffer;

@@ -105,11 +105,11 @@ namespace sr
             }
         }
 
-        inline PixelFormat getPixelFormat() const { return pixelFormat; }
-        inline uint32_t getWidth() const { return width; }
-        inline uint32_t getHeight() const { return height; }
+        inline PixelFormat getPixelFormat() const noexcept { return pixelFormat; }
+        inline uint32_t getWidth() const noexcept { return width; }
+        inline uint32_t getHeight() const noexcept { return height; }
 
-        inline size_t getLevelCount() const
+        inline size_t getLevelCount() const noexcept
         {
             return levels.size();
         }
