@@ -22,6 +22,13 @@
 
 namespace sr
 {
+    class RenderError: public std::runtime_error
+    {
+    public:
+        explicit RenderError(const std::string& str): std::runtime_error(str) {}
+        explicit RenderError(const char* str): std::runtime_error(str) {}
+    };
+
     static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha, float destColor, float destAlpha, float blendFactor)
     {
         switch (factor)
@@ -39,7 +46,7 @@ namespace sr
             case BlendState::Factor::SrcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
             case BlendState::Factor::BlendFactor: return blendFactor;
             case BlendState::Factor::InvBlendFactor: return 1.0F - blendFactor;
-            default: throw std::runtime_error("Invalid blend factor");
+            default: throw RenderError("Invalid blend factor");
         }
     }
 
@@ -52,7 +59,7 @@ namespace sr
             case BlendState::Operation::RevSubtract: return clamp(b - a, 0.0F, 1.0F);
             case BlendState::Operation::Min: return std::min(a, b);
             case BlendState::Operation::Max: return std::max(a, b);
-            default: throw std::runtime_error("Invalid blend operation");
+            default: throw RenderError("Invalid blend operation");
         }
     }
 
@@ -113,7 +120,7 @@ namespace sr
         void clear(Color color, float depth)
         {
             if (!renderTarget)
-                throw std::runtime_error("No render target set");
+                throw RenderError("No render target set");
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
@@ -133,9 +140,9 @@ namespace sr
         void drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4F& modelViewProjection)
         {
             if (!renderTarget)
-                throw std::runtime_error("No render target set");
+                throw RenderError("No render target set");
             if (!shader)
-                throw std::runtime_error("No shader set");
+                throw RenderError("No shader set");
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
