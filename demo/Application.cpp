@@ -3,6 +3,7 @@
 //
 
 #include "Application.hpp"
+#include "BMP.hpp"
 
 namespace demo
 {
