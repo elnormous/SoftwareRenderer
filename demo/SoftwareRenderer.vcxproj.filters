@@ -33,10 +33,10 @@
     <ClInclude Include="..\sr\Matrix.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\MTL.hpp">
+    <ClInclude Include="MTL.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\OBJ.hpp">
+    <ClInclude Include="OBJ.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\Plane.hpp">
@@ -78,7 +78,7 @@
     <ClInclude Include="..\sr\BlendState.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\BMP.hpp">
+    <ClInclude Include="BMP.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\Box.hpp">
@@ -96,7 +96,7 @@
     <ClInclude Include="..\sr\DepthState.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\File.hpp">
+    <ClInclude Include="File.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationWindows.hpp">
