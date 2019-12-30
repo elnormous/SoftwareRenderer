@@ -117,7 +117,7 @@ namespace sr
 
             uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
-            uint32_t rgba = color.getIntValueRaw();
+            const uint32_t rgba = color.getIntValueRaw();
 
             const uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
