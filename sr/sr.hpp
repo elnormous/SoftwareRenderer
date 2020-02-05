@@ -11,7 +11,6 @@
 #include "Color.hpp"
 #include "ConvexVolume.hpp"
 #include "DepthState.hpp"
-#include "Material.hpp"
 #include "MathUtils.hpp"
 #include "Matrix.hpp"
 #include "Plane.hpp"

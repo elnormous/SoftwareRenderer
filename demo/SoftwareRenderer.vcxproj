@@ -25,7 +25,6 @@
     <ClInclude Include="..\sr\Constants.hpp" />
     <ClInclude Include="..\sr\ConvexVolume.hpp" />
     <ClInclude Include="..\sr\DepthState.hpp" />
-    <ClInclude Include="..\sr\Material.hpp" />
     <ClInclude Include="..\sr\MathUtils.hpp" />
     <ClInclude Include="..\sr\Matrix.hpp" />
     <ClInclude Include="..\sr\Plane.hpp" />
