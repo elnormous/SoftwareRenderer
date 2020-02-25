@@ -198,7 +198,9 @@ namespace demo
 
         [content setNeedsDisplay:TRUE];
 
-        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016
+                                                  target:content selector:@selector(draw:)
+                                                userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
 
         setup();
     }
@@ -226,7 +228,7 @@ namespace demo
                                          bitsPerComponent * componentsPerPixel,
                                          componentsPerPixel * width,
                                          colorSpace,
-                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast,
                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
         CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
