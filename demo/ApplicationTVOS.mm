@@ -212,7 +212,7 @@ namespace demo
                                          bitsPerComponent * componentsPerPixel,
                                          componentsPerPixel * width,
                                          colorSpace,
-                                         kCGBitmapByteOrderDefault | kCGImageAlphaLast,
+                                         kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
         CGContextRef context = UIGraphicsGetCurrentContext();
