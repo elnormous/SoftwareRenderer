@@ -93,9 +93,6 @@
     <ClInclude Include="..\sr\DepthState.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="File.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="ApplicationWindows.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

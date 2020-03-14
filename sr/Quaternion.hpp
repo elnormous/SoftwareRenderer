@@ -21,8 +21,8 @@ namespace sr
         {
         }
 
-        inline T& operator[](size_t index) noexcept { return v[index]; }
-        constexpr T operator[](size_t index) const noexcept { return v[index]; }
+        inline T& operator[](std::size_t index) noexcept { return v[index]; }
+        constexpr T operator[](std::size_t index) const noexcept { return v[index]; }
 
         inline T& x() noexcept { return v[0]; }
         constexpr T x() const noexcept { return v[0]; }

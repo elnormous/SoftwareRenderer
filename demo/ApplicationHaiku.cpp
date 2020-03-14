@@ -48,8 +48,8 @@ namespace demo
 
         bitmap = new BBitmap(bounds, 0, B_RGB32);
 
-        width = static_cast<uint32_t>(bounds.Width());
-        height = static_cast<uint32_t>(bounds.Height());
+        width = static_cast<std::uint32_t>(bounds.Width());
+        height = static_cast<std::uint32_t>(bounds.Height());
 
         setup();
         window->Show();
@@ -74,8 +74,8 @@ namespace demo
 
     void ApplicationHaiku::didResize(float newWidth, float newHeight)
     {
-        width = static_cast<uint32_t>(newWidth);
-        height = static_cast<uint32_t>(newHeight);
+        width = static_cast<std::uint32_t>(newWidth);
+        height = static_cast<std::uint32_t>(newHeight);
 
         if (bitmap) delete bitmap;
         bitmap = new BBitmap(BRect(0, 0, newWidth, newHeight), 0, B_RGB32);

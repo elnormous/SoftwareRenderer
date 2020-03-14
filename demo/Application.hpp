@@ -32,8 +32,8 @@ namespace demo
     protected:
         void onResize();
 
-        uint32_t width;
-        uint32_t height;
+        std::uint32_t width;
+        std::uint32_t height;
 
         sr::Matrix4F projection;
         sr::Matrix4F view;
@@ -50,7 +50,7 @@ namespace demo
         sr::Sampler sampler;
         sr::Texture texture;
 
-        std::vector<uint32_t> indices;
+        std::vector<std::uint32_t> indices;
         std::vector<sr::Vertex> vertices;
     };
 }

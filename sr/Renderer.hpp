@@ -83,14 +83,14 @@ namespace sr
             shader = &newShader;
         }
 
-        void setTexture(Texture& newTexture, uint32_t level)
+        void setTexture(Texture& newTexture, std::uint32_t level)
         {
             assert(level < 2);
 
             textures[level] = &newTexture;
         }
 
-        void setSampler(Sampler& newSampler, uint32_t level)
+        void setSampler(Sampler& newSampler, std::uint32_t level)
         {
             assert(level < 2);
 
@@ -122,32 +122,32 @@ namespace sr
             if (!renderTarget)
                 throw RenderError("No render target set");
 
-            uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
-            const uint32_t rgba = color.getIntValueRaw();
+            const std::uint32_t rgba = color.getIntValueRaw();
 
-            const uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
+            const std::uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
-            for (uint32_t p = 0; p < frameBufferSize; ++p)
+            for (std::uint32_t p = 0; p < frameBufferSize; ++p)
                 frameBufferData[p] = rgba;
 
-            const uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
+            const std::uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
 
-            for (uint32_t p = 0; p < depthBufferSize; ++p)
+            for (std::uint32_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
         }
 
-        void drawTriangles(const std::vector<uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4F& modelViewProjection)
+        void drawTriangles(const std::vector<std::uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4F& modelViewProjection)
         {
             if (!renderTarget)
                 throw RenderError("No render target set");
             if (!shader)
                 throw RenderError("No shader set");
 
-            uint32_t* frameBufferData = reinterpret_cast<uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
-            for (uint32_t i = 0; i < indices.size(); i += 3)
+            for (std::uint32_t i = 0; i < indices.size(); i += 3)
             {
                 const Shader::VSOutput vsOutputs[3] = {
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
@@ -190,9 +190,9 @@ namespace sr
                 boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
                 boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
-                for (uint32_t screenY = static_cast<uint32_t>(boundingBox.min.v[1]); screenY <= static_cast<uint32_t>(boundingBox.max.v[1]); ++screenY)
+                for (std::uint32_t screenY = static_cast<std::uint32_t>(boundingBox.min.v[1]); screenY <= static_cast<std::uint32_t>(boundingBox.max.v[1]); ++screenY)
                 {
-                    for (uint32_t screenX = static_cast<uint32_t>(boundingBox.min.v[0]); screenX <= static_cast<uint32_t>(boundingBox.max.v[0]); ++screenX)
+                    for (std::uint32_t screenX = static_cast<std::uint32_t>(boundingBox.min.v[0]); screenX <= static_cast<std::uint32_t>(boundingBox.max.v[0]); ++screenX)
                     {
                         const Vector3F s = barycentric(viewportPositions[0],
                                                        viewportPositions[1],
@@ -234,7 +234,7 @@ namespace sr
 
                             if (blendState.enabled)
                             {
-                                const uint8_t* pixel = reinterpret_cast<uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
+                                const std::uint8_t* pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
                                 Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                                 // alpha blend

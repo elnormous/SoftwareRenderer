@@ -6,10 +6,10 @@
 #define BMP_H
 
 #include <cmath>
+#include <fstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include "File.hpp"
 
 namespace sr
 {
@@ -67,52 +67,52 @@ namespace sr
 
         explicit BMP(const std::string& filename)
         {
-            File f(filename, File::Mode::Read);
+            std::ifstream f(filename, std::ios::binary);
 
             BitmapFileHeader header;
 
-            f.read(&header.bfType, sizeof(header.bfType), true);
+            f.read(reinterpret_cast<char*>(&header.bfType), sizeof(header.bfType));
 
             if (header.bfType != BITMAPFILEHEADER_TYPE_BM)
                 throw std::runtime_error("Bad bitmap file");
 
-            f.read(&header.bfSize, sizeof(header.bfSize), true);
-            f.read(&header.bfReserved1, sizeof(header.bfReserved1), true);
-            f.read(&header.bfReserved2, sizeof(header.bfReserved2), true);
-            f.read(&header.bfOffBits, sizeof(header.bfOffBits), true);
+            f.read(reinterpret_cast<char*>(&header.bfSize), sizeof(header.bfSize));
+            f.read(reinterpret_cast<char*>(&header.bfReserved1), sizeof(header.bfReserved1));
+            f.read(reinterpret_cast<char*>(&header.bfReserved2), sizeof(header.bfReserved2));
+            f.read(reinterpret_cast<char*>(&header.bfOffBits), sizeof(header.bfOffBits));
 
             BitmapInfoHeader infoHeader;
-            f.read(&infoHeader.biSize, sizeof(infoHeader.biSize), true);
+            f.read(reinterpret_cast<char*>(&infoHeader.biSize), sizeof(infoHeader.biSize));
 
-            uint32_t offset = 0;
+            std::uint32_t offset = 0;
 
             if (offset + sizeof(infoHeader.biWidth) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biWidth, sizeof(infoHeader.biWidth), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biWidth), sizeof(infoHeader.biWidth));
                 offset += sizeof(infoHeader.biWidth);
             }
 
             if (offset + sizeof(infoHeader.biHeight) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biHeight, sizeof(infoHeader.biHeight), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biHeight), sizeof(infoHeader.biHeight));
                 offset += sizeof(infoHeader.biHeight);
             }
 
             if (offset + sizeof(infoHeader.biPlanes) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biPlanes), sizeof(infoHeader.biPlanes));
                 offset += sizeof(infoHeader.biPlanes);
             }
 
             if (offset + sizeof(infoHeader.biBitCount) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biBitCount), sizeof(infoHeader.biBitCount));
                 offset += sizeof(infoHeader.biBitCount);
             }
 
             if (offset + sizeof(infoHeader.biCompression) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biCompression, sizeof(infoHeader.biCompression), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biCompression), sizeof(infoHeader.biCompression));
                 offset += sizeof(infoHeader.biCompression);
             }
 
@@ -121,35 +121,35 @@ namespace sr
 
             if (offset + sizeof(infoHeader.biSizeImage) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biSizeImage), sizeof(infoHeader.biSizeImage));
                 offset += sizeof(infoHeader.biSizeImage);
             }
 
             if (offset + sizeof(infoHeader.biXPelsPerMeter) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biXPelsPerMeter), sizeof(infoHeader.biXPelsPerMeter));
                 offset += sizeof(infoHeader.biXPelsPerMeter);
             }
 
             if (offset + sizeof(infoHeader.biYPelsPerMeter) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biYPelsPerMeter), sizeof(infoHeader.biYPelsPerMeter));
                 offset += sizeof(infoHeader.biYPelsPerMeter);
             }
 
             if (offset + sizeof(infoHeader.biClrUsed) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biClrUsed), sizeof(infoHeader.biClrUsed));
                 offset += sizeof(infoHeader.biClrUsed);
             }
 
             if (offset + sizeof(infoHeader.biClrImportant) < infoHeader.biSize)
             {
-                f.read(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant), true);
+                f.read(reinterpret_cast<char*>(&infoHeader.biClrImportant), sizeof(infoHeader.biClrImportant));
                 offset += sizeof(infoHeader.biClrImportant);
             }
 
-            f.seek(header.bfOffBits, File::Seek::Begin);
+            f.seekg(header.bfOffBits, std::ios::beg);
 
             data.resize(infoHeader.biWidth * std::abs(infoHeader.biHeight) * sizeof(RGBQuad));
             std::fill(data.begin(), data.end(), 255);
@@ -158,30 +158,32 @@ namespace sr
             {
                 for (int y = infoHeader.biHeight - 1; y >= 0; --y)
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                        f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8, true);
+                        f.read(reinterpret_cast<char*>(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)]),
+                               infoHeader.biBitCount / 8);
             }
             else // top to bottom
             {
                 for (int y = 0; y < std::abs(infoHeader.biHeight); ++y)
                     for (int x = 0; x < infoHeader.biWidth; ++x)
-                        f.read(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)], infoHeader.biBitCount / 8, true);
+                        f.read(reinterpret_cast<char*>(&data[(y * infoHeader.biWidth + x) * sizeof(RGBQuad)]),
+                               infoHeader.biBitCount / 8);
             }
 
-            width = static_cast<uint32_t>(infoHeader.biWidth);
-            height = static_cast<uint32_t>(std::abs(infoHeader.biHeight));
+            width = static_cast<std::uint32_t>(infoHeader.biWidth);
+            height = static_cast<std::uint32_t>(std::abs(infoHeader.biHeight));
         }
 
-        inline uint32_t getWidth() const { return width; }
-        inline uint32_t getHeight() const { return height; }
+        inline std::uint32_t getWidth() const { return width; }
+        inline std::uint32_t getHeight() const { return height; }
 
-        const std::vector<uint8_t>& getData() const
+        const std::vector<std::uint8_t>& getData() const
         {
             return data;
         }
 
-        void setData(uint32_t newWidth,
-                     uint32_t newHeight,
-                     const std::vector<uint8_t>& newData)
+        void setData(std::uint32_t newWidth,
+                     std::uint32_t newHeight,
+                     const std::vector<std::uint8_t>& newData)
         {
             width = newWidth;
             height = newHeight;
@@ -190,7 +192,7 @@ namespace sr
 
         void save(const std::string& filename)
         {
-            File f(filename, File::Mode::Write);
+            std::ofstream f(filename, std::ios::binary | std::ios::trunc);
 
             BitmapFileHeader header;
             header.bfType = BITMAPFILEHEADER_TYPE_BM;
@@ -199,11 +201,11 @@ namespace sr
             header.bfReserved2 = 0;
             header.bfOffBits = 14 + 40; // size of BITMAPFILEHEADER + size of BITMAPINFOHEADER
 
-            f.write(&header.bfType, sizeof(header.bfType), true);
-            f.write(&header.bfSize, sizeof(header.bfSize), true);
-            f.write(&header.bfReserved1, sizeof(header.bfReserved1), true);
-            f.write(&header.bfReserved2, sizeof(header.bfReserved2), true);
-            f.write(&header.bfOffBits, sizeof(header.bfOffBits), true);
+            f.write(reinterpret_cast<const char*>(&header.bfType), sizeof(header.bfType));
+            f.write(reinterpret_cast<const char*>(&header.bfSize), sizeof(header.bfSize));
+            f.write(reinterpret_cast<const char*>(&header.bfReserved1), sizeof(header.bfReserved1));
+            f.write(reinterpret_cast<const char*>(&header.bfReserved2), sizeof(header.bfReserved2));
+            f.write(reinterpret_cast<const char*>(&header.bfOffBits), sizeof(header.bfOffBits));
 
             BitmapInfoHeader infoHeader;
             infoHeader.biSize = 40;
@@ -218,25 +220,25 @@ namespace sr
             infoHeader.biClrUsed = 0;
             infoHeader.biClrImportant = 0;
 
-            f.write(&infoHeader.biSize, sizeof(infoHeader.biSize), true);
-            f.write(&infoHeader.biWidth, sizeof(infoHeader.biWidth), true);
-            f.write(&infoHeader.biHeight, sizeof(infoHeader.biHeight), true);
-            f.write(&infoHeader.biPlanes, sizeof(infoHeader.biPlanes), true);
-            f.write(&infoHeader.biBitCount, sizeof(infoHeader.biBitCount), true);
-            f.write(&infoHeader.biCompression, sizeof(infoHeader.biCompression), true);
-            f.write(&infoHeader.biSizeImage, sizeof(infoHeader.biSizeImage), true);
-            f.write(&infoHeader.biXPelsPerMeter, sizeof(infoHeader.biXPelsPerMeter), true);
-            f.write(&infoHeader.biYPelsPerMeter, sizeof(infoHeader.biYPelsPerMeter), true);
-            f.write(&infoHeader.biClrUsed, sizeof(infoHeader.biClrUsed), true);
-            f.write(&infoHeader.biClrImportant, sizeof(infoHeader.biClrImportant), true);
+            f.write(reinterpret_cast<const char*>(&infoHeader.biSize), sizeof(infoHeader.biSize));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biWidth), sizeof(infoHeader.biWidth));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biHeight), sizeof(infoHeader.biHeight));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biPlanes), sizeof(infoHeader.biPlanes));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biBitCount), sizeof(infoHeader.biBitCount));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biCompression), sizeof(infoHeader.biCompression));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biSizeImage), sizeof(infoHeader.biSizeImage));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biXPelsPerMeter), sizeof(infoHeader.biXPelsPerMeter));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biYPelsPerMeter), sizeof(infoHeader.biYPelsPerMeter));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biClrUsed), sizeof(infoHeader.biClrUsed));
+            f.write(reinterpret_cast<const char*>(&infoHeader.biClrImportant), sizeof(infoHeader.biClrImportant));
 
-            f.write(data.data(), static_cast<uint32_t>(data.size()), true);
+            f.write(reinterpret_cast<const char*>(data.data()), static_cast<std::uint32_t>(data.size()));
         }
 
     private:
-        uint32_t width = 0;
-        uint32_t height = 0;
-        std::vector<uint8_t> data;
+        std::uint32_t width = 0;
+        std::uint32_t height = 0;
+        std::vector<std::uint8_t> data;
     };
 }
 

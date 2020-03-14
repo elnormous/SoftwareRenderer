@@ -42,7 +42,6 @@
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="ApplicationWindows.hpp" />
     <ClInclude Include="BMP.hpp" />
-    <ClInclude Include="File.hpp" />
     <ClInclude Include="MTL.hpp" />
     <ClInclude Include="OBJ.hpp" />
     <ClInclude Include="TextureShader.hpp" />

@@ -23,25 +23,25 @@ namespace sr
         {
         }
 
-        explicit Color(uint32_t color) noexcept:
-            r(static_cast<uint8_t>((color & 0xFF000000) >> 24) / 255.0F),
-            g(static_cast<uint8_t>((color & 0x00FF0000) >> 16) / 255.0F),
-            b(static_cast<uint8_t>((color & 0x0000FF00) >> 8) / 255.0F),
-            a(static_cast<uint8_t>(color & 0x000000FF) / 255.0F)
+        explicit Color(std::uint32_t color) noexcept:
+            r(static_cast<std::uint8_t>((color & 0xFF000000) >> 24) / 255.0F),
+            g(static_cast<std::uint8_t>((color & 0x00FF0000) >> 16) / 255.0F),
+            b(static_cast<std::uint8_t>((color & 0x0000FF00) >> 8) / 255.0F),
+            a(static_cast<std::uint8_t>(color & 0x000000FF) / 255.0F)
         {
         }
 
-        Color& operator=(uint32_t color) noexcept
+        Color& operator=(std::uint32_t color) noexcept
         {
-            r = static_cast<uint8_t>((color & 0xFF000000) >> 24) / 255.0F;
-            g = static_cast<uint8_t>((color & 0x00FF0000) >> 16) / 255.0F;
-            b = static_cast<uint8_t>((color & 0x0000FF00) >> 8) / 255.0F;
-            a = static_cast<uint8_t>(color & 0x000000FF) / 255.0F;
+            r = static_cast<std::uint8_t>((color & 0xFF000000) >> 24) / 255.0F;
+            g = static_cast<std::uint8_t>((color & 0x00FF0000) >> 16) / 255.0F;
+            b = static_cast<std::uint8_t>((color & 0x0000FF00) >> 8) / 255.0F;
+            a = static_cast<std::uint8_t>(color & 0x000000FF) / 255.0F;
 
             return *this;
         }
 
-        Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 0xFF) noexcept:
+        Color(std::uint8_t red, std::uint8_t green, std::uint8_t blue, std::uint8_t alpha = 0xFF) noexcept:
             r(red / 255.0F), g(green / 255.0F), b(blue / 255.0F), a(alpha / 255.0F)
         {
         }
@@ -54,22 +54,22 @@ namespace sr
         {
         }
 
-        inline uint32_t getIntValue() const noexcept
+        inline std::uint32_t getIntValue() const noexcept
         {
-            return (static_cast<uint32_t>(r * 255.0F) << 24) |
-                   (static_cast<uint32_t>(g * 255.0F) << 16) |
-                   (static_cast<uint32_t>(b * 255.0F) << 8) |
-                   static_cast<uint32_t>(a * 255.0F);
+            return (static_cast<std::uint32_t>(r * 255.0F) << 24) |
+                   (static_cast<std::uint32_t>(g * 255.0F) << 16) |
+                   (static_cast<std::uint32_t>(b * 255.0F) << 8) |
+                   static_cast<std::uint32_t>(a * 255.0F);
         }
 
-        inline uint32_t getIntValueRaw() const noexcept
+        inline std::uint32_t getIntValueRaw() const noexcept
         {
-            uint32_t result;
-            uint8_t* bytes = reinterpret_cast<uint8_t*>(&result);
-            bytes[0] = static_cast<uint8_t>(r * 255.0F);
-            bytes[1] = static_cast<uint8_t>(g * 255.0F);
-            bytes[2] = static_cast<uint8_t>(b * 255.0F);
-            bytes[3] = static_cast<uint8_t>(a * 255.0F);
+            std::uint32_t result;
+            std::uint8_t* bytes = reinterpret_cast<std::uint8_t*>(&result);
+            bytes[0] = static_cast<std::uint8_t>(r * 255.0F);
+            bytes[1] = static_cast<std::uint8_t>(g * 255.0F);
+            bytes[2] = static_cast<std::uint8_t>(b * 255.0F);
+            bytes[3] = static_cast<std::uint8_t>(a * 255.0F);
             return result;
         }
     };

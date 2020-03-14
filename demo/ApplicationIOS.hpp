@@ -32,8 +32,8 @@ namespace demo
         UIViewController* viewController = nil;
         NSTimer* timer = nil;
 
-        size_t componentsPerPixel;
-        size_t bitsPerComponent;
+        std::size_t componentsPerPixel;
+        std::size_t bitsPerComponent;
         CGColorSpaceRef colorSpace;
         CGDataProviderRef provider;
     };

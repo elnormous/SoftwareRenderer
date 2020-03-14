@@ -176,15 +176,15 @@ namespace demo
 
         CGRect windowFrame = [window bounds];
 
-        width = static_cast<uint32_t>(windowFrame.size.width * screen.scale);
-        height = static_cast<uint32_t>(windowFrame.size.height * screen.scale);
+        width = static_cast<std::uint32_t>(windowFrame.size.width * screen.scale);
+        height = static_cast<std::uint32_t>(windowFrame.size.height * screen.scale);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
         content.contentScaleFactor = screen.scale;
         viewController.view = content;
 
         componentsPerPixel = 4;
-        bitsPerComponent = sizeof(uint8_t) * 8;
+        bitsPerComponent = sizeof(std::uint8_t) * 8;
 
         CGDataProviderDirectCallbacks providerCallbacks = {
             0,
@@ -225,8 +225,8 @@ namespace demo
 
     void ApplicationTVOS::didResize(CGFloat newWidth, CGFloat newHeight)
     {
-        width = static_cast<uint32_t>(newWidth * screen.scale);
-        height = static_cast<uint32_t>(newHeight * screen.scale);
+        width = static_cast<std::uint32_t>(newWidth * screen.scale);
+        height = static_cast<std::uint32_t>(newHeight * screen.scale);
 
         CGDataProviderRelease(provider);
 

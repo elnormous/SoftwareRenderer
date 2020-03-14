@@ -174,13 +174,13 @@ namespace demo
         NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                      styleMask:[window styleMask]];
 
-        width = static_cast<uint32_t>(windowFrame.size.width);
-        height = static_cast<uint32_t>(windowFrame.size.height);
+        width = static_cast<std::uint32_t>(windowFrame.size.width);
+        height = static_cast<std::uint32_t>(windowFrame.size.height);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
 
         componentsPerPixel = 4;
-        bitsPerComponent = sizeof(uint8_t) * 8;
+        bitsPerComponent = sizeof(std::uint8_t) * 8;
 
         CGDataProviderDirectCallbacks providerCallbacks = {
             0,
@@ -244,8 +244,8 @@ namespace demo
         NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                      styleMask:[window styleMask]];
 
-        width = static_cast<uint32_t>(windowFrame.size.width);
-        height = static_cast<uint32_t>(windowFrame.size.height);
+        width = static_cast<std::uint32_t>(windowFrame.size.width);
+        height = static_cast<std::uint32_t>(windowFrame.size.height);
 
         CGDataProviderRelease(provider);
 
