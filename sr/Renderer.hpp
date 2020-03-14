@@ -147,7 +147,7 @@ namespace sr
             std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
-            for (std::uint32_t i = 0; i < indices.size(); i += 3)
+            for (std::uint32_t i = 0; i + 2 < indices.size(); i += 3)
             {
                 const Shader::VSOutput vsOutputs[3] = {
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
