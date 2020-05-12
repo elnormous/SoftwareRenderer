@@ -33,19 +33,19 @@ namespace sr
     {
         switch (factor)
         {
-            case BlendState::Factor::Zero: return 0.0F;
-            case BlendState::Factor::One: return 1.0F;
-            case BlendState::Factor::SrcColor: return srcColor;
-            case BlendState::Factor::InvSrcColor: return 1.0F - srcColor;
-            case BlendState::Factor::SrcAlpha: return srcAlpha;
-            case BlendState::Factor::InvSrcAlpha: return 1.0F - srcAlpha;
-            case BlendState::Factor::DestAlpha: return destAlpha;
-            case BlendState::Factor::InvDestAlpha: return 1.0F - destAlpha;
-            case BlendState::Factor::DestColor: return destColor;
-            case BlendState::Factor::InvDestColor: return 1.0F - destColor;
-            case BlendState::Factor::SrcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
-            case BlendState::Factor::BlendFactor: return blendFactor;
-            case BlendState::Factor::InvBlendFactor: return 1.0F - blendFactor;
+            case BlendState::Factor::zero: return 0.0F;
+            case BlendState::Factor::one: return 1.0F;
+            case BlendState::Factor::srcColor: return srcColor;
+            case BlendState::Factor::invSrcColor: return 1.0F - srcColor;
+            case BlendState::Factor::srcAlpha: return srcAlpha;
+            case BlendState::Factor::invSrcAlpha: return 1.0F - srcAlpha;
+            case BlendState::Factor::destAlpha: return destAlpha;
+            case BlendState::Factor::invDestAlpha: return 1.0F - destAlpha;
+            case BlendState::Factor::destColor: return destColor;
+            case BlendState::Factor::invDestColor: return 1.0F - destColor;
+            case BlendState::Factor::srcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
+            case BlendState::Factor::blendFactor: return blendFactor;
+            case BlendState::Factor::invBlendFactor: return 1.0F - blendFactor;
             default: throw RenderError("Invalid blend factor");
         }
     }
@@ -54,11 +54,11 @@ namespace sr
     {
         switch (operation)
         {
-            case BlendState::Operation::Add: return clamp(a + b, 0.0F, 1.0F);
-            case BlendState::Operation::Subtract: return clamp(a - b, 0.0F, 1.0F);
-            case BlendState::Operation::RevSubtract: return clamp(b - a, 0.0F, 1.0F);
-            case BlendState::Operation::Min: return std::min(a, b);
-            case BlendState::Operation::Max: return std::max(a, b);
+            case BlendState::Operation::add: return clamp(a + b, 0.0F, 1.0F);
+            case BlendState::Operation::subtract: return clamp(a - b, 0.0F, 1.0F);
+            case BlendState::Operation::reverseSubtract: return clamp(b - a, 0.0F, 1.0F);
+            case BlendState::Operation::min: return std::min(a, b);
+            case BlendState::Operation::max: return std::max(a, b);
             default: throw RenderError("Invalid blend operation");
         }
     }

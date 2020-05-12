@@ -15,20 +15,20 @@ namespace sr
     public:
         enum class AddressMode
         {
-            Clamp,
-            Repeat,
-            Mirror
+            clamp,
+            repeat,
+            mirror
         };
 
         enum class Filter
         {
-            Point,
-            Linear
+            point,
+            linear
         };
 
-        AddressMode addressModeX = AddressMode::Clamp;
-        AddressMode addressModeY = AddressMode::Clamp;
-        Filter filter = Filter::Point;
+        AddressMode addressModeX = AddressMode::clamp;
+        AddressMode addressModeY = AddressMode::clamp;
+        Filter filter = Filter::point;
     };
 }
 

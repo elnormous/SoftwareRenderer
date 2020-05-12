@@ -17,10 +17,10 @@ namespace sr
     public:
         enum class PixelFormat
         {
-            R8,
-            A8,
-            Rgba8,
-            Float32
+            r8,
+            a8,
+            rgba8,
+            float32
         };
 
         static constexpr float GAMMA = 2.2F;
@@ -29,19 +29,19 @@ namespace sr
         {
             switch (pixelFormat)
             {
-                case PixelFormat::R8:
-                case PixelFormat::A8:
+                case PixelFormat::r8:
+                case PixelFormat::a8:
                     return sizeof(std::uint8_t) * 1;
-                case PixelFormat::Rgba8:
+                case PixelFormat::rgba8:
                     return sizeof(std::uint8_t) * 4;
-                case PixelFormat::Float32:
+                case PixelFormat::float32:
                     return sizeof(float);
                 default:
                     return 0;
             }
         }
 
-        Texture(PixelFormat initPixelFormat = PixelFormat::Rgba8,
+        Texture(PixelFormat initPixelFormat = PixelFormat::rgba8,
                 std::uint32_t initWidth = 0,
                 std::uint32_t initHeight = 0,
                 bool initMipMaps = false):
@@ -143,22 +143,22 @@ namespace sr
 
             switch (pixelFormat)
             {
-                case Texture::PixelFormat::R8:
+                case Texture::PixelFormat::r8:
                 {
                     const std::uint8_t* r = &buffer[(y * width + x) * 1];
                     return sr::Color(*r, *r, *r, 255);
                 }
-                case Texture::PixelFormat::A8:
+                case Texture::PixelFormat::a8:
                 {
                     const std::uint8_t* a = &buffer[(y * width + x) * 1];
                     return sr::Color(0, 0, 0, *a);
                 }
-                case Texture::PixelFormat::Rgba8:
+                case Texture::PixelFormat::rgba8:
                 {
                     const std::uint8_t* rgba = &buffer[(y * width + x) * 4];
                     return sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
                 }
-                case Texture::PixelFormat::Float32:
+                case Texture::PixelFormat::float32:
                 {
                     float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
                     Color result;
@@ -199,17 +199,17 @@ namespace sr
 
                 switch (pixelFormat)
                 {
-                    case PixelFormat::Rgba8:
+                    case PixelFormat::rgba8:
                         imageRGBA8Downsample2x2(previousWidth, previousHeight, previousWidth * 4,
                                                 levels[level - 1].data(),
                                                 levels[level].data());
                         break;
-                    case PixelFormat::R8:
+                    case PixelFormat::r8:
                         imageR8Downsample2x2(previousWidth, previousHeight, previousWidth * 1,
                                              levels[level - 1].data(),
                                              levels[level].data());
                     break;
-                    case PixelFormat::A8:
+                    case PixelFormat::a8:
                         imageA8Downsample2x2(previousWidth, previousHeight, previousWidth * 1,
                                              levels[level - 1].data(),
                                              levels[level].data());
@@ -229,18 +229,18 @@ namespace sr
             if (sampler && !levels.empty())
             {
                 const float u =
-                    (sampler->addressModeX == Sampler::AddressMode::Clamp) ? clamp(coord.v[0], 0.0F, 1.0F) * (width - 1) :
-                    (sampler->addressModeX == Sampler::AddressMode::Repeat) ? std::fmod(coord.v[0], 1.0F) * (width - 1) :
-                    (sampler->addressModeX == Sampler::AddressMode::Mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::clamp) ? clamp(coord.v[0], 0.0F, 1.0F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::repeat) ? std::fmod(coord.v[0], 1.0F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1) :
                     0.0F;
 
                 const float v =
-                    (sampler->addressModeY == Sampler::AddressMode::Clamp) ? clamp(coord.v[1], 0.0F, 1.0F) * (height - 1) :
-                    (sampler->addressModeY == Sampler::AddressMode::Repeat) ? std::fmod(coord.v[1], 1.0F) * (height - 1) :
-                    (sampler->addressModeY == Sampler::AddressMode::Mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::clamp) ? clamp(coord.v[1], 0.0F, 1.0F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::repeat) ? std::fmod(coord.v[1], 1.0F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1) :
                     0.0F;
 
-                if (sampler->filter == Sampler::Filter::Point)
+                if (sampler->filter == Sampler::Filter::point)
                 {
                     const std::uint32_t textureX = static_cast<std::uint32_t>(std::round(u));
                     const std::uint32_t textureY = static_cast<std::uint32_t>(std::round(v));
