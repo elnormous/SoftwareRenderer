@@ -24,24 +24,24 @@ namespace sr
         }
 
         explicit Color(std::uint32_t color) noexcept:
-            r(static_cast<std::uint8_t>((color & 0xFF000000) >> 24) / 255.0F),
-            g(static_cast<std::uint8_t>((color & 0x00FF0000) >> 16) / 255.0F),
-            b(static_cast<std::uint8_t>((color & 0x0000FF00) >> 8) / 255.0F),
-            a(static_cast<std::uint8_t>(color & 0x000000FF) / 255.0F)
+            r(static_cast<std::uint8_t>((color & 0xFF000000U) >> 24) / 255.0F),
+            g(static_cast<std::uint8_t>((color & 0x00FF0000U) >> 16) / 255.0F),
+            b(static_cast<std::uint8_t>((color & 0x0000FF00U) >> 8) / 255.0F),
+            a(static_cast<std::uint8_t>(color & 0x000000FFU) / 255.0F)
         {
         }
 
         Color& operator=(std::uint32_t color) noexcept
         {
-            r = static_cast<std::uint8_t>((color & 0xFF000000) >> 24) / 255.0F;
-            g = static_cast<std::uint8_t>((color & 0x00FF0000) >> 16) / 255.0F;
-            b = static_cast<std::uint8_t>((color & 0x0000FF00) >> 8) / 255.0F;
-            a = static_cast<std::uint8_t>(color & 0x000000FF) / 255.0F;
+            r = static_cast<std::uint8_t>((color & 0xFF000000U) >> 24) / 255.0F;
+            g = static_cast<std::uint8_t>((color & 0x00FF0000U) >> 16) / 255.0F;
+            b = static_cast<std::uint8_t>((color & 0x0000FF00U) >> 8) / 255.0F;
+            a = static_cast<std::uint8_t>(color & 0x000000FFU) / 255.0F;
 
             return *this;
         }
 
-        Color(std::uint8_t red, std::uint8_t green, std::uint8_t blue, std::uint8_t alpha = 0xFF) noexcept:
+        Color(std::uint8_t red, std::uint8_t green, std::uint8_t blue, std::uint8_t alpha = 0xFFU) noexcept:
             r(red / 255.0F), g(green / 255.0F), b(blue / 255.0F), a(alpha / 255.0F)
         {
         }
