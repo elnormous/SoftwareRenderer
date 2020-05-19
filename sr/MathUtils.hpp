@@ -28,7 +28,7 @@ namespace sr
         s[1].v[1] = b.v[1] - a.v[1];
         s[1].v[2] = a.v[1] - p.v[1];
 
-        const Vector3F u = s[0].cross(s[1]);
+        const auto u = s[0].cross(s[1]);
 
         if (std::abs(u.v[2]) < std::numeric_limits<float>::min()) // degenerate triangle (all three points in a line)
             return Vector3F(-1.0F, 1.0F, 1.0F);

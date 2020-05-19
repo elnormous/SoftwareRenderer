@@ -124,14 +124,14 @@ namespace sr
 
             std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
-            const std::uint32_t rgba = color.getIntValueRaw();
+            const auto rgba = color.getIntValueRaw();
 
-            const std::uint32_t frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
+            const auto frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
             for (std::uint32_t p = 0; p < frameBufferSize; ++p)
                 frameBufferData[p] = rgba;
 
-            const std::uint32_t depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
+            const auto depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
 
             for (std::uint32_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
@@ -144,8 +144,8 @@ namespace sr
             if (!shader)
                 throw RenderError("No shader set");
 
-            std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
-            float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
+            auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
             for (std::uint32_t i = 0; i + 2 < indices.size(); i += 3)
             {
@@ -194,11 +194,11 @@ namespace sr
                 {
                     for (std::uint32_t screenX = static_cast<std::uint32_t>(boundingBox.min.v[0]); screenX <= static_cast<std::uint32_t>(boundingBox.max.v[0]); ++screenX)
                     {
-                        const Vector3F s = barycentric(viewportPositions[0],
-                                                       viewportPositions[1],
-                                                       viewportPositions[2],
-                                                       Vector2F(static_cast<float>(screenX),
-                                                                static_cast<float>(screenY)));
+                        const auto s = barycentric(viewportPositions[0],
+                                                   viewportPositions[1],
+                                                   viewportPositions[2],
+                                                   Vector2F(static_cast<float>(screenX),
+                                                            static_cast<float>(screenY)));
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
@@ -207,7 +207,7 @@ namespace sr
                                                      s.v[2] / vsOutputs[2].position.v[3]);
                             clip /= (clip.v[0] + clip.v[1] + clip.v[2]);
 
-                            const float depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
+                            const auto depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
 
                             if (depthState.read && depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] < depth)
                                 continue; // discard the pixel
@@ -230,11 +230,11 @@ namespace sr
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                            const Color srcColor = shader->fragmentShader(psInput, samplers, textures);
+                            const auto srcColor = shader->fragmentShader(psInput, samplers, textures);
 
                             if (blendState.enabled)
                             {
-                                const std::uint8_t* pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
+                                const auto pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
                                 Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                                 // alpha blend

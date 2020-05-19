@@ -69,9 +69,9 @@ namespace demo
     {
         render();
 
-        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
+        const auto& frameBuffer = renderTarget.getFrameBuffer();
 
-        const std::uint8_t* data = frameBuffer.getData().data();
+        const auto data = frameBuffer.getData().data();
         XImage* image = XCreateImage(display, visual, depth, ZPixmap, 0,
                                      const_cast<char*>(reinterpret_cast<const char*>(data)),
                                      frameBuffer.getWidth(), frameBuffer.getHeight(), 32, 0);

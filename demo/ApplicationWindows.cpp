@@ -95,7 +95,7 @@ namespace demo
     {
         render();
 
-        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
+        const auto& frameBuffer = renderTarget.getFrameBuffer();
 
         BITMAPINFO info;
         ZeroMemory(&info, sizeof(BITMAPINFO));

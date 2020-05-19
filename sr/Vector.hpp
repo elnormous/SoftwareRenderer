@@ -127,7 +127,7 @@ namespace sr
         T length() const noexcept
         {
             T l = 0;
-            for (const T& c : v)
+            for (const auto& c : v)
                 l += c * c;
             return std::sqrt(l);
         }
@@ -135,7 +135,7 @@ namespace sr
         T lengthSquared() const noexcept
         {
             T l = 0;
-            for (const T& c : v)
+            for (const auto& c : v)
                 l += c * c;
             return l;
         }
@@ -154,7 +154,7 @@ namespace sr
         void normalize() noexcept
         {
             T squared = T(0);
-            for (const T& c : v)
+            for (const auto& c : v)
                 squared += c * c;
 
             if (squared == T(1)) // already normalized
@@ -172,7 +172,7 @@ namespace sr
         Vector normalized() const noexcept
         {
             T squared = T(0);
-            for (const T& c : v)
+            for (const auto& c : v)
                 squared += c * c;
 
             if (squared == T(1)) // already normalized
@@ -313,7 +313,7 @@ namespace sr
 
         bool isZero() const noexcept
         {
-            for (const T& c : v)
+            for (const auto& c : v)
                 if (c != T(0)) return false;
             return true;
         }

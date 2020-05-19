@@ -65,7 +65,7 @@ namespace demo
     {
         render();
 
-        const sr::Texture& frameBuffer = renderTarget.getFrameBuffer();
+        const auto& frameBuffer = renderTarget.getFrameBuffer();
         bitmap->ImportBits(frameBuffer.getData().data(), frameBuffer.getWidth() * frameBuffer.getHeight() * 4,
                            frameBuffer.getWidth() * 4, 0, B_RGB32);
 
