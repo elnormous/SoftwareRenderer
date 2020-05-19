@@ -52,7 +52,6 @@
 		306944E72068655900C4969C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 		306A7D0C20B8D8F3002C47F1 /* MTL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTL.hpp; sourceTree = "<group>"; };
-		306A7D0D20B8D8F3002C47F1 /* Plane.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Plane.hpp; sourceTree = "<group>"; };
 		306A7D1020B8D8F4002C47F1 /* DepthState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DepthState.hpp; sourceTree = "<group>"; };
 		306A7D1120B8D8F4002C47F1 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		306A7D1320B8D8F4002C47F1 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
@@ -60,12 +59,10 @@
 		306A7D1720B8D8F4002C47F1 /* Sampler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sampler.hpp; sourceTree = "<group>"; };
 		306A7D1820B8D8F4002C47F1 /* RenderTarget.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderTarget.hpp; sourceTree = "<group>"; };
 		306A7D1920B8D8F4002C47F1 /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
-		306A7D1A20B8D8F4002C47F1 /* Box.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Box.hpp; sourceTree = "<group>"; };
 		306A7D1B20B8D8F4002C47F1 /* OBJ.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OBJ.hpp; sourceTree = "<group>"; };
 		306A7D1C20B8D8F5002C47F1 /* BlendState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlendState.hpp; sourceTree = "<group>"; };
 		306A7D1D20B8D8F5002C47F1 /* sr.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sr.hpp; sourceTree = "<group>"; };
 		306A7D1E20B8D8F5002C47F1 /* MathUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MathUtils.hpp; sourceTree = "<group>"; };
-		306A7D1F20B8D8F5002C47F1 /* ConvexVolume.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConvexVolume.hpp; sourceTree = "<group>"; };
 		306A7D2020B8D8F5002C47F1 /* Size.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Size.hpp; sourceTree = "<group>"; };
 		306A7D2120B8D8F5002C47F1 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
 		306A7D2220B8D8F5002C47F1 /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
@@ -190,14 +187,11 @@
 			isa = PBXGroup;
 			children = (
 				306A7D1C20B8D8F5002C47F1 /* BlendState.hpp */,
-				306A7D1A20B8D8F4002C47F1 /* Box.hpp */,
 				306A7D2420B8D8F5002C47F1 /* Color.hpp */,
 				306A7D1320B8D8F4002C47F1 /* Constants.hpp */,
-				306A7D1F20B8D8F5002C47F1 /* ConvexVolume.hpp */,
 				306A7D1020B8D8F4002C47F1 /* DepthState.hpp */,
 				306A7D1E20B8D8F5002C47F1 /* MathUtils.hpp */,
 				306A7D2220B8D8F5002C47F1 /* Matrix.hpp */,
-				306A7D0D20B8D8F3002C47F1 /* Plane.hpp */,
 				306A7D2320B8D8F5002C47F1 /* Quaternion.hpp */,
 				306A7D2520B8D8F5002C47F1 /* Rect.hpp */,
 				306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */,

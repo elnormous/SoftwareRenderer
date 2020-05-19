@@ -6,14 +6,11 @@
 #define SR_H
 
 #include "BlendState.hpp"
-#include "Box.hpp"
 #include "Constants.hpp"
 #include "Color.hpp"
-#include "ConvexVolume.hpp"
 #include "DepthState.hpp"
 #include "MathUtils.hpp"
 #include "Matrix.hpp"
-#include "Plane.hpp"
 #include "Quaternion.hpp"
 #include "Rect.hpp"
 #include "Renderer.hpp"

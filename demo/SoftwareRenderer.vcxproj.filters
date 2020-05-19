@@ -36,9 +36,6 @@
     <ClInclude Include="OBJ.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Plane.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Quaternion.hpp">
       <Filter>sr</Filter>
     </ClInclude>
@@ -78,16 +75,10 @@
     <ClInclude Include="BMP.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Box.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Color.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\Constants.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sr\ConvexVolume.hpp">
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="..\sr\DepthState.hpp">

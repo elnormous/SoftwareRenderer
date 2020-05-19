@@ -20,14 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sr\BlendState.hpp" />
-    <ClInclude Include="..\sr\Box.hpp" />
     <ClInclude Include="..\sr\Color.hpp" />
     <ClInclude Include="..\sr\Constants.hpp" />
-    <ClInclude Include="..\sr\ConvexVolume.hpp" />
     <ClInclude Include="..\sr\DepthState.hpp" />
     <ClInclude Include="..\sr\MathUtils.hpp" />
     <ClInclude Include="..\sr\Matrix.hpp" />
-    <ClInclude Include="..\sr\Plane.hpp" />
     <ClInclude Include="..\sr\Quaternion.hpp" />
     <ClInclude Include="..\sr\Rect.hpp" />
     <ClInclude Include="..\sr\Renderer.hpp" />

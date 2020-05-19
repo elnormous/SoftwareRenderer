@@ -171,7 +171,9 @@ namespace sr
                     Vector2F(ndcPositions[2].v[0], ndcPositions[2].v[1])
                 };
 
-                Box2F boundingBox;
+                Vector2F screenMin;
+                Vector2F screenMax;
+
                 for (sr::Vector2F& viewportPosition : viewportPositions)
                 {
                     // transform to viewport coordinates
@@ -179,20 +181,20 @@ namespace sr
                     viewportPosition.v[1] = viewportPosition.v[1] * viewport.size.v[1] / 2.0F + viewport.position.v[1] + viewport.size.v[1] / 2.0F;  // yndc * height / 2 + y + height / 2
                     //viewportPosition.v[2] = viewportPosition.v[2] * (1.0F - 0.0F) / 2.0F + (1.0F + 0.0F) / 2.0F; // zndc * (far - near) / 2 + (far + near) / 2
 
-                    if (viewportPosition.v[0] < boundingBox.min.v[0]) boundingBox.min.v[0] = viewportPosition.v[0];
-                    if (viewportPosition.v[0] > boundingBox.max.v[0]) boundingBox.max.v[0] = viewportPosition.v[0];
-                    if (viewportPosition.v[1] < boundingBox.min.v[1]) boundingBox.min.v[1] = viewportPosition.v[1];
-                    if (viewportPosition.v[1] > boundingBox.max.v[1]) boundingBox.max.v[1] = viewportPosition.v[1];
+                    if (viewportPosition.v[0] < screenMin.v[0]) screenMin.v[0] = viewportPosition.v[0];
+                    if (viewportPosition.v[0] > screenMax.v[0]) screenMax.v[0] = viewportPosition.v[0];
+                    if (viewportPosition.v[1] < screenMin.v[1]) screenMin.v[1] = viewportPosition.v[1];
+                    if (viewportPosition.v[1] > screenMax.v[1]) screenMax.v[1] = viewportPosition.v[1];
                 }
 
-                boundingBox.min.v[0] = clamp(boundingBox.min.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
-                boundingBox.max.v[0] = clamp(boundingBox.max.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
-                boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
-                boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
+                screenMin.v[0] = clamp(screenMin.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
+                screenMax.v[0] = clamp(screenMax.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
+                screenMin.v[1] = clamp(screenMin.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
+                screenMax.v[1] = clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
-                for (std::size_t screenY = static_cast<std::size_t>(boundingBox.min.v[1]); screenY <= static_cast<std::size_t>(boundingBox.max.v[1]); ++screenY)
+                for (std::size_t screenY = static_cast<std::size_t>(screenMin.v[1]); screenY <= static_cast<std::size_t>(screenMax.v[1]); ++screenY)
                 {
-                    for (std::size_t screenX = static_cast<std::size_t>(boundingBox.min.v[0]); screenX <= static_cast<std::size_t>(boundingBox.max.v[0]); ++screenX)
+                    for (std::size_t screenX = static_cast<std::size_t>(screenMin.v[0]); screenX <= static_cast<std::size_t>(screenMax.v[0]); ++screenX)
                     {
                         const auto s = barycentric(viewportPositions[0],
                                                    viewportPositions[1],

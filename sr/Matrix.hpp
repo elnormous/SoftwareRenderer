@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
-#include "ConvexVolume.hpp"
-#include "Plane.hpp"
 #include "Quaternion.hpp"
 #include "Vector.hpp"
 
@@ -367,55 +365,6 @@ namespace sr
             m[12] = x;
             m[13] = y;
             m[14] = z;
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumLeftPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumRightPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumBottomPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumTopPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumNearPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Plane<T> getFrustumFarPlane() const noexcept
-        {
-            return Plane<T>::makeFrustumPlane(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        ConvexVolume<T> getFrustum() const noexcept
-        {
-            return ConvexVolume<T>({
-                getFrustumLeftPlane(),
-                getFrustumRightPlane(),
-                getFrustumBottomPlane(),
-                getFrustumTopPlane(),
-                getFrustumNearPlane(),
-                getFrustumFarPlane()
-            });
         }
 
         void add(const T scalar) noexcept
