@@ -122,18 +122,18 @@ namespace sr
             if (!renderTarget)
                 throw RenderError("No render target set");
 
-            std::uint32_t* frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
-            float* depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
+            auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
             const auto rgba = color.getIntValueRaw();
 
             const auto frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
 
-            for (std::uint32_t p = 0; p < frameBufferSize; ++p)
+            for (std::size_t p = 0; p < frameBufferSize; ++p)
                 frameBufferData[p] = rgba;
 
             const auto depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
 
-            for (std::uint32_t p = 0; p < depthBufferSize; ++p)
+            for (std::size_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
         }
 
@@ -147,7 +147,7 @@ namespace sr
             auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
             auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
-            for (std::uint32_t i = 0; i + 2 < indices.size(); i += 3)
+            for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
             {
                 const Shader::VSOutput vsOutputs[3] = {
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
@@ -190,9 +190,9 @@ namespace sr
                 boundingBox.min.v[1] = clamp(boundingBox.min.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
                 boundingBox.max.v[1] = clamp(boundingBox.max.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
-                for (std::uint32_t screenY = static_cast<std::uint32_t>(boundingBox.min.v[1]); screenY <= static_cast<std::uint32_t>(boundingBox.max.v[1]); ++screenY)
+                for (std::size_t screenY = static_cast<std::size_t>(boundingBox.min.v[1]); screenY <= static_cast<std::size_t>(boundingBox.max.v[1]); ++screenY)
                 {
-                    for (std::uint32_t screenX = static_cast<std::uint32_t>(boundingBox.min.v[0]); screenX <= static_cast<std::uint32_t>(boundingBox.max.v[0]); ++screenX)
+                    for (std::size_t screenX = static_cast<std::size_t>(boundingBox.min.v[0]); screenX <= static_cast<std::size_t>(boundingBox.max.v[0]); ++screenX)
                     {
                         const auto s = barycentric(viewportPositions[0],
                                                    viewportPositions[1],

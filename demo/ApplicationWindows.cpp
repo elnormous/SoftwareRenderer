@@ -100,17 +100,23 @@ namespace demo
         BITMAPINFO info;
         ZeroMemory(&info, sizeof(BITMAPINFO));
         info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-        info.bmiHeader.biWidth = frameBuffer.getWidth();
-        info.bmiHeader.biHeight = -static_cast<int>(frameBuffer.getHeight());
+        info.bmiHeader.biWidth = static_cast<LONG>(frameBuffer.getWidth());
+        info.bmiHeader.biHeight = -static_cast<LONG>(frameBuffer.getHeight());
         info.bmiHeader.biPlanes = 1;
         info.bmiHeader.biBitCount = 32;
         info.bmiHeader.biCompression = BI_RGB;
-        info.bmiHeader.biSizeImage = frameBuffer.getWidth() * frameBuffer.getHeight() * 4;
+        info.bmiHeader.biSizeImage = static_cast<DWORD>(frameBuffer.getWidth() * frameBuffer.getHeight() * 4);
 
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(window, &ps);
 
-        SetDIBitsToDevice(hdc, 0, 0, frameBuffer.getWidth(), frameBuffer.getHeight(), 0, 0, 0, frameBuffer.getHeight(), frameBuffer.getData().data(), &info, DIB_RGB_COLORS);
+        SetDIBitsToDevice(hdc, 0, 0,
+                          static_cast<DWORD>(frameBuffer.getWidth()),
+                          static_cast<DWORD>(frameBuffer.getHeight()),
+                          0, 0, 0,
+                          static_cast<UINT>(frameBuffer.getHeight()),
+                          frameBuffer.getData().data(),
+                          &info, DIB_RGB_COLORS);
 
         EndPaint(window, &ps);
     }

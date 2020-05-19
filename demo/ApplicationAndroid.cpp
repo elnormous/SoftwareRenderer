@@ -91,8 +91,8 @@ namespace demo
 
     void ApplicationAndroid::onSizeChanged(jint newWidth, jint newHeight)
     {
-        width = static_cast<std::uint32_t>(newWidth);
-        height = static_cast<std::uint32_t>(newHeight);
+        width = static_cast<std::size_t>(newWidth);
+        height = static_cast<std::size_t>(newHeight);
 
         onResize();
     }

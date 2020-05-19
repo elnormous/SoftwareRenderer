@@ -42,8 +42,8 @@ namespace sr
         }
 
         Texture(PixelFormat initPixelFormat = PixelFormat::rgba8,
-                std::uint32_t initWidth = 0,
-                std::uint32_t initHeight = 0,
+                std::size_t initWidth = 0,
+                std::size_t initHeight = 0,
                 bool initMipMaps = false):
             pixelFormat(initPixelFormat),
             width(initWidth),
@@ -58,8 +58,8 @@ namespace sr
 
                 if (mipMaps)
                 {
-                    std::uint32_t newWidth = width;
-                    std::uint32_t newHeight = height;
+                    std::size_t newWidth = width;
+                    std::size_t newHeight = height;
 
                     while (newWidth > 1 || newHeight > 1)
                     {
@@ -75,7 +75,7 @@ namespace sr
             }
         }
 
-        void resize(std::uint32_t newWidth, std::uint32_t newHeight)
+        void resize(std::size_t newWidth, std::size_t newHeight)
         {
             width = newWidth;
             height = newHeight;
@@ -106,8 +106,8 @@ namespace sr
         }
 
         PixelFormat getPixelFormat() const noexcept { return pixelFormat; }
-        std::uint32_t getWidth() const noexcept { return width; }
-        std::uint32_t getHeight() const noexcept { return height; }
+        std::size_t getWidth() const noexcept { return width; }
+        std::size_t getHeight() const noexcept { return height; }
 
         std::size_t getLevelCount() const noexcept
         {
@@ -137,7 +137,7 @@ namespace sr
             levels[level] = buffer;
         }
 
-        Color getPixel(std::uint32_t x, std::uint32_t y, std::uint32_t level) const
+        Color getPixel(std::size_t x, std::size_t y, std::uint32_t level) const
         {
             const auto& buffer = levels[level];
 
@@ -242,21 +242,21 @@ namespace sr
 
                 if (sampler->filter == Sampler::Filter::point)
                 {
-                    const auto textureX = static_cast<std::uint32_t>(std::round(u));
-                    const auto textureY = static_cast<std::uint32_t>(std::round(v));
+                    const auto textureX = static_cast<std::size_t>(std::round(u));
+                    const auto textureY = static_cast<std::size_t>(std::round(v));
                     return getPixel(textureX, textureY, 0);
                 }
                 else
                 {
-                    auto textureX0 = static_cast<std::uint32_t>(u - 0.5F);
+                    auto textureX0 = static_cast<std::size_t>(u - 0.5F);
                     auto textureX1 = textureX0 + 1;
-                    auto textureY0 = static_cast<std::uint32_t>(v - 0.5F);
+                    auto textureY0 = static_cast<std::size_t>(v - 0.5F);
                     auto textureY1 = textureY0 + 1;
 
-                    textureX0 = clamp(textureX0, 0U, width - 1);
-                    textureX1 = clamp(textureX1, 0U, width - 1);
-                    textureY0 = clamp(textureY0, 0U, height - 1);
-                    textureY1 = clamp(textureY1, 0U, height - 1);
+                    textureX0 = clamp(textureX0, static_cast<std::size_t>(0U), width - 1);
+                    textureX1 = clamp(textureX1, static_cast<std::size_t>(0U), width - 1);
+                    textureY0 = clamp(textureY0, static_cast<std::size_t>(0U), height - 1);
+                    textureY1 = clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
 
                     // TODO: calculate mip level
                     Color color[4] = {
@@ -284,20 +284,20 @@ namespace sr
         }
 
     private:
-        static void imageA8Downsample2x2(std::uint32_t width, std::uint32_t height, std::uint32_t pitch, const std::uint8_t* src, std::uint8_t* dst)
+        static void imageA8Downsample2x2(std::size_t width, std::size_t height, std::size_t pitch, const std::uint8_t* src, std::uint8_t* dst)
         {
             const auto dstWidth  = width >> 1;
             const auto dstHeight = height >> 1;
 
             if (dstWidth > 0 && dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
 
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep)
                 {
                     const auto* pixel = src;
-                    for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
+                    for (std::size_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                     {
                         float a = 0.0F;
                         a += pixel[0];
@@ -311,8 +311,8 @@ namespace sr
             }
             else if (dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
 
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep, dst += 1)
                 {
@@ -328,7 +328,7 @@ namespace sr
             else if (dstWidth > 0)
             {
                 const auto* pixel = src;
-                for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
+                for (std::size_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                 {
                     float a = 0.0F;
                     a += pixel[0];
@@ -339,20 +339,20 @@ namespace sr
             }
         }
 
-        static void imageR8Downsample2x2(std::uint32_t width, std::uint32_t height, std::uint32_t pitch, const std::uint8_t* src, std::uint8_t* dst)
+        static void imageR8Downsample2x2(std::size_t width, std::size_t height, std::size_t pitch, const std::uint8_t* src, std::uint8_t* dst)
         {
             const auto dstWidth  = width >> 1;
             const auto dstHeight = height >> 1;
 
             if (dstWidth > 0 && dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
 
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep)
                 {
                     const auto* pixel = src;
-                    for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
+                    for (std::size_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                     {
                         float r = 0.0F;
                         r += std::pow(pixel[0] / 255.0F, GAMMA);
@@ -366,8 +366,8 @@ namespace sr
             }
             else if (dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
 
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep, dst += 1)
                 {
@@ -383,7 +383,7 @@ namespace sr
             else if (dstWidth > 0)
             {
                 const auto* pixel = src;
-                for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
+                for (std::size_t x = 0; x < dstWidth; ++x, pixel += 2, dst += 1)
                 {
                     float r = 0.0F;
                     r += std::pow(pixel[0] / 255.0F, GAMMA);
@@ -394,19 +394,19 @@ namespace sr
             }
         }
 
-        static void imageRGBA8Downsample2x2(std::uint32_t width, std::uint32_t height, std::uint32_t pitch, const std::uint8_t* src, std::uint8_t* dst)
+        static void imageRGBA8Downsample2x2(std::size_t width, std::size_t height, std::size_t pitch, const std::uint8_t* src, std::uint8_t* dst)
         {
             const auto dstWidth  = width >> 1;
             const auto dstHeight = height >> 1;
 
             if (dstWidth > 0 && dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep)
                 {
                     const auto* pixel = src;
-                    for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 8, dst += 4)
+                    for (std::size_t x = 0; x < dstWidth; ++x, pixel += 8, dst += 4)
                     {
                         float pixels = 0.0F;
                         float r = 0.0F;
@@ -473,8 +473,8 @@ namespace sr
             }
             else if (dstHeight > 0)
             {
-                std::uint32_t y;
-                std::uint32_t ystep;
+                std::size_t y;
+                std::size_t ystep;
 
                 for (y = 0, ystep = pitch * 2; y < dstHeight; ++y, src += ystep, dst += 4)
                 {
@@ -527,7 +527,7 @@ namespace sr
             else if (dstWidth > 0)
             {
                 const auto* pixel = src;
-                for (std::uint32_t x = 0; x < dstWidth; ++x, pixel += 8, dst += 4)
+                for (std::size_t x = 0; x < dstWidth; ++x, pixel += 8, dst += 4)
                 {
                     float pixels = 0.0F;
                     float r = 0.0F;
@@ -576,8 +576,8 @@ namespace sr
         }
 
         PixelFormat pixelFormat;
-        std::uint32_t width = 0;
-        std::uint32_t height = 0;
+        std::size_t width = 0;
+        std::size_t height = 0;
         bool mipMaps = false;
         std::vector<std::vector<std::uint8_t>> levels;
         std::uint32_t minLOD = 0;

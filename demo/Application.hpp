@@ -32,8 +32,8 @@ namespace demo
     protected:
         void onResize();
 
-        std::uint32_t width;
-        std::uint32_t height;
+        std::size_t width;
+        std::size_t height;
 
         sr::Matrix4F projection;
         sr::Matrix4F view;

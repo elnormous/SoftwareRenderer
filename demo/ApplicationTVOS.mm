@@ -176,8 +176,8 @@ namespace demo
 
         CGRect windowFrame = [window bounds];
 
-        width = static_cast<std::uint32_t>(windowFrame.size.width * screen.scale);
-        height = static_cast<std::uint32_t>(windowFrame.size.height * screen.scale);
+        width = static_cast<std::size_t>(windowFrame.size.width * screen.scale);
+        height = static_cast<std::size_t>(windowFrame.size.height * screen.scale);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
         content.contentScaleFactor = screen.scale;
@@ -225,8 +225,8 @@ namespace demo
 
     void ApplicationTVOS::didResize(CGFloat newWidth, CGFloat newHeight)
     {
-        width = static_cast<std::uint32_t>(newWidth * screen.scale);
-        height = static_cast<std::uint32_t>(newHeight * screen.scale);
+        width = static_cast<std::size_t>(newWidth * screen.scale);
+        height = static_cast<std::size_t>(newHeight * screen.scale);
 
         CGDataProviderRelease(provider);
 

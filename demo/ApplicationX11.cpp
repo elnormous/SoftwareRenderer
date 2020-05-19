@@ -24,8 +24,8 @@ namespace demo
         visual = DefaultVisual(display, screenIndex);
         depth = DefaultDepth(display, screenIndex);
 
-        width = static_cast<std::uint32_t>(XWidthOfScreen(screen) * 0.6F);
-        height = static_cast<std::uint32_t>(XHeightOfScreen(screen) * 0.6F);
+        width = static_cast<std::size_t>(XWidthOfScreen(screen) * 0.6F);
+        height = static_cast<std::size_t>(XHeightOfScreen(screen) * 0.6F);
 
         XSetWindowAttributes swa;
         swa.background_pixel = XWhitePixel(display, screenIndex);
@@ -84,8 +84,8 @@ namespace demo
 
     void ApplicationX11::didResize(int newWidth, int newHeight)
     {
-        width = static_cast<std::uint32_t>(newWidth);
-        height = static_cast<std::uint32_t>(newHeight);
+        width = static_cast<std::size_t>(newWidth);
+        height = static_cast<std::size_t>(newHeight);
 
         onResize();
     }

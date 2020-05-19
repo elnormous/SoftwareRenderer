@@ -12,13 +12,13 @@ namespace sr
     class RenderTarget final
     {
     public:
-        RenderTarget(std::uint32_t width = 0, std::uint32_t height = 0):
+        RenderTarget(std::size_t width = 0, std::size_t height = 0):
             frameBuffer(Texture::PixelFormat::rgba8, width, height),
             depthBuffer(Texture::PixelFormat::float32, width, height)
         {
         }
 
-        void resize(std::uint32_t newWidth, std::uint32_t newHeight)
+        void resize(std::size_t newWidth, std::size_t newHeight)
         {
             frameBuffer.resize(newWidth, newHeight);
             depthBuffer.resize(newWidth, newHeight);

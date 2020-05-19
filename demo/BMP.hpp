@@ -169,20 +169,20 @@ namespace sr
                                infoHeader.biBitCount / 8);
             }
 
-            width = static_cast<std::uint32_t>(infoHeader.biWidth);
-            height = static_cast<std::uint32_t>(std::abs(infoHeader.biHeight));
+            width = static_cast<std::size_t>(infoHeader.biWidth);
+            height = static_cast<std::size_t>(std::abs(infoHeader.biHeight));
         }
 
-        std::uint32_t getWidth() const noexcept { return width; }
-        std::uint32_t getHeight() const noexcept { return height; }
+        std::size_t getWidth() const noexcept { return width; }
+        std::size_t getHeight() const noexcept { return height; }
 
         const std::vector<std::uint8_t>& getData() const noexcept
         {
             return data;
         }
 
-        void setData(std::uint32_t newWidth,
-                     std::uint32_t newHeight,
+        void setData(std::size_t newWidth,
+                     std::size_t newHeight,
                      const std::vector<std::uint8_t>& newData)
         {
             width = newWidth;
@@ -196,7 +196,7 @@ namespace sr
 
             BitmapFileHeader header;
             header.bfType = BITMAPFILEHEADER_TYPE_BM;
-            header.bfSize = width  * height * 4 + 14 + 40;
+            header.bfSize = static_cast<unsigned int>(width  * height * 4 + 14 + 40);
             header.bfReserved1 = 0;
             header.bfReserved2 = 0;
             header.bfOffBits = 14 + 40; // size of BITMAPFILEHEADER + size of BITMAPINFOHEADER
@@ -232,12 +232,12 @@ namespace sr
             f.write(reinterpret_cast<const char*>(&infoHeader.biClrUsed), sizeof(infoHeader.biClrUsed));
             f.write(reinterpret_cast<const char*>(&infoHeader.biClrImportant), sizeof(infoHeader.biClrImportant));
 
-            f.write(reinterpret_cast<const char*>(data.data()), static_cast<std::uint32_t>(data.size()));
+            f.write(reinterpret_cast<const char*>(data.data()), data.size());
         }
 
     private:
-        std::uint32_t width = 0;
-        std::uint32_t height = 0;
+        std::size_t width = 0;
+        std::size_t height = 0;
         std::vector<std::uint8_t> data;
     };
 }
