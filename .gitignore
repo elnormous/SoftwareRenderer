@@ -4,12 +4,14 @@ demo/SoftwareRenderer.xcodeproj/xcshareddata
 demo/SoftwareRenderer.xcodeproj/xcuserdata
 *.opendb
 *.db
-x64/
+demo/x64
+demo/Win32
 *.d
 *.o
 demo/SoftwareRenderer
 demo/SoftwareRenderer.app
 .project
+*.vcxproj.user
 demo/.gradle
 demo/.settings
 demo/app/.externalNativeBuild
