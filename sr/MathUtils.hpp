@@ -16,7 +16,7 @@ namespace sr
         return (x < lo) ? lo : ((x > hi) ? hi : x);
     }
 
-    inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p)
+    inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p) noexcept
     {
         Vector3F s[2];
 

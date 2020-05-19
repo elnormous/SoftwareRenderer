@@ -24,7 +24,7 @@ namespace sr
         }
 
         template<std::size_t N, typename std::enable_if<N>= 3>::type* = nullptr>
-        inline bool isPointInside(const Vector<N, T>& position) const noexcept
+        bool isPointInside(const Vector<N, T>& position) const noexcept
         {
             for (const Plane<T>& plane : planes)
                 if (plane.dot(position) < T(0))
@@ -34,7 +34,7 @@ namespace sr
         }
 
         template<std::size_t N, typename std::enable_if<N>= 3>::type* = nullptr>
-        inline bool isSphereInside(const Vector<N, T>& position, const T radius) const noexcept
+        bool isSphereInside(const Vector<N, T>& position, const T radius) const noexcept
         {
             for (const Plane<T>& plane : planes)
                 if (plane.dot(position) < -radius)

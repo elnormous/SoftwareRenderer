@@ -54,7 +54,7 @@ namespace sr
         {
         }
 
-        inline std::uint32_t getIntValue() const noexcept
+        std::uint32_t getIntValue() const noexcept
         {
             return (static_cast<std::uint32_t>(r * 255.0F) << 24) |
                    (static_cast<std::uint32_t>(g * 255.0F) << 16) |
@@ -62,7 +62,7 @@ namespace sr
                    static_cast<std::uint32_t>(a * 255.0F);
         }
 
-        inline std::uint32_t getIntValueRaw() const noexcept
+        std::uint32_t getIntValueRaw() const noexcept
         {
             std::uint32_t result;
             std::uint8_t* bytes = reinterpret_cast<std::uint8_t*>(&result);

@@ -173,10 +173,10 @@ namespace sr
             height = static_cast<std::uint32_t>(std::abs(infoHeader.biHeight));
         }
 
-        inline std::uint32_t getWidth() const { return width; }
-        inline std::uint32_t getHeight() const { return height; }
+        std::uint32_t getWidth() const noexcept { return width; }
+        std::uint32_t getHeight() const noexcept { return height; }
 
-        const std::vector<std::uint8_t>& getData() const
+        const std::vector<std::uint8_t>& getData() const noexcept
         {
             return data;
         }

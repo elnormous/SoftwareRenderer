@@ -370,37 +370,37 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumLeftPlane() const noexcept
+        Plane<T> getFrustumLeftPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumRightPlane() const noexcept
+        Plane<T> getFrustumRightPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumBottomPlane() const noexcept
+        Plane<T> getFrustumBottomPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumTopPlane() const noexcept
+        Plane<T> getFrustumTopPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumNearPlane() const noexcept
+        Plane<T> getFrustumNearPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Plane<T> getFrustumFarPlane() const noexcept
+        Plane<T> getFrustumFarPlane() const noexcept
         {
             return Plane<T>::makeFrustumPlane(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14]);
         }
@@ -508,37 +508,37 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getUpVector() const noexcept
+        Vector<3, T> getUpVector() const noexcept
         {
             return Vector<3, T>(m[4], m[5], m[6]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getDownVector() const noexcept
+        Vector<3, T> getDownVector() const noexcept
         {
             return Vector<3, T>(-m[4], -m[5], -m[6]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getLeftVector() const noexcept
+        Vector<3, T> getLeftVector() const noexcept
         {
             return Vector<3, T>(-m[0], -m[1], -m[2]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getRightVector() const noexcept
+        Vector<3, T> getRightVector() const noexcept
         {
             return Vector<3, T>(m[0], m[1], m[2]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getForwardVector() const noexcept
+        Vector<3, T> getForwardVector() const noexcept
         {
             return Vector<3, T>(-m[8], -m[9], -m[10]);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline Vector<3, T> getBackVector() const noexcept
+        Vector<3, T> getBackVector() const noexcept
         {
             return Vector<3, T>(m[8], m[9], m[10]);
         }
@@ -594,7 +594,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == Y)>::type* = nullptr>
-        inline bool isIdentity() const noexcept
+        bool isIdentity() const noexcept
         {
             for (std::size_t r = 0; r < R; ++r)
                 for (std::size_t c = 0; c < C; ++c)
@@ -686,14 +686,14 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == Y)>::type* = nullptr>
-        inline void setIdentity() noexcept
+        void setIdentity() noexcept
         {
             for (std::size_t r = 0; r < R; ++r)
                 for (std::size_t c = 0; c < C; ++c)
                     m[r * C + c] = static_cast<T>(r == c ? T(1) : T(0));
         }
 
-        inline void setZero() noexcept
+        void setZero() noexcept
         {
             for (T& c : m)
                 c = T(0);
@@ -856,53 +856,53 @@ namespace sr
             return result;
         }
 
-        inline const Matrix operator+(const Matrix& matrix) const noexcept
+        const Matrix operator+(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.add(matrix, result);
             return result;
         }
 
-        inline Matrix& operator+=(const Matrix& matrix) noexcept
+        Matrix& operator+=(const Matrix& matrix) noexcept
         {
             add(matrix);
             return *this;
         }
 
-        inline const Matrix operator-(const Matrix& matrix) const noexcept
+        const Matrix operator-(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.subtract(matrix, result);
             return result;
         }
 
-        inline Matrix& operator-=(const Matrix& matrix) noexcept
+        Matrix& operator-=(const Matrix& matrix) noexcept
         {
             subtract(matrix);
             return *this;
         }
 
-        inline const Matrix operator-() const noexcept
+        const Matrix operator-() const noexcept
         {
             Matrix result(*this);
             negate(result);
             return result;
         }
 
-        inline const Matrix operator*(const Matrix& matrix) const noexcept
+        const Matrix operator*(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.multiply(matrix, result);
             return result;
         }
 
-        inline Matrix& operator*=(const Matrix& matrix) noexcept
+        Matrix& operator*=(const Matrix& matrix) noexcept
         {
             multiply(matrix);
             return *this;
         }
 
-        inline bool operator==(const Matrix& matrix) const noexcept
+        bool operator==(const Matrix& matrix) const noexcept
         {
             for (std::size_t i = 0; i < C * R; ++i)
                 if (m[i] != matrix.m[i])
@@ -911,7 +911,7 @@ namespace sr
             return true;
         }
 
-        inline bool operator!=(const Matrix& matrix) const noexcept
+        bool operator!=(const Matrix& matrix) const noexcept
         {
             for (std::size_t i = 0; i < C * R; ++i)
                 if (m[i] != matrix.m[i])
@@ -921,7 +921,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline const Vector<3, T> operator*(const Vector<3, T>& v) const noexcept
+        const Vector<3, T> operator*(const Vector<3, T>& v) const noexcept
         {
             Vector<3, T> x;
             transformVector(v, x);
@@ -929,7 +929,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        inline const Vector<4, T> operator*(const Vector<4, T>& v) const noexcept
+        const Vector<4, T> operator*(const Vector<4, T>& v) const noexcept
         {
             Vector<4, T> x;
             transformVector(v, x);

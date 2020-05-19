@@ -32,41 +32,41 @@ namespace sr
                 v[i] = vec.v[i];
         }
 
-        inline T& operator[](std::size_t index) noexcept { return v[index]; }
+        T& operator[](std::size_t index) noexcept { return v[index]; }
         constexpr T operator[](std::size_t index) const noexcept { return v[index]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 1)>::type* = nullptr>
-        inline T& x() noexcept { return v[0]; }
+        T& x() noexcept { return v[0]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 1)>::type* = nullptr>
         constexpr T x() const noexcept { return v[0]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 2)>::type* = nullptr>
-        inline T& y() noexcept { return v[1]; }
+        T& y() noexcept { return v[1]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 2)>::type* = nullptr>
         constexpr T y() const noexcept { return v[1]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 3)>::type* = nullptr>
-        inline T& z() noexcept { return v[2]; }
+        T& z() noexcept { return v[2]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 3)>::type* = nullptr>
         constexpr T z() const noexcept { return v[2]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 4)>::type* = nullptr>
-        inline T& w() noexcept { return v[3]; }
+        T& w() noexcept { return v[3]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 4)>::type* = nullptr>
         constexpr T w() const noexcept { return v[3]; }
 
         template <std::size_t X = N, typename std::enable_if<(X == 2)>::type* = nullptr>
-        inline T getAngle() const noexcept
+        T getAngle() const noexcept
         {
             return std::atan2(v[1], v[0]);
         }
 
         template <std::size_t X = N, typename std::enable_if<(X == 3)>::type* = nullptr>
-        inline T getAngle(const Vector& axis) const noexcept
+        T getAngle(const Vector& axis) const noexcept
         {
             constexpr T dx = axis.v[0] - v[0] - v[1] * axis.v[2] + v[2] * axis.v[1];
             constexpr T dy = axis.v[1] - v[1] - v[2] * axis.v[0] + v[0] * axis.v[2];
@@ -76,7 +76,7 @@ namespace sr
         }
 
         template <std::size_t X = N, typename std::enable_if<(X == 4)>::type* = nullptr>
-        inline T getAngle(const Vector& axis) const noexcept
+        T getAngle(const Vector& axis) const noexcept
         {
             constexpr T dx = v[3] * axis.v[0] - v[0] * axis.v[3] - v[1] * axis.v[2] + v[2] * axis.v[1];
             constexpr T dy = v[3] * axis.v[1] - v[1] * axis.v[3] - v[2] * axis.v[0] + v[0] * axis.v[2];
@@ -100,7 +100,7 @@ namespace sr
                           (v[0] * vec.v[1]) - (v[1] * vec.v[0]));
         }
 
-        inline T distance(const Vector& vec) const noexcept
+        T distance(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -108,7 +108,7 @@ namespace sr
             return std::sqrt(d);
         }
 
-        inline T distanceSquared(const Vector& vec) const noexcept
+        T distanceSquared(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -116,7 +116,7 @@ namespace sr
             return d;
         }
 
-        inline T dot(const Vector& vec) const noexcept
+        T dot(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -124,7 +124,7 @@ namespace sr
             return d;
         }
 
-        inline T length() const noexcept
+        T length() const noexcept
         {
             T l = 0;
             for (const T& c : v)
@@ -132,7 +132,7 @@ namespace sr
             return std::sqrt(l);
         }
 
-        inline T lengthSquared() const noexcept
+        T lengthSquared() const noexcept
         {
             T l = 0;
             for (const T& c : v)
@@ -140,13 +140,13 @@ namespace sr
             return l;
         }
 
-        inline void negate() noexcept
+        void negate() noexcept
         {
             for (T& c : v)
                 c = -c;
         }
 
-        inline bool isNormalized(const T tolerance = std::numeric_limits<T>::min()) const noexcept
+        bool isNormalized(const T tolerance = std::numeric_limits<T>::min()) const noexcept
         {
             return std::abs(T(1) - lengthSquared()) < tolerance;
         }
@@ -186,19 +186,19 @@ namespace sr
             return *this * multiplier;
         }
 
-        inline void scale(const Vector& scale) noexcept
+        void scale(const Vector& scale) noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 v[i] *= scale.v[i];
         }
 
-        inline void smooth(const Vector& target, const T elapsedTime, const T responseTime) noexcept
+        void smooth(const Vector& target, const T elapsedTime, const T responseTime) noexcept
         {
             if (elapsedTime > T(0))
                 *this += (target - *this) * (elapsedTime / (elapsedTime + responseTime));
         }
 
-        inline T getMin() const noexcept
+        T getMin() const noexcept
         {
             T result = v[0];
 
@@ -209,7 +209,7 @@ namespace sr
             return result;
         }
 
-        inline T getMax() const noexcept
+        T getMax() const noexcept
         {
             T result = v[0];
 
@@ -220,7 +220,7 @@ namespace sr
             return result;
         }
 
-        inline const Vector operator+(const Vector& vec) const noexcept
+        const Vector operator+(const Vector& vec) const noexcept
         {
             Vector result = *this;
             for (std::size_t i = 0; i < N; ++i)
@@ -228,14 +228,14 @@ namespace sr
             return result;
         }
 
-        inline Vector& operator+=(const Vector& vec) noexcept
+        Vector& operator+=(const Vector& vec) noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 v[i] += vec.v[i];
             return *this;
         }
 
-        inline const Vector operator-(const Vector& vec) const noexcept
+        const Vector operator-(const Vector& vec) const noexcept
         {
             Vector result = *this;
             for (std::size_t i = 0; i < N; ++i)
@@ -243,14 +243,14 @@ namespace sr
             return result;
         }
 
-        inline Vector& operator-=(const Vector& vec) noexcept
+        Vector& operator-=(const Vector& vec) noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 v[i] -= vec.v[i];
             return *this;
         }
 
-        inline const Vector operator-() const noexcept
+        const Vector operator-() const noexcept
         {
             Vector result = *this;
             for (T& c : result.v)
@@ -258,7 +258,7 @@ namespace sr
             return result;
         }
 
-        inline const Vector operator*(const T scalar) const noexcept
+        const Vector operator*(const T scalar) const noexcept
         {
             Vector result(*this);
             for (T& c : result.v)
@@ -266,14 +266,14 @@ namespace sr
             return result;
         }
 
-        inline Vector& operator*=(const T scalar) noexcept
+        Vector& operator*=(const T scalar) noexcept
         {
             for (T& c : v)
                 c *= scalar;
             return *this;
         }
 
-        inline const Vector operator/(const T scalar) const noexcept
+        const Vector operator/(const T scalar) const noexcept
         {
             Vector result(*this);
             for (T& c : result.v)
@@ -281,14 +281,14 @@ namespace sr
             return result;
         }
 
-        inline Vector& operator/=(const T scalar) noexcept
+        Vector& operator/=(const T scalar) noexcept
         {
             for (T& c : v)
                 c /= scalar;
             return *this;
         }
 
-        inline bool operator<(const Vector& vec) const noexcept
+        bool operator<(const Vector& vec) const noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 if (v[i] < vec.v[i]) return true;
@@ -297,21 +297,21 @@ namespace sr
             return false;
         }
 
-        inline bool operator==(const Vector& vec) const noexcept
+        bool operator==(const Vector& vec) const noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 if (v[i] != vec.v[i]) return false;
             return true;
         }
 
-        inline bool operator!=(const Vector& vec) const noexcept
+        bool operator!=(const Vector& vec) const noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 if (v[i] != vec.v[i]) return true;
             return false;
         }
 
-        inline bool isZero() const noexcept
+        bool isZero() const noexcept
         {
             for (const T& c : v)
                 if (c != T(0)) return false;

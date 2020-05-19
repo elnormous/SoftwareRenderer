@@ -25,7 +25,7 @@ namespace sr
 
         static constexpr float GAMMA = 2.2F;
 
-        static inline std::uint32_t getPixelSize(PixelFormat pixelFormat) noexcept
+        static std::uint32_t getPixelSize(PixelFormat pixelFormat) noexcept
         {
             switch (pixelFormat)
             {
@@ -105,26 +105,26 @@ namespace sr
             }
         }
 
-        inline PixelFormat getPixelFormat() const noexcept { return pixelFormat; }
-        inline std::uint32_t getWidth() const noexcept { return width; }
-        inline std::uint32_t getHeight() const noexcept { return height; }
+        PixelFormat getPixelFormat() const noexcept { return pixelFormat; }
+        std::uint32_t getWidth() const noexcept { return width; }
+        std::uint32_t getHeight() const noexcept { return height; }
 
-        inline std::size_t getLevelCount() const noexcept
+        std::size_t getLevelCount() const noexcept
         {
             return levels.size();
         }
 
-        inline std::vector<std::uint8_t>& getData(std::uint32_t level = 0)
+        std::vector<std::uint8_t>& getData(std::uint32_t level = 0)
         {
             return levels[level];
         }
 
-        inline const std::vector<std::uint8_t>& getData(std::uint32_t level = 0) const
+        const std::vector<std::uint8_t>& getData(std::uint32_t level = 0) const
         {
             return levels[level];
         }
 
-        inline void setData(const std::vector<std::uint8_t>& buffer, std::uint32_t level = 0)
+        void setData(const std::vector<std::uint8_t>& buffer, std::uint32_t level = 0)
         {
             const std::uint32_t pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
@@ -137,7 +137,7 @@ namespace sr
             levels[level] = buffer;
         }
 
-        inline Color getPixel(std::uint32_t x, std::uint32_t y, std::uint32_t level) const
+        Color getPixel(std::uint32_t x, std::uint32_t y, std::uint32_t level) const
         {
             const std::vector<std::uint8_t>& buffer = levels[level];
 

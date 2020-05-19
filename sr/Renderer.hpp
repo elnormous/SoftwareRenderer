@@ -68,12 +68,12 @@ namespace sr
     public:
         Renderer() noexcept = default;
 
-        inline RenderTarget* getRenderTarget() const noexcept
+        RenderTarget* getRenderTarget() const noexcept
         {
             return renderTarget;
         }
 
-        inline void setRenderTarget(RenderTarget* newRenderTarget) noexcept
+        void setRenderTarget(RenderTarget* newRenderTarget) noexcept
         {
             renderTarget = newRenderTarget;
         }

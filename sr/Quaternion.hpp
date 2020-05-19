@@ -21,19 +21,19 @@ namespace sr
         {
         }
 
-        inline T& operator[](std::size_t index) noexcept { return v[index]; }
+        T& operator[](std::size_t index) noexcept { return v[index]; }
         constexpr T operator[](std::size_t index) const noexcept { return v[index]; }
 
-        inline T& x() noexcept { return v[0]; }
+        T& x() noexcept { return v[0]; }
         constexpr T x() const noexcept { return v[0]; }
 
-        inline T& y() noexcept { return v[1]; }
+        T& y() noexcept { return v[1]; }
         constexpr T y() const noexcept { return v[1]; }
 
-        inline T& z() noexcept { return v[2]; }
+        T& z() noexcept { return v[2]; }
         constexpr T z() const noexcept { return v[2]; }
 
-        inline T& w() noexcept { return v[3]; }
+        T& w() noexcept { return v[3]; }
         constexpr T w() const noexcept { return v[3]; }
 
         static constexpr Quaternion identity() noexcept
@@ -49,7 +49,7 @@ namespace sr
                               -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3]);
         }
 
-        inline Quaternion& operator*=(const Quaternion& q) noexcept
+        Quaternion& operator*=(const Quaternion& q) noexcept
         {
             constexpr T tempX = v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0];
             constexpr T tempY = -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1];
@@ -72,7 +72,7 @@ namespace sr
                               v[3] * scalar);
         }
 
-        inline Quaternion& operator*=(const T scalar) noexcept
+        Quaternion& operator*=(const T scalar) noexcept
         {
             v[0] *= scalar;
             v[1] *= scalar;
@@ -90,7 +90,7 @@ namespace sr
                               v[3] / scalar);
         }
 
-        inline Quaternion& operator/=(const T scalar) noexcept
+        Quaternion& operator/=(const T scalar) noexcept
         {
             v[0] /= scalar;
             v[1] /= scalar;
@@ -113,7 +113,7 @@ namespace sr
                               v[3] + q.v[3]);
         }
 
-        inline Quaternion& operator+=(const Quaternion& q) noexcept
+        Quaternion& operator+=(const Quaternion& q) noexcept
         {
             v[0] += q.v[0];
             v[1] += q.v[1];
@@ -131,7 +131,7 @@ namespace sr
                               v[3] - q.v[3]);
         }
 
-        inline Quaternion& operator-=(const Quaternion& q) noexcept
+        Quaternion& operator-=(const Quaternion& q) noexcept
         {
             v[0] -= q.v[0];
             v[1] -= q.v[1];
@@ -151,7 +151,7 @@ namespace sr
             return v[0] != q.v[0] || v[1] != q.v[1] || v[2] != q.v[2] || v[3] != q.v[3];
         }
 
-        inline void negate() noexcept
+        void negate() noexcept
         {
             v[0] = -v[0];
             v[1] = -v[1];
@@ -159,14 +159,14 @@ namespace sr
             v[3] = -v[3];
         }
 
-        inline void conjugate() noexcept
+        void conjugate() noexcept
         {
             v[0] = -v[0];
             v[1] = -v[1];
             v[2] = -v[2];
         }
 
-        inline void invert() noexcept
+        void invert() noexcept
         {
             constexpr T squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
             if (squared <= std::numeric_limits<T>::min())
@@ -180,7 +180,7 @@ namespace sr
             v[3] = v[3] * multiplier;
         }
 
-        inline T getNorm() const noexcept
+        T getNorm() const noexcept
         {
             constexpr T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
             if (n == T(1)) // already normalized
@@ -263,17 +263,17 @@ namespace sr
             return result;
         }
 
-        inline T getEulerAngleX() const noexcept
+        T getEulerAngleX() const noexcept
         {
             return std::atan2(T(2) * (v[1] * v[2] + v[3] * v[0]), v[3] * v[3] - v[0] * v[0] - v[1] * v[1] + v[2] * v[2]);
         }
 
-        inline T getEulerAngleY() const noexcept
+        T getEulerAngleY() const noexcept
         {
             return std::asin(T(-2) * (v[0] * v[2] - v[3] * v[1]));
         }
 
-        inline T getEulerAngleZ() const noexcept
+        T getEulerAngleZ() const noexcept
         {
             return std::atan2(T(2) * (v[0] * v[1] + v[3] * v[2]), v[3] * v[3] + v[0] * v[0] - v[1] * v[1] - v[2] * v[2]);
         }
@@ -303,34 +303,34 @@ namespace sr
             v[3] = cr * cpcy + sr * spsy;
         }
 
-        inline const Vector<3, T> operator*(const Vector<3, T>& vector) const noexcept
+        const Vector<3, T> operator*(const Vector<3, T>& vector) const noexcept
         {
             return rotateVector(vector);
         }
 
-        inline Vector<3, T> rotateVector(const Vector<3, T>& vector) const noexcept
+        Vector<3, T> rotateVector(const Vector<3, T>& vector) const noexcept
         {
             const Vector<3, T> q(v[0], v[1], v[2]);
             const Vector<3, T> t = T(2) * q.cross(vector);
             return vector + (v[3] * t) + q.cross(t);
         }
 
-        inline Vector<3, T> getRightVector() const noexcept
+        Vector<3, T> getRightVector() const noexcept
         {
             return rotateVector(Vector<3, T>(1, 0, 0));
         }
 
-        inline Vector<3, T> getUpVector() const noexcept
+        Vector<3, T> getUpVector() const noexcept
         {
             return rotateVector(Vector<3, T>(0, 1, 0));
         }
 
-        inline Vector<3, T> getForwardVector() const noexcept
+        Vector<3, T> getForwardVector() const noexcept
         {
             return rotateVector(Vector<3, T>(0, 0, 1));
         }
 
-        inline Quaternion& lerp(const Quaternion& q1, const Quaternion& q2, T t) noexcept
+        Quaternion& lerp(const Quaternion& q1, const Quaternion& q2, T t) noexcept
         {
             *this = (q1 * (T(1) - t)) + (q2 * t);
             return *this;

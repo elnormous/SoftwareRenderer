@@ -46,13 +46,13 @@ namespace sr
             return size.isZero();
         }
 
-        inline void setPosition(const T x, const T y) noexcept
+        void setPosition(const T x, const T y) noexcept
         {
             position.v[0] = x;
             position.v[1] = y;
         }
 
-        inline void setPosition(const Vector<2, T>& newPosition) noexcept
+        void setPosition(const Vector<2, T>& newPosition) noexcept
         {
             position = newPosition;
         }
@@ -156,7 +156,7 @@ namespace sr
             dst.size.v[1] = std::max(r1.position.v[1] + r1.size.v[1], r2.position.v[1] + r2.size.v[1]) - dst.position.v[1];
         }
 
-        inline void inflate(const T horizontalAmount,
+        void inflate(const T horizontalAmount,
                             const T verticalAmount) noexcept
         {
             position.v[0] -= horizontalAmount;
@@ -183,7 +183,7 @@ namespace sr
                         size.v[0] * scalar, size.v[1] * scalar);
         }
 
-        inline Rect& operator*=(const T scalar) noexcept
+        Rect& operator*=(const T scalar) noexcept
         {
             position.v[0] *= scalar;
             position.v[1] *= scalar;
@@ -198,7 +198,7 @@ namespace sr
                         size.v[0] / scalar, size.v[1] / scalar);
         }
 
-        inline Rect& operator/=(const T scalar) noexcept
+        Rect& operator/=(const T scalar) noexcept
         {
             position.v[0] /= scalar;
             position.v[1] /= scalar;
