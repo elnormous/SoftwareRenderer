@@ -11,7 +11,7 @@ demo/Win32
 demo/SoftwareRenderer
 demo/SoftwareRenderer.app
 .project
-*.vcxproj.user
+*.user
 demo/.gradle
 demo/.settings
 demo/app/.externalNativeBuild
