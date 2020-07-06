@@ -146,25 +146,22 @@ namespace sr
                 case Texture::PixelFormat::r8:
                 {
                     const auto* r = &buffer[(y * width + x) * 1];
-                    return sr::Color(*r, *r, *r, 255);
+                    return Color{*r, *r, *r, std::uint8_t(255U)};
                 }
                 case Texture::PixelFormat::a8:
                 {
                     const auto* a = &buffer[(y * width + x) * 1];
-                    return sr::Color(0, 0, 0, *a);
+                    return Color{std::uint8_t(0U), std::uint8_t(0U), std::uint8_t(0U), *a};
                 }
                 case Texture::PixelFormat::rgba8:
                 {
                     const auto* rgba = &buffer[(y * width + x) * 4];
-                    return sr::Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+                    return Color{rgba[0], rgba[1], rgba[2], rgba[3]};
                 }
                 case Texture::PixelFormat::float32:
                 {
                     float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
-                    Color result;
-                    result.r = result.g = result.b = f;
-                    result.a = 1.0F;
-                    return result;
+                    return Color{f, f, f, 1.0F};
                 }
                 default:
                     throw std::runtime_error("Invalid pixel format");

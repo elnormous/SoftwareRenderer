@@ -30,11 +30,12 @@ namespace demo
         {
             const auto sampleColor = textures[0]->sample(samplers[0], input.texCoords[0]);
 
-            sr::Color result;
-            result.r = input.color.r * sampleColor.r;
-            result.g = input.color.g * sampleColor.g;
-            result.b = input.color.b * sampleColor.b;
-            result.a = input.color.a * sampleColor.a;
+            const sr::Color result{
+                input.color.r * sampleColor.r,
+                input.color.g * sampleColor.g,
+                input.color.b * sampleColor.b,
+                input.color.a * sampleColor.a
+            };
 
             return result;
         }
