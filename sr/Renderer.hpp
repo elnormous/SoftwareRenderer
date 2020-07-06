@@ -237,23 +237,24 @@ namespace sr
                             if (blendState.enabled)
                             {
                                 const auto pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
-                                Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
+                                const Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
 
                                 // alpha blend
-                                destColor.r = getValue(blendState.colorOperation,
-                                                       srcColor.r * getValue(blendState.colorBlendSource, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r),
-                                                       destColor.r * getValue(blendState.colorBlendDest, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r));
-                                destColor.g = getValue(blendState.colorOperation,
-                                                       srcColor.g * getValue(blendState.colorBlendSource, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g),
-                                                       destColor.g * getValue(blendState.colorBlendDest, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g));
-                                destColor.b = getValue(blendState.colorOperation,
-                                                       srcColor.b * getValue(blendState.colorBlendSource, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b),
-                                                       destColor.b * getValue(blendState.colorBlendDest, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b));
-                                destColor.a = getValue(blendState.alphaOperation,
-                                                       srcColor.a * getValue(blendState.alphaBlendSource, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a),
-                                                       destColor.a * getValue(blendState.alphaBlendDest, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a));
+                                Color resultColor;
+                                resultColor.r = getValue(blendState.colorOperation,
+                                                         srcColor.r * getValue(blendState.colorBlendSource, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r),
+                                                         destColor.r * getValue(blendState.colorBlendDest, srcColor.r, srcColor.a, destColor.r, destColor.a, blendState.blendFactor.r));
+                                resultColor.g = getValue(blendState.colorOperation,
+                                                         srcColor.g * getValue(blendState.colorBlendSource, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g),
+                                                         destColor.g * getValue(blendState.colorBlendDest, srcColor.g, srcColor.a, destColor.g, destColor.a, blendState.blendFactor.g));
+                                resultColor.b = getValue(blendState.colorOperation,
+                                                         srcColor.b * getValue(blendState.colorBlendSource, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b),
+                                                         destColor.b * getValue(blendState.colorBlendDest, srcColor.b, srcColor.a, destColor.b, destColor.a, blendState.blendFactor.b));
+                                resultColor.a = getValue(blendState.alphaOperation,
+                                                         srcColor.a * getValue(blendState.alphaBlendSource, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a),
+                                                         destColor.a * getValue(blendState.alphaBlendDest, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a));
 
-                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = destColor.getIntValueRaw();
+                                frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = resultColor.getIntValueRaw();
                             }
                             else
                                 frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = srcColor.getIntValueRaw();

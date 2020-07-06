@@ -259,7 +259,7 @@ namespace sr
                     textureY1 = clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
 
                     // TODO: calculate mip level
-                    Color color[4] = {
+                    const Color color[4] = {
                         getPixel(textureX0, textureY0, 0),
                         getPixel(textureX1, textureY0, 0),
                         getPixel(textureX0, textureY1, 0),
