@@ -61,7 +61,6 @@ namespace demo
         sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
         texture = sr::Texture(sr::Texture::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight());
         texture.setData(bmp.getData(), 0);
-        texture.generateMipMaps();
 
         sampler.addressModeX = sr::Sampler::AddressMode::repeat;
         sampler.addressModeY = sr::Sampler::AddressMode::repeat;

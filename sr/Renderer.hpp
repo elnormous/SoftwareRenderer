@@ -29,7 +29,8 @@ namespace sr
         explicit RenderError(const char* str): std::runtime_error(str) {}
     };
 
-    static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha, float destColor, float destAlpha, float blendFactor)
+    static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha,
+                          float destColor, float destAlpha, float blendFactor)
     {
         switch (factor)
         {
@@ -127,12 +128,10 @@ namespace sr
             const auto rgba = color.getIntValueRaw();
 
             const auto frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
-
             for (std::size_t p = 0; p < frameBufferSize; ++p)
                 frameBufferData[p] = rgba;
 
             const auto depthBufferSize = renderTarget->getDepthBuffer().getWidth() * renderTarget->getDepthBuffer().getHeight();
-
             for (std::size_t p = 0; p < depthBufferSize; ++p)
                 depthBufferData[p] = depth;
         }
@@ -193,7 +192,6 @@ namespace sr
                 screenMax.v[1] = clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
                 for (std::size_t screenY = static_cast<std::size_t>(screenMin.v[1]); screenY <= static_cast<std::size_t>(screenMax.v[1]); ++screenY)
-                {
                     for (std::size_t screenX = static_cast<std::size_t>(screenMin.v[0]); screenX <= static_cast<std::size_t>(screenMax.v[0]); ++screenX)
                     {
                         const auto s = barycentric(viewportPositions[0],
@@ -214,7 +212,8 @@ namespace sr
                             if (depthState.read && depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] < depth)
                                 continue; // discard the pixel
 
-                            if (depthState.write) depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
+                            if (depthState.write)
+                                depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
 
                             Shader::VSOutput psInput;
                             psInput.position = Vector4F(clip.v[0], clip.v[1], clip.v[2], 1.0F);
@@ -261,7 +260,6 @@ namespace sr
                                 frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX] = srcColor.getIntValueRaw();
                         }
                     }
-                }
             }
         }
 
