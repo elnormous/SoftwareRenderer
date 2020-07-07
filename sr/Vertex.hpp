@@ -13,10 +13,10 @@ namespace sr
     class Vertex final
     {
     public:
-        Vertex() = default;
+        Vertex() noexcept = default;
 
         Vertex(const Vector4F& initPosition, Color initColor,
-               const Vector2F& initTexCoord, const Vector3F& initNormal):
+               const Vector2F& initTexCoord, const Vector3F& initNormal) noexcept:
             position(initPosition), color(initColor),
             texCoords{initTexCoord}, normal(initNormal)
         {
