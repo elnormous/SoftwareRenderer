@@ -158,7 +158,7 @@ namespace sr
                 }
                 case Texture::PixelFormat::float32:
                 {
-                    float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
+                    const float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
                     return Color{f, f, f, 1.0F};
                 }
                 default:
@@ -212,13 +212,13 @@ namespace sr
                     const auto y0 = v - (textureY0 + 0.5F);
                     const auto x1 = (textureX0 + 1.5F) - u;
                     const auto y1 = (textureY0 + 1.5F) - v;
-
-                    Color result;
-                    result.r = color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0;
-                    result.g = color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0;
-                    result.b = color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0;
-                    result.a = color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0;
-                    return result;
+                    
+                    return Color{
+                        color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0,
+                        color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0,
+                        color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0,
+                        color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0
+                    };
                 }
             }
 

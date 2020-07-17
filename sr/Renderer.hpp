@@ -22,7 +22,7 @@
 
 namespace sr
 {
-    class RenderError: public std::runtime_error
+    class RenderError final: public std::runtime_error
     {
     public:
         explicit RenderError(const std::string& str): std::runtime_error(str) {}
