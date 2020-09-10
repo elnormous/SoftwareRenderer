@@ -36,8 +36,6 @@ static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM 
     return DefWindowProcW(window, msg, wParam, lParam); 
 }
 
-static const LPCWSTR WINDOW_CLASS_NAME = L"SoftwareRenderer";
-
 namespace demo
 {
     ApplicationWindows::ApplicationWindows()
@@ -57,7 +55,7 @@ namespace demo
         wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
         wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
         wc.lpszMenuName = nullptr;
-        wc.lpszClassName = WINDOW_CLASS_NAME;
+        wc.lpszClassName = L"SoftwareRenderer";
         wc.hIconSm = nullptr;
 
         windowClass = RegisterClassExW(&wc);
@@ -67,7 +65,7 @@ namespace demo
         DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
         DWORD windowExStyle = WS_EX_APPWINDOW;
 
-        window = CreateWindowExW(windowExStyle, WINDOW_CLASS_NAME, L"SoftwareRenderer", windowStyle,
+        window = CreateWindowExW(windowExStyle, MAKEINTATOM(windowClass), L"SoftwareRenderer", windowStyle,
             CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, nullptr, instance, nullptr);
 
         if (!window)
@@ -88,7 +86,7 @@ namespace demo
     ApplicationWindows::~ApplicationWindows()
     {
         if (window) DestroyWindow(window);
-        if (windowClass) UnregisterClassW(WINDOW_CLASS_NAME, GetModuleHandleW(nullptr));
+        if (windowClass) UnregisterClassW(MAKEINTATOM(windowClass), GetModuleHandleW(nullptr));
     }
 
     void ApplicationWindows::draw()
