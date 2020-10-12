@@ -29,41 +29,6 @@ namespace sr
         explicit RenderError(const char* str): std::runtime_error(str) {}
     };
 
-    static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha,
-                          float destColor, float destAlpha, float blendFactor)
-    {
-        switch (factor)
-        {
-            case BlendState::Factor::zero: return 0.0F;
-            case BlendState::Factor::one: return 1.0F;
-            case BlendState::Factor::srcColor: return srcColor;
-            case BlendState::Factor::invSrcColor: return 1.0F - srcColor;
-            case BlendState::Factor::srcAlpha: return srcAlpha;
-            case BlendState::Factor::invSrcAlpha: return 1.0F - srcAlpha;
-            case BlendState::Factor::destAlpha: return destAlpha;
-            case BlendState::Factor::invDestAlpha: return 1.0F - destAlpha;
-            case BlendState::Factor::destColor: return destColor;
-            case BlendState::Factor::invDestColor: return 1.0F - destColor;
-            case BlendState::Factor::srcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
-            case BlendState::Factor::blendFactor: return blendFactor;
-            case BlendState::Factor::invBlendFactor: return 1.0F - blendFactor;
-            default: throw RenderError("Invalid blend factor");
-        }
-    }
-
-    static float getValue(BlendState::Operation operation, float a, float b)
-    {
-        switch (operation)
-        {
-            case BlendState::Operation::add: return clamp(a + b, 0.0F, 1.0F);
-            case BlendState::Operation::subtract: return clamp(a - b, 0.0F, 1.0F);
-            case BlendState::Operation::reverseSubtract: return clamp(b - a, 0.0F, 1.0F);
-            case BlendState::Operation::min: return std::min(a, b);
-            case BlendState::Operation::max: return std::max(a, b);
-            default: throw RenderError("Invalid blend operation");
-        }
-    }
-
     class Renderer final
     {
     public:
@@ -264,6 +229,41 @@ namespace sr
         }
 
     private:
+        static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha,
+                              float destColor, float destAlpha, float blendFactor)
+        {
+            switch (factor)
+            {
+                case BlendState::Factor::zero: return 0.0F;
+                case BlendState::Factor::one: return 1.0F;
+                case BlendState::Factor::srcColor: return srcColor;
+                case BlendState::Factor::invSrcColor: return 1.0F - srcColor;
+                case BlendState::Factor::srcAlpha: return srcAlpha;
+                case BlendState::Factor::invSrcAlpha: return 1.0F - srcAlpha;
+                case BlendState::Factor::destAlpha: return destAlpha;
+                case BlendState::Factor::invDestAlpha: return 1.0F - destAlpha;
+                case BlendState::Factor::destColor: return destColor;
+                case BlendState::Factor::invDestColor: return 1.0F - destColor;
+                case BlendState::Factor::srcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
+                case BlendState::Factor::blendFactor: return blendFactor;
+                case BlendState::Factor::invBlendFactor: return 1.0F - blendFactor;
+                default: throw RenderError("Invalid blend factor");
+            }
+        }
+
+        static float getValue(BlendState::Operation operation, float a, float b)
+        {
+            switch (operation)
+            {
+                case BlendState::Operation::add: return clamp(a + b, 0.0F, 1.0F);
+                case BlendState::Operation::subtract: return clamp(a - b, 0.0F, 1.0F);
+                case BlendState::Operation::reverseSubtract: return clamp(b - a, 0.0F, 1.0F);
+                case BlendState::Operation::min: return std::min(a, b);
+                case BlendState::Operation::max: return std::max(a, b);
+                default: throw RenderError("Invalid blend operation");
+            }
+        }
+
         RenderTarget* renderTarget = nullptr;
         RectF viewport;
         RectF scissorRect = RectF(0.0F, 0.0F, 1.0F, 1.0F);
