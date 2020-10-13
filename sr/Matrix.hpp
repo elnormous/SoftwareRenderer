@@ -644,7 +644,7 @@ namespace sr
 
         void setZero() noexcept
         {
-            for (T& c : m)
+            for (auto& c : m)
                 c = T(0);
         }
 

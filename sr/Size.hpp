@@ -96,7 +96,7 @@ namespace sr
         const Size operator-() const noexcept
         {
             Size result = *this;
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c = -c;
             return result;
         }
@@ -104,14 +104,14 @@ namespace sr
         const Size operator*(const T scalar) const noexcept
         {
             Size result(*this);
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c *= scalar;
             return result;
         }
 
         Size& operator*=(const T scalar) noexcept
         {
-            for (T& c : v)
+            for (auto& c : v)
                 c *= scalar;
             return *this;
         }
@@ -119,14 +119,14 @@ namespace sr
         const Size operator/(const T scalar) const noexcept
         {
             Size result(*this);
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c /= scalar;
             return result;
         }
 
         Size& operator/=(const T scalar) noexcept
         {
-            for (T& c : v)
+            for (auto& c : v)
                 c /= scalar;
             return *this;
         }

@@ -142,7 +142,7 @@ namespace sr
 
         void negate() noexcept
         {
-            for (T& c : v)
+            for (auto& c : v)
                 c = -c;
         }
 
@@ -165,7 +165,7 @@ namespace sr
                 return;
 
             const T multiplier = T(1) / length;
-            for (T& c : v)
+            for (auto& c : v)
                 c *= multiplier;
         }
 
@@ -253,7 +253,7 @@ namespace sr
         const Vector operator-() const noexcept
         {
             Vector result = *this;
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c = -c;
             return result;
         }
@@ -261,14 +261,14 @@ namespace sr
         const Vector operator*(const T scalar) const noexcept
         {
             Vector result(*this);
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c *= scalar;
             return result;
         }
 
         Vector& operator*=(const T scalar) noexcept
         {
-            for (T& c : v)
+            for (auto& c : v)
                 c *= scalar;
             return *this;
         }
@@ -276,14 +276,14 @@ namespace sr
         const Vector operator/(const T scalar) const noexcept
         {
             Vector result(*this);
-            for (T& c : result.v)
+            for (auto& c : result.v)
                 c /= scalar;
             return result;
         }
 
         Vector& operator/=(const T scalar) noexcept
         {
-            for (T& c : v)
+            for (auto& c : v)
                 c /= scalar;
             return *this;
         }
