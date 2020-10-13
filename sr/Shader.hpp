@@ -14,7 +14,7 @@ namespace sr
     class Shader
     {
     public:
-        struct VSOutput
+        struct VertexShaderOutput
         {
             Vector4F position;
             Color color;
@@ -24,8 +24,8 @@ namespace sr
 
         virtual ~Shader() {}
 
-        virtual VSOutput vertexShader(const Matrix4F& modelViewProjection, const Vertex& vertex) const = 0;
-        virtual Color fragmentShader(const VSOutput& input, Sampler* samplers[2], Texture* textures[2]) const = 0;
+        virtual VertexShaderOutput vertexShader(const Matrix4F& modelViewProjection, const Vertex& vertex) const = 0;
+        virtual Color fragmentShader(const VertexShaderOutput& input, Sampler* samplers[2], Texture* textures[2]) const = 0;
     };
 }
 
