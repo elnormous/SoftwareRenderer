@@ -35,9 +35,9 @@ namespace demo
         std::size_t width;
         std::size_t height;
 
-        sr::Matrix4F projection;
-        sr::Matrix4F view;
-        sr::Matrix4F model;
+        sr::Matrix4F projection = sr::Matrix4F::identity();
+        sr::Matrix4F view = sr::Matrix4F::identity();
+        sr::Matrix4F model = sr::Matrix4F::identity();
         float rotationY = 0.0F;
 
         sr::RenderTarget renderTarget;

@@ -54,10 +54,6 @@ namespace demo
             sr::Vertex(sr::Vector4F(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector2F(1.0F, 1.0F), sr::Vector3F(0.0F, 0.0F, 1.0F))
         }
     {
-        projection.setIdentity();
-        view.setIdentity();
-        model.setIdentity();
-
         sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
         texture = sr::Texture(sr::Texture::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight());
         texture.setData(bmp.getData(), 0);
