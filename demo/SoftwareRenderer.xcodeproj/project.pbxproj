@@ -51,7 +51,6 @@
 		306944E0205E00A900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944E72068655900C4969C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
-		306A7D0C20B8D8F3002C47F1 /* MTL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTL.hpp; sourceTree = "<group>"; };
 		306A7D1020B8D8F4002C47F1 /* DepthState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DepthState.hpp; sourceTree = "<group>"; };
 		306A7D1120B8D8F4002C47F1 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		306A7D1320B8D8F4002C47F1 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
@@ -59,7 +58,6 @@
 		306A7D1720B8D8F4002C47F1 /* Sampler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sampler.hpp; sourceTree = "<group>"; };
 		306A7D1820B8D8F4002C47F1 /* RenderTarget.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderTarget.hpp; sourceTree = "<group>"; };
 		306A7D1920B8D8F4002C47F1 /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
-		306A7D1B20B8D8F4002C47F1 /* OBJ.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OBJ.hpp; sourceTree = "<group>"; };
 		306A7D1C20B8D8F5002C47F1 /* BlendState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlendState.hpp; sourceTree = "<group>"; };
 		306A7D1D20B8D8F5002C47F1 /* sr.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sr.hpp; sourceTree = "<group>"; };
 		306A7D1E20B8D8F5002C47F1 /* MathUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MathUtils.hpp; sourceTree = "<group>"; };
@@ -147,8 +145,6 @@
 				305F943B2123730900893FF5 /* ApplicationTVOS.hpp */,
 				305F943A2123730900893FF5 /* ApplicationTVOS.mm */,
 				306A7D1520B8D8F4002C47F1 /* BMP.hpp */,
-				306A7D0C20B8D8F3002C47F1 /* MTL.hpp */,
-				306A7D1B20B8D8F4002C47F1 /* OBJ.hpp */,
 				30345F4720AA1BF300B9B963 /* Resources */,
 				30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */,
 			);
