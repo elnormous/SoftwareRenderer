@@ -25,7 +25,7 @@ ifeq ($(platform),emscripten)
 CC=emcc
 CXX=em++
 endif
-CXXFLAGS=-c -std=c++11 -Wall -O2 -I../sr
+CXXFLAGS=-std=c++11 -Wall -O2 -I../sr
 LDFLAGS=-O2
 SOURCES=Application.cpp
 ifeq ($(platform),windows)
@@ -117,10 +117,10 @@ $(EXECUTABLE): $(OBJECTS)
 -include $(DEPENDENCIES)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -MMD -MP $< -o $@
+	$(CXX) -c $(CXXFLAGS) -MMD -MP $< -o $@
 
 %.o: %.mm
-	$(CXX) -fno-objc-arc $(CXXFLAGS) -MMD -MP $< -o $@
+	$(CXX) -c -fno-objc-arc $(CXXFLAGS) -MMD -MP $< -o $@
 
 .PHONY: clean
 clean:
