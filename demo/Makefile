@@ -1,85 +1,85 @@
-debug=0
+DEBUG=0
 ifeq ($(OS),Windows_NT)
-	platform=windows
+	PLATFORM=windows
 else
 	architecture=$(shell uname -m)
 	os=$(shell uname -s)
 
 	ifeq ($(os),Linux)
-		platform=linux
+		PLATFORM=linux
 	else ifeq ($(os),SunOS)
-		platform=sunos
+		PLATFORM=sunos
 	else ifeq ($(os),FreeBSD)
-		platform=bsd
+		PLATFORM=bsd
 	else ifeq ($(os),DragonFly)
-		platform=bsd
+		PLATFORM=bsd
 	else ifeq ($(os),NetBSD)
-		platform=bsd
+		PLATFORM=bsd
 	else ifeq ($(os),Darwin)
-		platform=macos
+		PLATFORM=macos
 	else ifeq ($(os),Haiku)
-		platform=haiku
+		PLATFORM=haiku
 	endif
 endif
-ifeq ($(platform),emscripten)
+ifeq ($(PLATFORM),emscripten)
 CC=emcc
 CXX=em++
 endif
 CXXFLAGS=-std=c++11 -Wall -O2 -I../sr
 LDFLAGS=-O2
 SOURCES=Application.cpp
-ifeq ($(platform),windows)
+ifeq ($(PLATFORM),windows)
 LDFLAGS+=-u WinMain
 SOURCES+=ApplicationWindows.cpp
-else ifeq ($(platform),linux)
+else ifeq ($(PLATFORM),linux)
 LDFLAGS+=-lX11
 SOURCES+=ApplicationX11.cpp
-else ifeq ($(platform),sunos)
+else ifeq ($(PLATFORM),sunos)
 LDFLAGS+=-lX11
 SOURCES+=ApplicationX11.cpp
-else ifeq ($(platform),bsd)
+else ifeq ($(PLATFORM),bsd)
 CXXFLAGS+=-I/usr/local/include
 LDFLAGS+=-lX11 -L/usr/local/lib
 SOURCES+=ApplicationX11.cpp
-else ifeq ($(platform),macos)
+else ifeq ($(PLATFORM),macos)
 LDFLAGS+=-framework Cocoa
 SOURCES+=ApplicationMacOS.mm
-else ifeq ($(platform),haiku)
+else ifeq ($(PLATFORM),haiku)
 LDFLAGS+=-lbe
 SOURCES+=ApplicationHaiku.cpp
-else ifeq ($(platform),ios)
+else ifeq ($(PLATFORM),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0 \
 	-framework CoreGraphics -framework Foundation -framework UIKit
 SOURCES+=ApplicationIOS.mm
-else ifeq ($(platform),tvos)
+else ifeq ($(PLATFORM),tvos)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0 \
 	-framework CoreGraphics -framework Foundation -framework UIKit
 SOURCES+=ApplicationTVOS.mm
-else ifeq ($(platform),emscripten)
+else ifeq ($(PLATFORM),emscripten)
 LDFLAGS+=--embed-file Resources -s TOTAL_MEMORY=134217728
 endif
 BASE_NAMES=$(basename $(SOURCES))
 OBJECTS=$(BASE_NAMES:=.o)
 DEPENDENCIES=$(OBJECTS:.o=.d)
-ifeq ($(platform),emscripten)
+ifeq ($(PLATFORM),emscripten)
 EXECUTABLE=SoftwareRenderer.js
 else
 EXECUTABLE=SoftwareRenderer
 endif
 
 .PHONY: all
-ifeq ($(debug),1)
+ifeq ($(DEBUG),1)
 all: CXXFLAGS+=-DDEBUG -g
 endif
 all: bundle
 
 .PHONY: bundle
 bundle: $(EXECUTABLE)
-ifeq ($(platform),macos)
+ifeq ($(PLATFORM),macos)
 bundle:
 	mkdir -p $(EXECUTABLE).app
 	mkdir -p $(EXECUTABLE).app/Contents
@@ -93,7 +93,7 @@ bundle:
 	cp -f $(EXECUTABLE) $(EXECUTABLE).app/Contents/MacOS
 	mkdir -p $(EXECUTABLE).app/Contents/Resources
 	cp -f Resources/* $(EXECUTABLE).app/Contents/Resources/
-else ifeq ($(platform),ios)
+else ifeq ($(PLATFORM),ios)
 	mkdir -p $(EXECUTABLE).app
 	sed -e s/'$$(EXECUTABLE_NAME)'/SoftwareRenderer/ \
 		-e s/'$$(PRODUCT_BUNDLE_IDENTIFIER)'/lv.elviss.softwarerenderer/ \
@@ -101,7 +101,7 @@ else ifeq ($(platform),ios)
 		ios/Info.plist > $(EXECUTABLE).app/Info.plist
 	cp -f $(EXECUTABLE) $(EXECUTABLE).app
 	cp -f Resources/* $(EXECUTABLE).app
-else ifeq ($(platform),tvos)
+else ifeq ($(PLATFORM),tvos)
 	mkdir -p $(EXECUTABLE).app
 	sed -e s/'$$(EXECUTABLE_NAME)'/SoftwareRenderer/ \
 		-e s/'$$(PRODUCT_BUNDLE_IDENTIFIER)'/lv.elviss.softwarerenderer/ \
@@ -124,7 +124,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 .PHONY: clean
 clean:
-ifeq ($(platform),windows)
+ifeq ($(PLATFORM),windows)
 	-del /f /q "$(EXECUTABLE).exe" "*.o" "*.d" "*.js.mem" "*.js" "*.hpp.gch"
 else
 	$(RM) $(EXECUTABLE) *.o *.d *.js.mem *.js *.hpp.gch $(EXECUTABLE).exe assetcatalog_generated_info.plist assetcatalog_dependencies
