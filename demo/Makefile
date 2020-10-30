@@ -25,8 +25,7 @@ ifeq ($(PLATFORM),emscripten)
 CC=emcc
 CXX=em++
 endif
-CXXFLAGS=-std=c++11 -Wall -O2 -I../sr
-LDFLAGS=-O2
+CXXFLAGS=-std=c++11 -Wall -I../sr
 SOURCES=Application.cpp
 ifeq ($(PLATFORM),windows)
 LDFLAGS+=-u WinMain
@@ -74,6 +73,9 @@ endif
 .PHONY: all
 ifeq ($(DEBUG),1)
 all: CXXFLAGS+=-DDEBUG -g
+else
+all: CXXFLAGS+=-O3
+all: LDFLAGS+=-O3
 endif
 all: bundle
 
