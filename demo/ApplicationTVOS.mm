@@ -90,16 +90,6 @@ demo::ApplicationTVOS* sharedApplication;
     application->didResize(size.width, size.height);
 }
 
--(void)deviceOrientationDidChange:(NSNotification*)note
-{
-    if (self.view)
-    {
-        CGSize size = self.view.frame.size;
-
-        application->didResize(size.width, size.height);
-    }
-}
-
 @end
 
 @interface Canvas: UIView
