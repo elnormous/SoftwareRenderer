@@ -164,7 +164,7 @@ namespace demo
         viewController = [[[ViewController alloc] initWithWindow:this] autorelease];
         window.rootViewController = viewController;
 
-        CGRect windowFrame = [window bounds];
+        const CGRect windowFrame = [window bounds];
 
         width = static_cast<std::size_t>(windowFrame.size.width * screen.scale);
         height = static_cast<std::size_t>(windowFrame.size.height * screen.scale);

@@ -20,7 +20,7 @@ namespace demo
             throw std::runtime_error("Failed to open display");
 
         Screen* screen = XDefaultScreenOfDisplay(display);
-        int screenIndex = XScreenNumberOfScreen(screen);
+        const int screenIndex = XScreenNumberOfScreen(screen);
         visual = DefaultVisual(display, screenIndex);
         depth = DefaultDepth(display, screenIndex);
 
@@ -92,13 +92,13 @@ namespace demo
 
     void ApplicationX11::run()
     {
-        int running = 1;
-        XEvent event;
+        bool running = true;
 
         while (running)
         {
             while (XPending(display))
             {
+                XEvent event;
                 XNextEvent(display, &event);
 
                 switch (event.type)
@@ -106,7 +106,7 @@ namespace demo
                     case ClientMessage:
                         if (event.xclient.message_type == protocolsAtom &&
                             static_cast<Atom>(event.xclient.data.l[0]) == deleteAtom)
-                            running = 0;
+                            running = false;
                         break;
                     case KeyPress:
                         break;

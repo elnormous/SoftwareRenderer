@@ -94,7 +94,7 @@ demo::ApplicationIOS* sharedApplication;
 {
     if (self.view)
     {
-        CGSize size = self.view.frame.size;
+        const CGSize size = self.view.frame.size;
 
         application->didResize(size.width, size.height);
     }
@@ -179,7 +179,7 @@ namespace demo
                                                      name:UIDeviceOrientationDidChangeNotification
                                                    object:[UIDevice currentDevice]];
 
-        CGRect windowFrame = [window bounds];
+        const CGRect windowFrame = [window bounds];
 
         width = static_cast<std::size_t>(windowFrame.size.width * screen.scale);
         height = static_cast<std::size_t>(windowFrame.size.height * screen.scale);

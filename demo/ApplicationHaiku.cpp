@@ -37,11 +37,11 @@ namespace demo
     ApplicationHaiku::ApplicationHaiku():
         BApplication("application/x-vnd.SoftwareRenderer")
     {
-        BRect frame(100, 100, 100 + 640, 100 + 480);
+        const BRect frame(100, 100, 100 + 640, 100 + 480);
         window = new BWindow(frame, "SoftwareRenderer", B_TITLED_WINDOW,
                              B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE);
 
-        BRect bounds = window->Bounds();
+        const BRect bounds = window->Bounds();
 
         view = new AppView(*this, bounds, "render");
         window->AddChild(view);
