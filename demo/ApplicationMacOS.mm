@@ -275,7 +275,7 @@ namespace demo
 
         if (path)
         {
-            char resourceDirectory[1024];
+            char resourceDirectory[CS_MAX_PATH];
             CFURLGetFileSystemRepresentation(path, TRUE, reinterpret_cast<UInt8*>(resourceDirectory), sizeof(resourceDirectory));
             CFRelease(path);
             return resourceDirectory;
