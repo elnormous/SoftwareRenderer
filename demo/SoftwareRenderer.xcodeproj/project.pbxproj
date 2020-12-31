@@ -119,6 +119,7 @@
 				306944AE205DF40A00C4969C /* macos */,
 				300984F0202D38FF00BB0340 /* Products */,
 				306A7D0A20B8D8B2002C47F1 /* sr */,
+				308BDAFC253D216B009DB683 /* test */,
 				305F94352123729200893FF5 /* tvos */,
 			);
 			sourceTree = "<group>";
@@ -214,6 +215,14 @@
 				3071DEA920425CE50073390E /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		308BDAFC253D216B009DB683 /* test */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = test;
+			path = ../test;
 			sourceTree = "<group>";
 		};
 		C6D285182122E22A00A4D87F /* ios */ = {
