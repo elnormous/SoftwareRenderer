@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include <memory>
 #include <stdexcept>
+#include <CoreFoundation/CoreFoundation.h>
 #include "ApplicationTVOS.hpp"
 
 demo::ApplicationTVOS* sharedApplication;
@@ -240,15 +242,27 @@ namespace demo
 
     std::string Application::getResourcePath()
     {
-        CFBundleRef bundle = CFBundleGetMainBundle(); // [NSBundle mainBundle]
-        CFURLRef path = CFBundleCopyResourcesDirectoryURL(bundle); // [bundle resourceURL]
+        CFBundleRef bundle = CFBundleGetMainBundle();
+        CFURLRef relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
 
-        if (path)
+        if (relativePath)
         {
-            char resourceDirectory[CS_MAX_PATH];
-            CFURLGetFileSystemRepresentation(path, TRUE, reinterpret_cast<UInt8*>(resourceDirectory), sizeof(resourceDirectory));
-            CFRelease(path);
-            return resourceDirectory;
+            CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
+            if (absolutePath)
+            {
+                CFStringRef path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
+                if (path)
+                {
+                    const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
+                    auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
+                    CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
+                    CFRelease(path);
+                    return std::string(resourceDirectory.get());
+                }
+                CFRelease(absolutePath);
+            }
+            CFRelease(relativePath);
+            return std::string();
         }
         else
             throw std::runtime_error("Failed to get current directory");
