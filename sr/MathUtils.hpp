@@ -18,17 +18,9 @@ namespace sr
 
     inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p) noexcept
     {
-        Vector3F s[2];
-
-        s[0].v[0] = c.v[0] - a.v[0];
-        s[0].v[1] = b.v[0] - a.v[0];
-        s[0].v[2] = a.v[0] - p.v[0];
-
-        s[1].v[0] = c.v[1] - a.v[1];
-        s[1].v[1] = b.v[1] - a.v[1];
-        s[1].v[2] = a.v[1] - p.v[1];
-
-        const auto u = s[0].cross(s[1]);
+        const Vector3F side1{c.v[0] - a.v[0], b.v[0] - a.v[0], a.v[0] - p.v[0]};
+        const Vector3F side2{c.v[1] - a.v[1], b.v[1] - a.v[1], a.v[1] - p.v[1]};
+        const auto u = side1.cross(side2);
 
         if (std::abs(u.v[2]) < std::numeric_limits<float>::min()) // degenerate triangle (all three points in a line)
             return Vector3F(-1.0F, 1.0F, 1.0F);
