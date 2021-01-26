@@ -9,7 +9,7 @@
 
 static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    demo::ApplicationWindows* applicationWindows = (demo::ApplicationWindows*)GetWindowLongPtr(window, GWLP_USERDATA);
+    auto applicationWindows = reinterpret_cast<demo::ApplicationWindows*>(GetWindowLongPtr(window, GWLP_USERDATA));
     if (!applicationWindows) return DefWindowProcW(window, msg, wParam, lParam);
 
     switch (msg)
@@ -53,7 +53,7 @@ namespace demo
         //wc.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(101));
         wc.hIcon = nullptr;
         wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
-        wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
+        wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(COLOR_WINDOW));
         wc.lpszMenuName = nullptr;
         wc.lpszClassName = L"SoftwareRenderer";
         wc.hIconSm = nullptr;
@@ -95,15 +95,13 @@ namespace demo
 
         const auto& frameBuffer = renderTarget.getFrameBuffer();
 
-        BITMAPINFO info;
-        ZeroMemory(&info, sizeof(BITMAPINFO));
+        BITMAPINFO info = {};
         info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
         info.bmiHeader.biWidth = static_cast<LONG>(frameBuffer.getWidth());
         info.bmiHeader.biHeight = -static_cast<LONG>(frameBuffer.getHeight());
         info.bmiHeader.biPlanes = 1;
         info.bmiHeader.biBitCount = 32;
         info.bmiHeader.biCompression = BI_RGB;
-        info.bmiHeader.biSizeImage = static_cast<DWORD>(frameBuffer.getWidth() * frameBuffer.getHeight() * 4);
 
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(window, &ps);
