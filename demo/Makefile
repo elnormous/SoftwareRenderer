@@ -127,8 +127,8 @@ $(EXECUTABLE): $(OBJECTS)
 .PHONY: clean
 clean:
 ifeq ($(PLATFORM),windows)
-	-del /f /q "$(EXECUTABLE).exe" "*.o" "*.d" "*.js.mem" "*.js" "*.hpp.gch"
+	-del /f /q "$(EXECUTABLE).exe" $(OBJECTS) $(DEPENDENCIES) "*.js.mem" "*.js" "*.hpp.gch"
 else
-	$(RM) $(EXECUTABLE) *.o *.d *.js.mem *.js *.hpp.gch $(EXECUTABLE).exe assetcatalog_generated_info.plist assetcatalog_dependencies
+	$(RM) $(EXECUTABLE) $(OBJECTS) $(DEPENDENCIES) *.js.mem *.js *.hpp.gch $(EXECUTABLE).exe assetcatalog_generated_info.plist assetcatalog_dependencies
 	$(RM) -r $(EXECUTABLE).app
 endif
