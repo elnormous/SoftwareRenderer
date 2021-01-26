@@ -13,7 +13,7 @@ namespace sr
     template<typename T>
     constexpr T clamp(T x, T lo, T hi) noexcept
     {
-        return (x < lo) ? lo : ((x > hi) ? hi : x);
+        return x < lo ? lo : x > hi ? hi : x;
     }
 
     inline Vector3F barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p) noexcept
