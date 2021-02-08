@@ -7,33 +7,36 @@
 #include <Strsafe.h>
 #include "ApplicationWindows.hpp"
 
-static LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
+namespace
 {
-    auto applicationWindows = reinterpret_cast<demo::ApplicationWindows*>(GetWindowLongPtr(window, GWLP_USERDATA));
-    if (!applicationWindows) return DefWindowProcW(window, msg, wParam, lParam);
-
-    switch (msg)
+    LRESULT CALLBACK windowProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
     {
-        case WM_PAINT:
+        auto applicationWindows = reinterpret_cast<demo::ApplicationWindows*>(GetWindowLongPtr(window, GWLP_USERDATA));
+        if (!applicationWindows) return DefWindowProcW(window, msg, wParam, lParam);
+
+        switch (msg)
         {
-            applicationWindows->draw();
-            break;
+            case WM_PAINT:
+            {
+                applicationWindows->draw();
+                break;
+            }
+
+            case WM_SIZE:
+            {
+                applicationWindows->didResize();
+                break;
+            }
+
+            case WM_DESTROY:
+            {
+                PostQuitMessage(0);
+                break;
+            }
         }
 
-        case WM_SIZE:
-        {
-            applicationWindows->didResize();
-            break;
-        }
-
-        case WM_DESTROY:
-        {
-            PostQuitMessage(0);
-            break;
-        }
+        return DefWindowProcW(window, msg, wParam, lParam); 
     }
-
-    return DefWindowProcW(window, msg, wParam, lParam); 
 }
 
 namespace demo
