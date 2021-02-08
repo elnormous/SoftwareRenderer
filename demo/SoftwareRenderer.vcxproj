@@ -42,7 +42,6 @@
     <ClInclude Include="TextureShader.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplicationWindows.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

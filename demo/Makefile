@@ -26,38 +26,37 @@ CC=emcc
 CXX=em++
 endif
 CXXFLAGS=-std=c++11 -Wall -I../sr
-SOURCES=Application.cpp
 ifeq ($(PLATFORM),windows)
 LDFLAGS+=-u WinMain
-SOURCES+=ApplicationWindows.cpp
+SOURCES=ApplicationWindows.cpp
 else ifeq ($(PLATFORM),linux)
 LDFLAGS+=-lX11
-SOURCES+=ApplicationX11.cpp
+SOURCES=ApplicationX11.cpp
 else ifeq ($(PLATFORM),sunos)
 LDFLAGS+=-lX11
-SOURCES+=ApplicationX11.cpp
+SOURCES=ApplicationX11.cpp
 else ifeq ($(PLATFORM),bsd)
 CXXFLAGS+=-I/usr/local/include
 LDFLAGS+=-lX11 -L/usr/local/lib
-SOURCES+=ApplicationX11.cpp
+SOURCES=ApplicationX11.cpp
 else ifeq ($(PLATFORM),macos)
 LDFLAGS+=-framework Cocoa
-SOURCES+=ApplicationMacOS.mm
+SOURCES=ApplicationMacOS.mm
 else ifeq ($(PLATFORM),haiku)
 LDFLAGS+=-lbe
-SOURCES+=ApplicationHaiku.cpp
+SOURCES=ApplicationHaiku.cpp
 else ifeq ($(PLATFORM),ios)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=8.0 \
 	-framework CoreGraphics -framework Foundation -framework UIKit
-SOURCES+=ApplicationIOS.mm
+SOURCES=ApplicationIOS.mm
 else ifeq ($(PLATFORM),tvos)
 CFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 CXXFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0
 LDFLAGS+=-arch arm64 -isysroot $(shell xcrun --sdk appletvos --show-sdk-path) -mtvos-version-min=9.0 \
 	-framework CoreGraphics -framework Foundation -framework UIKit
-SOURCES+=ApplicationTVOS.mm
+SOURCES=ApplicationTVOS.mm
 else ifeq ($(PLATFORM),emscripten)
 LDFLAGS+=--embed-file Resources -s TOTAL_MEMORY=134217728
 endif

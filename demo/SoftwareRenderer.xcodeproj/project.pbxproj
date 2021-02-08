@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30345F2B20A9062200B9B963 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Application.cpp */; };
 		30345F4C20AA1C0600B9B963 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4920AA1C0600B9B963 /* cube.mtl */; };
 		30345F4D20AA1C0600B9B963 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
 		30345F4F20AA1C7A00B9B963 /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		305F942221235C0D00893FF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305F942121235C0D00893FF5 /* CoreGraphics.framework */; };
-		305F94272123726A00893FF5 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Application.cpp */; };
 		305F94292123726A00893FF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305F942121235C0D00893FF5 /* CoreGraphics.framework */; };
 		305F942A2123726A00893FF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D285112122E1E400A4D87F /* UIKit.framework */; };
 		305F942C2123726A00893FF5 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
@@ -25,7 +23,6 @@
 		306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 306944E0205E00A900C4969C /* ApplicationMacOS.mm */; };
 		306944E82068655900C4969C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306944E72068655900C4969C /* Cocoa.framework */; };
 		C6D285232122E22D00A4D87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6D285222122E22D00A4D87F /* Assets.xcassets */; };
-		C6D2852D2122E27000A4D87F /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30345F2A20A9062200B9B963 /* Application.cpp */; };
 		C6D2852E2122E27C00A4D87F /* cube.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4E20AA1C7900B9B963 /* cube.bmp */; };
 		C6D2852F2122E27C00A4D87F /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4920AA1C0600B9B963 /* cube.mtl */; };
 		C6D285302122E27C00A4D87F /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 30345F4A20AA1C0600B9B963 /* cube.obj */; };
@@ -34,7 +31,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		30345F2A20A9062200B9B963 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		30345F4920AA1C0600B9B963 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
@@ -137,7 +133,6 @@
 		300984F1202D38FF00BB0340 /* demo */ = {
 			isa = PBXGroup;
 			children = (
-				30345F2A20A9062200B9B963 /* Application.cpp */,
 				306944A8205DF15A00C4969C /* Application.hpp */,
 				C6D285322122E29800A4D87F /* ApplicationIOS.hpp */,
 				C6D285312122E29800A4D87F /* ApplicationIOS.mm */,
@@ -369,7 +364,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				305F943C2123730A00893FF5 /* ApplicationTVOS.mm in Sources */,
-				305F94272123726A00893FF5 /* Application.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +372,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				306944E1205E00A900C4969C /* ApplicationMacOS.mm in Sources */,
-				30345F2B20A9062200B9B963 /* Application.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,7 +380,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6D285332122E29800A4D87F /* ApplicationIOS.mm in Sources */,
-				C6D2852D2122E27000A4D87F /* Application.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
