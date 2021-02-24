@@ -14,7 +14,7 @@ namespace sr
     class Shader
     {
     public:
-        struct VertexShaderOutput
+        struct VertexShaderOutput final
         {
             Vector4F position;
             Color color;
@@ -22,7 +22,7 @@ namespace sr
             Vector3F normal;
         };
 
-        virtual ~Shader() {}
+        virtual ~Shader() = default;
 
         virtual VertexShaderOutput vertexShader(const Matrix4F& modelViewProjection, const Vertex& vertex) const = 0;
         virtual Color fragmentShader(const VertexShaderOutput& input, Sampler* samplers[2], Texture* textures[2]) const = 0;
