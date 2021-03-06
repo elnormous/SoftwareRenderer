@@ -21,7 +21,7 @@ namespace sr
 
         template <typename ...A>
         explicit constexpr Vector(A... args) noexcept:
-            v{static_cast<T>(args)...}
+            v{args...}
         {
         }
 

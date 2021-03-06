@@ -17,7 +17,7 @@ namespace sr
         constexpr Quaternion() noexcept {}
 
         constexpr Quaternion(const T x, const T y, const T z, const T w) noexcept:
-            v{x, y, z, w}
+            v{{x, y, z, w}}
         {
         }
 
@@ -38,15 +38,17 @@ namespace sr
 
         static constexpr Quaternion identity() noexcept
         {
-            return Quaternion(0, 0, 0, 1);
+            return Quaternion{0, 0, 0, 1};
         }
 
         constexpr const Quaternion operator*(const Quaternion& q) const noexcept
         {
-            return Quaternion(v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0],
-                              -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1],
-                              v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2],
-                              -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3]);
+            return Quaternion{
+                v[0] * q.v[3] + v[1] * q.v[2] - v[2] * q.v[1] + v[3] * q.v[0],
+                -v[0] * q.v[2] + v[1] * q.v[3] + v[2] * q.v[0] + v[3] * q.v[1],
+                v[0] * q.v[1] - v[1] * q.v[0] + v[2] * q.v[3] + v[3] * q.v[2],
+                -v[0] * q.v[0] - v[1] * q.v[1] - v[2] * q.v[2] + v[3] * q.v[3]
+            };
         }
 
         Quaternion& operator*=(const Quaternion& q) noexcept

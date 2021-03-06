@@ -22,7 +22,7 @@ namespace sr
 
         template <typename ...A>
         explicit constexpr Matrix(A... args) noexcept:
-            m{static_cast<T>(args)...}
+            m{args...}
         {
         }
 
@@ -32,10 +32,12 @@ namespace sr
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
         static constexpr Matrix identity() noexcept
         {
-            return Matrix(T(1), T(0), T(0), T(0),
-                          T(0), T(1), T(0), T(0),
-                          T(0), T(0), T(1), T(0),
-                          T(0), T(0), T(0), T(1));
+            return Matrix{
+                T(1), T(0), T(0), T(0),
+                T(0), T(1), T(0), T(0),
+                T(0), T(0), T(1), T(0),
+                T(0), T(0), T(0), T(1)
+            };
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>

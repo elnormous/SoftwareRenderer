@@ -25,8 +25,8 @@ namespace sr
     class RenderError final: public std::runtime_error
     {
     public:
-        explicit RenderError(const std::string& str): std::runtime_error(str) {}
-        explicit RenderError(const char* str): std::runtime_error(str) {}
+        explicit RenderError(const std::string& str): std::runtime_error{str} {}
+        explicit RenderError(const char* str): std::runtime_error{str} {}
     };
 
     class Renderer final

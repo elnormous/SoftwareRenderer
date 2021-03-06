@@ -17,8 +17,8 @@ namespace sr
 
         Vertex(const Vector4F& initPosition, Color initColor,
                const Vector2F& initTexCoord, const Vector3F& initNormal) noexcept:
-            position(initPosition), color(initColor),
-            texCoords{initTexCoord}, normal(initNormal)
+            position{initPosition}, color{initColor},
+            texCoords{initTexCoord}, normal{initNormal}
         {
         }
 

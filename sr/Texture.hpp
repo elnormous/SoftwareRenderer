@@ -43,10 +43,10 @@ namespace sr
                 std::size_t initWidth = 0,
                 std::size_t initHeight = 0,
                 bool initMipMaps = false):
-            pixelFormat(initPixelFormat),
-            width(initWidth),
-            height(initHeight),
-            mipMaps(initMipMaps)
+            pixelFormat{initPixelFormat},
+            width{initWidth},
+            height{initHeight},
+            mipMaps{initMipMaps}
         {
             const auto pixelSize = getPixelSize(pixelFormat);
 

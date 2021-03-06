@@ -19,25 +19,25 @@ namespace sr
         constexpr Rect() noexcept {}
 
         constexpr Rect(const T width, const T height) noexcept:
-            size(width, height)
+            size{width, height}
         {
         }
 
         constexpr Rect(const T x, const T y,
                        const T width, const T height) noexcept:
-            position(x, y), size(width, height)
+            position{x, y}, size{width, height}
         {
         }
 
         constexpr Rect(const Vector<2, T>& initPosition,
                       const T width, const T height) noexcept:
-            position(initPosition), size(width, height)
+            position{initPosition}, size{width, height}
         {
         }
 
         constexpr Rect(const Vector<2, T>& initPosition,
                        const Size<2, T>& initSize) noexcept:
-            position(initPosition), size(initSize)
+            position{initPosition}, size{initSize}
         {
         }
 

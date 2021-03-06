@@ -25,10 +25,10 @@ namespace sr
         }
 
         explicit constexpr Color(std::uint32_t color) noexcept:
-            r(static_cast<std::uint8_t>((color & 0xFF000000U) >> 24) / 255.0F),
-            g(static_cast<std::uint8_t>((color & 0x00FF0000U) >> 16) / 255.0F),
-            b(static_cast<std::uint8_t>((color & 0x0000FF00U) >> 8) / 255.0F),
-            a(static_cast<std::uint8_t>(color & 0x000000FFU) / 255.0F)
+            r{static_cast<std::uint8_t>((color & 0xFF000000U) >> 24) / 255.0F},
+            g{static_cast<std::uint8_t>((color & 0x00FF0000U) >> 16) / 255.0F},
+            b{static_cast<std::uint8_t>((color & 0x0000FF00U) >> 8) / 255.0F},
+            a{static_cast<std::uint8_t>(color & 0x000000FFU) / 255.0F}
         {
         }
 
@@ -44,20 +44,20 @@ namespace sr
 
         template <class T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
         constexpr Color(T red, T green, T blue, T alpha = 0xFFU) noexcept:
-            r(red / 255.0F), g(green / 255.0F), b(blue / 255.0F), a(alpha / 255.0F)
+            r{red / 255.0F}, g{green / 255.0F}, b{blue / 255.0F}, a{alpha / 255.0F}
         {
         }
 
         constexpr Color(float red, float green, float blue, float alpha = 1.0F) noexcept:
-            r(red), g(green), b(blue), a(alpha)
+            r{red}, g{green}, b{blue}, a{alpha}
         {
         }
 
         explicit constexpr Color(const float color[4]) noexcept:
-            r(color[0]),
-            g(color[1]),
-            b(color[2]),
-            a(color[3])
+            r{color[0]},
+            g{color[1]},
+            b{color[2]},
+            a{color[3]}
         {
         }
 

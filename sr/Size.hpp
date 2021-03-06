@@ -20,7 +20,7 @@ namespace sr
 
         template <typename ...A>
         explicit constexpr Size(A... args) noexcept:
-            v{static_cast<T>(args)...}
+            v{args...}
         {
         }
 
@@ -32,7 +32,7 @@ namespace sr
         }
 
         explicit constexpr Size(const Vector<N, T>& vec) noexcept:
-            v(vec.v)
+            v{vec.v}
         {
         }
 
