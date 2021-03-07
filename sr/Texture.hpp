@@ -166,7 +166,7 @@ namespace sr
             }
         }
 
-        Color sample(const Sampler* sampler, const Vector2F& coord) const
+        Color sample(const Sampler* sampler, const Vector<float, 2>& coord) const
         {
             if (sampler && !levels.empty())
             {

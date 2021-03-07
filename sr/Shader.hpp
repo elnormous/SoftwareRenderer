@@ -16,15 +16,15 @@ namespace sr
     public:
         struct VertexShaderOutput final
         {
-            Vector4F position;
+            Vector<float, 4> position;
             Color color;
-            Vector2F texCoords[2];
-            Vector3F normal;
+            Vector<float, 2> texCoords[2];
+            Vector<float, 3> normal;
         };
 
         virtual ~Shader() = default;
 
-        virtual VertexShaderOutput vertexShader(const Matrix4F& modelViewProjection, const Vertex& vertex) const = 0;
+        virtual VertexShaderOutput vertexShader(const Matrix<float, 4>& modelViewProjection, const Vertex& vertex) const = 0;
         virtual Color fragmentShader(const VertexShaderOutput& input, Sampler* samplers[2], Texture* textures[2]) const = 0;
     };
 }

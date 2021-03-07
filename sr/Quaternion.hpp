@@ -338,8 +338,6 @@ namespace sr
             return *this;
         }
     };
-
-    using QuaternionF = Quaternion<float>;
 }
 
 #endif

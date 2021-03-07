@@ -207,8 +207,6 @@ namespace sr
             return *this;
         }
     };
-
-    using RectF = Rect<float>;
 }
 
 #endif

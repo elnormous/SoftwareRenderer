@@ -901,8 +901,6 @@ namespace sr
         m.transformVector(v);
         return v;
     }
-
-    using Matrix4F = Matrix<float, 4>;
 }
 
 #endif

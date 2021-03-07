@@ -63,12 +63,12 @@ namespace sr
             samplers[level] = &newSampler;
         }
 
-        void setViewport(const RectF& newViewport) noexcept
+        void setViewport(const Rect<float>& newViewport) noexcept
         {
             viewport = newViewport;
         }
 
-        void setScissorRect(const RectF& newScissorRect) noexcept
+        void setScissorRect(const Rect<float>& newScissorRect) noexcept
         {
             scissorRect = newScissorRect;
         }
@@ -101,7 +101,7 @@ namespace sr
                 depthBufferData[p] = depth;
         }
 
-        void drawTriangles(const std::vector<std::uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix4F& modelViewProjection)
+        void drawTriangles(const std::vector<std::uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix<float, 4>& modelViewProjection)
         {
             if (!renderTarget)
                 throw RenderError("No render target set");
@@ -119,26 +119,26 @@ namespace sr
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 2]])
                 };
 
-                Vector4F ndcPositions[3] = {
+                Vector<float, 4> ndcPositions[3] = {
                     vsOutputs[0].position,
                     vsOutputs[1].position,
                     vsOutputs[2].position
                 };
 
                 // transform to normalized device coordinates
-                for (sr::Vector4F& ndcPosition : ndcPositions)
+                for (sr::Vector<float, 4>& ndcPosition : ndcPositions)
                     ndcPosition /= ndcPosition.v[3];
 
-                Vector2F viewportPositions[3] = {
-                    Vector2F(ndcPositions[0].v[0], ndcPositions[0].v[1]),
-                    Vector2F(ndcPositions[1].v[0], ndcPositions[1].v[1]),
-                    Vector2F(ndcPositions[2].v[0], ndcPositions[2].v[1])
+                Vector<float, 2> viewportPositions[3] = {
+                    Vector<float, 2>(ndcPositions[0].v[0], ndcPositions[0].v[1]),
+                    Vector<float, 2>(ndcPositions[1].v[0], ndcPositions[1].v[1]),
+                    Vector<float, 2>(ndcPositions[2].v[0], ndcPositions[2].v[1])
                 };
 
-                Vector2F screenMin;
-                Vector2F screenMax;
+                Vector<float, 2> screenMin;
+                Vector<float, 2> screenMax;
 
-                for (sr::Vector2F& viewportPosition : viewportPositions)
+                for (sr::Vector<float, 2>& viewportPosition : viewportPositions)
                 {
                     // transform to viewport coordinates
                     viewportPosition.v[0] = viewportPosition.v[0] * viewport.size.v[0] / 2.0F + viewport.position.v[0] + viewport.size.v[0] / 2.0F; // xndc * width / 2 + x + width / 2
@@ -162,12 +162,12 @@ namespace sr
                         const auto s = barycentric(viewportPositions[0],
                                                    viewportPositions[1],
                                                    viewportPositions[2],
-                                                   Vector2F(static_cast<float>(screenX),
+                                                   Vector<float, 2>(static_cast<float>(screenX),
                                                             static_cast<float>(screenY)));
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
-                            Vector3F clip = Vector3F(s.v[0] / vsOutputs[0].position.v[3],
+                            Vector<float, 3> clip = Vector<float, 3>(s.v[0] / vsOutputs[0].position.v[3],
                                                      s.v[1] / vsOutputs[1].position.v[3],
                                                      s.v[2] / vsOutputs[2].position.v[3]);
                             clip /= (clip.v[0] + clip.v[1] + clip.v[2]);
@@ -181,7 +181,7 @@ namespace sr
                                 depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
 
                             Shader::VertexShaderOutput psInput;
-                            psInput.position = Vector4F(clip.v[0], clip.v[1], clip.v[2], 1.0F);
+                            psInput.position = Vector<float, 4>(clip.v[0], clip.v[1], clip.v[2], 1.0F);
                             psInput.color = Color({
                                 vsOutputs[0].color.r * clip.v[0] + vsOutputs[1].color.r * clip.v[1] + vsOutputs[2].color.r * clip.v[2],
                                 vsOutputs[0].color.g * clip.v[0] + vsOutputs[1].color.g * clip.v[1] + vsOutputs[2].color.g * clip.v[2],
@@ -189,10 +189,10 @@ namespace sr
                                 vsOutputs[0].color.a * clip.v[0] + vsOutputs[1].color.a * clip.v[1] + vsOutputs[2].color.a * clip.v[2]
                             });
 
-                            psInput.texCoords[0] = Vector2F(vsOutputs[0].texCoords[0].v[0] * clip.v[0] + vsOutputs[1].texCoords[0].v[0] * clip.v[1] + vsOutputs[2].texCoords[0].v[0] * clip.v[2],
+                            psInput.texCoords[0] = Vector<float, 2>(vsOutputs[0].texCoords[0].v[0] * clip.v[0] + vsOutputs[1].texCoords[0].v[0] * clip.v[1] + vsOutputs[2].texCoords[0].v[0] * clip.v[2],
                                                             vsOutputs[0].texCoords[0].v[1] * clip.v[0] + vsOutputs[1].texCoords[0].v[1] * clip.v[1] + vsOutputs[2].texCoords[0].v[1] * clip.v[2]);
 
-                            psInput.texCoords[1] = Vector2F(vsOutputs[0].texCoords[1].v[0] * clip.v[0] + vsOutputs[1].texCoords[1].v[0] * clip.v[1] + vsOutputs[2].texCoords[1].v[0] * clip.v[2],
+                            psInput.texCoords[1] = Vector<float, 2>(vsOutputs[0].texCoords[1].v[0] * clip.v[0] + vsOutputs[1].texCoords[1].v[0] * clip.v[1] + vsOutputs[2].texCoords[1].v[0] * clip.v[2],
                                                             vsOutputs[0].texCoords[1].v[1] * clip.v[0] + vsOutputs[1].texCoords[1].v[1] * clip.v[1] + vsOutputs[2].texCoords[1].v[1] * clip.v[2]);
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
@@ -266,8 +266,8 @@ namespace sr
         }
 
         RenderTarget* renderTarget = nullptr;
-        RectF viewport;
-        RectF scissorRect = RectF(0.0F, 0.0F, 1.0F, 1.0F);
+        Rect<float> viewport;
+        Rect<float> scissorRect = Rect<float>(0.0F, 0.0F, 1.0F, 1.0F);
         const Shader* shader = nullptr;
         Sampler* samplers[2]{nullptr, nullptr};
         Texture* textures[2]{nullptr, nullptr};
