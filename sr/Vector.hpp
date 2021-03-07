@@ -12,7 +12,7 @@
 
 namespace sr
 {
-    template <std::size_t N, typename T> class Vector final
+    template <typename T, std::size_t N> class Vector final
     {
     public:
         T v[N]{0};
@@ -26,7 +26,7 @@ namespace sr
         }
 
         template <std::size_t X = N, std::size_t N2, typename std::enable_if<(X != N2)>::type* = nullptr>
-        explicit Vector(const Vector<N2, T>& vec) noexcept
+        explicit Vector(const Vector<T, N2>& vec) noexcept
         {
             for (std::size_t i = 0; i < N && i < N2; ++i)
                 v[i] = vec.v[i];
@@ -319,17 +319,17 @@ namespace sr
         }
     };
 
-    template <std::size_t N, typename T>
-    inline const Vector<N, T> operator*(const T scalar, const Vector<N, T>& vec) noexcept
+    template <typename T, std::size_t N>
+    inline const Vector<T, N> operator*(const T scalar, const Vector<T, N>& vec) noexcept
     {
-        Vector<N, T> result = vec;
+        Vector<T, N> result = vec;
         result *= scalar;
         return result;
     }
 
-    using Vector2F = Vector<2, float>;
-    using Vector3F = Vector<3, float>;
-    using Vector4F = Vector<4, float>;
+    using Vector2F = Vector<float, 2>;
+    using Vector3F = Vector<float, 3>;
+    using Vector4F = Vector<float, 4>;
 }
 
 #endif

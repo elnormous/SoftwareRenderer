@@ -11,7 +11,7 @@
 
 namespace sr
 {
-    template <std::size_t N, typename T> class Size final
+    template <typename T, std::size_t N> class Size final
     {
     public:
         T v[N]{0};
@@ -25,13 +25,13 @@ namespace sr
         }
 
         template <std::size_t X = N, std::size_t N2, typename std::enable_if<(X != N2)>::type* = nullptr>
-        explicit Size(const Size<N2, T>& size) noexcept
+        explicit Size(const Size<T, N2>& size) noexcept
         {
             for (std::size_t i = 0; i < N && i < N2; ++i)
                 v[i] = size.v[i];
         }
 
-        explicit constexpr Size(const Vector<N, T>& vec) noexcept:
+        explicit constexpr Size(const Vector<T, N>& vec) noexcept:
             v{vec.v}
         {
         }
@@ -57,7 +57,7 @@ namespace sr
         template <std::size_t X = N, typename std::enable_if<(X >= 3)>::type* = nullptr>
         constexpr T depth() const noexcept { return v[2]; }
 
-        void scale(const Vector<N, T>& scale) noexcept
+        void scale(const Vector<T, N>& scale) noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 v[i] *= scale.v[i];
@@ -172,28 +172,28 @@ namespace sr
         }
     };
 
-    template <std::size_t N, typename T>
-    inline const Size<N, T> operator*(const Size<N, T>& size, const Vector<N, T>& v) noexcept
+    template <typename T, std::size_t N>
+    inline const Size<T, N> operator*(const Size<T, N>& size, const Vector<T, N>& v) noexcept
     {
-        Size<N, T> result = size;
+        Size<T, N> result = size;
         for (std::size_t i = 0; i < N; ++i)
             result.v[i] *= v.v[i];
         return result;
     }
 
-    template <std::size_t N, typename T>
-    inline const Size<N, T> operator/(const Size<N, T>& size, const Vector<N, T>& v) noexcept
+    template <typename T, std::size_t N>
+    inline const Size<T, N> operator/(const Size<T, N>& size, const Vector<T, N>& v) noexcept
     {
-        Size<N, T> result = size;
+        Size<T, N> result = size;
         for (std::size_t i = 0; i < N; ++i)
             result.v[i] /= v.v[i];
         return result;
     }
 
-    using Size2U = Size<2, std::uint32_t>;
-    using Size3U = Size<3, std::uint32_t>;
-    using Size2F = Size<2, float>;
-    using Size3F = Size<3, float>;
+    using Size2U = Size<std::uint32_t, 2>;
+    using Size3U = Size<std::uint32_t, 3>;
+    using Size2F = Size<float, 2>;
+    using Size3F = Size<float, 3>;
 }
 
 #endif
