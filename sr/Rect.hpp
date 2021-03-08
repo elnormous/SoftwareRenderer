@@ -84,7 +84,7 @@ namespace sr
 
         constexpr Vector<T, 2> topRight() const noexcept
         {
-            return Vector<T, 2>(position.v[0] + size.v[0], position.v[1] + size.v[1]);
+            return Vector<T, 2>{position.v[0] + size.v[0], position.v[1] + size.v[1]};
         }
 
         constexpr bool containsPoint(const T x, const T y) const noexcept
@@ -179,8 +179,10 @@ namespace sr
 
         constexpr const Rect operator*(const T scalar) const noexcept
         {
-            return Rect(position.v[0] * scalar, position.v[1] * scalar,
-                        size.v[0] * scalar, size.v[1] * scalar);
+            return Rect{
+                position.v[0] * scalar, position.v[1] * scalar,
+                size.v[0] * scalar, size.v[1] * scalar
+            };
         }
 
         Rect& operator*=(const T scalar) noexcept
@@ -194,8 +196,10 @@ namespace sr
 
         constexpr const Rect operator/(const T scalar) const noexcept
         {
-            return Rect(position.v[0] / scalar, position.v[1] / scalar,
-                        size.v[0] / scalar, size.v[1] / scalar);
+            return Rect{
+                position.v[0] / scalar, position.v[1] / scalar,
+                size.v[0] / scalar, size.v[1] / scalar
+            };
         }
 
         Rect& operator/=(const T scalar) noexcept
