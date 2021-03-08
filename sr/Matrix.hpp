@@ -499,6 +499,7 @@ namespace sr
             invert(*this);
         }
 
+        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
         void invert(Matrix& dst) const noexcept
         {
             const T a0 = m[0] * m[5] - m[1] * m[4];
@@ -520,28 +521,29 @@ namespace sr
             // Close to zero, can't invert
             if (std::fabs(det) <= std::numeric_limits<T>::min()) return;
 
-            Matrix inverse;
-            inverse.m[0] = m[5] * b5 - m[6] * b4 + m[7] * b3;
-            inverse.m[1] = -m[1] * b5 + m[2] * b4 - m[3] * b3;
-            inverse.m[2] = m[13] * a5 - m[14] * a4 + m[15] * a3;
-            inverse.m[3] = -m[9] * a5 + m[10] * a4 - m[11] * a3;
+            const Matrix adjugate{
+                m[5] * b5 - m[6] * b4 + m[7] * b3,
+                -m[1] * b5 + m[2] * b4 - m[3] * b3,
+                m[13] * a5 - m[14] * a4 + m[15] * a3,
+                -m[9] * a5 + m[10] * a4 - m[11] * a3,
 
-            inverse.m[4] = -m[4] * b5 + m[6] * b2 - m[7] * b1;
-            inverse.m[5] = m[0] * b5 - m[2] * b2 + m[3] * b1;
-            inverse.m[6] = -m[12] * a5 + m[14] * a2 - m[15] * a1;
-            inverse.m[7] = m[8] * a5 - m[10] * a2 + m[11] * a1;
+                -m[4] * b5 + m[6] * b2 - m[7] * b1,
+                m[0] * b5 - m[2] * b2 + m[3] * b1,
+                -m[12] * a5 + m[14] * a2 - m[15] * a1,
+                m[8] * a5 - m[10] * a2 + m[11] * a1,
 
-            inverse.m[8] = m[4] * b4 - m[5] * b2 + m[7] * b0;
-            inverse.m[9] = -m[0] * b4 + m[1] * b2 - m[3] * b0;
-            inverse.m[10] = m[12] * a4 - m[13] * a2 + m[15] * a0;
-            inverse.m[11] = -m[8] * a4 + m[9] * a2 - m[11] * a0;
+                m[4] * b4 - m[5] * b2 + m[7] * b0,
+                -m[0] * b4 + m[1] * b2 - m[3] * b0,
+                m[12] * a4 - m[13] * a2 + m[15] * a0,
+                -m[8] * a4 + m[9] * a2 - m[11] * a0,
 
-            inverse.m[12] = -m[4] * b3 + m[5] * b1 - m[6] * b0;
-            inverse.m[13] = m[0] * b3 - m[1] * b1 + m[2] * b0;
-            inverse.m[14] = -m[12] * a3 + m[13] * a1 - m[14] * a0;
-            inverse.m[15] = m[8] * a3 - m[9] * a1 + m[10] * a0;
+                -m[4] * b3 + m[5] * b1 - m[6] * b0,
+                m[0] * b3 - m[1] * b1 + m[2] * b0,
+                -m[12] * a3 + m[13] * a1 - m[14] * a0,
+                m[8] * a3 - m[9] * a1 + m[10] * a0
+            };
 
-            inverse.multiply(T(1) / det, dst);
+            adjugate.multiply(T(1) / det, dst);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == Y)>::type* = nullptr>
