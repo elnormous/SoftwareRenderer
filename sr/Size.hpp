@@ -103,7 +103,7 @@ namespace sr
 
         const Size operator*(const T scalar) const noexcept
         {
-            Size result(*this);
+            Size result = *this;
             for (auto& c : result.v)
                 c *= scalar;
             return result;
@@ -118,7 +118,7 @@ namespace sr
 
         const Size operator/(const T scalar) const noexcept
         {
-            Size result(*this);
+            Size result = *this;
             for (auto& c : result.v)
                 c /= scalar;
             return result;

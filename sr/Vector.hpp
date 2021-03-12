@@ -95,9 +95,11 @@ namespace sr
         template <std::size_t X = N, typename std::enable_if<(X == 3)>::type* = nullptr>
         constexpr Vector cross(const Vector& vec) const noexcept
         {
-            return Vector((v[1] * vec.v[2]) - (v[2] * vec.v[1]),
-                          (v[2] * vec.v[0]) - (v[0] * vec.v[2]),
-                          (v[0] * vec.v[1]) - (v[1] * vec.v[0]));
+            return Vector{
+                (v[1] * vec.v[2]) - (v[2] * vec.v[1]),
+                (v[2] * vec.v[0]) - (v[0] * vec.v[2]),
+                (v[0] * vec.v[1]) - (v[1] * vec.v[0])
+            };
         }
 
         T distance(const Vector& vec) const noexcept
