@@ -170,12 +170,12 @@ namespace sr
 
         void invert() noexcept
         {
-            constexpr T squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
+            constexpr auto squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
             if (squared <= std::numeric_limits<T>::min())
                 return;
 
             // conjugate divided by norm squared
-            const T multiplier = T(1) / squared;
+            const auto multiplier = T(1) / squared;
             v[0] = -v[0] * multiplier;
             v[1] = -v[1] * multiplier;
             v[2] = -v[2] * multiplier;
@@ -184,7 +184,7 @@ namespace sr
 
         T getNorm() const noexcept
         {
-            constexpr T n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            constexpr auto n = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
             if (n == T(1)) // already normalized
                 return 1;
 
@@ -193,15 +193,15 @@ namespace sr
 
         void normalize() noexcept
         {
-            constexpr T squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            constexpr auto squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
             if (squared == T(1)) // already normalized
                 return;
 
-            const T length = std::sqrt(squared);
+            const auto length = std::sqrt(squared);
             if (length <= std::numeric_limits<T>::min()) // too close to zero
                 return;
 
-            const T multiplier = T(1) / length;
+            const auto multiplier = T(1) / length;
             v[0] *= multiplier;
             v[1] *= multiplier;
             v[2] *= multiplier;
@@ -210,11 +210,11 @@ namespace sr
 
         Quaternion normalized() const noexcept
         {
-            constexpr T squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+            constexpr auto squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
             if (squared == T(1)) // already normalized
                 return *this;
 
-            const T length = std::sqrt(squared);
+            const auto length = std::sqrt(squared);
             if (length <= std::numeric_limits<T>::min()) // too close to zero
                 return *this;
 
@@ -229,8 +229,8 @@ namespace sr
         {
             const auto normalizedAxis = axis.normalized();
 
-            const T cosAngle = std::cos(angle / T(2));
-            const T sinAngle = std::sin(angle / T(2));
+            const auto cosAngle = std::cos(angle / T(2));
+            const auto sinAngle = std::sin(angle / T(2));
 
             v[0] = normalizedAxis.v[0] * sinAngle;
             v[1] = normalizedAxis.v[1] * sinAngle;
@@ -241,7 +241,7 @@ namespace sr
         void getRotation(T& angle, Vector<T, 3>& axis) const noexcept
         {
             angle = T(2) * std::acos(v[3]);
-            const T s = std::sqrt(T(1) - v[3] * v[3]);
+            const auto s = std::sqrt(T(1) - v[3] * v[3]);
             if (s <= std::numeric_limits<T>::min()) // too close to zero
             {
                 axis.v[0] = v[0];
@@ -282,22 +282,22 @@ namespace sr
 
         void setEulerAngles(const Vector<T, 3>& angles) noexcept
         {
-            const T angleR = angles.v[0] / T(2);
-            const T sr = std::sin(angleR);
-            const T cr = std::cos(angleR);
+            const auto angleR = angles.v[0] / T(2);
+            const auto sr = std::sin(angleR);
+            const auto cr = std::cos(angleR);
 
-            const T angleP = angles.v[1] / T(2);
-            const T sp = std::sin(angleP);
-            const T cp = std::cos(angleP);
+            const auto angleP = angles.v[1] / T(2);
+            const auto sp = std::sin(angleP);
+            const auto cp = std::cos(angleP);
 
-            const T angleY = angles.v[2] / T(2);
-            const T sy = std::sin(angleY);
-            const T cy = std::cos(angleY);
+            const auto angleY = angles.v[2] / T(2);
+            const auto sy = std::sin(angleY);
+            const auto cy = std::cos(angleY);
 
-            const T cpcy = cp * cy;
-            const T spcy = sp * cy;
-            const T cpsy = cp * sy;
-            const T spsy = sp * sy;
+            const auto cpcy = cp * cy;
+            const auto spcy = sp * cy;
+            const auto cpsy = cp * sy;
+            const auto spsy = sp * sy;
 
             v[0] = sr * cpcy - cr * spsy;
             v[1] = cr * spcy + sr * cpsy;
@@ -312,8 +312,8 @@ namespace sr
 
         Vector<T, 3> rotateVector(const Vector<T, 3>& vector) const noexcept
         {
-            const Vector<T, 3> q(v[0], v[1], v[2]);
-            const Vector<T, 3> t = T(2) * q.cross(vector);
+            const Vector<T, 3> q{v[0], v[1], v[2]};
+            const auto t = T(2) * q.cross(vector);
             return vector + (v[3] * t) + q.cross(t);
         }
 

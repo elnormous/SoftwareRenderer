@@ -162,11 +162,11 @@ namespace sr
             if (squared == T(1)) // already normalized
                 return;
 
-            const T length = std::sqrt(squared);
+            const auto length = std::sqrt(squared);
             if (length <= std::numeric_limits<T>::min()) // too close to zero
                 return;
 
-            const T multiplier = T(1) / length;
+            const auto multiplier = T(1) / length;
             for (auto& c : v)
                 c *= multiplier;
         }
@@ -180,11 +180,11 @@ namespace sr
             if (squared == T(1)) // already normalized
                 return *this;
 
-            const T length = std::sqrt(squared);
+            const auto length = std::sqrt(squared);
             if (length <= std::numeric_limits<T>::min()) // too close to zero
                 return *this;
 
-            const T multiplier = T(1) / length;
+            const auto multiplier = T(1) / length;
             return *this * multiplier;
         }
 
