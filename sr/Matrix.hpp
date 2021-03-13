@@ -115,33 +115,39 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        void setOrthographicFromSize(const T width, const T height,
-                                     const T zNearPlane, const T zFarPlane) noexcept
+        void setOrthographic(const T width, const T height,
+                             const T nearClip, const T farClip) noexcept
         {
-            const auto halfWidth = width / T(2);
-            const auto halfHeight = height / T(2);
-            setOrthographicOffCenter(-halfWidth, halfWidth,
-                                     -halfHeight, halfHeight,
-                                     zNearPlane, zFarPlane);
+            assert(width);
+            assert(height);
+            assert(farClip != nearClip);
+
+            setZero();
+
+            m[0] = T(2) / width;
+            m[5] = T(2) / height;
+            m[10] = T(1) / (farClip - nearClip);
+            m[14] = nearClip / (nearClip - farClip);
+            m[15] = T(1);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        void setOrthographicOffCenter(const T left, const T right,
-                                      const T bottom, const T top,
-                                      const T zNearPlane, const T zFarPlane) noexcept
+        void setOrthographic(const T left, const T right,
+                             const T bottom, const T top,
+                             const T near, const T far) noexcept
         {
             assert(right != left);
             assert(top != bottom);
-            assert(zFarPlane != zNearPlane);
+            assert(far != near);
 
             setZero();
 
             m[0] = T(2) / (right - left);
             m[5] = T(2) / (top - bottom);
-            m[10] = T(1) / (zFarPlane - zNearPlane);
+            m[10] = T(1) / (far - near);
             m[12] = (left + right) / (left - right);
             m[13] = (bottom + top) / (bottom - top);
-            m[14] = zNearPlane / (zNearPlane - zFarPlane);
+            m[14] = near / (near - far);
             m[15] = T(1);
         }
 
