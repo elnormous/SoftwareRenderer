@@ -173,8 +173,8 @@ namespace demo
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
         [window setTitle:@"SoftwareRenderer"];
 
-        NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                     styleMask:[window styleMask]];
+        const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
+                                                           styleMask:[window styleMask]];
 
         width = static_cast<std::size_t>(windowFrame.size.width);
         height = static_cast<std::size_t>(windowFrame.size.height);
