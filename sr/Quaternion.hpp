@@ -38,7 +38,7 @@ namespace sr
 
         static constexpr Quaternion identity() noexcept
         {
-            return Quaternion{0, 0, 0, 1};
+            return Quaternion{T(0), T(0), T(0), T(1)};
         }
 
         constexpr const Quaternion operator*(const Quaternion& q) const noexcept
@@ -319,17 +319,17 @@ namespace sr
 
         Vector<T, 3> getRightVector() const noexcept
         {
-            return rotateVector(Vector<T, 3>(1, 0, 0));
+            return rotateVector(Vector<T, 3>(T(1), T(0), T(0)));
         }
 
         Vector<T, 3> getUpVector() const noexcept
         {
-            return rotateVector(Vector<T, 3>(0, 1, 0));
+            return rotateVector(Vector<T, 3>(T(0), T(1), T(0)));
         }
 
         Vector<T, 3> getForwardVector() const noexcept
         {
-            return rotateVector(Vector<T, 3>(0, 0, 1));
+            return rotateVector(Vector<T, 3>(T(0), T(0), T(1)));
         }
 
         Quaternion& lerp(const Quaternion& q1, const Quaternion& q2, T t) noexcept
