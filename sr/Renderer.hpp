@@ -159,17 +159,23 @@ namespace sr
                 for (std::size_t screenY = static_cast<std::size_t>(screenMin.v[1]); screenY <= static_cast<std::size_t>(screenMax.v[1]); ++screenY)
                     for (std::size_t screenX = static_cast<std::size_t>(screenMin.v[0]); screenX <= static_cast<std::size_t>(screenMax.v[0]); ++screenX)
                     {
+                        const Vector<float, 2> p{
+                            static_cast<float>(screenX),
+                            static_cast<float>(screenY)
+                        };
+
                         const auto s = barycentric(viewportPositions[0],
                                                    viewportPositions[1],
                                                    viewportPositions[2],
-                                                   Vector<float, 2>(static_cast<float>(screenX),
-                                                            static_cast<float>(screenY)));
+                                                   p);
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
-                            Vector<float, 3> clip = Vector<float, 3>(s.v[0] / vsOutputs[0].position.v[3],
-                                                     s.v[1] / vsOutputs[1].position.v[3],
-                                                     s.v[2] / vsOutputs[2].position.v[3]);
+                            Vector<float, 3> clip = Vector<float, 3>{
+                                s.v[0] / vsOutputs[0].position.v[3],
+                                s.v[1] / vsOutputs[1].position.v[3],
+                                s.v[2] / vsOutputs[2].position.v[3]
+                            };
                             clip /= (clip.v[0] + clip.v[1] + clip.v[2]);
 
                             const auto depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
@@ -181,19 +187,23 @@ namespace sr
                                 depthBufferData[screenY * renderTarget->getDepthBuffer().getWidth() + screenX] = depth;
 
                             Shader::VertexShaderOutput psInput;
-                            psInput.position = Vector<float, 4>(clip.v[0], clip.v[1], clip.v[2], 1.0F);
-                            psInput.color = Color({
+                            psInput.position = Vector<float, 4>{clip.v[0], clip.v[1], clip.v[2], 1.0F};
+                            psInput.color = Color{
                                 vsOutputs[0].color.r * clip.v[0] + vsOutputs[1].color.r * clip.v[1] + vsOutputs[2].color.r * clip.v[2],
                                 vsOutputs[0].color.g * clip.v[0] + vsOutputs[1].color.g * clip.v[1] + vsOutputs[2].color.g * clip.v[2],
                                 vsOutputs[0].color.b * clip.v[0] + vsOutputs[1].color.b * clip.v[1] + vsOutputs[2].color.b * clip.v[2],
                                 vsOutputs[0].color.a * clip.v[0] + vsOutputs[1].color.a * clip.v[1] + vsOutputs[2].color.a * clip.v[2]
-                            });
+                            };
 
-                            psInput.texCoords[0] = Vector<float, 2>(vsOutputs[0].texCoords[0].v[0] * clip.v[0] + vsOutputs[1].texCoords[0].v[0] * clip.v[1] + vsOutputs[2].texCoords[0].v[0] * clip.v[2],
-                                                            vsOutputs[0].texCoords[0].v[1] * clip.v[0] + vsOutputs[1].texCoords[0].v[1] * clip.v[1] + vsOutputs[2].texCoords[0].v[1] * clip.v[2]);
+                            psInput.texCoords[0] = Vector<float, 2>{
+                                vsOutputs[0].texCoords[0].v[0] * clip.v[0] + vsOutputs[1].texCoords[0].v[0] * clip.v[1] + vsOutputs[2].texCoords[0].v[0] * clip.v[2],
+                                vsOutputs[0].texCoords[0].v[1] * clip.v[0] + vsOutputs[1].texCoords[0].v[1] * clip.v[1] + vsOutputs[2].texCoords[0].v[1] * clip.v[2]
+                            };
 
-                            psInput.texCoords[1] = Vector<float, 2>(vsOutputs[0].texCoords[1].v[0] * clip.v[0] + vsOutputs[1].texCoords[1].v[0] * clip.v[1] + vsOutputs[2].texCoords[1].v[0] * clip.v[2],
-                                                            vsOutputs[0].texCoords[1].v[1] * clip.v[0] + vsOutputs[1].texCoords[1].v[1] * clip.v[1] + vsOutputs[2].texCoords[1].v[1] * clip.v[2]);
+                            psInput.texCoords[1] = Vector<float, 2>{
+                                vsOutputs[0].texCoords[1].v[0] * clip.v[0] + vsOutputs[1].texCoords[1].v[0] * clip.v[1] + vsOutputs[2].texCoords[1].v[0] * clip.v[2],
+                                vsOutputs[0].texCoords[1].v[1] * clip.v[0] + vsOutputs[1].texCoords[1].v[1] * clip.v[1] + vsOutputs[2].texCoords[1].v[1] * clip.v[2]
+                            };
 
                             psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
@@ -202,7 +212,7 @@ namespace sr
                             if (blendState.enabled)
                             {
                                 const auto pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget->getFrameBuffer().getWidth() + screenX]);
-                                const Color destColor(pixel[0], pixel[1], pixel[2], pixel[3]);
+                                const Color destColor{pixel[0], pixel[1], pixel[2], pixel[3]};
 
                                 // alpha blend
                                 const Color resultColor{
