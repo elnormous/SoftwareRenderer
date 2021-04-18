@@ -50,26 +50,26 @@ namespace sr
         {
             const auto pixelSize = getPixelSize(pixelFormat);
 
-            if (pixelSize > 0 && width > 0 && height > 0)
+            if (pixelSize <= 0 || width <= 0 || height <= 0)
+                return;
+
+            levels.push_back(std::vector<std::uint8_t>(width * height * pixelSize));
+
+            if (!mipMaps)
+                return;
+            
+            std::size_t newWidth = width;
+            std::size_t newHeight = height;
+
+            while (newWidth > 1 || newHeight > 1)
             {
-                levels.push_back(std::vector<std::uint8_t>(width * height * pixelSize));
+                newWidth >>= 1;
+                newHeight >>= 1;
 
-                if (mipMaps)
-                {
-                    std::size_t newWidth = width;
-                    std::size_t newHeight = height;
+                if (newWidth < 1) newWidth = 1;
+                if (newHeight < 1) newHeight = 1;
 
-                    while (newWidth > 1 || newHeight > 1)
-                    {
-                        newWidth >>= 1;
-                        newHeight >>= 1;
-
-                        if (newWidth < 1) newWidth = 1;
-                        if (newHeight < 1) newHeight = 1;
-
-                        levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
-                    }
-                }
+                levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
             }
         }
 
@@ -86,20 +86,20 @@ namespace sr
             levels.push_back(std::vector<std::uint8_t>(width * height * pixelSize));
 
             if (mipMaps)
+                return;
+
+            newWidth = width;
+            newHeight = height;
+
+            while (newWidth > 1 || newHeight > 1)
             {
-                newWidth = width;
-                newHeight = height;
+                newWidth >>= 1;
+                newHeight >>= 1;
 
-                while (newWidth > 1 || newHeight > 1)
-                {
-                    newWidth >>= 1;
-                    newHeight >>= 1;
+                if (newWidth < 1) newWidth = 1;
+                if (newHeight < 1) newHeight = 1;
 
-                    if (newWidth < 1) newWidth = 1;
-                    if (newHeight < 1) newHeight = 1;
-
-                    levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
-                }
+                levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
             }
         }
 
@@ -188,38 +188,36 @@ namespace sr
                     const auto textureY = static_cast<std::size_t>(std::round(v));
                     return getPixel(textureX, textureY, 0);
                 }
-                else
-                {
-                    auto textureX0 = static_cast<std::size_t>(u - 0.5F);
-                    auto textureX1 = textureX0 + 1;
-                    auto textureY0 = static_cast<std::size_t>(v - 0.5F);
-                    auto textureY1 = textureY0 + 1;
+                
+                auto textureX0 = static_cast<std::size_t>(u - 0.5F);
+                auto textureX1 = textureX0 + 1;
+                auto textureY0 = static_cast<std::size_t>(v - 0.5F);
+                auto textureY1 = textureY0 + 1;
 
-                    textureX0 = clamp(textureX0, static_cast<std::size_t>(0U), width - 1);
-                    textureX1 = clamp(textureX1, static_cast<std::size_t>(0U), width - 1);
-                    textureY0 = clamp(textureY0, static_cast<std::size_t>(0U), height - 1);
-                    textureY1 = clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
+                textureX0 = clamp(textureX0, static_cast<std::size_t>(0U), width - 1);
+                textureX1 = clamp(textureX1, static_cast<std::size_t>(0U), width - 1);
+                textureY0 = clamp(textureY0, static_cast<std::size_t>(0U), height - 1);
+                textureY1 = clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
 
-                    // TODO: calculate mip level
-                    const Color color[4] = {
-                        getPixel(textureX0, textureY0, 0),
-                        getPixel(textureX1, textureY0, 0),
-                        getPixel(textureX0, textureY1, 0),
-                        getPixel(textureX1, textureY1, 0)
-                    };
+                // TODO: calculate mip level
+                const Color color[4] = {
+                    getPixel(textureX0, textureY0, 0),
+                    getPixel(textureX1, textureY0, 0),
+                    getPixel(textureX0, textureY1, 0),
+                    getPixel(textureX1, textureY1, 0)
+                };
 
-                    const auto x0 = u - (textureX0 + 0.5F);
-                    const auto y0 = v - (textureY0 + 0.5F);
-                    const auto x1 = (textureX0 + 1.5F) - u;
-                    const auto y1 = (textureY0 + 1.5F) - v;
-                    
-                    return Color{
-                        color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0,
-                        color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0,
-                        color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0,
-                        color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0
-                    };
-                }
+                const auto x0 = u - (textureX0 + 0.5F);
+                const auto y0 = v - (textureY0 + 0.5F);
+                const auto x1 = (textureX0 + 1.5F) - u;
+                const auto y1 = (textureY0 + 1.5F) - v;
+                
+                return Color{
+                    color[0].r * x1 * y1 + color[1].r * x0 * y1 + color[2].r * x1 * y0 + color[3].r * x0 * y0,
+                    color[0].g * x1 * y1 + color[1].g * x0 * y1 + color[2].g * x1 * y0 + color[3].g * x0 * y0,
+                    color[0].b * x1 * y1 + color[1].b * x0 * y1 + color[2].b * x1 * y0 + color[3].b * x0 * y0,
+                    color[0].a * x1 * y1 + color[1].a * x0 * y1 + color[2].a * x1 * y0 + color[3].a * x0 * y0
+                };
             }
 
             return Color();
