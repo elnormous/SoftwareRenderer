@@ -66,9 +66,6 @@
     <ClInclude Include="..\sr\BlendState.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="BMP.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Color.hpp">
       <Filter>sr</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>sr</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationWindows.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BMP.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace demo
                 8, 9, 10, 9, 11, 10, // left
                 12, 13, 14, 13, 15, 14 // right
             },
-                vertices{
+            vertices{
                 // front
                 sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFF0000FFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
                 sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0x00FF00FFU), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
@@ -63,8 +63,8 @@ namespace demo
                 sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F))
             }
         {
-            const sr::BMP bmp(Application::getResourcePath() + "/cube.bmp");
-            texture = sr::Texture(sr::Texture::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight());
+            const sr::BMP bmp{Application::getResourcePath() + "/cube.bmp"};
+            texture = sr::Texture{sr::Texture::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight()};
             texture.setData(bmp.getData(), 0);
 
             sampler.addressModeX = sr::Sampler::AddressMode::repeat;
@@ -91,7 +91,7 @@ namespace demo
 
         void setup()
         {
-            renderTarget = sr::RenderTarget(width, height);
+            renderTarget = sr::RenderTarget{width, height};
 
             projection.setPerspective(static_cast<float>(sr::tau / 6.0),
                 static_cast<float>(width) / static_cast<float>(height),
@@ -109,11 +109,11 @@ namespace demo
 
             sr::Matrix<float, 4> modelViewProjection = projection * view * model;
 
-            renderer.setViewport(sr::Rect<float>(0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)));
+            renderer.setViewport(sr::Rect<float>{0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)});
             renderer.setBlendState(blendState);
             renderer.setDepthState(depthState);
 
-            renderer.clear(sr::Color(255, 255, 255, 255), 1000.0F);
+            renderer.clear(sr::Color{255, 255, 255, 255}, 1000.0F);
 
             renderer.setShader(shader);
             renderer.setTexture(texture, 0);
