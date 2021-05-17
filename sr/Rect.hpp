@@ -114,11 +114,8 @@ namespace sr
                         const T width, const T height) const noexcept
         {
             T t;
-            if ((t = x - position.v[0]) > size.v[0] || -t > width)
-                return false;
-            if ((t = y - position.v[1]) > size.v[1] || -t > height)
-                return false;
-            return true;
+            return !((t = x - position.v[0]) > size.v[0] || -t > width) &&
+                !((t = y - position.v[1]) > size.v[1] || -t > height);
         }
 
         constexpr bool intersects(const Rect& r) const noexcept
