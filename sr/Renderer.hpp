@@ -25,8 +25,7 @@ namespace sr
     class RenderError final: public std::runtime_error
     {
     public:
-        explicit RenderError(const std::string& str): std::runtime_error{str} {}
-        explicit RenderError(const char* str): std::runtime_error{str} {}
+        using std::runtime_error::runtime_error;
     };
 
     class Renderer final
@@ -113,13 +112,13 @@ namespace sr
 
             for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
             {
-                const Shader::VertexShaderOutput vsOutputs[3] = {
+                const Shader::VertexShaderOutput vsOutputs[3]{
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 1]]),
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 2]])
                 };
 
-                Vector<float, 4> ndcPositions[3] = {
+                Vector<float, 4> ndcPositions[3]{
                     vsOutputs[0].position,
                     vsOutputs[1].position,
                     vsOutputs[2].position
@@ -129,16 +128,16 @@ namespace sr
                 for (sr::Vector<float, 4>& ndcPosition : ndcPositions)
                     ndcPosition /= ndcPosition.v[3];
 
-                Vector<float, 2> viewportPositions[3] = {
-                    Vector<float, 2>(ndcPositions[0].v[0], ndcPositions[0].v[1]),
-                    Vector<float, 2>(ndcPositions[1].v[0], ndcPositions[1].v[1]),
-                    Vector<float, 2>(ndcPositions[2].v[0], ndcPositions[2].v[1])
+                Vector<float, 2> viewportPositions[3]{
+                    Vector<float, 2>{ndcPositions[0].v[0], ndcPositions[0].v[1]},
+                    Vector<float, 2>{ndcPositions[1].v[0], ndcPositions[1].v[1]},
+                    Vector<float, 2>{ndcPositions[2].v[0], ndcPositions[2].v[1]}
                 };
 
                 Vector<float, 2> screenMin;
                 Vector<float, 2> screenMax;
 
-                for (sr::Vector<float, 2>& viewportPosition : viewportPositions)
+                for (auto& viewportPosition : viewportPositions)
                 {
                     // transform to viewport coordinates
                     viewportPosition.v[0] = viewportPosition.v[0] * viewport.size.v[0] / 2.0F + viewport.position.v[0] + viewport.size.v[0] / 2.0F; // xndc * width / 2 + x + width / 2
@@ -171,7 +170,7 @@ namespace sr
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
-                            Vector<float, 3> clip = Vector<float, 3>{
+                            Vector<float, 3> clip{
                                 s.v[0] / vsOutputs[0].position.v[3],
                                 s.v[1] / vsOutputs[1].position.v[3],
                                 s.v[2] / vsOutputs[2].position.v[3]
@@ -277,7 +276,7 @@ namespace sr
 
         RenderTarget* renderTarget = nullptr;
         Rect<float> viewport;
-        Rect<float> scissorRect = Rect<float>(0.0F, 0.0F, 1.0F, 1.0F);
+        Rect<float> scissorRect{0.0F, 0.0F, 1.0F, 1.0F};
         const Shader* shader = nullptr;
         Sampler* samplers[2]{nullptr, nullptr};
         Texture* textures[2]{nullptr, nullptr};
