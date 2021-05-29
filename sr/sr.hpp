@@ -6,8 +6,8 @@
 #define SR_H
 
 #include "BlendState.hpp"
-#include "Constants.hpp"
 #include "Color.hpp"
+#include "Constants.hpp"
 #include "DepthState.hpp"
 #include "MathUtils.hpp"
 #include "Matrix.hpp"

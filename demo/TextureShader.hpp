@@ -26,7 +26,9 @@ namespace demo
             return result;
         }
 
-        virtual sr::Color fragmentShader(const VertexShaderOutput& input, sr::Sampler* samplers[2], sr::Texture* textures[2]) const override
+        virtual sr::Color fragmentShader(const VertexShaderOutput& input,
+                                         const std::array<sr::Sampler*, 2>& samplers,
+                                         const std::array<sr::Texture*, 2>& textures) const override
         {
             const auto sampleColor = textures[0]->sample(samplers[0], input.texCoords[0]);
 

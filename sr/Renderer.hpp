@@ -7,6 +7,7 @@
 
 #include <cassert>
 #include <algorithm>
+#include <array>
 #include <stdexcept>
 #include "BlendState.hpp"
 #include "Color.hpp"
@@ -278,8 +279,8 @@ namespace sr
         Rect<float> viewport;
         Rect<float> scissorRect{0.0F, 0.0F, 1.0F, 1.0F};
         const Shader* shader = nullptr;
-        Sampler* samplers[2]{nullptr, nullptr};
-        Texture* textures[2]{nullptr, nullptr};
+        std::array<Sampler*, 2> samplers{nullptr, nullptr};
+        std::array<Texture*, 2> textures{nullptr, nullptr};
         BlendState blendState;
         DepthState depthState;
     };
