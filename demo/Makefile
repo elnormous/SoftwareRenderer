@@ -25,7 +25,7 @@ ifeq ($(PLATFORM),emscripten)
 CC=emcc
 CXX=em++
 endif
-CXXFLAGS=-std=c++11 -Wall -I../sr
+CXXFLAGS=-std=c++11 -Wall -Wshadow -I../sr
 ifeq ($(PLATFORM),windows)
 LDFLAGS+=-u WinMain
 SOURCES=ApplicationWindows.cpp
@@ -125,9 +125,5 @@ $(EXECUTABLE): $(OBJECTS)
 
 .PHONY: clean
 clean:
-ifeq ($(PLATFORM),windows)
-	-del /f /q "$(EXECUTABLE).exe" $(OBJECTS) $(DEPENDENCIES) "*.js.mem" "*.js" "*.hpp.gch"
-else
 	$(RM) $(EXECUTABLE) $(OBJECTS) $(DEPENDENCIES) *.js.mem *.js *.hpp.gch $(EXECUTABLE).exe assetcatalog_generated_info.plist assetcatalog_dependencies
 	$(RM) -r $(EXECUTABLE).app
-endif
