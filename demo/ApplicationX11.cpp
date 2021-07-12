@@ -33,14 +33,14 @@ namespace demo
         swa.event_mask = KeyPressMask | ExposureMask | StructureNotifyMask;
 
         window = XCreateWindow(display,
-            RootWindow(display, screenIndex),
-            0, 0, width, height,
-            0, depth, InputOutput, visual,
-            CWBorderPixel | CWBackPixel | CWEventMask, &swa);
+                               RootWindow(display, screenIndex),
+                               0, 0, width, height,
+                               0, depth, InputOutput, visual,
+                               CWBorderPixel | CWBackPixel | CWEventMask, &swa);
 
         XSetStandardProperties(display,
-            window, "SoftwareRenderer", "SoftwareRenderer", None,
-            nullptr, 0, nullptr);
+                               window, "SoftwareRenderer", "SoftwareRenderer", None,
+                               nullptr, 0, nullptr);
 
         XMapWindow(display, window);
 

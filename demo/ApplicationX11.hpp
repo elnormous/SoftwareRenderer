@@ -22,9 +22,9 @@ namespace demo
         void run();
 
     private:
-        Visual* visual;
+        Visual* visual = nullptr;
         int depth;
-        Display* display;
+        Display* display = nullptr;
         ::Window window;
         Atom protocolsAtom;
         Atom deleteAtom;

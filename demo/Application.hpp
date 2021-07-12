@@ -94,8 +94,8 @@ namespace demo
             renderTarget = sr::RenderTarget{width, height};
 
             projection.setPerspective(static_cast<float>(sr::tau / 6.0),
-                static_cast<float>(width) / static_cast<float>(height),
-                1.0F, 1000.0F);
+                                      static_cast<float>(width) / static_cast<float>(height),
+                                      1.0F, 1000.0F);
 
             view.setTranslation(0.0F, 0.0F, 100.0F);
         }
@@ -107,7 +107,7 @@ namespace demo
             rotationY += 0.05F;
             model.setRotationY(rotationY);
 
-            sr::Matrix<float, 4> modelViewProjection = projection * view * model;
+            const auto modelViewProjection = projection * view * model;
 
             renderer.setViewport(sr::Rect<float>{0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)});
             renderer.setBlendState(blendState);
