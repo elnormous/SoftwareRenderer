@@ -25,7 +25,7 @@ ifeq ($(PLATFORM),emscripten)
 CC=emcc
 CXX=em++
 endif
-CXXFLAGS=-std=c++11 -Wall -Wshadow -I../sr
+CXXFLAGS=-std=c++11 -Wall -Wextra -Wshadow -I../sr
 ifeq ($(PLATFORM),windows)
 LDFLAGS+=-u WinMain
 SOURCES=ApplicationWindows.cpp
