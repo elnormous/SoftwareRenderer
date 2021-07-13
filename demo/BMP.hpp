@@ -84,7 +84,7 @@ namespace sr
             BitmapInfoHeader infoHeader;
             f.read(reinterpret_cast<char*>(&infoHeader.biSize), sizeof(infoHeader.biSize));
 
-            std::uint32_t offset = 0;
+            std::size_t offset = 0;
 
             if (offset + sizeof(infoHeader.biWidth) < infoHeader.biSize)
             {
