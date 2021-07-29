@@ -136,13 +136,15 @@ namespace demo
 
         std::size_t width;
         std::size_t height;
+        
+        sr::RenderTarget renderTarget;
 
+    private:
         sr::Matrix<float, 4> projection = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> view = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> model = sr::Matrix<float, 4>::identity();
         float rotationY = 0.0F;
 
-        sr::RenderTarget renderTarget;
         sr::Renderer renderer;
 
         sr::BlendState blendState;
