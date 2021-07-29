@@ -139,8 +139,7 @@ demo::ApplicationIOS* sharedApplication;
 
 static const void* getBytePointer(void* info)
 {
-    sr::RenderTarget* renderTarget = static_cast<sr::RenderTarget*>(info);
-
+    const auto renderTarget = static_cast<sr::RenderTarget*>(info);
     return renderTarget->getFrameBuffer().getData().data();
 }
 
@@ -202,7 +201,7 @@ namespace demo
         };
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
 
         [window makeKeyAndVisible];
 
@@ -245,7 +244,7 @@ namespace demo
             nullptr
         };
 
-        provider = CGDataProviderCreateDirect(&renderTarget, width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
         
         onResize();
     }

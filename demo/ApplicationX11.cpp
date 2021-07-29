@@ -69,7 +69,7 @@ namespace demo
     {
         render();
 
-        const auto& frameBuffer = renderTarget.getFrameBuffer();
+        const auto& frameBuffer = getRenderTarget().getFrameBuffer();
 
         const auto data = frameBuffer.getData().data();
         XImage* image = XCreateImage(display, visual, depth, ZPixmap, 0,

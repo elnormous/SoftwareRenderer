@@ -96,7 +96,7 @@ namespace demo
     {
         render();
 
-        const auto& frameBuffer = renderTarget.getFrameBuffer();
+        const auto& frameBuffer = getRenderTarget().getFrameBuffer();
 
         BITMAPINFO info = {};
         info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);

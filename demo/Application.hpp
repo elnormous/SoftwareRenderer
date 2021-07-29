@@ -100,6 +100,9 @@ namespace demo
             view.setTranslation(0.0F, 0.0F, 100.0F);
         }
 
+        std::size_t getWidth() const noexcept { return width; }
+        std::size_t getHeight() const noexcept { return height; }
+        
         void render()
         {
             renderer.setRenderTarget(&renderTarget);
@@ -123,6 +126,9 @@ namespace demo
         }
 
         static std::string getResourcePath();
+        
+        const sr::RenderTarget& getRenderTarget() const noexcept { return renderTarget; }
+        sr::RenderTarget& getRenderTarget() noexcept { return renderTarget; }
 
     protected:
         void onResize()
@@ -136,8 +142,6 @@ namespace demo
 
         std::size_t width;
         std::size_t height;
-        
-        sr::RenderTarget renderTarget;
 
     private:
         sr::Matrix<float, 4> projection = sr::Matrix<float, 4>::identity();
@@ -146,6 +150,7 @@ namespace demo
         float rotationY = 0.0F;
 
         sr::Renderer renderer;
+        sr::RenderTarget renderTarget;
 
         sr::BlendState blendState;
         sr::DepthState depthState;
