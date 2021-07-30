@@ -84,10 +84,8 @@ namespace demo
 
     void ApplicationX11::didResize(int newWidth, int newHeight)
     {
-        width = static_cast<std::size_t>(newWidth);
-        height = static_cast<std::size_t>(newHeight);
-
-        onResize();
+        onResize(static_cast<std::size_t>(newWidth),
+                 static_cast<std::size_t>(newHeight));
     }
 
     void ApplicationX11::run()

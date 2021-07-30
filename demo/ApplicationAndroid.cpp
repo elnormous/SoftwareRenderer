@@ -91,10 +91,8 @@ namespace demo
 
     void ApplicationAndroid::onSizeChanged(jint newWidth, jint newHeight)
     {
-        width = static_cast<std::size_t>(newWidth);
-        height = static_cast<std::size_t>(newHeight);
-
-        onResize();
+        onResize(static_cast<std::size_t>(newWidth),
+                 static_cast<std::size_t>(newHeight));
     }
 
     std::string Application::getResourcePath()

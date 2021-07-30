@@ -125,10 +125,8 @@ namespace demo
         RECT clientRect;
         GetClientRect(window, &clientRect);
 
-        width = clientRect.right - clientRect.left;
-        height = clientRect.bottom - clientRect.top;
-
-        onResize();
+        onResize(static_cast<std::size_t>(clientRect.right - clientRect.left),
+                 static_cast<std::size_t>(clientRect.bottom - clientRect.top));
     }
 
     void ApplicationWindows::run()

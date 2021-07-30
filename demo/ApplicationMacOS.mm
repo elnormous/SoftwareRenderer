@@ -246,9 +246,6 @@ namespace demo
         const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                            styleMask:[window styleMask]];
 
-        width = static_cast<std::size_t>(windowFrame.size.width);
-        height = static_cast<std::size_t>(windowFrame.size.height);
-
         CGDataProviderRelease(provider);
 
         CGDataProviderDirectCallbacks providerCallbacks = {
@@ -259,9 +256,14 @@ namespace demo
             nullptr
         };
 
-        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
+        const auto w = static_cast<std::size_t>(windowFrame.size.width);
+        const auto h = static_cast<std::size_t>(windowFrame.size.height);
+        
+        provider = CGDataProviderCreateDirect(&getRenderTarget(),
+                                              w * h * componentsPerPixel,
+                                              &providerCallbacks);
 
-        onResize();
+        onResize(w, h);
     }
 
     void ApplicationMacOS::run()

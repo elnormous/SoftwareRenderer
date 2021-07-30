@@ -74,13 +74,14 @@ namespace demo
 
     void ApplicationHaiku::didResize(float newWidth, float newHeight)
     {
-        width = static_cast<std::size_t>(newWidth);
-        height = static_cast<std::size_t>(newHeight);
-
         if (bitmap) delete bitmap;
-        bitmap = new BBitmap(BRect(0, 0, newWidth, newHeight), 0, B_RGB32);
 
-        onResize();
+        const auto w = static_cast<std::size_t>(newWidth);
+        const auto h = static_cast<std::size_t>(newHeight);
+
+        bitmap = new BBitmap(BRect{0, 0, w, h}, 0, B_RGB32);
+
+        onResize(w, h);
     }
 
     void ApplicationHaiku::run()

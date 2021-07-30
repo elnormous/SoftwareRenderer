@@ -231,9 +231,6 @@ namespace demo
 
     void ApplicationIOS::didResize(CGFloat newWidth, CGFloat newHeight)
     {
-        width = static_cast<std::size_t>(newWidth * screen.scale);
-        height = static_cast<std::size_t>(newHeight * screen.scale);
-
         CGDataProviderRelease(provider);
 
         CGDataProviderDirectCallbacks providerCallbacks = {
@@ -244,9 +241,14 @@ namespace demo
             nullptr
         };
 
-        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
+        const auto w = static_cast<std::size_t>(newWidth * screen.scale);
+        const auto h = static_cast<std::size_t>(newHeight * screen.scale);
         
-        onResize();
+        provider = CGDataProviderCreateDirect(&getRenderTarget(),
+                                              w * h * componentsPerPixel,
+                                              &providerCallbacks);
+        
+        onResize(w, h);
     }
 
     void ApplicationIOS::run(int argc, char* argv[])

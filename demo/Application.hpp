@@ -131,8 +131,11 @@ namespace demo
         sr::RenderTarget& getRenderTarget() noexcept { return renderTarget; }
 
     protected:
-        void onResize()
+        void onResize(std::size_t newWidth, std::size_t newHeight)
         {
+            width = newWidth;
+            height = newHeight;
+            
             renderTarget.resize(width, height);
 
             projection.setPerspective(static_cast<float>(sr::tau / 6.0),
