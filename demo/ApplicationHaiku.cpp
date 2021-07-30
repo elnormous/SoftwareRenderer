@@ -76,13 +76,7 @@ namespace demo
     {
         if (bitmap) delete bitmap;
 
-        const BRect rect{
-            0, 0,
-            static_cast<long>(newWidth),
-            static_cast<long>(newHeight)
-        };
-
-        bitmap = new BBitmap(rect, 0, B_RGB32);
+        bitmap = new BBitmap(BRect{0, 0, newWidth, newHeight}, 0, B_RGB32);
 
         onResize(static_cast<std::size_t>(newWidth),
                  static_cast<std::size_t>(newHeight));
