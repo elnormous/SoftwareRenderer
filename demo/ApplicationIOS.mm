@@ -218,9 +218,12 @@ namespace demo
     {
         render();
 
-        CGImageRef image = CGImageCreate(getWidth(), getHeight(), bitsPerComponent,
+        const auto& frameBuffer = getRenderTarget().getFrameBuffer();
+        
+        CGImageRef image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
+                                         bitsPerComponent,
                                          bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * getWidth(),
+                                         componentsPerPixel * frameBuffer.getWidth(),
                                          colorSpace,
                                          kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);
