@@ -76,12 +76,16 @@ namespace demo
     {
         if (bitmap) delete bitmap;
 
-        const auto w = static_cast<std::size_t>(newWidth);
-        const auto h = static_cast<std::size_t>(newHeight);
+        const BRect rect{
+            0, 0,
+            static_cast<long>(newWidth),
+            static_cast<long>(newHeight)
+        };
 
-        bitmap = new BBitmap(BRect{0, 0, w, h}, 0, B_RGB32);
+        bitmap = new BBitmap(rect, 0, B_RGB32);
 
-        onResize(w, h);
+        onResize(static_cast<std::size_t>(newWidth),
+                 static_cast<std::size_t>(newHeight));
     }
 
     void ApplicationHaiku::run()
