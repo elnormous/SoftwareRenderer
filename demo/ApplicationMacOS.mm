@@ -175,8 +175,8 @@ namespace demo
         const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                            styleMask:[window styleMask]];
 
-        width = static_cast<std::size_t>(windowFrame.size.width);
-        height = static_cast<std::size_t>(windowFrame.size.height);
+        const auto w = static_cast<std::size_t>(windowFrame.size.width);
+        const auto h = static_cast<std::size_t>(windowFrame.size.height);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
 
@@ -193,7 +193,7 @@ namespace demo
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
         
-        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&getRenderTarget(), w * h * componentsPerPixel, &providerCallbacks);
 
         window.contentView = content;
         [window makeKeyAndOrderFront:nil];
@@ -201,10 +201,12 @@ namespace demo
         [content setNeedsDisplay:TRUE];
 
         timer = [[NSTimer scheduledTimerWithTimeInterval:0.016
-                                                  target:content selector:@selector(draw:)
-                                                userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+                                                  target:content
+                                                selector:@selector(draw:)
+                                                userInfo:[NSValue valueWithPointer:this]
+                                                 repeats:YES] retain];
 
-        setup();
+        setup(w, h);
     }
 
     ApplicationMacOS::~ApplicationMacOS()
@@ -226,9 +228,9 @@ namespace demo
     {
         render();
 
-        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+        CGImageRef image = CGImageCreate(getWidth(), getHeight(), bitsPerComponent,
                                          bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * width,
+                                         componentsPerPixel * getWidth(),
                                          colorSpace,
                                          kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);

@@ -37,7 +37,7 @@ namespace demo
     ApplicationHaiku::ApplicationHaiku():
         BApplication("application/x-vnd.SoftwareRenderer")
     {
-        const BRect frame(100, 100, 100 + 640, 100 + 480);
+        const BRect frame{100, 100, 100 + 640, 100 + 480};
         window = new BWindow(frame, "SoftwareRenderer", B_TITLED_WINDOW,
                              B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE);
 
@@ -48,10 +48,10 @@ namespace demo
 
         bitmap = new BBitmap(bounds, 0, B_RGB32);
 
-        width = static_cast<std::size_t>(bounds.Width());
-        height = static_cast<std::size_t>(bounds.Height());
+        const auto w = static_cast<std::size_t>(bounds.Width());
+        const auto h = static_cast<std::size_t>(bounds.Height());
 
-        setup();
+        setup(w, h);
         window->Show();
         SetPulseRate(100000);
     }

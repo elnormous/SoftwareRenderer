@@ -79,7 +79,8 @@ namespace demo
     void ApplicationAndroid::init(jint initWidth, jint initHeight)
     {
         // TODO: implement file loading from apk
-        setup();
+        setup(static_cast<std::size_t>(newWidth),
+              static_cast<std::size_t>(newHeight));
     }
 
     void ApplicationAndroid::onDraw(jobject bitmap)

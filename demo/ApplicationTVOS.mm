@@ -167,8 +167,8 @@ namespace demo
 
         const CGRect windowFrame = [window bounds];
 
-        width = static_cast<std::size_t>(windowFrame.size.width * screen.scale);
-        height = static_cast<std::size_t>(windowFrame.size.height * screen.scale);
+        const auto w = static_cast<std::size_t>(windowFrame.size.width * screen.scale);
+        const auto h = static_cast<std::size_t>(windowFrame.size.height * screen.scale);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
         content.contentScaleFactor = screen.scale;
@@ -186,22 +186,26 @@ namespace demo
         };
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        provider = CGDataProviderCreateDirect(&getRenderTarget(), width * height * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&getRenderTarget(), w * h * componentsPerPixel, &providerCallbacks);
 
         [window makeKeyAndVisible];
 
-        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016 target:content selector:@selector(draw:) userInfo:[NSValue valueWithPointer:this] repeats:YES] retain];
+        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016
+                                                  target:content
+                                                selector:@selector(draw:)
+                                                userInfo:[NSValue valueWithPointer:this]
+                                                 repeats:YES] retain];
 
-        setup();
+        setup(w, h);
     }
 
     void ApplicationTVOS::draw()
     {
         render();
 
-        CGImageRef image = CGImageCreate(width, height, bitsPerComponent,
+        CGImageRef image = CGImageCreate(getWidth(), getHeight(), bitsPerComponent,
                                          bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * width,
+                                         componentsPerPixel * getWidth(),
                                          colorSpace,
                                          kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);

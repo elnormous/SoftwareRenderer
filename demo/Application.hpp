@@ -89,8 +89,11 @@ namespace demo
         Application(Application&&) = delete;
         Application& operator=(Application&&) = delete;
 
-        void setup()
+        void setup(std::size_t newWidth, std::size_t newHeight)
         {
+            width = newWidth;
+            height = newHeight;
+
             renderTarget = sr::RenderTarget{width, height};
 
             projection.setPerspective(static_cast<float>(sr::tau / 6.0),
@@ -143,10 +146,10 @@ namespace demo
                                       1.0F, 1000.0F);
         }
 
+    private:
         std::size_t width;
         std::size_t height;
 
-    private:
         sr::Matrix<float, 4> projection = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> view = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> model = sr::Matrix<float, 4>::identity();

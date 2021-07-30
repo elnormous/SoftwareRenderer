@@ -24,8 +24,8 @@ namespace demo
         visual = DefaultVisual(display, screenIndex);
         depth = DefaultDepth(display, screenIndex);
 
-        width = static_cast<std::size_t>(XWidthOfScreen(screen) * 0.6F);
-        height = static_cast<std::size_t>(XHeightOfScreen(screen) * 0.6F);
+        const auto w = static_cast<std::size_t>(XWidthOfScreen(screen) * 0.6F);
+        const auto h = static_cast<std::size_t>(XHeightOfScreen(screen) * 0.6F);
 
         XSetWindowAttributes swa;
         swa.background_pixel = XWhitePixel(display, screenIndex);
@@ -34,7 +34,7 @@ namespace demo
 
         window = XCreateWindow(display,
                                RootWindow(display, screenIndex),
-                               0, 0, width, height,
+                               0, 0, w, h,
                                0, depth, InputOutput, visual,
                                CWBorderPixel | CWBackPixel | CWEventMask, &swa);
 
@@ -51,7 +51,7 @@ namespace demo
         gc = XCreateGC(display, window, 0, 0);
         XSetForeground(display, gc, 0);
 
-        setup();
+        setup(w, h);
     }
 
     ApplicationX11::~ApplicationX11()

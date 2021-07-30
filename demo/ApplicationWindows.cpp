@@ -77,13 +77,13 @@ namespace demo
         RECT clientRect;
         GetClientRect(window, &clientRect);
 
-        width = clientRect.right - clientRect.left;
-        height = clientRect.bottom - clientRect.top;
+        const auto w = static_cast<std::size_t>(clientRect.right - clientRect.left);
+        const auto h = static_cast<std::size_t>(clientRect.bottom - clientRect.top);
 
         ShowWindow(window, SW_SHOW);
         SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 
-        setup();
+        setup(w, h);
     }
 
     ApplicationWindows::~ApplicationWindows()
