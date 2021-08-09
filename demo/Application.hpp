@@ -27,40 +27,40 @@ namespace demo
             },
             vertices{
                 // front
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFF0000FFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0x00FF00FFU), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0x0000FFFFU), sr::Vector<float, 2>(1.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0xFF0000FFU}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0x00FF00FFU}, sr::Vector<float, 2>{0.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0x0000FFFFU}, sr::Vector<float, 2>{1.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
 
                 // back
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
 
                 // left
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 4.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(4.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(4.0F, 4.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 4.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{4.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{4.0F, 4.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
 
                 // right
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFA0U), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFA0U), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFA0U), sr::Vector<float, 2>(1.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFA0U), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFA0U}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFA0U}, sr::Vector<float, 2>{0.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFA0U}, sr::Vector<float, 2>{1.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFA0U}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
 
                 // bottom
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, -20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, -20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
 
                 // top
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(-20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(0.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, -20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 0.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F)),
-                sr::Vertex(sr::Vector<float, 4>(20.0F, 20.0F, 20.0F, 1.0F), sr::Color(0xFFFFFFFFU), sr::Vector<float, 2>(1.0F, 1.0F), sr::Vector<float, 3>(0.0F, 0.0F, 1.0F))
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{-20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{0.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, -20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 0.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}},
+                sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}}
             }
         {
             const sr::BMP bmp{Application::getResourcePath() + "/cube.bmp"};
