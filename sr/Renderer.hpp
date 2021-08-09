@@ -101,7 +101,9 @@ namespace sr
                 depthBufferData[p] = depth;
         }
 
-        void drawTriangles(const std::vector<std::uint32_t>& indices, const std::vector<Vertex>& vertices, const Matrix<float, 4>& modelViewProjection)
+        void drawTriangles(const std::vector<std::size_t>& indices,
+                           const std::vector<Vertex>& vertices,
+                           const Matrix<float, 4>& modelViewProjection)
         {
             if (!renderTarget)
                 throw RenderError("No render target set");

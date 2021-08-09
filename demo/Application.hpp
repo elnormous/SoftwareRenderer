@@ -165,7 +165,7 @@ namespace demo
         sr::Sampler sampler;
         sr::Texture texture;
 
-        std::vector<std::uint32_t> indices;
+        std::vector<std::size_t> indices;
         std::vector<sr::Vertex> vertices;
     };
 }
