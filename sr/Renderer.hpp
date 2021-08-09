@@ -113,13 +113,13 @@ namespace sr
 
             for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
             {
-                const Shader::VertexShaderOutput vsOutputs[3]{
+                const std::array<Shader::VertexShaderOutput, 3> vsOutputs{
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 0]]),
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 1]]),
                     shader->vertexShader(modelViewProjection, vertices[indices[i + 2]])
                 };
 
-                Vector<float, 4> ndcPositions[3]{
+                std::array<Vector<float, 4>, 3> ndcPositions{
                     vsOutputs[0].position,
                     vsOutputs[1].position,
                     vsOutputs[2].position
@@ -129,7 +129,7 @@ namespace sr
                 for (sr::Vector<float, 4>& ndcPosition : ndcPositions)
                     ndcPosition /= ndcPosition.v[3];
 
-                Vector<float, 2> viewportPositions[3]{
+                std::array<Vector<float, 2>, 3> viewportPositions{
                     Vector<float, 2>{ndcPositions[0].v[0], ndcPositions[0].v[1]},
                     Vector<float, 2>{ndcPositions[1].v[0], ndcPositions[1].v[1]},
                     Vector<float, 2>{ndcPositions[2].v[0], ndcPositions[2].v[1]}
