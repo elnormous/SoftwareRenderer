@@ -149,11 +149,11 @@ namespace demo
         screen = [NSScreen mainScreen];
 
         CGSize windowSize;
-        windowSize.width = round(screen.frame.size.width * 0.6);
-        windowSize.height = round(screen.frame.size.height * 0.6);
+        windowSize.width = std::round(screen.frame.size.width * 0.6);
+        windowSize.height = std::round(screen.frame.size.height * 0.6);
 
-        const NSRect frame = NSMakeRect(round(screen.frame.size.width / 2.0F - windowSize.width / 2.0F),
-                                        round(screen.frame.size.height / 2.0F - windowSize.height / 2.0F),
+        const NSRect frame = NSMakeRect(std::round(screen.frame.size.width / 2.0F - windowSize.width / 2.0F),
+                                        std::round(screen.frame.size.height / 2.0F - windowSize.height / 2.0F),
                                         windowSize.width, windowSize.height);
 
         const NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
