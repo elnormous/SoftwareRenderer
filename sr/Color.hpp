@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <array>
 #include <type_traits>
 #include "Vector.hpp"
 
@@ -71,13 +72,14 @@ namespace sr
 
         std::uint32_t getIntValueRaw() const noexcept
         {
-            std::uint32_t result;
-            std::uint8_t* bytes = reinterpret_cast<std::uint8_t*>(&result);
-            bytes[0] = static_cast<std::uint8_t>(r * 255.0F);
-            bytes[1] = static_cast<std::uint8_t>(g * 255.0F);
-            bytes[2] = static_cast<std::uint8_t>(b * 255.0F);
-            bytes[3] = static_cast<std::uint8_t>(a * 255.0F);
-            return result;
+            const std::array<std::uint8_t, 4> result{
+                static_cast<std::uint8_t>(r * 255.0F),
+                static_cast<std::uint8_t>(g * 255.0F),
+                static_cast<std::uint8_t>(b * 255.0F),
+                static_cast<std::uint8_t>(a * 255.0F)
+            };
+
+            return *reinterpret_cast<const std::uint32_t*>(result.data());
         }
     };
 } // namespace sr
