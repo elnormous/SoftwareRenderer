@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef APPLICATIONIOS_H
-#define APPLICATIONIOS_H
+#ifndef APPLICATIONIOS_HPP
+#define APPLICATIONIOS_HPP
 
 #import <UIKit/UIKit.h>
 #include "Application.hpp"

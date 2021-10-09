@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
 
 namespace sr
 {

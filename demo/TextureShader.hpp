@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef TEXTURESHADER_H
-#define TEXTURESHADER_H
+#ifndef TEXTURESHADER_HPP
+#define TEXTURESHADER_HPP
 
 #include "sr.hpp"
 

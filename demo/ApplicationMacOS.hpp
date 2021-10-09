@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef APPLICATIONMACOS_H
-#define APPLICATIONMACOS_H
+#ifndef APPLICATIONMACOS_HPP
+#define APPLICATIONMACOS_HPP
 
 #import <Cocoa/Cocoa.h>
 #include "Application.hpp"

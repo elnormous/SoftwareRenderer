@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef QUATERNION_H
-#define QUATERNION_H
+#ifndef QUATERNION_HPP
+#define QUATERNION_HPP
 
 #include "Vector.hpp"
 

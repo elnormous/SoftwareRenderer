@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef COLOR_HPP
+#define COLOR_HPP
 
 #include <cstddef>
 #include <cstdint>
@@ -82,6 +82,6 @@ namespace sr
             return *reinterpret_cast<const std::uint32_t*>(result.data());
         }
     };
-} // namespace sr
+}
 
 #endif

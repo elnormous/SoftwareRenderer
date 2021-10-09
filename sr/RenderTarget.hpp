@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef RENDERTARGET_H
-#define RENDERTARGET_H
+#ifndef RENDERTARGET_HPP
+#define RENDERTARGET_HPP
 
 #include "Texture.hpp"
 

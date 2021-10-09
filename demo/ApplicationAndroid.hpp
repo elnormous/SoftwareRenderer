@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef APPLICATIONANDROID_H
-#define APPLICATIONANDROID_H
+#ifndef APPLICATIONANDROID_HPP
+#define APPLICATIONANDROID_HPP
 
 #include <jni.h>
 #include "Application.hpp"

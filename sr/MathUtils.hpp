@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef MATHUTILS_H
-#define MATHUTILS_H
+#ifndef MATHUTILS_HPP
+#define MATHUTILS_HPP
 
 #include <cstdint>
 #include "Vector.hpp"

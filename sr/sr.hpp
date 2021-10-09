@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef SR_H
-#define SR_H
+#ifndef SR_HPP
+#define SR_HPP
 
 #include "BlendState.hpp"
 #include "Color.hpp"

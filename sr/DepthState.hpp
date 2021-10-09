@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef DEPTHSTATE_H
-#define DEPTHSTATE_H
+#ifndef DEPTHSTATE_HPP
+#define DEPTHSTATE_HPP
 
 namespace sr
 {

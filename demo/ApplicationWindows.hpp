@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef APPLICATIONWINDOWS_H
-#define APPLICATIONWINDOWS_H
+#ifndef APPLICATIONWINDOWS_HPP
+#define APPLICATIONWINDOWS_HPP
 
 #include <Windows.h>
 #include "Application.hpp"

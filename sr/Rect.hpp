@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef RECT_H
-#define RECT_H
+#ifndef RECT_HPP
+#define RECT_HPP
 
 #include "Vector.hpp"
 #include "Size.hpp"

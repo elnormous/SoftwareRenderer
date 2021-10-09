@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef SIZE_H
-#define SIZE_H
+#ifndef SIZE_HPP
+#define SIZE_HPP
 
 #include <cstddef>
 #include <type_traits>
