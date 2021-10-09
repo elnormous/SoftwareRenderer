@@ -5,6 +5,7 @@
 #ifndef RENDERTARGET_HPP
 #define RENDERTARGET_HPP
 
+#include "PixelFormat.hpp"
 #include "Texture.hpp"
 
 namespace sr
