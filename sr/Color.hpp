@@ -45,12 +45,18 @@ namespace sr
 
         template <class T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
         constexpr Color(T red, T green, T blue, T alpha = 0xFFU) noexcept:
-            r{red / 255.0F}, g{green / 255.0F}, b{blue / 255.0F}, a{alpha / 255.0F}
+            r{red / 255.0F},
+            g{green / 255.0F},
+            b{blue / 255.0F},
+            a{alpha / 255.0F}
         {
         }
 
         constexpr Color(float red, float green, float blue, float alpha = 1.0F) noexcept:
-            r{red}, g{green}, b{blue}, a{alpha}
+            r{red},
+            g{green},
+            b{blue},
+            a{alpha}
         {
         }
 

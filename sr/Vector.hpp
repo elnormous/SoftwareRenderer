@@ -148,7 +148,7 @@ namespace sr
                 c = -c;
         }
 
-        bool isNormalized(const T tolerance = std::numeric_limits<T>::min()) const noexcept
+        bool isNormalized(const T tolerance = std::numeric_limits<T>::epsilon()) const noexcept
         {
             return std::abs(T(1) - lengthSquared()) < tolerance;
         }
@@ -163,7 +163,7 @@ namespace sr
                 return;
 
             const auto length = std::sqrt(squared);
-            if (length <= std::numeric_limits<T>::min()) // too close to zero
+            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
                 return;
 
             const auto multiplier = T(1) / length;
@@ -181,7 +181,7 @@ namespace sr
                 return *this;
 
             const auto length = std::sqrt(squared);
-            if (length <= std::numeric_limits<T>::min()) // too close to zero
+            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
                 return *this;
 
             const auto multiplier = T(1) / length;
