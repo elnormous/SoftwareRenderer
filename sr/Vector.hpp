@@ -150,7 +150,7 @@ namespace sr
 
         bool isNormalized(const T tolerance = std::numeric_limits<T>::epsilon()) const noexcept
         {
-            return std::abs(T(1) - lengthSquared()) < tolerance;
+            return std::abs(T(1) - lengthSquared()) <= tolerance;
         }
 
         void normalize() noexcept
@@ -163,7 +163,7 @@ namespace sr
                 return;
 
             const auto length = std::sqrt(squared);
-            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
+            if (length <= std::numeric_limits<T>::epsilon()) // too close to zero
                 return;
 
             const auto multiplier = T(1) / length;
@@ -181,7 +181,7 @@ namespace sr
                 return *this;
 
             const auto length = std::sqrt(squared);
-            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
+            if (length <= std::numeric_limits<T>::epsilon()) // too close to zero
                 return *this;
 
             const auto multiplier = T(1) / length;

@@ -171,7 +171,7 @@ namespace sr
         void invert() noexcept
         {
             constexpr auto squared = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; // norm squared
-            if (squared < std::numeric_limits<T>::epsilon())
+            if (squared <= std::numeric_limits<T>::epsilon())
                 return;
 
             // conjugate divided by norm squared
@@ -198,7 +198,7 @@ namespace sr
                 return;
 
             const auto length = std::sqrt(squared);
-            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
+            if (length <= std::numeric_limits<T>::epsilon()) // too close to zero
                 return;
 
             const auto multiplier = T(1) / length;
@@ -215,7 +215,7 @@ namespace sr
                 return *this;
 
             const auto length = std::sqrt(squared);
-            if (length < std::numeric_limits<T>::epsilon()) // too close to zero
+            if (length <= std::numeric_limits<T>::epsilon()) // too close to zero
                 return *this;
 
             const T multiplier = T(1) / length;
@@ -242,7 +242,7 @@ namespace sr
         {
             angle = T(2) * std::acos(v[3]);
             const auto s = std::sqrt(T(1) - v[3] * v[3]);
-            if (s < std::numeric_limits<T>::epsilon()) // too close to zero
+            if (s <= std::numeric_limits<T>::epsilon()) // too close to zero
             {
                 axis.v[0] = v[0];
                 axis.v[1] = v[1];
