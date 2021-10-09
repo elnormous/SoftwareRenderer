@@ -12,32 +12,33 @@
 
 namespace sr
 {
+    enum class PixelFormat
+    {
+        r8,
+        a8,
+        rgba8,
+        float32
+    };
+
+    inline std::size_t getPixelSize(PixelFormat pixelFormat) noexcept
+    {
+        switch (pixelFormat)
+        {
+        case PixelFormat::r8:
+        case PixelFormat::a8:
+            return sizeof(std::uint8_t) * 1;
+        case PixelFormat::rgba8:
+            return sizeof(std::uint8_t) * 4;
+        case PixelFormat::float32:
+            return sizeof(float);
+        default:
+            return 0;
+        }
+    }
+
     class Texture final
     {
     public:
-        enum class PixelFormat
-        {
-            r8,
-            a8,
-            rgba8,
-            float32
-        };
-
-        static std::size_t getPixelSize(PixelFormat pixelFormat) noexcept
-        {
-            switch (pixelFormat)
-            {
-                case PixelFormat::r8:
-                case PixelFormat::a8:
-                    return sizeof(std::uint8_t) * 1;
-                case PixelFormat::rgba8:
-                    return sizeof(std::uint8_t) * 4;
-                case PixelFormat::float32:
-                    return sizeof(float);
-                default:
-                    return 0;
-            }
-        }
 
         Texture(PixelFormat initPixelFormat = PixelFormat::rgba8,
                 std::size_t initWidth = 0,
@@ -141,22 +142,22 @@ namespace sr
 
             switch (pixelFormat)
             {
-                case Texture::PixelFormat::r8:
+                case PixelFormat::r8:
                 {
                     const auto* r = &buffer[(y * width + x) * 1];
                     return Color{*r, *r, *r, std::uint8_t(255U)};
                 }
-                case Texture::PixelFormat::a8:
+                case PixelFormat::a8:
                 {
                     const auto* a = &buffer[(y * width + x) * 1];
                     return Color{std::uint8_t(0U), std::uint8_t(0U), std::uint8_t(0U), *a};
                 }
-                case Texture::PixelFormat::rgba8:
+                case PixelFormat::rgba8:
                 {
                     const auto* rgba = &buffer[(y * width + x) * 4];
                     return Color{rgba[0], rgba[1], rgba[2], rgba[3]};
                 }
-                case Texture::PixelFormat::float32:
+                case PixelFormat::float32:
                 {
                     const float f = reinterpret_cast<const float*>(buffer.data())[y * width + x];
                     return Color{f, f, f, 1.0F};

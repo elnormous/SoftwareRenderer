@@ -64,7 +64,7 @@ namespace demo
             }
         {
             const sr::BMP bmp{Application::getResourcePath() + "/cube.bmp"};
-            texture = sr::Texture{sr::Texture::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight()};
+            texture = sr::Texture{sr::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight()};
             texture.setData(bmp.getData(), 0);
 
             sampler.addressModeX = sr::Sampler::AddressMode::repeat;

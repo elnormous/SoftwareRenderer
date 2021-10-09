@@ -13,8 +13,8 @@ namespace sr
     {
     public:
         RenderTarget(std::size_t width = 0, std::size_t height = 0,
-                     Texture::PixelFormat frameBufferFormat = Texture::PixelFormat::rgba8,
-                     Texture::PixelFormat depthBufferFormat = Texture::PixelFormat::float32):
+                     PixelFormat frameBufferFormat = PixelFormat::rgba8,
+                     PixelFormat depthBufferFormat = PixelFormat::float32):
             frameBuffer{frameBufferFormat, width, height},
             depthBuffer{depthBufferFormat, width, height}
         {
