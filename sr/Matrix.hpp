@@ -40,56 +40,6 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        void setLookAt(const Vector<T, 3>& eyePosition,
-                       const Vector<T, 3>& targetPosition,
-                       const Vector<T, 3>& up) noexcept
-        {
-            setLookAt(eyePosition.v[0], eyePosition.v[1], eyePosition.v[2],
-                      targetPosition.v[0], targetPosition.v[1], targetPosition.v[2],
-                      up.v[0], up.v[1], up.v[2]);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        void setLookAt(const T eyePositionX, const T eyePositionY, const T eyePositionZ,
-                       const T targetPositionX, const T targetPositionY, const T targetPositionZ,
-                       const T upX, const T upY, const T upZ) noexcept
-        {
-            const Vector<T, 3> eye(eyePositionX, eyePositionY, eyePositionZ);
-            const Vector<T, 3> target(targetPositionX, targetPositionY, targetPositionZ);
-            Vector<T, 3> up(upX, upY, upZ);
-            up.normalize();
-
-            Vector<T, 3> zaxis = target - eye;
-            zaxis.normalize();
-
-            Vector<T, 3> xaxis = up.cross(zaxis);
-            xaxis.normalize();
-
-            Vector<T, 3> yaxis = zaxis.cross(xaxis);
-            yaxis.normalize();
-
-            m[0] = xaxis.v[0];
-            m[1] = yaxis.v[0];
-            m[2] = zaxis.v[0];
-            m[3] = T(0);
-
-            m[4] = xaxis.v[1];
-            m[5] = yaxis.v[1];
-            m[6] = zaxis.v[1];
-            m[7] = T(0);
-
-            m[8] = xaxis.v[2];
-            m[9] = yaxis.v[2];
-            m[10] = zaxis.v[2];
-            m[11] = T(0);
-
-            m[12] = xaxis.dot(-eye);
-            m[13] = yaxis.dot(-eye);
-            m[14] = zaxis.dot(-eye);
-            m[15] = T(1);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
         void setPerspective(const T fieldOfView, const T aspectRatio,
                             const T zNearPlane, const T zFarPlane) noexcept
         {
