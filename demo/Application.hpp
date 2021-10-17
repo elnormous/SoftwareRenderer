@@ -96,7 +96,7 @@ namespace demo
 
             renderTarget = sr::RenderTarget{width, height};
 
-            projection.setPerspective(static_cast<float>(sr::tau / 6.0),
+            projection.setPerspective(sr::tau<float> / 6.0,
                                       static_cast<float>(width) / static_cast<float>(height),
                                       1.0F, 1000.0F);
 
@@ -141,7 +141,7 @@ namespace demo
             
             renderTarget.resize(width, height);
 
-            projection.setPerspective(static_cast<float>(sr::tau / 6.0),
+            projection.setPerspective(sr::tau<float> / 6.0,
                                       static_cast<float>(width) / static_cast<float>(height),
                                       1.0F, 1000.0F);
         }
