@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
-#include "Quaternion.hpp"
 #include "Vector.hpp"
 
 namespace sr
@@ -250,43 +249,6 @@ namespace sr
             m[2] = txz - sy;
             m[6] = tyz + sx;
             m[10] = c + tz * z;
-            m[14] = T(0);
-
-            m[3] = T(0);
-            m[7] = T(0);
-            m[11] = T(0);
-            m[15] = T(1);
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        void setRotation(const Quaternion<T>& rotation) noexcept
-        {
-            const auto wx = rotation.v[3] * rotation.v[0];
-            const auto wy = rotation.v[3] * rotation.v[1];
-            const auto wz = rotation.v[3] * rotation.v[2];
-
-            const auto xx = rotation.v[0] * rotation.v[0];
-            const auto xy = rotation.v[0] * rotation.v[1];
-            const auto xz = rotation.v[0] * rotation.v[2];
-
-            const auto yy = rotation.v[1] * rotation.v[1];
-            const auto yz = rotation.v[1] * rotation.v[2];
-
-            const auto zz = rotation.v[2] * rotation.v[2];
-
-            m[0] = T(1) - T(2) * (yy + zz);
-            m[4] = T(2) * (xy - wz);
-            m[8] = T(2) * (xz + wy);
-            m[12] = T(0);
-
-            m[1] = T(2) * (xy + wz);
-            m[5] = T(1) - T(2) * (xx + zz);
-            m[9] = T(2) * (yz - wx);
-            m[13] = T(0);
-
-            m[2] = T(2) * (xz - wy);
-            m[6] = T(2) * (yz + wx);
-            m[10] = T(1) - T(2) * (xx + yy);
             m[14] = T(0);
 
             m[3] = T(0);
@@ -780,39 +742,6 @@ namespace sr
             scale.v[2] = Vector<T, 3>{m[8], m[9], m[10]}.length();
 
             return scale;
-        }
-
-        template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getRotation() const noexcept
-        {
-            const auto scale = getScale();
-
-            const auto m11 = m[0] / scale.v[0];
-            const auto m21 = m[1] / scale.v[0];
-            const auto m31 = m[2] / scale.v[0];
-
-            const auto m12 = m[4] / scale.v[1];
-            const auto m22 = m[5] / scale.v[1];
-            const auto m32 = m[6] / scale.v[1];
-
-            const auto m13 = m[8] / scale.v[2];
-            const auto m23 = m[9] / scale.v[2];
-            const auto m33 = m[10] / scale.v[2];
-
-            Quaternion<T> result;
-            result.v[0] = std::sqrt(std::max(static_cast<T>(0), T(1) + m11 - m22 - m33)) / T(2);
-            result.v[1] = std::sqrt(std::max(static_cast<T>(0), T(1) - m11 + m22 - m33)) / T(2);
-            result.v[2] = std::sqrt(std::max(static_cast<T>(0), T(1) - m11 - m22 + m33)) / T(2);
-            result.v[3] = std::sqrt(std::max(static_cast<T>(0), T(1) + m11 + m22 + m33)) / T(2);
-
-            // The problem with using copysign: http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/paul.htm
-            result.v[0] = std::copysign(result.v[0], m32 - m23);
-            result.v[1] = std::copysign(result.v[1], m13 - m31);
-            result.v[2] = std::copysign(result.v[2], m21 - m12);
-
-            result.normalize();
-
-            return result;
         }
 
         const Matrix operator+(const Matrix& matrix) const noexcept

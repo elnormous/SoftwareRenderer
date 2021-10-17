@@ -33,9 +33,6 @@
     <ClInclude Include="..\sr\PixelFormat.hpp">
       <Filter>sr</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\Quaternion.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Rect.hpp">
       <Filter>sr</Filter>
     </ClInclude>

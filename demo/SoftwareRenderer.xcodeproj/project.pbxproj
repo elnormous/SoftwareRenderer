@@ -60,7 +60,6 @@
 		306A7D2020B8D8F5002C47F1 /* Size.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Size.hpp; sourceTree = "<group>"; };
 		306A7D2120B8D8F5002C47F1 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
 		306A7D2220B8D8F5002C47F1 /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
-		306A7D2320B8D8F5002C47F1 /* Quaternion.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Quaternion.hpp; sourceTree = "<group>"; };
 		306A7D2420B8D8F5002C47F1 /* Color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
 		306A7D2520B8D8F5002C47F1 /* Rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rect.hpp; sourceTree = "<group>"; };
 		306A7D2620B8D8F6002C47F1 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
@@ -116,7 +115,6 @@
 				306944AE205DF40A00C4969C /* macos */,
 				300984F0202D38FF00BB0340 /* Products */,
 				306A7D0A20B8D8B2002C47F1 /* sr */,
-				308BDAFC253D216B009DB683 /* test */,
 				305F94352123729200893FF5 /* tvos */,
 			);
 			sourceTree = "<group>";
@@ -186,7 +184,6 @@
 				306A7D1E20B8D8F5002C47F1 /* MathUtils.hpp */,
 				306A7D2220B8D8F5002C47F1 /* Matrix.hpp */,
 				30A4C1E32711369800419C99 /* PixelFormat.hpp */,
-				306A7D2320B8D8F5002C47F1 /* Quaternion.hpp */,
 				306A7D2520B8D8F5002C47F1 /* Rect.hpp */,
 				306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */,
 				306A7D1820B8D8F4002C47F1 /* RenderTarget.hpp */,
@@ -212,14 +209,6 @@
 				3071DEA920425CE50073390E /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		308BDAFC253D216B009DB683 /* test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = test;
-			path = ../test;
 			sourceTree = "<group>";
 		};
 		C6D285182122E22A00A4D87F /* ios */ = {

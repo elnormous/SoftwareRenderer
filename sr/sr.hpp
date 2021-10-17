@@ -11,7 +11,6 @@
 #include "DepthState.hpp"
 #include "MathUtils.hpp"
 #include "Matrix.hpp"
-#include "Quaternion.hpp"
 #include "Rect.hpp"
 #include "Renderer.hpp"
 #include "RenderTarget.hpp"
