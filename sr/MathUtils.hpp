@@ -10,12 +10,6 @@
 
 namespace sr
 {
-    template<typename T>
-    constexpr T clamp(T x, T lo, T hi) noexcept
-    {
-        return x < lo ? lo : x > hi ? hi : x;
-    }
-
     template <class T>
     inline Vector<T, 3> barycentric(const Vector<T, 2>& a, const Vector<T, 2>& b, const Vector<T, 2>& c, const Vector<T, 2>& p) noexcept
     {

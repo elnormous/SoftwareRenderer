@@ -149,13 +149,13 @@ namespace sr
             if (sampler && !levels.empty())
             {
                 const auto u =
-                    (sampler->addressModeX == Sampler::AddressMode::clamp) ? clamp(coord.v[0], 0.0F, 1.0F) * (width - 1) :
+                    (sampler->addressModeX == Sampler::AddressMode::clamp) ? std::clamp(coord.v[0], 0.0F, 1.0F) * (width - 1) :
                     (sampler->addressModeX == Sampler::AddressMode::repeat) ? std::fmod(coord.v[0], 1.0F) * (width - 1) :
                     (sampler->addressModeX == Sampler::AddressMode::mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[0] / 2.0F, 1.0F) - 0.5F) * (width - 1) :
                     0.0F;
 
                 const auto v =
-                    (sampler->addressModeY == Sampler::AddressMode::clamp) ? clamp(coord.v[1], 0.0F, 1.0F) * (height - 1) :
+                    (sampler->addressModeY == Sampler::AddressMode::clamp) ? std::clamp(coord.v[1], 0.0F, 1.0F) * (height - 1) :
                     (sampler->addressModeY == Sampler::AddressMode::repeat) ? std::fmod(coord.v[1], 1.0F) * (height - 1) :
                     (sampler->addressModeY == Sampler::AddressMode::mirror) ? 1.0F - 2.0F * std::fabs(std::fmod(coord.v[1] / 2.0F, 1.0F) - 0.5F) * (height - 1) :
                     0.0F;
@@ -173,10 +173,10 @@ namespace sr
                     auto textureY0 = static_cast<std::size_t>(v - 0.5F);
                     auto textureY1 = textureY0 + 1;
 
-                    textureX0 = clamp(textureX0, static_cast<std::size_t>(0U), width - 1);
-                    textureX1 = clamp(textureX1, static_cast<std::size_t>(0U), width - 1);
-                    textureY0 = clamp(textureY0, static_cast<std::size_t>(0U), height - 1);
-                    textureY1 = clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
+                    textureX0 = std::clamp(textureX0, static_cast<std::size_t>(0U), width - 1);
+                    textureX1 = std::clamp(textureX1, static_cast<std::size_t>(0U), width - 1);
+                    textureY0 = std::clamp(textureY0, static_cast<std::size_t>(0U), height - 1);
+                    textureY1 = std::clamp(textureY1, static_cast<std::size_t>(0U), height - 1);
 
                     // TODO: calculate mip level
                     const Color color[4] = {

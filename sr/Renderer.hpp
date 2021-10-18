@@ -153,10 +153,10 @@ namespace sr
                     if (viewportPosition.v[1] > screenMax.v[1]) screenMax.v[1] = viewportPosition.v[1];
                 }
 
-                screenMin.v[0] = clamp(screenMin.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
-                screenMax.v[0] = clamp(screenMax.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
-                screenMin.v[1] = clamp(screenMin.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
-                screenMax.v[1] = clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
+                screenMin.v[0] = std::clamp(screenMin.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
+                screenMax.v[0] = std::clamp(screenMax.v[0], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
+                screenMin.v[1] = std::clamp(screenMin.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
+                screenMax.v[1] = std::clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
                 for (auto screenY = static_cast<std::size_t>(screenMin.v[1]); screenY <= static_cast<std::size_t>(screenMax.v[1]); ++screenY)
                     for (auto screenX = static_cast<std::size_t>(screenMin.v[0]); screenX <= static_cast<std::size_t>(screenMax.v[0]); ++screenX)
@@ -268,9 +268,9 @@ namespace sr
         {
             switch (operation)
             {
-                case BlendState::Operation::add: return clamp(a + b, 0.0F, 1.0F);
-                case BlendState::Operation::subtract: return clamp(a - b, 0.0F, 1.0F);
-                case BlendState::Operation::reverseSubtract: return clamp(b - a, 0.0F, 1.0F);
+                case BlendState::Operation::add: return std::clamp(a + b, 0.0F, 1.0F);
+                case BlendState::Operation::subtract: return std::clamp(a - b, 0.0F, 1.0F);
+                case BlendState::Operation::reverseSubtract: return std::clamp(b - a, 0.0F, 1.0F);
                 case BlendState::Operation::min: return std::min(a, b);
                 case BlendState::Operation::max: return std::max(a, b);
                 default: throw RenderError("Invalid blend operation");
