@@ -17,10 +17,10 @@ namespace sr
     {
     public:
 
-        Texture(PixelFormat initPixelFormat = PixelFormat::rgba8,
-                std::size_t initWidth = 0,
-                std::size_t initHeight = 0,
-                bool initMipMaps = false):
+        Texture(const PixelFormat initPixelFormat = PixelFormat::rgba8,
+                const std::size_t initWidth = 0,
+                const std::size_t initHeight = 0,
+                const bool initMipMaps = false):
             pixelFormat{initPixelFormat},
             width{initWidth},
             height{initHeight},
@@ -113,7 +113,9 @@ namespace sr
             levels[level] = buffer;
         }
 
-        Color getPixel(std::size_t x, std::size_t y, std::uint32_t level) const
+        Color getPixel(const std::size_t x,
+                       const std::size_t y,
+                       const std::uint32_t level) const
         {
             const auto& buffer = levels[level];
 

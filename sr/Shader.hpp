@@ -25,7 +25,8 @@ namespace sr
 
         virtual ~Shader() = default;
 
-        virtual VertexShaderOutput vertexShader(const Matrix<float, 4>& modelViewProjection, const Vertex& vertex) const = 0;
+        virtual VertexShaderOutput vertexShader(const Matrix<float, 4>& modelViewProjection,
+                                                const Vertex& vertex) const = 0;
         virtual Color fragmentShader(const VertexShaderOutput& input,
                                      const std::array<Sampler*, 2>& samplers,
                                      const std::array<Texture*, 2>& textures) const = 0;

@@ -49,14 +49,14 @@ namespace sr
             shader = &newShader;
         }
 
-        void setTexture(Texture& newTexture, std::uint32_t level)
+        void setTexture(Texture& newTexture, const std::uint32_t level)
         {
             assert(level < 2);
 
             textures[level] = &newTexture;
         }
 
-        void setSampler(Sampler& newSampler, std::uint32_t level)
+        void setSampler(Sampler& newSampler, const std::uint32_t level)
         {
             assert(level < 2);
 
@@ -83,7 +83,7 @@ namespace sr
             depthState = newDepthState;
         }
 
-        void clear(Color color, float depth)
+        void clear(const Color color, const float depth)
         {
             if (!renderTarget)
                 throw RenderError("No render target set");
@@ -242,8 +242,12 @@ namespace sr
         }
 
     private:
-        static float getValue(BlendState::Factor factor, float srcColor, float srcAlpha,
-                              float destColor, float destAlpha, float blendFactor)
+        static float getValue(const BlendState::Factor factor,
+                              const float srcColor,
+                              const float srcAlpha,
+                              const float destColor,
+                              const float destAlpha,
+                              const float blendFactor)
         {
             switch (factor)
             {
@@ -264,7 +268,9 @@ namespace sr
             }
         }
 
-        static float getValue(BlendState::Operation operation, float a, float b)
+        static float getValue(const BlendState::Operation operation,
+                              const float a,
+                              const float b)
         {
             switch (operation)
             {

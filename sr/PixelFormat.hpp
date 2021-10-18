@@ -15,7 +15,7 @@ namespace sr
         float32
     };
 
-    inline std::size_t getPixelSize(PixelFormat pixelFormat) noexcept
+    inline std::size_t getPixelSize(const PixelFormat pixelFormat) noexcept
     {
         switch (pixelFormat)
         {

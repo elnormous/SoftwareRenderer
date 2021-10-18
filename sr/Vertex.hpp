@@ -15,8 +15,10 @@ namespace sr
     public:
         Vertex() noexcept = default;
 
-        Vertex(const Vector<float, 4>& initPosition, Color initColor,
-               const Vector<float, 2>& initTexCoord, const Vector<float, 3>& initNormal) noexcept:
+        Vertex(const Vector<float, 4>& initPosition,
+               const Color initColor,
+               const Vector<float, 2>& initTexCoord,
+               const Vector<float, 3>& initNormal) noexcept:
             position{initPosition}, color{initColor},
             texCoords{initTexCoord}, normal{initNormal}
         {

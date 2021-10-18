@@ -30,7 +30,7 @@ namespace sr
         }
 
         constexpr Rect(const Vector<T, 2>& initPosition,
-                      const T width, const T height) noexcept:
+                       const T width, const T height) noexcept:
             position{initPosition}, size{width, height}
         {
         }
