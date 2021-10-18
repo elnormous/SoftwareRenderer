@@ -137,8 +137,14 @@ namespace sr
                     Vector<float, 2>{ndcPositions[2].v[0], ndcPositions[2].v[1]}
                 };
 
-                Vector<float, 2> screenMin;
-                Vector<float, 2> screenMax;
+                Vector<float, 2> screenMin{
+                    std::numeric_limits<float>::infinity(),
+                    std::numeric_limits<float>::infinity()
+                };
+                Vector<float, 2> screenMax{
+                    -std::numeric_limits<float>::infinity(),
+                    -std::numeric_limits<float>::infinity()
+                };
 
                 for (auto& viewportPosition : viewportPositions)
                 {
