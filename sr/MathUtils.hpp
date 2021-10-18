@@ -11,7 +11,10 @@
 namespace sr
 {
     template <class T>
-    inline Vector<T, 3> barycentric(const Vector<T, 2>& a, const Vector<T, 2>& b, const Vector<T, 2>& c, const Vector<T, 2>& p) noexcept
+    Vector<T, 3> barycentric(const Vector<T, 2>& a,
+                             const Vector<T, 2>& b,
+                             const Vector<T, 2>& c,
+                             const Vector<T, 2>& p) noexcept
     {
         const Vector<T, 3> side1{c.v[0] - a.v[0], b.v[0] - a.v[0], a.v[0] - p.v[0]};
         const Vector<T, 3> side2{c.v[1] - a.v[1], b.v[1] - a.v[1], a.v[1] - p.v[1]};
