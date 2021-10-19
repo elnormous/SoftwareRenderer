@@ -49,14 +49,14 @@ namespace sr
             shader = &newShader;
         }
 
-        void setTexture(Texture& newTexture, const std::uint32_t level)
+        void setTexture(const Texture& newTexture, const std::uint32_t level)
         {
             assert(level < 2);
 
             textures[level] = &newTexture;
         }
 
-        void setSampler(Sampler& newSampler, const std::uint32_t level)
+        void setSampler(const Sampler& newSampler, const std::uint32_t level)
         {
             assert(level < 2);
 
