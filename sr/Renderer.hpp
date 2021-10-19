@@ -181,15 +181,15 @@ namespace sr
                         // calculate barycentric coordinates
                         const auto v = (v2.v[0] * v1.v[1] - v1.v[0] * v2.v[1]) / den;
                         const auto w = (v0.v[0] * v2.v[1] - v2.v[0] * v0.v[1]) / den;
-                        const auto u = 1.0f - v - w;
-                        const auto s = Vector<float, 3>{u, v, w};
 
-                        if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
+                        if (v >= 0.0F && w >= 0.0F && v + w <= 1.0F)
                         {
+                            const auto u = 1.0F - v - w;
+
                             Vector<float, 3> clip{
-                                s.v[0] / vsOutputs[0].position.v[3],
-                                s.v[1] / vsOutputs[1].position.v[3],
-                                s.v[2] / vsOutputs[2].position.v[3]
+                                u / vsOutputs[0].position.v[3],
+                                v / vsOutputs[1].position.v[3],
+                                w / vsOutputs[2].position.v[3]
                             };
                             clip /= (clip.v[0] + clip.v[1] + clip.v[2]);
 
