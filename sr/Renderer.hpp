@@ -110,8 +110,8 @@ namespace sr
             if (!shader)
                 throw RenderError("No shader set");
 
-            auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
-            auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
+            const auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            const auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
 
             for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
             {
