@@ -6,6 +6,7 @@
 #define MATRIX_HPP
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <cmath>
 #include "Vector.hpp"
@@ -15,7 +16,7 @@ namespace sr
     template <typename T, std::size_t C, std::size_t R = C> class Matrix final
     {
     public:
-        T m[C * R]{0};
+        std::array<T, C * R> m{0};
 
         constexpr Matrix() noexcept {}
 
@@ -506,7 +507,7 @@ namespace sr
 
         void multiply(const Matrix& matrix, Matrix& dst) const noexcept
         {
-            const auto product = {
+            dst.m = {
                 m[0] * matrix.m[0] + m[4] * matrix.m[1] + m[8] * matrix.m[2] + m[12] * matrix.m[3],
                 m[1] * matrix.m[0] + m[5] * matrix.m[1] + m[9] * matrix.m[2] + m[13] * matrix.m[3],
                 m[2] * matrix.m[0] + m[6] * matrix.m[1] + m[10] * matrix.m[2] + m[14] * matrix.m[3],
@@ -527,8 +528,6 @@ namespace sr
                 m[2] * matrix.m[12] + m[6] * matrix.m[13] + m[10] * matrix.m[14] + m[14] * matrix.m[15],
                 m[3] * matrix.m[12] + m[7] * matrix.m[13] + m[11] * matrix.m[14] + m[15] * matrix.m[15]
             };
-
-            std::copy(std::begin(product), std::end(product), dst.m);
         }
 
         void negate() noexcept
@@ -652,13 +651,12 @@ namespace sr
 
         void transpose(Matrix& dst) const noexcept
         {
-            const auto t = {
+            dst.m = {
                 m[0], m[4], m[8], m[12],
                 m[1], m[5], m[9], m[13],
                 m[2], m[6], m[10], m[14],
                 m[3], m[7], m[11], m[15]
             };
-            std::copy(std::begin(t), std::end(t), dst.m);
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 3 && Y == 3)>::type* = nullptr>

@@ -5,9 +5,10 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cmath>
-#include <algorithm>
 #include <iterator>
 
 namespace sr
@@ -15,7 +16,7 @@ namespace sr
     template <typename T, std::size_t N> class Vector final
     {
     public:
-        T v[N]{0};
+        std::array<T, N> v{0};
 
         constexpr Vector() noexcept {}
 
