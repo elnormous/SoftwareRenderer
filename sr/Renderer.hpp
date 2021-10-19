@@ -164,6 +164,10 @@ namespace sr
                 screenMin.v[1] = std::clamp(screenMin.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
                 screenMax.v[1] = std::clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget->getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
+                const auto v0 = viewportPositions[1] - viewportPositions[0];
+                const auto v1 = viewportPositions[2] - viewportPositions[0];
+                const auto den = v0.v[0] * v1.v[1] - v1.v[0] * v0.v[1];
+
                 for (auto screenY = static_cast<std::size_t>(screenMin.v[1]); screenY <= static_cast<std::size_t>(screenMax.v[1]); ++screenY)
                     for (auto screenX = static_cast<std::size_t>(screenMin.v[0]); screenX <= static_cast<std::size_t>(screenMax.v[0]); ++screenX)
                     {
@@ -172,11 +176,13 @@ namespace sr
                             static_cast<float>(screenY)
                         };
 
-                        // TODO: optimize
-                        const auto s = barycentric(viewportPositions[0],
-                                                   viewportPositions[1],
-                                                   viewportPositions[2],
-                                                   p);
+                        const auto v2 = p - viewportPositions[0];
+
+                        // calculate barycentric coordinates
+                        const auto v = (v2.v[0] * v1.v[1] - v1.v[0] * v2.v[1]) / den;
+                        const auto w = (v0.v[0] * v2.v[1] - v2.v[0] * v0.v[1]) / den;
+                        const auto u = 1.0f - v - w;
+                        const auto s = Vector<float, 3>{u, v, w};
 
                         if (s.v[0] >= 0.0F && s.v[1] >= 0.0F && s.v[2] >= 0.0F)
                         {
@@ -249,22 +255,6 @@ namespace sr
         }
 
     private:
-        template <class T>
-        static Vector<T, 3> barycentric(const Vector<T, 2>& a,
-                                        const Vector<T, 2>& b,
-                                        const Vector<T, 2>& c,
-                                        const Vector<T, 2>& p) noexcept
-        {
-            const Vector<T, 3> side1{c.v[0] - a.v[0], b.v[0] - a.v[0], a.v[0] - p.v[0]};
-            const Vector<T, 3> side2{c.v[1] - a.v[1], b.v[1] - a.v[1], a.v[1] - p.v[1]};
-            const auto u = side1.cross(side2);
-
-            if (std::abs(u.v[2]) < std::numeric_limits<T>::epsilon()) // degenerate triangle (all three points in a line)
-                return Vector<T, 3>{T(-1), T(1), T(1)};
-
-            return Vector<T, 3>{T(1) - (u.v[0] + u.v[1]) / u.v[2], u.v[1] / u.v[2], u.v[0] / u.v[2]};
-        }
-
         static float getValue(const BlendState::Factor factor,
                               const float srcColor,
                               const float srcAlpha,
