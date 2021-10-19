@@ -9,7 +9,6 @@
 #include "Color.hpp"
 #include "Constants.hpp"
 #include "DepthState.hpp"
-#include "MathUtils.hpp"
 #include "Matrix.hpp"
 #include "Rect.hpp"
 #include "Renderer.hpp"

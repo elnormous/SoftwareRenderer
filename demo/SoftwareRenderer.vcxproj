@@ -23,7 +23,6 @@
     <ClInclude Include="..\sr\Color.hpp" />
     <ClInclude Include="..\sr\Constants.hpp" />
     <ClInclude Include="..\sr\DepthState.hpp" />
-    <ClInclude Include="..\sr\MathUtils.hpp" />
     <ClInclude Include="..\sr\Matrix.hpp" />
     <ClInclude Include="..\sr\PixelFormat.hpp" />
     <ClInclude Include="..\sr\Rect.hpp" />

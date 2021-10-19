@@ -24,9 +24,6 @@
     <ClInclude Include="TextureShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\sr\MathUtils.hpp">
-      <Filter>sr</Filter>
-    </ClInclude>
     <ClInclude Include="..\sr\Matrix.hpp">
       <Filter>sr</Filter>
     </ClInclude>
