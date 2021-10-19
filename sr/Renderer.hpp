@@ -300,8 +300,8 @@ namespace sr
         Rect<float> viewport;
         Rect<float> scissorRect{0.0F, 0.0F, 1.0F, 1.0F};
         const Shader* shader = nullptr;
-        std::array<Sampler*, 2> samplers{};
-        std::array<Texture*, 2> textures{};
+        std::array<const Sampler*, 2> samplers{};
+        std::array<const Texture*, 2> textures{};
         BlendState blendState;
         DepthState depthState;
     };
