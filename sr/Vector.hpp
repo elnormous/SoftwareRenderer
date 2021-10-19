@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef VECTOR_HPP
-#define VECTOR_HPP
+#ifndef SR_VECTOR_HPP
+#define SR_VECTOR_HPP
 
 #include <algorithm>
 #include <array>

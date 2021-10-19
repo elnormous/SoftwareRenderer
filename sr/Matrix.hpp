@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
+#ifndef SR_MATRIX_HPP
+#define SR_MATRIX_HPP
 
 #include <algorithm>
 #include <array>

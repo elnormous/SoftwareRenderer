@@ -2,9 +2,10 @@
 //  SoftwareRenderer
 //
 
-#ifndef SIZE_HPP
-#define SIZE_HPP
+#ifndef SR_SIZE_HPP
+#define SR_SIZE_HPP
 
+#include <array>
 #include <cstddef>
 #include <type_traits>
 #include "Vector.hpp"
@@ -14,7 +15,7 @@ namespace sr
     template <typename T, std::size_t N> class Size final
     {
     public:
-        T v[N]{0};
+        std::array<T, N> v{0};
 
         constexpr Size() noexcept {}
 

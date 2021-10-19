@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef RENDERER_HPP
-#define RENDERER_HPP
+#ifndef SR_RENDERER_HPP
+#define SR_RENDERER_HPP
 
 #include <cassert>
 #include <algorithm>

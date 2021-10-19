@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef PIXELFORMAT_HPP
-#define PIXELFORMAT_HPP
+#ifndef SR_PIXELFORMAT_HPP
+#define SR_PIXELFORMAT_HPP
 
 namespace sr
 {

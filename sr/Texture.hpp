@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef TEXTURE_HPP
-#define TEXTURE_HPP
+#ifndef SR_TEXTURE_HPP
+#define SR_TEXTURE_HPP
 
 #include <climits>
 #include <stdexcept>

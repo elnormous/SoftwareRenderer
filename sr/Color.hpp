@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef COLOR_HPP
-#define COLOR_HPP
+#ifndef SR_COLOR_HPP
+#define SR_COLOR_HPP
 
 #include <cstddef>
 #include <cstdint>

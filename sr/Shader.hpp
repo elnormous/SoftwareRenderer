@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef SHADER_HPP
-#define SHADER_HPP
+#ifndef SR_SHADER_HPP
+#define SR_SHADER_HPP
 
 #include <array>
 #include "Matrix.hpp"

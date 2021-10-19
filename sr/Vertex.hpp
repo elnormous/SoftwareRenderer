@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef VERTEX_HPP
-#define VERTEX_HPP
+#ifndef SR_VERTEX_HPP
+#define SR_VERTEX_HPP
 
 #include "Color.hpp"
 #include "Vector.hpp"

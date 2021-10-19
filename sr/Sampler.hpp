@@ -2,8 +2,8 @@
 //  SoftwareRenderer
 //
 
-#ifndef SAMPLER_HPP
-#define SAMPLER_HPP
+#ifndef SR_SAMPLER_HPP
+#define SR_SAMPLER_HPP
 
 #include "Color.hpp"
 #include "Vector.hpp"
