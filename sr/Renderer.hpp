@@ -88,8 +88,8 @@ namespace sr
             if (!renderTarget)
                 throw RenderError("No render target set");
 
-            auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
-            auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
+            const auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget->getFrameBuffer().getData().data());
+            const auto depthBufferData = reinterpret_cast<float*>(renderTarget->getDepthBuffer().getData().data());
             const auto rgba = color.getIntValueRaw();
 
             const auto frameBufferSize = renderTarget->getFrameBuffer().getWidth() * renderTarget->getFrameBuffer().getHeight();
