@@ -91,41 +91,38 @@ namespace demo
 
         void setup(std::size_t newWidth, std::size_t newHeight)
         {
-            width = newWidth;
-            height = newHeight;
+            viewport.size.v[0] = static_cast<float>(newWidth);
+            viewport.size.v[1] = static_cast<float>(newHeight);
 
-            renderTarget = sr::RenderTarget{width, height};
+            renderTarget = sr::RenderTarget{newWidth, newHeight};
 
             projection.setPerspective(sr::tau<float> / 6.0,
-                                      static_cast<float>(width) / static_cast<float>(height),
+                                      static_cast<float>(newWidth) / static_cast<float>(newHeight),
                                       1.0F, 1000.0F);
 
             view.setTranslation(0.0F, 0.0F, 100.0F);
         }
-
-        std::size_t getWidth() const noexcept { return width; }
-        std::size_t getHeight() const noexcept { return height; }
         
         void render()
         {
-            renderer.setRenderTarget(&renderTarget);
-
             rotationY += 0.05F;
             model.setRotationY(rotationY);
 
             const auto modelViewProjection = projection * view * model;
 
-            renderer.setViewport(sr::Rect<float>{0.0F, 0.0F, static_cast<float>(width), static_cast<float>(height)});
-            renderer.setBlendState(blendState);
-            renderer.setDepthState(depthState);
+            clear(renderTarget, sr::Color{255, 255, 255, 255}, 1000.0F);
 
-            renderer.clear(sr::Color{255, 255, 255, 255}, 1000.0F);
-
-            renderer.setShader(shader);
-            renderer.setTexture(texture, 0);
-            renderer.setSampler(sampler, 0);
-
-            renderer.drawTriangles(indices, vertices, modelViewProjection);
+            drawTriangles(renderTarget,
+                          shader,
+                          {&sampler, nullptr},
+                          {&texture, nullptr},
+                          viewport,
+                          scissorRect,
+                          blendState,
+                          depthState,
+                          indices,
+                          vertices,
+                          modelViewProjection);
         }
 
         static std::string getResourcePath();
@@ -136,28 +133,26 @@ namespace demo
     protected:
         void onResize(std::size_t newWidth, std::size_t newHeight)
         {
-            width = newWidth;
-            height = newHeight;
+            viewport.size.v[0] = static_cast<float>(newWidth);
+            viewport.size.v[1] = static_cast<float>(newHeight);
             
-            renderTarget.resize(width, height);
+            renderTarget.resize(newWidth, newHeight);
 
             projection.setPerspective(sr::tau<float> / 6.0,
-                                      static_cast<float>(width) / static_cast<float>(height),
+                                      static_cast<float>(newWidth) / static_cast<float>(newHeight),
                                       1.0F, 1000.0F);
         }
 
     private:
-        std::size_t width;
-        std::size_t height;
-
         sr::Matrix<float, 4> projection = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> view = sr::Matrix<float, 4>::identity();
         sr::Matrix<float, 4> model = sr::Matrix<float, 4>::identity();
         float rotationY = 0.0F;
 
-        sr::Renderer renderer;
         sr::RenderTarget renderTarget;
 
+        sr::Rect<float> viewport;
+        sr::Rect<float> scissorRect{0.0F, 0.0F, 1.0F, 1.0F};
         sr::BlendState blendState;
         sr::DepthState depthState;
 
