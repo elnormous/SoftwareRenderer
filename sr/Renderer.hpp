@@ -8,6 +8,7 @@
 #include <cassert>
 #include <algorithm>
 #include <array>
+#include <limits>
 #include <stdexcept>
 #include "BlendState.hpp"
 #include "Color.hpp"

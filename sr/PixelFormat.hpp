@@ -5,6 +5,8 @@
 #ifndef SR_PIXELFORMAT_HPP
 #define SR_PIXELFORMAT_HPP
 
+#include <cstdint>
+
 namespace sr
 {
     enum class PixelFormat
