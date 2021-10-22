@@ -20,17 +20,12 @@ namespace sr
         Vector<float, 3> normal;
     };
 
-    class Shader
-    {
-    public:
-        virtual ~Shader() = default;
+    using VertexShader = VertexShaderOutput(const Matrix<float, 4>& modelViewProjection,
+                                            const Vertex& vertex);
 
-        virtual VertexShaderOutput vertexShader(const Matrix<float, 4>& modelViewProjection,
-                                                const Vertex& vertex) const = 0;
-        virtual Color fragmentShader(const VertexShaderOutput& input,
-                                     const std::array<const Sampler*, 2>& samplers,
-                                     const std::array<const Texture*, 2>& textures) const = 0;
-    };
+    using FragmentShader = Color(const VertexShaderOutput& input,
+                                 const std::array<const Sampler*, 2>& samplers,
+                                 const std::array<const Texture*, 2>& textures);
 }
 
 #endif

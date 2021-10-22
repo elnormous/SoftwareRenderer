@@ -113,7 +113,8 @@ namespace demo
             clear(renderTarget, sr::Color{255, 255, 255, 255}, 1000.0F);
 
             drawTriangles(renderTarget,
-                          shader,
+                          vertexShader,
+                          fragmentShader,
                           {&sampler, nullptr},
                           {&texture, nullptr},
                           viewport,
@@ -156,7 +157,6 @@ namespace demo
         sr::BlendState blendState;
         sr::DepthState depthState;
 
-        TextureShader shader;
         sr::Sampler sampler;
         sr::Texture texture;
 

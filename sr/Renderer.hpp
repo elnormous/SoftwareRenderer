@@ -87,7 +87,8 @@ namespace sr
     }
 
     inline void drawTriangles(RenderTarget& renderTarget,
-                              const Shader& shader,
+                              VertexShader vertexShader,
+                              FragmentShader fragmentShader,
                               const std::array<const Sampler*, 2>& samplers,
                               const std::array<const Texture*, 2>& textures,
                               const Rect<float>& viewport,
@@ -104,9 +105,9 @@ namespace sr
         for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
         {
             const std::array<VertexShaderOutput, 3> vsOutputs{
-                shader.vertexShader(modelViewProjection, vertices[indices[i + 0]]),
-                shader.vertexShader(modelViewProjection, vertices[indices[i + 1]]),
-                shader.vertexShader(modelViewProjection, vertices[indices[i + 2]])
+                vertexShader(modelViewProjection, vertices[indices[i + 0]]),
+                vertexShader(modelViewProjection, vertices[indices[i + 1]]),
+                vertexShader(modelViewProjection, vertices[indices[i + 2]])
             };
 
             std::array<Vector<float, 4>, 3> ndcPositions{
@@ -210,7 +211,7 @@ namespace sr
 
                         psInput.normal = vsOutputs[0].normal * clip.v[0] + vsOutputs[1].normal * clip.v[1] + vsOutputs[2].normal * clip.v[2];
 
-                        const auto srcColor = shader.fragmentShader(psInput, samplers, textures);
+                        const auto srcColor = fragmentShader(psInput, samplers, textures);
 
                         if (blendState.enabled)
                         {
