@@ -103,7 +103,7 @@ namespace sr
 
         for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
         {
-            const std::array<Shader::VertexShaderOutput, 3> vsOutputs{
+            const std::array<VertexShaderOutput, 3> vsOutputs{
                 shader.vertexShader(modelViewProjection, vertices[indices[i + 0]]),
                 shader.vertexShader(modelViewProjection, vertices[indices[i + 1]]),
                 shader.vertexShader(modelViewProjection, vertices[indices[i + 2]])
@@ -189,7 +189,7 @@ namespace sr
                         if (depthState.write)
                             depthBufferData[screenY * renderTarget.getDepthBuffer().getWidth() + screenX] = depth;
 
-                        Shader::VertexShaderOutput psInput;
+                        VertexShaderOutput psInput;
                         psInput.position = Vector<float, 4>{clip.v[0], clip.v[1], clip.v[2], 1.0F};
                         psInput.color = Color{
                             vsOutputs[0].color.r * clip.v[0] + vsOutputs[1].color.r * clip.v[1] + vsOutputs[2].color.r * clip.v[2],

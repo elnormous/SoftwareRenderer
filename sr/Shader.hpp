@@ -12,17 +12,17 @@
 
 namespace sr
 {
+    struct VertexShaderOutput final
+    {
+        Vector<float, 4> position;
+        Color color;
+        std::array<Vector<float, 2>, 2> texCoords;
+        Vector<float, 3> normal;
+    };
+
     class Shader
     {
     public:
-        struct VertexShaderOutput final
-        {
-            Vector<float, 4> position;
-            Color color;
-            std::array<Vector<float, 2>, 2> texCoords;
-            Vector<float, 3> normal;
-        };
-
         virtual ~Shader() = default;
 
         virtual VertexShaderOutput vertexShader(const Matrix<float, 4>& modelViewProjection,

@@ -12,10 +12,10 @@ namespace demo
     class TextureShader: public sr::Shader
     {
     public:
-        virtual VertexShaderOutput vertexShader(const sr::Matrix<float, 4>& modelViewProjection,
-                                                const sr::Vertex& vertex) const override
+        virtual sr::VertexShaderOutput vertexShader(const sr::Matrix<float, 4>& modelViewProjection,
+                                                    const sr::Vertex& vertex) const override
         {
-            VertexShaderOutput result;
+            sr::VertexShaderOutput result;
 
             // transform to clip space
             result.position = modelViewProjection * vertex.position;
@@ -27,7 +27,7 @@ namespace demo
             return result;
         }
 
-        virtual sr::Color fragmentShader(const VertexShaderOutput& input,
+        virtual sr::Color fragmentShader(const sr::VertexShaderOutput& input,
                                          const std::array<const sr::Sampler*, 2>& samplers,
                                          const std::array<const sr::Texture*, 2>& textures) const override
         {
