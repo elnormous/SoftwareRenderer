@@ -31,6 +31,8 @@ namespace sr
 
     inline void clear(Texture& renderTarget, const Color color)
     {
+        assert(renderTarget.getPixelFormat() == PixelFormat::rgba8);
+
         const auto bufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getData().data());
         const auto rgba = color.getIntValueRaw();
 
@@ -41,6 +43,8 @@ namespace sr
 
     inline void clear(Texture& renderTarget, const float depth)
     {
+        assert(renderTarget.getPixelFormat() == PixelFormat::float32);
+
         const auto bufferData = reinterpret_cast<float*>(renderTarget.getData().data());
 
         const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
