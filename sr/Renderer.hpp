@@ -15,7 +15,6 @@
 #include "DepthState.hpp"
 #include "Matrix.hpp"
 #include "Rect.hpp"
-#include "RenderTarget.hpp"
 #include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
@@ -30,19 +29,23 @@ namespace sr
         using std::runtime_error::runtime_error;
     };
 
-    inline void clear(RenderTarget& renderTarget, const Color color, const float depth)
+    inline void clear(Texture& renderTarget, const Color color)
     {
-        const auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getFrameBuffer().getData().data());
-        const auto depthBufferData = reinterpret_cast<float*>(renderTarget.getDepthBuffer().getData().data());
+        const auto bufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getData().data());
         const auto rgba = color.getIntValueRaw();
 
-        const auto frameBufferSize = renderTarget.getFrameBuffer().getWidth() * renderTarget.getFrameBuffer().getHeight();
-        for (std::size_t p = 0; p < frameBufferSize; ++p)
-            frameBufferData[p] = rgba;
+        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
+        for (std::size_t p = 0; p < bufferSize; ++p)
+            bufferData[p] = rgba;
+    }
 
-        const auto depthBufferSize = renderTarget.getDepthBuffer().getWidth() * renderTarget.getDepthBuffer().getHeight();
-        for (std::size_t p = 0; p < depthBufferSize; ++p)
-            depthBufferData[p] = depth;
+    inline void clear(Texture& renderTarget, const float depth)
+    {
+        const auto bufferData = reinterpret_cast<float*>(renderTarget.getData().data());
+
+        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
+        for (std::size_t p = 0; p < bufferSize; ++p)
+            bufferData[p] = depth;
     }
 
     inline float getValue(const BlendState::Factor factor,
@@ -86,7 +89,8 @@ namespace sr
         }
     }
 
-    inline void drawTriangles(RenderTarget& renderTarget,
+    inline void drawTriangles(Texture& frameBuffer,
+                              Texture& depthBuffer,
                               VertexShader vertexShader,
                               FragmentShader fragmentShader,
                               const std::array<const Sampler*, 2>& samplers,
@@ -99,8 +103,8 @@ namespace sr
                               const std::vector<Vertex>& vertices,
                               const Matrix<float, 4>& modelViewProjection)
     {
-        const auto frameBufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getFrameBuffer().getData().data());
-        const auto depthBufferData = reinterpret_cast<float*>(renderTarget.getDepthBuffer().getData().data());
+        const auto frameBufferData = reinterpret_cast<std::uint32_t*>(frameBuffer.getData().data());
+        const auto depthBufferData = reinterpret_cast<float*>(depthBuffer.getData().data());
 
         for (std::size_t i = 0; i + 2 < indices.size(); i += 3)
         {
@@ -148,10 +152,10 @@ namespace sr
                 if (viewportPosition.v[1] > screenMax.v[1]) screenMax.v[1] = viewportPosition.v[1];
             }
 
-            screenMin.v[0] = std::clamp(screenMin.v[0], 0.0F, static_cast<float>(renderTarget.getFrameBuffer().getWidth() - 1) * scissorRect.position.v[0]);
-            screenMax.v[0] = std::clamp(screenMax.v[0], 0.0F, static_cast<float>(renderTarget.getFrameBuffer().getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
-            screenMin.v[1] = std::clamp(screenMin.v[1], 0.0F, static_cast<float>(renderTarget.getFrameBuffer().getHeight() - 1) * scissorRect.position.v[1]);
-            screenMax.v[1] = std::clamp(screenMax.v[1], 0.0F, static_cast<float>(renderTarget.getFrameBuffer().getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
+            screenMin.v[0] = std::clamp(screenMin.v[0], 0.0F, static_cast<float>(frameBuffer.getWidth() - 1) * scissorRect.position.v[0]);
+            screenMax.v[0] = std::clamp(screenMax.v[0], 0.0F, static_cast<float>(frameBuffer.getWidth() - 1) * (scissorRect.position.v[0] + scissorRect.size.v[0]));
+            screenMin.v[1] = std::clamp(screenMin.v[1], 0.0F, static_cast<float>(frameBuffer.getHeight() - 1) * scissorRect.position.v[1]);
+            screenMax.v[1] = std::clamp(screenMax.v[1], 0.0F, static_cast<float>(frameBuffer.getHeight() - 1) * (scissorRect.position.v[1] + scissorRect.size.v[1]));
 
             const auto v0 = viewportPositions[1] - viewportPositions[0];
             const auto v1 = viewportPositions[2] - viewportPositions[0];
@@ -184,11 +188,11 @@ namespace sr
 
                         const auto depth = ndcPositions[0].v[2] * clip.v[0] + ndcPositions[1].v[2] * clip.v[1] + ndcPositions[2].v[2] * clip.v[2];
 
-                        if (depthState.read && depthBufferData[screenY * renderTarget.getDepthBuffer().getWidth() + screenX] < depth)
+                        if (depthState.read && depthBufferData[screenY * depthBuffer.getWidth() + screenX] < depth)
                             continue; // discard the pixel
 
                         if (depthState.write)
-                            depthBufferData[screenY * renderTarget.getDepthBuffer().getWidth() + screenX] = depth;
+                            depthBufferData[screenY * depthBuffer.getWidth() + screenX] = depth;
 
                         VertexShaderOutput psInput;
                         psInput.position = Vector<float, 4>{clip.v[0], clip.v[1], clip.v[2], 1.0F};
@@ -215,7 +219,7 @@ namespace sr
 
                         if (blendState.enabled)
                         {
-                            const auto pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * renderTarget.getFrameBuffer().getWidth() + screenX]);
+                            const auto pixel = reinterpret_cast<std::uint8_t*>(&frameBufferData[screenY * frameBuffer.getWidth() + screenX]);
                             const Color destColor{pixel[0], pixel[1], pixel[2], pixel[3]};
 
                             // alpha blend
@@ -234,10 +238,10 @@ namespace sr
                                          destColor.a * getValue(blendState.alphaBlendDest, srcColor.a, srcColor.a, destColor.a, destColor.a, blendState.blendFactor.a))
                             };
 
-                            frameBufferData[screenY * renderTarget.getFrameBuffer().getWidth() + screenX] = resultColor.getIntValueRaw();
+                            frameBufferData[screenY * frameBuffer.getWidth() + screenX] = resultColor.getIntValueRaw();
                         }
                         else
-                            frameBufferData[screenY * renderTarget.getFrameBuffer().getWidth() + screenX] = srcColor.getIntValueRaw();
+                            frameBufferData[screenY * frameBuffer.getWidth() + screenX] = srcColor.getIntValueRaw();
                     }
                 }
         }

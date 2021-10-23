@@ -139,8 +139,8 @@ demo::ApplicationIOS* sharedApplication;
 
 static const void* getBytePointer(void* info)
 {
-    const auto renderTarget = static_cast<sr::RenderTarget*>(info);
-    return renderTarget->getFrameBuffer().getData().data();
+    const auto frameBuffer = static_cast<sr::Texture*>(info);
+    return frameBuffer->getData().data();
 }
 
 namespace demo
@@ -201,7 +201,7 @@ namespace demo
         };
 
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        provider = CGDataProviderCreateDirect(&getRenderTarget(), w * h * componentsPerPixel, &providerCallbacks);
+        provider = CGDataProviderCreateDirect(&getFrameBuffer(), w * h * componentsPerPixel, &providerCallbacks);
 
         [window makeKeyAndVisible];
 
@@ -218,7 +218,7 @@ namespace demo
     {
         render();
 
-        const auto& frameBuffer = getRenderTarget().getFrameBuffer();
+        const auto& frameBuffer = getFrameBuffer();
         
         CGImageRef image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
                                          bitsPerComponent,
@@ -251,7 +251,7 @@ namespace demo
         const auto w = static_cast<std::size_t>(newWidth * screen.scale);
         const auto h = static_cast<std::size_t>(newHeight * screen.scale);
         
-        provider = CGDataProviderCreateDirect(&getRenderTarget(),
+        provider = CGDataProviderCreateDirect(&getFrameBuffer(),
                                               w * h * componentsPerPixel,
                                               &providerCallbacks);
         

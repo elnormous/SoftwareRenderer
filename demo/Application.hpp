@@ -94,7 +94,8 @@ namespace demo
             viewport.size.v[0] = static_cast<float>(newWidth);
             viewport.size.v[1] = static_cast<float>(newHeight);
 
-            renderTarget = sr::RenderTarget{newWidth, newHeight};
+            frameBuffer.resize(newWidth, newHeight);
+            depthBuffer.resize(newWidth, newHeight);
 
             projection.setPerspective(sr::tau<float> / 6.0,
                                       static_cast<float>(newWidth) / static_cast<float>(newHeight),
@@ -110,9 +111,11 @@ namespace demo
 
             const auto modelViewProjection = projection * view * model;
 
-            clear(renderTarget, sr::Color{255, 255, 255, 255}, 1000.0F);
+            clear(frameBuffer, sr::Color{255, 255, 255, 255});
+            clear(depthBuffer, 1000.0F);
 
-            drawTriangles(renderTarget,
+            drawTriangles(frameBuffer,
+                          depthBuffer,
                           vertexShader,
                           fragmentShader,
                           {&sampler, nullptr},
@@ -128,8 +131,8 @@ namespace demo
 
         static std::string getResourcePath();
         
-        const sr::RenderTarget& getRenderTarget() const noexcept { return renderTarget; }
-        sr::RenderTarget& getRenderTarget() noexcept { return renderTarget; }
+        const sr::Texture& getFrameBuffer() const noexcept { return frameBuffer; }
+        sr::Texture& getFrameBuffer() noexcept { return frameBuffer; }
 
     protected:
         void onResize(std::size_t newWidth, std::size_t newHeight)
@@ -137,7 +140,8 @@ namespace demo
             viewport.size.v[0] = static_cast<float>(newWidth);
             viewport.size.v[1] = static_cast<float>(newHeight);
             
-            renderTarget.resize(newWidth, newHeight);
+            frameBuffer.resize(newWidth, newHeight);
+            depthBuffer.resize(newWidth, newHeight);
 
             projection.setPerspective(sr::tau<float> / 6.0,
                                       static_cast<float>(newWidth) / static_cast<float>(newHeight),
@@ -150,7 +154,8 @@ namespace demo
         sr::Matrix<float, 4> model = sr::Matrix<float, 4>::identity();
         float rotationY = 0.0F;
 
-        sr::RenderTarget renderTarget;
+        sr::Texture frameBuffer{sr::PixelFormat::rgba8};
+        sr::Texture depthBuffer{sr::PixelFormat::float32};
 
         sr::Rect<float> viewport;
         sr::Rect<float> scissorRect{0.0F, 0.0F, 1.0F, 1.0F};

@@ -12,7 +12,6 @@
 #include "Matrix.hpp"
 #include "Rect.hpp"
 #include "Renderer.hpp"
-#include "RenderTarget.hpp"
 #include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Size.hpp"

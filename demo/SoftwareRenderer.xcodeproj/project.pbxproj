@@ -52,7 +52,6 @@
 		306A7D1320B8D8F4002C47F1 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
 		306A7D1520B8D8F4002C47F1 /* BMP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BMP.hpp; sourceTree = "<group>"; };
 		306A7D1720B8D8F4002C47F1 /* Sampler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sampler.hpp; sourceTree = "<group>"; };
-		306A7D1820B8D8F4002C47F1 /* RenderTarget.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderTarget.hpp; sourceTree = "<group>"; };
 		306A7D1920B8D8F4002C47F1 /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		306A7D1C20B8D8F5002C47F1 /* BlendState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlendState.hpp; sourceTree = "<group>"; };
 		306A7D1D20B8D8F5002C47F1 /* sr.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sr.hpp; sourceTree = "<group>"; };
@@ -184,7 +183,6 @@
 				30A4C1E32711369800419C99 /* PixelFormat.hpp */,
 				306A7D2520B8D8F5002C47F1 /* Rect.hpp */,
 				306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */,
-				306A7D1820B8D8F4002C47F1 /* RenderTarget.hpp */,
 				306A7D1720B8D8F4002C47F1 /* Sampler.hpp */,
 				306A7D2620B8D8F6002C47F1 /* Shader.hpp */,
 				306A7D2020B8D8F5002C47F1 /* Size.hpp */,
