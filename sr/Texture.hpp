@@ -168,7 +168,7 @@ namespace sr
                     const auto textureY = static_cast<std::size_t>(std::round(v));
                     return getPixel(textureX, textureY, 0);
                 }
-                else
+                else if (sampler->filter == Sampler::Filter::linear)
                 {
                     auto textureX0 = static_cast<std::size_t>(u - 0.5F);
                     auto textureX1 = textureX0 + 1;
@@ -202,7 +202,7 @@ namespace sr
                 }
             }
 
-            return Color();
+            return Color{};
         }
 
     private:
