@@ -67,14 +67,14 @@ namespace sr
 
         explicit BMP(const std::string& filename)
         {
-            std::ifstream f(filename, std::ios::binary);
+            std::ifstream f{filename, std::ios::binary};
 
             BitmapFileHeader header;
 
             f.read(reinterpret_cast<char*>(&header.bfType), sizeof(header.bfType));
 
             if (header.bfType != BITMAPFILEHEADER_TYPE_BM)
-                throw std::runtime_error("Bad bitmap file");
+                throw std::runtime_error{"Bad bitmap file"};
 
             f.read(reinterpret_cast<char*>(&header.bfSize), sizeof(header.bfSize));
             f.read(reinterpret_cast<char*>(&header.bfReserved1), sizeof(header.bfReserved1));
@@ -117,7 +117,7 @@ namespace sr
             }
 
             if (infoHeader.biCompression != RGB)
-                throw std::runtime_error("Compression not supported");
+                throw std::runtime_error{"Compression not supported"};
 
             if (offset + sizeof(infoHeader.biSizeImage) < infoHeader.biSize)
             {

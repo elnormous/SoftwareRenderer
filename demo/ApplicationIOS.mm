@@ -162,15 +162,15 @@ namespace demo
                     auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
                     CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
                     CFRelease(path);
-                    return std::string(resourceDirectory.get());
+                    return std::string{resourceDirectory.get()};
                 }
                 CFRelease(absolutePath);
             }
             CFRelease(relativePath);
-            return std::string();
+            return std::string{};
         }
         else
-            throw std::runtime_error("Failed to get current directory");
+            throw std::runtime_error{"Failed to get current directory"};
 
         return "";
     }
@@ -300,7 +300,6 @@ int main(int argc, char* argv[])
     {
         demo::ApplicationIOS application;
         application.run(argc, argv);
-
         return EXIT_SUCCESS;
     }
     catch (const std::exception& e)

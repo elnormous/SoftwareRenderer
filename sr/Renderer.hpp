@@ -74,7 +74,7 @@ namespace sr
             case BlendState::Factor::srcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
             case BlendState::Factor::blendFactor: return blendFactor;
             case BlendState::Factor::invBlendFactor: return 1.0F - blendFactor;
-            default: throw RenderError("Invalid blend factor");
+            default: throw RenderError{"Invalid blend factor"};
         }
     }
 
@@ -89,7 +89,7 @@ namespace sr
             case BlendState::Operation::reverseSubtract: return std::clamp(b - a, 0.0F, 1.0F);
             case BlendState::Operation::min: return std::min(a, b);
             case BlendState::Operation::max: return std::max(a, b);
-            default: throw RenderError("Invalid blend operation");
+            default: throw RenderError{"Invalid blend operation"};
         }
     }
 

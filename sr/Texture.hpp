@@ -58,7 +58,7 @@ namespace sr
 
             const auto pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
-                throw std::runtime_error("Invalid pixel format");
+                throw std::runtime_error{"Invalid pixel format"};
 
             levels.clear();
             levels.push_back(std::vector<std::uint8_t>(width * height * pixelSize));
@@ -104,10 +104,10 @@ namespace sr
         {
             const auto pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
-                throw std::runtime_error("Invalid pixel format");
+                throw std::runtime_error{"Invalid pixel format"};
 
             if (buffer.size() != width * height * pixelSize)
-                throw std::runtime_error("Invalid buffer size");
+                throw std::runtime_error{"Invalid buffer size"};
 
             if (level >= levels.size()) levels.resize(level + 1);
             levels[level] = buffer;
@@ -142,7 +142,7 @@ namespace sr
                     return Color{f, f, f, 1.0F};
                 }
                 default:
-                    throw std::runtime_error("Invalid pixel format");
+                    throw std::runtime_error{"Invalid pixel format"};
             }
         }
 

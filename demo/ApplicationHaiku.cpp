@@ -20,8 +20,8 @@ namespace demo
     {
     public:
         AppView(ApplicationHaiku& initApplication, const BRect& frame, const std::string& title):
-            BView(frame, title.c_str(), B_FOLLOW_ALL_SIDES, B_WILL_DRAW | B_FRAME_EVENTS),
-            application(initApplication)
+            BView{frame, title.c_str(), B_FOLLOW_ALL_SIDES, B_WILL_DRAW | B_FRAME_EVENTS},
+            application{initApplication}
         {
         }
 
@@ -40,7 +40,7 @@ namespace demo
     };
 
     ApplicationHaiku::ApplicationHaiku():
-        BApplication("application/x-vnd.SoftwareRenderer")
+        BApplication{"application/x-vnd.SoftwareRenderer"}
     {
         const BRect frame{100, 100, 100 + 640, 100 + 480};
         window = new BWindow(frame, "SoftwareRenderer", B_TITLED_WINDOW,

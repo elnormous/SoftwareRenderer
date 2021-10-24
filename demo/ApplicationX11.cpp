@@ -17,12 +17,12 @@ namespace demo
     ApplicationX11::ApplicationX11()
     {
         if (!XInitThreads())
-            throw std::runtime_error("Failed to initialize thread support");
+            throw std::runtime_error{"Failed to initialize thread support"};
 
         display = XOpenDisplay(nullptr);
 
         if (!display)
-            throw std::runtime_error("Failed to open display");
+            throw std::runtime_error{"Failed to open display"};
 
         Screen* screen = XDefaultScreenOfDisplay(display);
         const int screenIndex = XScreenNumberOfScreen(screen);
