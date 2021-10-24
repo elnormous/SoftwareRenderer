@@ -9,6 +9,11 @@
 
 namespace demo
 {
+    std::string getResourcePath()
+    {
+        return "Resources";
+    }
+
     ApplicationX11::ApplicationX11()
     {
         if (!XInitThreads())
@@ -119,11 +124,6 @@ namespace demo
 
             draw();
         }
-    }
-
-    std::string Application::getResourcePath()
-    {
-        return "Resources";
     }
 }
 

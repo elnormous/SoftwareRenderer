@@ -67,6 +67,11 @@ extern "C" JNIEXPORT void JNICALL Java_lv_elviss_softwarerenderer_DemoLibJNIWrap
 
 namespace demo
 {
+    std::string getResourcePath()
+    {
+        return "Resources";
+    }
+
     ApplicationAndroid::ApplicationAndroid(JavaVM* initJavaVM):
         javaVM(initJavaVM)
     {
@@ -94,10 +99,5 @@ namespace demo
     {
         onResize(static_cast<std::size_t>(newWidth),
                  static_cast<std::size_t>(newHeight));
-    }
-
-    std::string Application::getResourcePath()
-    {
-        return "Resources";
     }
 }

@@ -145,6 +145,36 @@ static const void* getBytePointer(void* info)
 
 namespace demo
 {
+    std::string getResourcePath()
+    {
+        CFBundleRef bundle = CFBundleGetMainBundle();
+        CFURLRef relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
+
+        if (relativePath)
+        {
+            CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
+            if (absolutePath)
+            {
+                CFStringRef path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
+                if (path)
+                {
+                    const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
+                    auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
+                    CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
+                    CFRelease(path);
+                    return std::string(resourceDirectory.get());
+                }
+                CFRelease(absolutePath);
+            }
+            CFRelease(relativePath);
+            return std::string();
+        }
+        else
+            throw std::runtime_error("Failed to get current directory");
+
+        return "";
+    }
+
     ApplicationIOS::ApplicationIOS()
     {
         sharedApplication = this;
@@ -261,36 +291,6 @@ namespace demo
     void ApplicationIOS::run(int argc, char* argv[])
     {
         UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-    }
-
-    std::string Application::getResourcePath()
-    {
-        CFBundleRef bundle = CFBundleGetMainBundle();
-        CFURLRef relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
-
-        if (relativePath)
-        {
-            CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
-            if (absolutePath)
-            {
-                CFStringRef path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
-                if (path)
-                {
-                    const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
-                    auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
-                    CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
-                    CFRelease(path);
-                    return std::string(resourceDirectory.get());
-                }
-                CFRelease(absolutePath);
-            }
-            CFRelease(relativePath);
-            return std::string();
-        }
-        else
-            throw std::runtime_error("Failed to get current directory");
-
-        return "";
     }
 }
 

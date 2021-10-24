@@ -11,6 +11,11 @@
 
 namespace demo
 {
+    std::string getResourcePath()
+    {
+        return "Resources";
+    }
+
     class AppView: public BView
     {
     public:
@@ -94,11 +99,6 @@ namespace demo
             view->Invalidate();
             window->Unlock();
     	}
-    }
-
-    std::string Application::getResourcePath()
-    {
-        return "Resources";
     }
 }
 

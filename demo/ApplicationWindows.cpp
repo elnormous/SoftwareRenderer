@@ -41,6 +41,11 @@ namespace
 
 namespace demo
 {
+    std::string getResourcePath()
+    {
+        return "Resources";
+    }
+
     ApplicationWindows::ApplicationWindows()
     {
         HINSTANCE instance = GetModuleHandleW(nullptr);
@@ -144,11 +149,6 @@ namespace demo
 
             InvalidateRect(window, nullptr, FALSE);
         }
-    }
-
-    std::string Application::getResourcePath()
-    {
-        return "Resources";
     }
 }
 
