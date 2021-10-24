@@ -37,7 +37,6 @@
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="ApplicationWindows.hpp" />
     <ClInclude Include="BMP.hpp" />
-    <ClInclude Include="TextureShader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationWindows.cpp" />

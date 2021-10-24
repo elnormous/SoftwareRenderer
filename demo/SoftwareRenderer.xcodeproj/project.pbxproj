@@ -65,7 +65,6 @@
 		3071DEAB20425CEC0073390E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		30971FB2206BDA1C000D196D /* ApplicationMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ApplicationMacOS.hpp; sourceTree = "<group>"; };
 		30A4C1E32711369800419C99 /* PixelFormat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PixelFormat.hpp; sourceTree = "<group>"; };
-		30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureShader.hpp; sourceTree = "<group>"; };
 		C6D285112122E1E400A4D87F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6D285222122E22D00A4D87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -139,7 +138,6 @@
 				305F943A2123730900893FF5 /* ApplicationTVOS.mm */,
 				306A7D1520B8D8F4002C47F1 /* BMP.hpp */,
 				30345F4720AA1BF300B9B963 /* Resources */,
-				30DFA4B620ACDAAE007BEB42 /* TextureShader.hpp */,
 			);
 			name = demo;
 			sourceTree = "<group>";
