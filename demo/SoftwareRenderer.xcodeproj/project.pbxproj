@@ -37,13 +37,11 @@
 		305F942121235C0D00893FF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererTVOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305F9436212372AF00893FF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		305F9437212372AF00893FF5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		305F943A2123730900893FF5 /* ApplicationTVOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationTVOS.mm; sourceTree = "<group>"; };
 		305F943B2123730900893FF5 /* ApplicationTVOS.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ApplicationTVOS.hpp; sourceTree = "<group>"; };
 		306944A8205DF15A00C4969C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		306944AD205DF40A00C4969C /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306944B2205DF40A00C4969C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		306944B7205DF40A00C4969C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		306944E0205E00A900C4969C /* ApplicationMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationMacOS.mm; sourceTree = "<group>"; };
 		306944E72068655900C4969C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 		C6D285112122E1E400A4D87F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6D285222122E22D00A4D87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C6D285272122E22D00A4D87F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6D285312122E29800A4D87F /* ApplicationIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationIOS.mm; sourceTree = "<group>"; };
 		C6D285322122E29800A4D87F /* ApplicationIOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ApplicationIOS.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				305F9436212372AF00893FF5 /* Assets.xcassets */,
-				305F9437212372AF00893FF5 /* Info.plist */,
 			);
 			path = tvos;
 			sourceTree = "<group>";
@@ -165,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				306944B2205DF40A00C4969C /* Assets.xcassets */,
-				306944B7205DF40A00C4969C /* Info.plist */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -209,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				C6D285222122E22D00A4D87F /* Assets.xcassets */,
-				C6D285272122E22D00A4D87F /* Info.plist */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -412,6 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -454,6 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -473,7 +469,6 @@
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "";
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = tvos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -494,7 +489,6 @@
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "";
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = tvos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,7 +514,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -544,7 +537,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -563,7 +555,6 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -584,7 +575,6 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = ../sr;
-				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
