@@ -27,6 +27,7 @@
     <ClInclude Include="..\sr\PixelFormat.hpp" />
     <ClInclude Include="..\sr\Rect.hpp" />
     <ClInclude Include="..\sr\Renderer.hpp" />
+    <ClInclude Include="..\sr\RenderError.hpp" />
     <ClInclude Include="..\sr\Sampler.hpp" />
     <ClInclude Include="..\sr\Shader.hpp" />
     <ClInclude Include="..\sr\Size.hpp" />

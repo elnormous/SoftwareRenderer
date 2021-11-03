@@ -33,6 +33,9 @@
     <ClInclude Include="..\sr\Renderer.hpp">
       <Filter>sr</Filter>
     </ClInclude>
+    <ClInclude Include="..\sr\RenderError.hpp">
+      <Filter>sr</Filter>
+    </ClInclude>
     <ClInclude Include="..\sr\Sampler.hpp">
       <Filter>sr</Filter>
     </ClInclude>

@@ -30,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		302402302732360C0024D12F /* RenderError.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderError.hpp; sourceTree = "<group>"; };
 		30345F4920AA1C0600B9B963 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 				30A4C1E32711369800419C99 /* PixelFormat.hpp */,
 				306A7D2520B8D8F5002C47F1 /* Rect.hpp */,
 				306A7D0B20B8D8F3002C47F1 /* Renderer.hpp */,
+				302402302732360C0024D12F /* RenderError.hpp */,
 				306A7D1720B8D8F4002C47F1 /* Sampler.hpp */,
 				306A7D2620B8D8F6002C47F1 /* Shader.hpp */,
 				306A7D2020B8D8F5002C47F1 /* Size.hpp */,

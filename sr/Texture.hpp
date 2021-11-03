@@ -215,6 +215,29 @@ namespace sr
         std::uint32_t maxLOD = UINT_MAX;
         float lodBias = 0.0F;
     };
+
+    inline void clear(Texture& renderTarget, const Color color)
+    {
+        assert(renderTarget.getPixelFormat() == PixelFormat::rgba8);
+
+        const auto bufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getData().data());
+        const auto rgba = color.getIntValueRaw();
+
+        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
+        for (std::size_t p = 0; p < bufferSize; ++p)
+            bufferData[p] = rgba;
+    }
+
+    inline void clear(Texture& renderTarget, const float depth)
+    {
+        assert(renderTarget.getPixelFormat() == PixelFormat::float32);
+
+        const auto bufferData = reinterpret_cast<float*>(renderTarget.getData().data());
+
+        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
+        for (std::size_t p = 0; p < bufferSize; ++p)
+            bufferData[p] = depth;
+    }
 }
 
 #endif

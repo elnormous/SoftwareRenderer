@@ -9,12 +9,12 @@
 #include <algorithm>
 #include <array>
 #include <limits>
-#include <stdexcept>
 #include "BlendState.hpp"
 #include "Color.hpp"
 #include "DepthState.hpp"
 #include "Matrix.hpp"
 #include "Rect.hpp"
+#include "RenderError.hpp"
 #include "Sampler.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
@@ -23,76 +23,6 @@
 
 namespace sr
 {
-    class RenderError final: public std::runtime_error
-    {
-    public:
-        using std::runtime_error::runtime_error;
-    };
-
-    inline void clear(Texture& renderTarget, const Color color)
-    {
-        assert(renderTarget.getPixelFormat() == PixelFormat::rgba8);
-
-        const auto bufferData = reinterpret_cast<std::uint32_t*>(renderTarget.getData().data());
-        const auto rgba = color.getIntValueRaw();
-
-        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
-        for (std::size_t p = 0; p < bufferSize; ++p)
-            bufferData[p] = rgba;
-    }
-
-    inline void clear(Texture& renderTarget, const float depth)
-    {
-        assert(renderTarget.getPixelFormat() == PixelFormat::float32);
-
-        const auto bufferData = reinterpret_cast<float*>(renderTarget.getData().data());
-
-        const auto bufferSize = renderTarget.getWidth() * renderTarget.getHeight();
-        for (std::size_t p = 0; p < bufferSize; ++p)
-            bufferData[p] = depth;
-    }
-
-    inline float getValue(const BlendState::Factor factor,
-                          const float srcColor,
-                          const float srcAlpha,
-                          const float destColor,
-                          const float destAlpha,
-                          const float blendFactor)
-    {
-        switch (factor)
-        {
-            case BlendState::Factor::zero: return 0.0F;
-            case BlendState::Factor::one: return 1.0F;
-            case BlendState::Factor::srcColor: return srcColor;
-            case BlendState::Factor::invSrcColor: return 1.0F - srcColor;
-            case BlendState::Factor::srcAlpha: return srcAlpha;
-            case BlendState::Factor::invSrcAlpha: return 1.0F - srcAlpha;
-            case BlendState::Factor::destAlpha: return destAlpha;
-            case BlendState::Factor::invDestAlpha: return 1.0F - destAlpha;
-            case BlendState::Factor::destColor: return destColor;
-            case BlendState::Factor::invDestColor: return 1.0F - destColor;
-            case BlendState::Factor::srcAlphaSat: return std::min(srcAlpha, 1.0F - destAlpha);
-            case BlendState::Factor::blendFactor: return blendFactor;
-            case BlendState::Factor::invBlendFactor: return 1.0F - blendFactor;
-            default: throw RenderError{"Invalid blend factor"};
-        }
-    }
-
-    inline float getValue(const BlendState::Operation operation,
-                          const float a,
-                          const float b)
-    {
-        switch (operation)
-        {
-            case BlendState::Operation::add: return std::clamp(a + b, 0.0F, 1.0F);
-            case BlendState::Operation::subtract: return std::clamp(a - b, 0.0F, 1.0F);
-            case BlendState::Operation::reverseSubtract: return std::clamp(b - a, 0.0F, 1.0F);
-            case BlendState::Operation::min: return std::min(a, b);
-            case BlendState::Operation::max: return std::max(a, b);
-            default: throw RenderError{"Invalid blend operation"};
-        }
-    }
-
     inline void drawTriangles(Texture& frameBuffer,
                               Texture& depthBuffer,
                               VertexShader vertexShader,
