@@ -81,9 +81,9 @@ namespace sr
             }
         }
 
-        PixelFormat getPixelFormat() const noexcept { return pixelFormat; }
-        std::size_t getWidth() const noexcept { return width; }
-        std::size_t getHeight() const noexcept { return height; }
+        auto getPixelFormat() const noexcept { return pixelFormat; }
+        auto getWidth() const noexcept { return width; }
+        auto getHeight() const noexcept { return height; }
 
         std::size_t getLevelCount() const noexcept
         {
