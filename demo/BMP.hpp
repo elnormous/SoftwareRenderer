@@ -69,6 +69,9 @@ namespace sr
         {
             std::ifstream f{filename, std::ios::binary};
 
+            if (!f.is_open())
+                throw std::runtime_error{"Failed to open file"};
+
             BitmapFileHeader header;
 
             f.read(reinterpret_cast<char*>(&header.bfType), sizeof(header.bfType));
@@ -189,6 +192,9 @@ namespace sr
         void save(const std::string& filename)
         {
             std::ofstream f(filename, std::ios::binary | std::ios::trunc);
+
+            if (!f.is_open())
+                throw std::runtime_error{"Failed to open file"};
 
             BitmapFileHeader header;
             header.bfType = BITMAPFILEHEADER_TYPE_BM;
