@@ -15,7 +15,7 @@ namespace sr
     template <typename T, std::size_t N> class Size final
     {
     public:
-        std::array<T, N> v{0};
+        std::array<T, N> v{};
 
         constexpr Size() noexcept {}
 

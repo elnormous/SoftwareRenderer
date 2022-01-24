@@ -16,7 +16,7 @@ namespace sr
     template <typename T, std::size_t C, std::size_t R = C> class Matrix final
     {
     public:
-        std::array<T, C * R> m{0};
+        std::array<T, C * R> m{};
 
         constexpr Matrix() noexcept {}
 
