@@ -47,7 +47,7 @@ namespace sr
             assert(zFarPlane != zNearPlane);
 
             const auto theta = fieldOfView / T(2);
-            if (std::fabs(std::fmod(theta, pi<T> / T(2))) <= std::numeric_limits<T>::epsilon())
+            if (std::fabs(std::fmod(theta, tau<T> / T(4))) <= std::numeric_limits<T>::epsilon())
                 return;
 
             const auto divisor = tan(theta);
