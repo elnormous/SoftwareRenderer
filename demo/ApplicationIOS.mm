@@ -145,34 +145,41 @@ static const void* getBytePointer(void* info)
 
 namespace demo
 {
+    template <class T = CFTypeRef, typename std::enable_if_t<std::is_pointer_v<T>>* = nullptr>
+    class Pointer final
+    {
+    public:
+        ~Pointer()
+        {
+            if (p) CFRelease(p);
+        }
+
+        Pointer(T a) noexcept: p{a} {}
+
+        operator T() const noexcept { return p; }
+        bool operator!() const noexcept { return p == nullptr; }
+
+    private:
+        T p = nullptr;
+    };
+
     std::string getResourcePath()
     {
         CFBundleRef bundle = CFBundleGetMainBundle();
-        CFURLRef relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
+        Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
 
-        if (relativePath)
-        {
-            CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
-            if (absolutePath)
-            {
-                CFStringRef path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
-                if (path)
-                {
-                    const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
-                    auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
-                    CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
-                    CFRelease(path);
-                    return std::string{resourceDirectory.get()};
-                }
-                CFRelease(absolutePath);
-            }
-            CFRelease(relativePath);
-            return std::string{};
-        }
-        else
-            throw std::runtime_error{"Failed to get current directory"};
+        if (!relativePath) throw std::runtime_error{"Failed to get current directory"};
 
-        return "";
+        CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
+        if (!absolutePath) throw std::runtime_error{"Failed to copy absolute URL"};
+
+        Pointer path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
+        if (!path) throw std::runtime_error{"Failed to copy file system path"};
+
+        const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
+        auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
+        CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
+        return std::string{resourceDirectory.get()};
     }
 
     ApplicationIOS::ApplicationIOS()
