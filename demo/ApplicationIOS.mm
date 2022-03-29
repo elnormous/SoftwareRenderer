@@ -166,6 +166,8 @@ namespace demo
     std::string getResourcePath()
     {
         CFBundleRef bundle = CFBundleGetMainBundle();
+        if (!bundle) throw std::runtime_error{"Failed to get main bundle"};
+
         const Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
         if (!relativePath) throw std::runtime_error{"Failed to get current directory"};
 
