@@ -157,7 +157,6 @@ namespace demo
     {
         CFBundleRef bundle = CFBundleGetMainBundle();
         const Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
-
         if (!relativePath) throw std::runtime_error{"Failed to get current directory"};
 
         const Pointer absolutePath = CFURLCopyAbsoluteURL(relativePath);
@@ -167,7 +166,7 @@ namespace demo
         if (!path) throw std::runtime_error{"Failed to copy file system path"};
 
         const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
-        auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
+        const auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
         if (!CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize))
             throw std::runtime_error{"Failed to get file system representation"};
 
