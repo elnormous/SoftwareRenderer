@@ -156,7 +156,9 @@ namespace demo
 
         const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
         auto resourceDirectory = std::unique_ptr<char[]>(new char[static_cast<std::size_t>(maximumSize)]);
-        CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize);
+        if (!CFStringGetFileSystemRepresentation(path, resourceDirectory.get(), maximumSize))
+            throw std::runtime_error{"Failed to get file system representation"};
+
         return std::string{resourceDirectory.get()};
     }
 
