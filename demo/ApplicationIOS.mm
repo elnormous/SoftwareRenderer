@@ -166,14 +166,14 @@ namespace demo
     std::string getResourcePath()
     {
         CFBundleRef bundle = CFBundleGetMainBundle();
-        Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
+        const Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
 
         if (!relativePath) throw std::runtime_error{"Failed to get current directory"};
 
-        CFURLRef absolutePath = CFURLCopyAbsoluteURL(relativePath);
+        const Pointer absolutePath = CFURLCopyAbsoluteURL(relativePath);
         if (!absolutePath) throw std::runtime_error{"Failed to copy absolute URL"};
 
-        Pointer path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
+        const Pointer path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
         if (!path) throw std::runtime_error{"Failed to copy file system path"};
 
         const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
