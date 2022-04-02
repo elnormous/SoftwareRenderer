@@ -18,3 +18,7 @@ demo/app/.externalNativeBuild
 demo/app/.idea
 demo/app/build
 local.properties
+test/test.xcodeproj/project.xcworkspace/xcshareddata
+test/test.xcodeproj/project.xcworkspace/xcuserdata/elviss.xcuserdatad
+test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcdebugger
+test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcschemes
