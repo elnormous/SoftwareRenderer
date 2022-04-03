@@ -50,7 +50,7 @@
 		306A7D1020B8D8F4002C47F1 /* DepthState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DepthState.hpp; sourceTree = "<group>"; };
 		306A7D1120B8D8F4002C47F1 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		306A7D1320B8D8F4002C47F1 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
-		306A7D1520B8D8F4002C47F1 /* BMP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BMP.hpp; sourceTree = "<group>"; };
+		306A7D1520B8D8F4002C47F1 /* Bmp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Bmp.hpp; sourceTree = "<group>"; };
 		306A7D1720B8D8F4002C47F1 /* Sampler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sampler.hpp; sourceTree = "<group>"; };
 		306A7D1920B8D8F4002C47F1 /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		306A7D1C20B8D8F5002C47F1 /* BlendState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlendState.hpp; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 				306944E0205E00A900C4969C /* ApplicationMacOS.mm */,
 				305F943B2123730900893FF5 /* ApplicationTVOS.hpp */,
 				305F943A2123730900893FF5 /* ApplicationTVOS.mm */,
-				306A7D1520B8D8F4002C47F1 /* BMP.hpp */,
+				306A7D1520B8D8F4002C47F1 /* Bmp.hpp */,
 				30345F4720AA1BF300B9B963 /* Resources */,
 			);
 			name = demo;

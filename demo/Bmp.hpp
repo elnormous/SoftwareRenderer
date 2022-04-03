@@ -13,7 +13,7 @@
 
 namespace sr
 {
-    class BMP final
+    class Bmp final
     {
     public:
         static constexpr int BITMAPFILEHEADER_TYPE_BM = 0x4D42;
@@ -63,9 +63,9 @@ namespace sr
             CMYKRLE4 = 0x000D
         };
 
-        BMP() = default;
+        Bmp() = default;
 
-        explicit BMP(const std::string& filename)
+        explicit Bmp(const std::string& filename)
         {
             std::ifstream f{filename, std::ios::binary};
 
