@@ -191,7 +191,7 @@ namespace sr
 
         void save(const std::string& filename)
         {
-            std::ofstream f(filename, std::ios::binary | std::ios::trunc);
+            std::ofstream f{filename, std::ios::binary | std::ios::trunc};
 
             if (!f.is_open())
                 throw std::runtime_error{"Failed to open file"};
