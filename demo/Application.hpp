@@ -95,7 +95,7 @@ namespace demo
                 sr::Vertex{sr::Vector<float, 4>{20.0F, 20.0F, 20.0F, 1.0F}, sr::Color{0xFFFFFFFFU}, sr::Vector<float, 2>{1.0F, 1.0F}, sr::Vector<float, 3>{0.0F, 0.0F, 1.0F}}
             }
         {
-            const sr::Bmp bmp{getResourcePath() + "/cube.bmp"};
+            const sr::bmp::Bmp bmp{getResourcePath() + "/cube.bmp"};
             texture = sr::Texture{sr::PixelFormat::rgba8, bmp.getWidth(), bmp.getHeight()};
             texture.setData(bmp.getData(), 0);
 
