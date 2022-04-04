@@ -261,7 +261,6 @@ namespace demo
             window.delegate = nil;
             [window release];
         }
-        if (pool) [pool release];
     }
 
     void ApplicationMacOS::draw()
