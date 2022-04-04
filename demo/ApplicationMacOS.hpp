@@ -10,6 +10,35 @@
 
 namespace demo
 {
+    namespace objc
+    {
+        template <class T = NSObject>
+        class Pointer final
+        {
+        public:
+            Pointer() noexcept = default;
+
+            ~Pointer()
+            {
+                if (p) [p release];
+            }
+
+            Pointer(T* a) noexcept: p{a} {}
+            Pointer& operator=(T* a) noexcept
+            {
+                if (p) [p release];
+                p = a;
+                return *this;
+            }
+
+            operator T*() const noexcept { return p; }
+            bool operator!() const noexcept { return p == nil; }
+
+        private:
+            T* p = nil;
+        };
+    }
+
     class ApplicationMacOS: public Application
     {
     public:
@@ -22,7 +51,7 @@ namespace demo
         void run();
 
     private:
-        NSAutoreleasePool* pool = nil;
+        objc::Pointer<NSAutoreleasePool> pool;
 
         NSScreen* screen = nil;
         NSWindow* window = nil;
