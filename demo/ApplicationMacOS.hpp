@@ -39,6 +39,35 @@ namespace demo
         };
     }
 
+    namespace cf
+    {
+        template <class T = CFTypeRef, typename std::enable_if_t<std::is_pointer_v<T>>* = nullptr>
+        class Pointer final
+        {
+        public:
+            Pointer() noexcept = default;
+
+            ~Pointer()
+            {
+                if (p) CFRelease(p);
+            }
+
+            Pointer(T a) noexcept: p{a} {}
+            Pointer& operator=(T a) noexcept
+            {
+                if (p) CFRelease(p);
+                p = a;
+                return *this;
+            }
+
+            operator T() const noexcept { return p; }
+            bool operator!() const noexcept { return p == nullptr; }
+
+        private:
+            T p = nullptr;
+        };
+    }
+
     class ApplicationMacOS: public Application
     {
     public:
@@ -60,8 +89,8 @@ namespace demo
 
         std::size_t componentsPerPixel;
         std::size_t bitsPerComponent;
-        CGColorSpaceRef colorSpace;
-        CGDataProviderRef provider;
+        cf::Pointer<CGColorSpaceRef> colorSpace;
+        cf::Pointer<CGDataProviderRef> provider;
     };
 }
 

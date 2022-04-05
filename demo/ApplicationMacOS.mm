@@ -123,36 +123,18 @@ static const void* getBytePointer(void* info)
 
 namespace demo
 {
-    template <class T = CFTypeRef, typename std::enable_if_t<std::is_pointer_v<T>>* = nullptr>
-    class Pointer final
-    {
-    public:
-        ~Pointer()
-        {
-            if (p) CFRelease(p);
-        }
-
-        Pointer(T a) noexcept: p{a} {}
-
-        operator T() const noexcept { return p; }
-        bool operator!() const noexcept { return p == nullptr; }
-
-    private:
-        T p = nullptr;
-    };
-
     std::string getResourcePath()
     {
         CFBundleRef bundle = CFBundleGetMainBundle();
         if (!bundle) throw std::runtime_error{"Failed to get main bundle"};
 
-        const Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
+        const cf::Pointer relativePath = CFBundleCopyResourcesDirectoryURL(bundle);
         if (!relativePath) throw std::runtime_error{"Failed to get current directory"};
 
-        const Pointer absolutePath = CFURLCopyAbsoluteURL(relativePath);
+        const cf::Pointer absolutePath = CFURLCopyAbsoluteURL(relativePath);
         if (!absolutePath) throw std::runtime_error{"Failed to copy absolute URL"};
 
-        const Pointer path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
+        const cf::Pointer path = CFURLCopyFileSystemPath(absolutePath, kCFURLPOSIXPathStyle);
         if (!path) throw std::runtime_error{"Failed to copy file system path"};
 
         const auto maximumSize = CFStringGetMaximumSizeOfFileSystemRepresentation(path);
@@ -251,9 +233,6 @@ namespace demo
 
     ApplicationMacOS::~ApplicationMacOS()
     {
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpace);
-
         if (timer) [timer release];
         if (content) [content release];
         if (window)
@@ -269,28 +248,24 @@ namespace demo
 
         const auto& frameBuffer = getFrameBuffer();
 
-        CGImageRef image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
-                                         bitsPerComponent,
-                                         bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * frameBuffer.getWidth(),
-                                         colorSpace,
-                                         kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
-                                         provider, nullptr, FALSE, kCGRenderingIntentDefault);
+        cf::Pointer image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
+                                          bitsPerComponent,
+                                          bitsPerComponent * componentsPerPixel,
+                                          componentsPerPixel * frameBuffer.getWidth(),
+                                          colorSpace,
+                                          kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
+                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
         CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 
         CGContextDrawImage(context, [content frame], image);
         CGContextFlush(context);
-
-        CGImageRelease(image);
     }
 
     void ApplicationMacOS::didResize()
     {
         const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                            styleMask:[window styleMask]];
-
-        CGDataProviderRelease(provider);
 
         CGDataProviderDirectCallbacks providerCallbacks = {
             0,
