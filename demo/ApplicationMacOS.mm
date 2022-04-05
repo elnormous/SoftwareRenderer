@@ -240,7 +240,7 @@ namespace demo
 
         [content setNeedsDisplay:TRUE];
 
-        timer = [[NSTimer scheduledTimerWithTimeInterval:0.016
+        timer = [[NSTimer scheduledTimerWithTimeInterval:1.0 / 60.0
                                                   target:content
                                                 selector:@selector(draw:)
                                                 userInfo:[NSValue valueWithPointer:this]
