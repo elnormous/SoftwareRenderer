@@ -186,7 +186,7 @@ namespace demo
         sharedApplication.mainMenu = mainMenu;
 
         // create window
-        screen = [NSScreen mainScreen];
+        NSScreen* screen = [NSScreen mainScreen];
 
         CGSize windowSize;
         windowSize.width = std::round(screen.frame.size.width * 0.6);

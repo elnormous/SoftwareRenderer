@@ -53,7 +53,6 @@ namespace demo
     private:
         objc::Pointer<NSAutoreleasePool> pool;
 
-        NSScreen* screen;
         NSWindow* window = nil;
         NSView* content = nil;
         NSObject<NSWindowDelegate>* windowDelegate = nil;
