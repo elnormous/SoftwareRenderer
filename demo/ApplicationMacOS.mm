@@ -187,9 +187,9 @@ namespace demo
                                                  screen:screen];
         [window setReleasedWhenClosed:NO];
 
-        window.acceptsMouseMovedEvents = YES;
+        [window setAcceptsMouseMovedEvents: YES];
         windowDelegate = [[WindowDelegate alloc] initWithWindow:this];
-        window.delegate = windowDelegate;
+        [window setDelegate: windowDelegate];
 
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
         [window setTitle:@"SoftwareRenderer"];
@@ -217,7 +217,7 @@ namespace demo
         
         provider = CGDataProviderCreateDirect(&getFrameBuffer(), w * h * componentsPerPixel, &providerCallbacks);
 
-        window.contentView = content;
+        [window setContentView: content];
         [window makeKeyAndOrderFront:nil];
 
         [content setNeedsDisplay:TRUE];
@@ -233,13 +233,8 @@ namespace demo
 
     ApplicationMacOS::~ApplicationMacOS()
     {
-        if (timer) [timer release];
-        if (content) [content release];
         if (window)
-        {
-            window.delegate = nil;
-            [window release];
-        }
+            [window setDelegate: nil];
 
         [windowDelegate release];
     }

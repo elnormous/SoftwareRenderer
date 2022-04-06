@@ -82,10 +82,10 @@ namespace demo
     private:
         objc::Pointer<NSAutoreleasePool> pool;
 
-        NSWindow* window = nil;
-        NSView* content = nil;
+        objc::Pointer<NSWindow> window;
+        objc::Pointer<NSView> content;
         NSObject<NSWindowDelegate>* windowDelegate = nil;
-        NSTimer* timer = nil;
+        objc::Pointer<NSTimer> timer;
 
         std::size_t componentsPerPixel;
         std::size_t bitsPerComponent;
