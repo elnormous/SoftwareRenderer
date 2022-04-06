@@ -240,6 +240,8 @@ namespace demo
             window.delegate = nil;
             [window release];
         }
+
+        [windowDelegate release];
     }
 
     void ApplicationMacOS::draw()
