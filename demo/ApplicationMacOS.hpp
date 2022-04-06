@@ -84,7 +84,7 @@ namespace demo
 
         objc::Pointer<NSWindow> window;
         objc::Pointer<NSView> content;
-        NSObject<NSWindowDelegate>* windowDelegate = nil;
+        objc::Pointer<NSObject<NSWindowDelegate>> windowDelegate;
         objc::Pointer<NSTimer> timer;
 
         std::size_t componentsPerPixel;

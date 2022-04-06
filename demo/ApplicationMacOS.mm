@@ -235,8 +235,6 @@ namespace demo
     {
         if (window)
             [window setDelegate: nil];
-
-        [windowDelegate release];
     }
 
     void ApplicationMacOS::draw()
