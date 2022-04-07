@@ -10,6 +10,64 @@
 
 namespace demo
 {
+    namespace objc
+    {
+        template <class T = NSObject>
+        class Pointer final
+        {
+        public:
+            Pointer() noexcept = default;
+
+            ~Pointer()
+            {
+                if (p) [p release];
+            }
+
+            Pointer(T* a) noexcept: p{a} {}
+            Pointer& operator=(T* a) noexcept
+            {
+                if (p) [p release];
+                p = a;
+                return *this;
+            }
+
+            operator T*() const noexcept { return p; }
+            bool operator!() const noexcept { return p == nil; }
+
+        private:
+            T* p = nil;
+        };
+    }
+
+    namespace cf
+    {
+        template <class T = CFTypeRef, typename std::enable_if_t<std::is_pointer_v<T>>* = nullptr>
+        class Pointer final
+        {
+        public:
+            Pointer() noexcept = default;
+
+            ~Pointer()
+            {
+                if (p) CFRelease(p);
+            }
+
+            Pointer(T a) noexcept: p{a} {}
+            Pointer& operator=(T a) noexcept
+            {
+                if (p) CFRelease(p);
+                p = a;
+                return *this;
+            }
+
+            operator T() const noexcept { return p; }
+            bool operator!() const noexcept { return p == nullptr; }
+
+        private:
+            T p = nullptr;
+        };
+    }
+
     class ApplicationIOS: public Application
     {
     public:
