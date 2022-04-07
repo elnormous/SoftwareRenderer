@@ -175,7 +175,6 @@ namespace demo
             window.rootViewController = nil;
             [window release];
         }
-        if (pool) [pool release];
     }
 
     void ApplicationTVOS::createWindow()

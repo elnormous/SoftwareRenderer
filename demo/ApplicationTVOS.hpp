@@ -82,7 +82,7 @@ namespace demo
         void run(int argc, char* argv[]);
 
     private:
-        NSAutoreleasePool* pool = nil;
+        objc::Pointer<NSAutoreleasePool> pool;
 
         UIScreen* screen = nil;
         UIWindow* window = nil;
