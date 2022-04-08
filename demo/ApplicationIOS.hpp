@@ -92,8 +92,8 @@ namespace demo
 
         std::size_t componentsPerPixel;
         std::size_t bitsPerComponent;
-        CGColorSpaceRef colorSpace;
-        CGDataProviderRef provider;
+        cf::Pointer<CGColorSpaceRef> colorSpace;
+        cf::Pointer<CGDataProviderRef> provider;
     };
 }
 

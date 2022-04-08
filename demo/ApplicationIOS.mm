@@ -175,9 +175,6 @@ namespace demo
 
     ApplicationIOS::~ApplicationIOS()
     {
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpace);
-
         if (timer) [timer release];
         if (content) [content release];
         if (window)
