@@ -175,7 +175,6 @@ namespace demo
 
     ApplicationIOS::~ApplicationIOS()
     {
-        if (timer) [timer release];
         if (content) [content release];
         if (window)
         {

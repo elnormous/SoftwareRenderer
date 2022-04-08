@@ -165,7 +165,6 @@ namespace demo
 
     ApplicationTVOS::~ApplicationTVOS()
     {
-        if (timer) [timer release];
         if (content) [content release];
         if (window)
         {

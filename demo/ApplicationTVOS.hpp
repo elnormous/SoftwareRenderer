@@ -88,7 +88,7 @@ namespace demo
         UIWindow* window = nil;
         UIView* content = nil;
         UIViewController* viewController = nil;
-        NSTimer* timer = nil;
+        objc::Pointer<NSTimer> timer;
 
         std::size_t componentsPerPixel;
         std::size_t bitsPerComponent;
