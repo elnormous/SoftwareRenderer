@@ -181,6 +181,8 @@ namespace demo
             window.rootViewController = nil;
             [window release];
         }
+
+        if (viewController) [viewController release];
     }
 
     void ApplicationIOS::createWindow()
