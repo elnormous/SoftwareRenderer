@@ -224,20 +224,18 @@ namespace demo
 
         const auto& frameBuffer = getFrameBuffer();
         
-        CGImageRef image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
-                                         bitsPerComponent,
-                                         bitsPerComponent * componentsPerPixel,
-                                         componentsPerPixel * frameBuffer.getWidth(),
-                                         colorSpace,
-                                         kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
-                                         provider, nullptr, FALSE, kCGRenderingIntentDefault);
+        cf::Pointer image = CGImageCreate(frameBuffer.getWidth(), frameBuffer.getHeight(),
+                                          bitsPerComponent,
+                                          bitsPerComponent * componentsPerPixel,
+                                          componentsPerPixel * frameBuffer.getWidth(),
+                                          colorSpace,
+                                          kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
+                                          provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
         CGContextRef context = UIGraphicsGetCurrentContext();
 
         CGContextDrawImage(context, [content frame], image);
         CGContextFlush(context);
-
-        CGImageRelease(image);
     }
 
     void ApplicationTVOS::didResize(CGFloat newWidth, CGFloat newHeight)
