@@ -262,7 +262,7 @@ namespace demo
         const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                            styleMask:[window styleMask]];
 
-        CGDataProviderDirectCallbacks providerCallbacks = {
+        const CGDataProviderDirectCallbacks providerCallbacks = {
             0,
             getBytePointer,
             nullptr,

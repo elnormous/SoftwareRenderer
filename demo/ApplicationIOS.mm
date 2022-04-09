@@ -255,7 +255,7 @@ namespace demo
 
     void ApplicationIOS::didResize(CGFloat newWidth, CGFloat newHeight)
     {
-        CGDataProviderDirectCallbacks providerCallbacks = {
+        const CGDataProviderDirectCallbacks providerCallbacks = {
             0,
             getBytePointer,
             nullptr,
