@@ -162,7 +162,7 @@ namespace demo
         [mainMenuItem setSubmenu:subMenu];
 
         NSMenuItem* quitItem = [[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(handleQuit:) keyEquivalent:@"q"] autorelease];
-        [quitItem setTarget: [sharedApplication delegate]];
+        [quitItem setTarget:[sharedApplication delegate]];
         [subMenu addItem:quitItem];
 
         sharedApplication.mainMenu = mainMenu;
@@ -187,9 +187,9 @@ namespace demo
                                                  screen:screen];
         [window setReleasedWhenClosed:NO];
 
-        [window setAcceptsMouseMovedEvents: YES];
+        [window setAcceptsMouseMovedEvents:YES];
         windowDelegate = [[WindowDelegate alloc] initWithWindow:this];
-        [window setDelegate: windowDelegate];
+        [window setDelegate:windowDelegate];
 
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
         [window setTitle:@"SoftwareRenderer"];
@@ -217,7 +217,7 @@ namespace demo
         
         provider = CGDataProviderCreateDirect(&getFrameBuffer(), w * h * componentsPerPixel, &providerCallbacks);
 
-        [window setContentView: content];
+        [window setContentView:content];
         [window makeKeyAndOrderFront:nil];
 
         [content setNeedsDisplay:TRUE];
@@ -234,7 +234,7 @@ namespace demo
     ApplicationMacOS::~ApplicationMacOS()
     {
         if (window)
-            [window setDelegate: nil];
+            [window setDelegate:nil];
     }
 
     void ApplicationMacOS::draw()

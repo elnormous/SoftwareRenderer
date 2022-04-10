@@ -85,9 +85,9 @@ namespace demo
         objc::Pointer<NSAutoreleasePool> pool;
 
         UIScreen* screen = nil;
-        UIWindow* window = nil;
-        UIView* content = nil;
-        UIViewController* viewController = nil;
+        objc::Pointer<UIWindow> window;
+        objc::Pointer<UIView> content;
+        objc::Pointer<UIViewController> viewController;
         objc::Pointer<NSTimer> timer;
 
         std::size_t componentsPerPixel;

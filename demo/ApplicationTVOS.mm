@@ -165,14 +165,8 @@ namespace demo
 
     ApplicationTVOS::~ApplicationTVOS()
     {
-        if (content) [content release];
         if (window)
-        {
-            window.rootViewController = nil;
-            [window release];
-        }
-
-        if (viewController) [viewController release];
+            [window setRootViewController:nil];
     }
 
     void ApplicationTVOS::createWindow()
@@ -182,7 +176,7 @@ namespace demo
         window = [[UIWindow alloc] initWithFrame:[screen bounds]];
 
         viewController = [[[ViewController alloc] initWithWindow:this] autorelease];
-        window.rootViewController = viewController;
+        [window setRootViewController:viewController];
 
         const CGRect windowFrame = [window bounds];
 
@@ -190,8 +184,8 @@ namespace demo
         const auto h = static_cast<std::size_t>(windowFrame.size.height * screen.scale);
 
         content = [[Canvas alloc] initWithFrame:windowFrame andApplication:this];
-        content.contentScaleFactor = screen.scale;
-        viewController.view = content;
+        [content setContentScaleFactor:screen.scale];
+        [viewController setView:content];
 
         componentsPerPixel = 4;
         bitsPerComponent = sizeof(std::uint8_t) * 8;
