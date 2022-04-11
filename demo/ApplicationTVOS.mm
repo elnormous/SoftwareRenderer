@@ -71,18 +71,8 @@ demo::ApplicationTVOS* sharedApplication;
     return self;
 }
 
--(BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
 -(void)textFieldDidChange:(__unused id)sender
 {
-}
-
--(NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
