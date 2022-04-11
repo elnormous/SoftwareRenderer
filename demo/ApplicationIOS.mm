@@ -63,7 +63,7 @@ demo::ApplicationIOS* sharedApplication;
 
 @implementation ViewController
 
--(id)initWithWindow:(demo::ApplicationIOS*)initApplication
+-(id)initWithApplication:(demo::ApplicationIOS*)initApplication
 {
     if (self = [super init])
         application = initApplication;
@@ -185,7 +185,7 @@ namespace demo
 
         window = [[UIWindow alloc] initWithFrame:[screen bounds]];
 
-        viewController = [[[ViewController alloc] initWithWindow:this] autorelease];
+        viewController = [[[ViewController alloc] initWithApplication:this] autorelease];
         [window setRootViewController:viewController];
 
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
