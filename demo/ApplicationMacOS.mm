@@ -155,15 +155,74 @@ namespace demo
 
         NSMenu* mainMenu = [[[NSMenu alloc] initWithTitle:@"Main Menu"] autorelease];
 
-        NSMenuItem* mainMenuItem = [[[NSMenuItem alloc] init] autorelease];
-        [mainMenu addItem:mainMenuItem];
+        // Apple menu
+        NSMenuItem* mainMenuItem = [mainMenu addItemWithTitle:@"Apple"
+                                                       action:nil
+                                                keyEquivalent:@""];
 
-        NSMenu* subMenu = [[[NSMenu alloc] init] autorelease];
-        [mainMenuItem setSubmenu:subMenu];
+        NSMenu* applicationMenu = [[[NSMenu alloc] init] autorelease];
+        mainMenuItem.submenu = applicationMenu;
 
-        NSMenuItem* quitItem = [[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(handleQuit:) keyEquivalent:@"q"] autorelease];
-        [quitItem setTarget:[sharedApplication delegate]];
-        [subMenu addItem:quitItem];
+        NSString* bundleName = NSBundle.mainBundle.infoDictionary[@"CFBundleDisplayName"];
+        if (!bundleName)
+            bundleName = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
+
+        NSMenuItem* aboutItem = [applicationMenu addItemWithTitle:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"About", nil), bundleName]
+                                                           action:@selector(orderFrontStandardAboutPanel:)
+                                                    keyEquivalent:@""];
+        aboutItem.target = NSApp;
+
+        [applicationMenu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem* servicesItem = [applicationMenu addItemWithTitle:NSLocalizedString(@"Services", nil)
+                                                              action:nil
+                                                       keyEquivalent:@""];
+
+        NSMenu* servicesMenu = [[[NSMenu alloc] init] autorelease];
+        servicesItem.submenu = servicesMenu;
+        NSApp.servicesMenu = servicesMenu;
+
+        [applicationMenu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem* hideItem = [applicationMenu addItemWithTitle:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Hide", nil), bundleName]
+                                                          action:@selector(hide:)
+                                                   keyEquivalent:@"h"];
+        hideItem.target = NSApp;
+
+        NSMenuItem* hideOthersItem = [applicationMenu addItemWithTitle:NSLocalizedString(@"Hide Others", nil)
+                                                                action:@selector(hideOtherApplications:)
+                                                         keyEquivalent:@"h"];
+        hideOthersItem.keyEquivalentModifierMask = NSEventModifierFlagOption | NSEventModifierFlagCommand;
+        hideOthersItem.target = NSApp;
+
+        NSMenuItem* showAllItem = [applicationMenu addItemWithTitle:NSLocalizedString(@"Show All", nil)
+                                                             action:@selector(unhideAllApplications:)
+                                                      keyEquivalent:@""];
+        showAllItem.target = NSApp;
+
+        [applicationMenu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem* quitItem = [applicationMenu addItemWithTitle:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Quit", nil), bundleName]
+                                                          action:@selector(terminate:)
+                                                   keyEquivalent:@"q"];
+        quitItem.target = NSApp;
+
+        // View menu
+        NSMenuItem* viewItem = [mainMenu addItemWithTitle:NSLocalizedString(@"View", nil)
+                                                   action:nil
+                                            keyEquivalent:@""];
+
+        NSMenu* viewMenu = [[[NSMenu alloc] initWithTitle:NSLocalizedString(@"View", nil)] autorelease];
+        viewItem.submenu = viewMenu;
+
+        // Window menu
+        NSMenuItem* windowsItem = [mainMenu addItemWithTitle:NSLocalizedString(@"Window", nil)
+                                                      action:nil
+                                               keyEquivalent:@""];
+
+        NSMenu* windowsMenu = [[[NSMenu alloc] initWithTitle:NSLocalizedString(@"Window", nil)] autorelease];
+        windowsItem.submenu = windowsMenu;
+        NSApp.windowsMenu = windowsMenu;
 
         sharedApplication.mainMenu = mainMenu;
 
