@@ -245,6 +245,7 @@ namespace demo
                                                   defer:NO
                                                  screen:screen];
         [window setReleasedWhenClosed:NO];
+        [window setTabbingMode:NSWindowTabbingModeDisallowed];
 
         [window setAcceptsMouseMovedEvents:YES];
         windowDelegate = [[WindowDelegate alloc] initWithApplication:this];
