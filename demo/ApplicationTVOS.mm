@@ -165,7 +165,7 @@ namespace demo
 
         window = [[UIWindow alloc] initWithFrame:[screen bounds]];
 
-        viewController = [[[ViewController alloc] initWithApplication:this] autorelease];
+        viewController = [[ViewController alloc] initWithApplication:this];
         [window setRootViewController:viewController];
 
         const CGRect windowFrame = [window bounds];
