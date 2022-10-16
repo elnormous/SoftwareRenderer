@@ -229,9 +229,8 @@ namespace demo
         // create window
         NSScreen* screen = [NSScreen mainScreen];
 
-        CGSize windowSize;
-        windowSize.width = std::round(screen.frame.size.width * 0.6);
-        windowSize.height = std::round(screen.frame.size.height * 0.6);
+        const CGSize windowSize = CGSizeMake(std::round(screen.frame.size.width * 0.6),
+                                             std::round(screen.frame.size.height * 0.6));
 
         const NSRect frame = NSMakeRect(std::round(screen.frame.size.width / 2.0F - windowSize.width / 2.0F),
                                         std::round(screen.frame.size.height / 2.0F - windowSize.height / 2.0F),
