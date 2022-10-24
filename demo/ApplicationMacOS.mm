@@ -251,6 +251,7 @@ namespace demo
 
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
         [window setTitle:@"SoftwareRenderer"];
+        [window setReleasedWhenClosed:NO];
 
         const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
                                                            styleMask:[window styleMask]];
