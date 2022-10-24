@@ -225,7 +225,16 @@ namespace demo
         [windowsMenu addItemWithTitle:NSLocalizedString(@"Zoom", nil) action:@selector(performZoom:) keyEquivalent:@""];
 
         windowsItem.submenu = windowsMenu;
-        NSApp.windowsMenu = windowsMenu;
+        sharedApplication.windowsMenu = windowsMenu;
+
+        // Help menu
+        NSMenuItem* helpItem = [mainMenu addItemWithTitle:NSLocalizedString(@"Help", nil)
+                                                   action:nil
+                                            keyEquivalent:@""];
+
+        NSMenu* helpMenu = [[[NSMenu alloc] initWithTitle:NSLocalizedString(@"Help", nil)] autorelease];
+        helpItem.submenu = helpMenu;
+        sharedApplication.helpMenu = helpMenu;
 
         sharedApplication.mainMenu = mainMenu;
 
