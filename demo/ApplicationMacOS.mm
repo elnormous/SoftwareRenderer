@@ -253,8 +253,7 @@ namespace demo
         [window setTitle:@"SoftwareRenderer"];
         [window setReleasedWhenClosed:NO];
 
-        const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                           styleMask:[window styleMask]];
+        const NSRect windowFrame = [window contentRectForFrameRect:[window frame]];
 
         const auto w = static_cast<std::size_t>(windowFrame.size.width);
         const auto h = static_cast<std::size_t>(windowFrame.size.height);
@@ -318,8 +317,7 @@ namespace demo
 
     void ApplicationMacOS::didResize()
     {
-        const NSRect windowFrame = [NSWindow contentRectForFrameRect:[window frame]
-                                                           styleMask:[window styleMask]];
+        const NSRect windowFrame = [window contentRectForFrameRect:[window frame]];
 
         const CGDataProviderDirectCallbacks providerCallbacks = {
             0,
