@@ -24,3 +24,4 @@ test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcdebugger
 test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcschemes
 test/x64
 test/Win32
+*.aps
