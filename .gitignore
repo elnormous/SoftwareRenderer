@@ -22,3 +22,5 @@ test/test.xcodeproj/project.xcworkspace/xcshareddata
 test/test.xcodeproj/project.xcworkspace/xcuserdata/elviss.xcuserdatad
 test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcdebugger
 test/test.xcodeproj/xcuserdata/elviss.xcuserdatad/xcschemes
+test/x64
+test/Win32
