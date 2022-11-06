@@ -90,7 +90,7 @@ namespace demo
             throw std::system_error{static_cast<int>(GetLastError()), std::system_category(), "Failed to get file version info"};
 
         UINT valueLength = MAX_PATH;
-        LPVOID valuePointer = NULL;
+        LPVOID valuePointer = nullptr;
         if (!VerQueryValueW(fileVersionInfo.get(),
             L"StringFileInfo\\040904b0\\ProductName", // MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
             &valuePointer,
