@@ -261,8 +261,7 @@ namespace demo
         [window setDelegate:[[[WindowDelegate alloc] initWithApplication:this] autorelease]];
 
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-        NSString* bundleName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
-        [window setTitle:bundleName];
+        [window setTitle:@"SoftwareRenderer"];
         [window setReleasedWhenClosed:NO];
 
         const NSRect windowFrame = [window contentRectForFrameRect:[window frame]];

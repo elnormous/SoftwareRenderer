@@ -73,31 +73,7 @@ namespace demo
         const DWORD windowStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_BORDER | WS_DLGFRAME | WS_THICKFRAME | WS_GROUP | WS_TABSTOP | WS_SIZEBOX | WS_MAXIMIZEBOX;
         const DWORD windowExStyle = WS_EX_APPWINDOW;
 
-        WCHAR moduleFilename[MAX_PATH];
-        if (!GetModuleFileNameW(instance, moduleFilename, MAX_PATH))
-            throw std::system_error{static_cast<int>(GetLastError()), std::system_category(), "Failed to get module filename"};
-
-        DWORD fileVersionHandle = 0;
-        const DWORD fileVersionSize = GetFileVersionInfoSizeW(moduleFilename, &fileVersionHandle);
-
-        if (fileVersionSize == 0)
-            throw std::system_error{static_cast<int>(GetLastError()), std::system_category(), "Failed to get file version info size"};
-
-        const std::unique_ptr<BYTE[]> fileVersionInfo{new BYTE[fileVersionSize]};
-        ZeroMemory(fileVersionInfo.get(), fileVersionSize);
-
-        if (!GetFileVersionInfoW(moduleFilename, 0, fileVersionSize, fileVersionInfo.get()))
-            throw std::system_error{static_cast<int>(GetLastError()), std::system_category(), "Failed to get file version info"};
-
-        UINT valueLength = MAX_PATH;
-        LPVOID valuePointer = nullptr;
-        if (!VerQueryValueW(fileVersionInfo.get(),
-            L"StringFileInfo\\040904b0\\ProductName", // MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
-            &valuePointer,
-            &valueLength))
-            throw std::system_error{static_cast<int>(GetLastError()), std::system_category(), "Failed to query file version value"};
-
-        window = CreateWindowExW(windowExStyle, MAKEINTATOM(windowClass), static_cast<LPWSTR>(valuePointer), windowStyle,
+        window = CreateWindowExW(windowExStyle, MAKEINTATOM(windowClass), L"SoftwareRenderer", windowStyle,
             CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, nullptr, instance, nullptr);
 
         if (!window)
