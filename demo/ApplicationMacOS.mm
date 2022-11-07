@@ -258,7 +258,8 @@ namespace demo
         [window setTabbingMode:NSWindowTabbingModeDisallowed];
 
         [window setAcceptsMouseMovedEvents:YES];
-        [window setDelegate:[[[WindowDelegate alloc] initWithApplication:this] autorelease]];
+        windowDelegate = [[WindowDelegate alloc] initWithApplication:this];
+        [window setDelegate:windowDelegate];
 
         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
         [window setTitle:@"SoftwareRenderer"];
