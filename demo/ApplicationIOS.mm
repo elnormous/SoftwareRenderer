@@ -92,7 +92,7 @@ demo::ApplicationIOS* sharedApplication;
     application->didResize(size.width, size.height);
 }
 
--(void)deviceOrientationDidChange:(NSNotification*)note
+-(void)deviceOrientationDidChange:(__unused NSNotification*)notification
 {
     if (self.view)
     {
