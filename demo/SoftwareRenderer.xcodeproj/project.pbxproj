@@ -35,7 +35,7 @@
 		30345F4A20AA1C0600B9B963 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		30345F4E20AA1C7900B9B963 /* cube.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = cube.bmp; sourceTree = "<group>"; };
 		305F942121235C0D00893FF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererTVOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		305F94332123726B00893FF5 /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305F9436212372AF00893FF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		305F9437212372AF00893FF5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		305F943A2123730900893FF5 /* ApplicationTVOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationTVOS.mm; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		30971FB2206BDA1C000D196D /* ApplicationMacOS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ApplicationMacOS.hpp; sourceTree = "<group>"; };
 		30A4C1E32711369800419C99 /* PixelFormat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PixelFormat.hpp; sourceTree = "<group>"; };
 		C6D285112122E1E400A4D87F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRendererIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6D285172122E22A00A4D87F /* SoftwareRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftwareRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6D285222122E22D00A4D87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6D285272122E22D00A4D87F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6D285312122E29800A4D87F /* ApplicationIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationIOS.mm; sourceTree = "<group>"; };
@@ -120,8 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				306944AD205DF40A00C4969C /* SoftwareRenderer.app */,
-				C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */,
-				305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */,
+				C6D285172122E22A00A4D87F /* SoftwareRenderer.app */,
+				305F94332123726B00893FF5 /* SoftwareRenderer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		305F94242123726A00893FF5 /* SoftwareRendererTVOS */ = {
+		305F94242123726A00893FF5 /* SoftwareRenderer-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRendererTVOS" */;
+			buildConfigurationList = 305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRenderer-tvOS" */;
 			buildPhases = (
 				305F94252123726A00893FF5 /* Sources */,
 				305F94282123726A00893FF5 /* Frameworks */,
@@ -230,14 +230,14 @@
 			);
 			dependencies = (
 			);
-			name = SoftwareRendererTVOS;
+			name = "SoftwareRenderer-tvOS";
 			productName = SoftwareRendererIOS;
-			productReference = 305F94332123726B00893FF5 /* SoftwareRendererTVOS.app */;
+			productReference = 305F94332123726B00893FF5 /* SoftwareRenderer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		306944AC205DF40A00C4969C /* SoftwareRenderer */ = {
+		306944AC205DF40A00C4969C /* SoftwareRenderer-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 306944D1205DF40A00C4969C /* Build configuration list for PBXNativeTarget "SoftwareRenderer" */;
+			buildConfigurationList = 306944D1205DF40A00C4969C /* Build configuration list for PBXNativeTarget "SoftwareRenderer-macOS" */;
 			buildPhases = (
 				306944A9205DF40A00C4969C /* Sources */,
 				306944AA205DF40A00C4969C /* Frameworks */,
@@ -247,14 +247,14 @@
 			);
 			dependencies = (
 			);
-			name = SoftwareRenderer;
+			name = "SoftwareRenderer-macOS";
 			productName = SoftwareRenderer;
 			productReference = 306944AD205DF40A00C4969C /* SoftwareRenderer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C6D285162122E22A00A4D87F /* SoftwareRendererIOS */ = {
+		C6D285162122E22A00A4D87F /* SoftwareRenderer-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C6D2852A2122E22D00A4D87F /* Build configuration list for PBXNativeTarget "SoftwareRendererIOS" */;
+			buildConfigurationList = C6D2852A2122E22D00A4D87F /* Build configuration list for PBXNativeTarget "SoftwareRenderer-iOS" */;
 			buildPhases = (
 				C6D285132122E22A00A4D87F /* Sources */,
 				C6D285142122E22A00A4D87F /* Frameworks */,
@@ -264,9 +264,9 @@
 			);
 			dependencies = (
 			);
-			name = SoftwareRendererIOS;
+			name = "SoftwareRenderer-iOS";
 			productName = SoftwareRendererIOS;
-			productReference = C6D285172122E22A00A4D87F /* SoftwareRendererIOS.app */;
+			productReference = C6D285172122E22A00A4D87F /* SoftwareRenderer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -304,9 +304,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				306944AC205DF40A00C4969C /* SoftwareRenderer */,
-				C6D285162122E22A00A4D87F /* SoftwareRendererIOS */,
-				305F94242123726A00893FF5 /* SoftwareRendererTVOS */,
+				306944AC205DF40A00C4969C /* SoftwareRenderer-macOS */,
+				C6D285162122E22A00A4D87F /* SoftwareRenderer-iOS */,
+				305F94242123726A00893FF5 /* SoftwareRenderer-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -483,7 +483,7 @@
 				INFOPLIST_FILE = tvos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 				SDKROOT = appletvos;
 			};
 			name = Debug;
@@ -503,7 +503,7 @@
 				INFOPLIST_FILE = tvos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 				SDKROOT = appletvos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -529,7 +529,7 @@
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 			};
 			name = Debug;
 		};
@@ -553,7 +553,7 @@
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 			};
 			name = Release;
 		};
@@ -572,7 +572,7 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -593,7 +593,7 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lv.elviss.SoftwareRenderer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SoftwareRenderer;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -612,7 +612,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRendererTVOS" */ = {
+		305F94302123726A00893FF5 /* Build configuration list for PBXNativeTarget "SoftwareRenderer-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				305F94312123726A00893FF5 /* Debug */,
@@ -621,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		306944D1205DF40A00C4969C /* Build configuration list for PBXNativeTarget "SoftwareRenderer" */ = {
+		306944D1205DF40A00C4969C /* Build configuration list for PBXNativeTarget "SoftwareRenderer-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				306944D2205DF40A00C4969C /* Debug */,
@@ -630,7 +630,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C6D2852A2122E22D00A4D87F /* Build configuration list for PBXNativeTarget "SoftwareRendererIOS" */ = {
+		C6D2852A2122E22D00A4D87F /* Build configuration list for PBXNativeTarget "SoftwareRenderer-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C6D2852B2122E22D00A4D87F /* Debug */,
