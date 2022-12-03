@@ -20,13 +20,13 @@ namespace demo
 
             ~Pointer()
             {
-                if (p) [p release];
+                [p release];
             }
 
             Pointer(T* a) noexcept: p{a} {}
             Pointer& operator=(T* a) noexcept
             {
-                if (p) [p release];
+                [p release];
                 p = a;
                 return *this;
             }
