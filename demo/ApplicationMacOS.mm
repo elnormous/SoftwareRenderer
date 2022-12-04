@@ -49,11 +49,6 @@
 {
 }
 
--(void)handleQuit:(id)sender
-{
-    [[NSApplication sharedApplication] terminate:sender];
-}
-
 @end
 
 @interface WindowDelegate: NSObject<NSWindowDelegate>
