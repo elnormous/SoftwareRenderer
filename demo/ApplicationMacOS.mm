@@ -316,7 +316,7 @@ namespace demo
                                           kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipLast,
                                           provider, nullptr, FALSE, kCGRenderingIntentDefault);
 
-        CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+        CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
 
         CGContextDrawImage(context, [content frame], image);
         CGContextFlush(context);
