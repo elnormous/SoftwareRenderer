@@ -242,7 +242,7 @@ namespace demo
                                         std::round(screen.frame.size.height / 2.0F - windowSize.height / 2.0F),
                                         windowSize.width, windowSize.height);
 
-        const NSWindowStyleMask windowStyleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+        const NSWindowStyleMask windowStyleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
 
         window  = [[NSWindow alloc] initWithContentRect:frame
                                               styleMask:windowStyleMask
