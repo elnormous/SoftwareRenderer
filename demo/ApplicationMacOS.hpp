@@ -82,6 +82,7 @@ namespace demo
     private:
         objc::Pointer<NSAutoreleasePool> pool;
 
+        objc::Pointer<NSObject<NSApplicationDelegate>> appDelegate;
         objc::Pointer<NSWindow> window;
         objc::Pointer<NSView> content;
         objc::Pointer<NSObject<NSWindowDelegate>> windowDelegate;

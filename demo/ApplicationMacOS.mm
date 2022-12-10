@@ -230,9 +230,11 @@ namespace demo
     {
         pool = [[NSAutoreleasePool alloc] init];
 
+        appDelegate = [[AppDelegate alloc] initWithApplication:this];
+
         NSApplication* sharedApplication = [NSApplication sharedApplication];
         [sharedApplication activateIgnoringOtherApps:YES];
-        [sharedApplication setDelegate:[[[AppDelegate alloc] initWithApplication:this] autorelease]];
+        [sharedApplication setDelegate:appDelegate];
         createMainMenu(sharedApplication);
 
         NSScreen* screen = [NSScreen mainScreen];
