@@ -49,12 +49,12 @@ namespace sr
         Color blendFactor;
     };
 
-    inline float getValue(const BlendState::Factor factor,
-                          const float srcColor,
-                          const float srcAlpha,
-                          const float destColor,
-                          const float destAlpha,
-                          const float blendFactor)
+    [[nodiscard]] inline float getValue(const BlendState::Factor factor,
+                                        const float srcColor,
+                                        const float srcAlpha,
+                                        const float destColor,
+                                        const float destAlpha,
+                                        const float blendFactor)
     {
         switch (factor)
         {
@@ -75,9 +75,9 @@ namespace sr
         }
     }
 
-    inline float getValue(const BlendState::Operation operation,
-                          const float a,
-                          const float b)
+    [[nodiscard]] inline float getValue(const BlendState::Operation operation,
+                                        const float a,
+                                        const float b)
     {
         switch (operation)
         {

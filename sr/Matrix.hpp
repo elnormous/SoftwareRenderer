@@ -27,10 +27,10 @@ namespace sr
         }
 
         T& operator[](std::size_t index) noexcept { return m[index]; }
-        constexpr T operator[](std::size_t index) const noexcept { return m[index]; }
+        [[nodiscard]] constexpr T operator[](std::size_t index) const noexcept { return m[index]; }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        static constexpr Matrix identity() noexcept
+        [[nodiscard]] static constexpr Matrix identity() noexcept
         {
             return Matrix{
                 T(1), T(0), T(0), T(0),
@@ -339,19 +339,19 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 1 && Y == 1)>::type* = nullptr>
-        T determinant() const noexcept
+        [[nodiscard]] T determinant() const noexcept
         {
             return m[0];
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 2 && Y == 2)>::type* = nullptr>
-        T determinant() const noexcept
+        [[nodiscard]] T determinant() const noexcept
         {
             return m[0] * m[3] - m[1] * m[2];
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 3 && Y == 3)>::type* = nullptr>
-        T determinant() const noexcept
+        [[nodiscard]] T determinant() const noexcept
         {
             const auto a0 = m[0] * (m[4] * m[8] - m[5] * m[7]);
             const auto a1 = m[1] * (m[3] * m[8] - m[5] * m[6]);
@@ -360,7 +360,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        T determinant() const noexcept
+        [[nodiscard]] T determinant() const noexcept
         {
             const auto a0 = m[0] * m[5] - m[1] * m[4];
             const auto a1 = m[0] * m[6] - m[2] * m[4];
@@ -378,37 +378,37 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getUpVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getUpVector() const noexcept
         {
             return Vector<T, 3>{m[4], m[5], m[6]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getDownVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getDownVector() const noexcept
         {
             return Vector<T, 3>{-m[4], -m[5], -m[6]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getLeftVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getLeftVector() const noexcept
         {
             return Vector<T, 3>{-m[0], -m[1], -m[2]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getRightVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getRightVector() const noexcept
         {
             return Vector<T, 3>{m[0], m[1], m[2]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getForwardVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getForwardVector() const noexcept
         {
             return Vector<T, 3>{-m[8], -m[9], -m[10]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getBackVector() const noexcept
+        [[nodiscard]] Vector<T, 3> getBackVector() const noexcept
         {
             return Vector<T, 3>{m[8], m[9], m[10]};
         }
@@ -466,7 +466,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == Y)>::type* = nullptr>
-        bool isIdentity() const noexcept
+        [[nodiscard]] bool isIdentity() const noexcept
         {
             for (std::size_t r = 0; r < R; ++r)
                 for (std::size_t c = 0; c < C; ++c)
@@ -660,19 +660,19 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 3 && Y == 3)>::type* = nullptr>
-        Vector<T, 2> getTranslation() const noexcept
+        [[nodiscard]] Vector<T, 2> getTranslation() const noexcept
         {
             return Vector<T, 2>{m[6], m[7]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getTranslation() const noexcept
+        [[nodiscard]] Vector<T, 3> getTranslation() const noexcept
         {
             return Vector<T, 3>{m[12], m[13], m[14]};
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 3 && Y == 3)>::type* = nullptr>
-        Vector<T, 2> getScale() const noexcept
+        [[nodiscard]] Vector<T, 2> getScale() const noexcept
         {
             Vector<T, 2> scale;
             scale.v[0] = Vector<T, 2>{m[0], m[1]}.length();
@@ -682,7 +682,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        Vector<T, 3> getScale() const noexcept
+        [[nodiscard]] Vector<T, 3> getScale() const noexcept
         {
             Vector<T, 3> scale;
             scale.v[0] = Vector<T, 3>{m[0], m[1], m[2]}.length();
@@ -692,7 +692,7 @@ namespace sr
             return scale;
         }
 
-        const Matrix operator+(const Matrix& matrix) const noexcept
+        [[nodiscard]] const Matrix operator+(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.add(matrix, result);
@@ -705,7 +705,7 @@ namespace sr
             return *this;
         }
 
-        const Matrix operator-(const Matrix& matrix) const noexcept
+        [[nodiscard]] const Matrix operator-(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.subtract(matrix, result);
@@ -718,14 +718,14 @@ namespace sr
             return *this;
         }
 
-        const Matrix operator-() const noexcept
+        [[nodiscard]] const Matrix operator-() const noexcept
         {
             Matrix result(*this);
             negate(result);
             return result;
         }
 
-        const Matrix operator*(const Matrix& matrix) const noexcept
+        [[nodiscard]] const Matrix operator*(const Matrix& matrix) const noexcept
         {
             Matrix result(*this);
             result.multiply(matrix, result);
@@ -738,7 +738,7 @@ namespace sr
             return *this;
         }
 
-        bool operator==(const Matrix& matrix) const noexcept
+        [[nodiscard]] bool operator==(const Matrix& matrix) const noexcept
         {
             for (std::size_t i = 0; i < C * R; ++i)
                 if (m[i] != matrix.m[i])
@@ -747,7 +747,7 @@ namespace sr
             return true;
         }
 
-        bool operator!=(const Matrix& matrix) const noexcept
+        [[nodiscard]] bool operator!=(const Matrix& matrix) const noexcept
         {
             for (std::size_t i = 0; i < C * R; ++i)
                 if (m[i] != matrix.m[i])
@@ -757,7 +757,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        const Vector<T, 3> operator*(const Vector<T, 3>& v) const noexcept
+        [[nodiscard]] const Vector<T, 3> operator*(const Vector<T, 3>& v) const noexcept
         {
             Vector<T, 3> x;
             transformVector(v, x);
@@ -765,7 +765,7 @@ namespace sr
         }
 
         template <std::size_t X = C, std::size_t Y = R, typename std::enable_if<(X == 4 && Y == 4)>::type* = nullptr>
-        const Vector<T, 4> operator*(const Vector<T, 4>& v) const noexcept
+        [[nodiscard]] const Vector<T, 4> operator*(const Vector<T, 4>& v) const noexcept
         {
             Vector<T, 4> x;
             transformVector(v, x);
@@ -774,14 +774,14 @@ namespace sr
     };
 
     template <typename T>
-    inline Vector<T, 3>& operator*=(Vector<T, 3>& v, const Matrix<T, 4, 4>& m) noexcept
+    [[nodiscard]] inline Vector<T, 3>& operator*=(Vector<T, 3>& v, const Matrix<T, 4, 4>& m) noexcept
     {
         m.transformVector(v);
         return v;
     }
 
     template <typename T>
-    inline Vector<T, 4>& operator*=(Vector<T, 4>& v, const Matrix<T, 4, 4>& m) noexcept
+    [[nodiscard]] inline Vector<T, 4>& operator*=(Vector<T, 4>& v, const Matrix<T, 4, 4>& m) noexcept
     {
         m.transformVector(v);
         return v;

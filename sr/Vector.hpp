@@ -34,40 +34,40 @@ namespace sr
         }
 
         T& operator[](std::size_t index) noexcept { return v[index]; }
-        constexpr T operator[](std::size_t index) const noexcept { return v[index]; }
+        [[nodiscard]] constexpr T operator[](std::size_t index) const noexcept { return v[index]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 1)>::type* = nullptr>
         T& x() noexcept { return v[0]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 1)>::type* = nullptr>
-        constexpr T x() const noexcept { return v[0]; }
+        [[nodiscard]] constexpr T x() const noexcept { return v[0]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 2)>::type* = nullptr>
         T& y() noexcept { return v[1]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 2)>::type* = nullptr>
-        constexpr T y() const noexcept { return v[1]; }
+        [[nodiscard]] constexpr T y() const noexcept { return v[1]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 3)>::type* = nullptr>
         T& z() noexcept { return v[2]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 3)>::type* = nullptr>
-        constexpr T z() const noexcept { return v[2]; }
+        [[nodiscard]] constexpr T z() const noexcept { return v[2]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 4)>::type* = nullptr>
         T& w() noexcept { return v[3]; }
 
         template <std::size_t X = N, typename std::enable_if<(X >= 4)>::type* = nullptr>
-        constexpr T w() const noexcept { return v[3]; }
+        [[nodiscard]] constexpr T w() const noexcept { return v[3]; }
 
         template <std::size_t X = N, typename std::enable_if<(X == 2)>::type* = nullptr>
-        T getAngle() const noexcept
+        [[nodiscard]] T getAngle() const noexcept
         {
             return std::atan2(v[1], v[0]);
         }
 
         template <std::size_t X = N, typename std::enable_if<(X == 3)>::type* = nullptr>
-        T getAngle(const Vector& axis) const noexcept
+        [[nodiscard]] T getAngle(const Vector& axis) const noexcept
         {
             constexpr T dx = axis.v[0] - v[0] - v[1] * axis.v[2] + v[2] * axis.v[1];
             constexpr T dy = axis.v[1] - v[1] - v[2] * axis.v[0] + v[0] * axis.v[2];
@@ -77,7 +77,7 @@ namespace sr
         }
 
         template <std::size_t X = N, typename std::enable_if<(X == 4)>::type* = nullptr>
-        T getAngle(const Vector& axis) const noexcept
+        [[nodiscard]] T getAngle(const Vector& axis) const noexcept
         {
             constexpr T dx = v[3] * axis.v[0] - v[0] * axis.v[3] - v[1] * axis.v[2] + v[2] * axis.v[1];
             constexpr T dy = v[3] * axis.v[1] - v[1] * axis.v[3] - v[2] * axis.v[0] + v[0] * axis.v[2];
@@ -94,7 +94,7 @@ namespace sr
         }
 
         template <std::size_t X = N, typename std::enable_if<(X == 3)>::type* = nullptr>
-        constexpr Vector cross(const Vector& vec) const noexcept
+        [[nodiscard]] constexpr Vector cross(const Vector& vec) const noexcept
         {
             return Vector{
                 (v[1] * vec.v[2]) - (v[2] * vec.v[1]),
@@ -103,7 +103,7 @@ namespace sr
             };
         }
 
-        T distance(const Vector& vec) const noexcept
+        [[nodiscard]] T distance(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -111,7 +111,7 @@ namespace sr
             return std::sqrt(d);
         }
 
-        T distanceSquared(const Vector& vec) const noexcept
+        [[nodiscard]] T distanceSquared(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -119,7 +119,7 @@ namespace sr
             return d;
         }
 
-        T dot(const Vector& vec) const noexcept
+        [[nodiscard]] T dot(const Vector& vec) const noexcept
         {
             T d = 0;
             for (std::size_t i = 0; i < N; ++i)
@@ -127,7 +127,7 @@ namespace sr
             return d;
         }
 
-        T length() const noexcept
+        [[nodiscard]] T length() const noexcept
         {
             T l = 0;
             for (const auto& c : v)
@@ -135,7 +135,7 @@ namespace sr
             return std::sqrt(l);
         }
 
-        T lengthSquared() const noexcept
+        [[nodiscard]] T lengthSquared() const noexcept
         {
             T l = 0;
             for (const auto& c : v)
@@ -149,7 +149,7 @@ namespace sr
                 c = -c;
         }
 
-        bool isNormalized(const T tolerance = std::numeric_limits<T>::epsilon()) const noexcept
+        [[nodiscard]] bool isNormalized(const T tolerance = std::numeric_limits<T>::epsilon()) const noexcept
         {
             return std::abs(T(1) - lengthSquared()) <= tolerance;
         }
@@ -172,7 +172,7 @@ namespace sr
                 c *= multiplier;
         }
 
-        Vector normalized() const noexcept
+        [[nodiscard]] Vector normalized() const noexcept
         {
             T squared = T(0);
             for (const auto& c : v)
@@ -201,7 +201,7 @@ namespace sr
                 *this += (target - *this) * (elapsedTime / (elapsedTime + responseTime));
         }
 
-        T getMin() const noexcept
+        [[nodiscard]] T getMin() const noexcept
         {
             T result = v[0];
 
@@ -212,7 +212,7 @@ namespace sr
             return result;
         }
 
-        T getMax() const noexcept
+        [[nodiscard]] T getMax() const noexcept
         {
             T result = v[0];
 
@@ -223,7 +223,7 @@ namespace sr
             return result;
         }
 
-        const Vector operator+(const Vector& vec) const noexcept
+        [[nodiscard]] const Vector operator+(const Vector& vec) const noexcept
         {
             Vector result = *this;
             for (std::size_t i = 0; i < N; ++i)
@@ -238,7 +238,7 @@ namespace sr
             return *this;
         }
 
-        const Vector operator-(const Vector& vec) const noexcept
+        [[nodiscard]] const Vector operator-(const Vector& vec) const noexcept
         {
             Vector result = *this;
             for (std::size_t i = 0; i < N; ++i)
@@ -253,7 +253,7 @@ namespace sr
             return *this;
         }
 
-        const Vector operator-() const noexcept
+        [[nodiscard]] const Vector operator-() const noexcept
         {
             Vector result = *this;
             for (auto& c : result.v)
@@ -261,7 +261,7 @@ namespace sr
             return result;
         }
 
-        const Vector operator*(const T scalar) const noexcept
+        [[nodiscard]] const Vector operator*(const T scalar) const noexcept
         {
             Vector result(*this);
             for (auto& c : result.v)
@@ -276,7 +276,7 @@ namespace sr
             return *this;
         }
 
-        const Vector operator/(const T scalar) const noexcept
+        [[nodiscard]] const Vector operator/(const T scalar) const noexcept
         {
             Vector result(*this);
             for (auto& c : result.v)
@@ -291,7 +291,7 @@ namespace sr
             return *this;
         }
 
-        bool operator<(const Vector& vec) const noexcept
+        [[nodiscard]] bool operator<(const Vector& vec) const noexcept
         {
             for (std::size_t i = 0; i < N; ++i)
                 if (v[i] < vec.v[i]) return true;
@@ -300,17 +300,17 @@ namespace sr
             return false;
         }
 
-        bool operator==(const Vector& vec) const noexcept
+        [[nodiscard]] bool operator==(const Vector& vec) const noexcept
         {
             return std::equal(std::begin(v), std::end(v), std::begin(vec.v));
         }
 
-        bool operator!=(const Vector& vec) const noexcept
+        [[nodiscard]] bool operator!=(const Vector& vec) const noexcept
         {
             return !std::equal(std::begin(v), std::end(v), std::begin(vec.v));
         }
 
-        bool isZero() const noexcept
+        [[nodiscard]] bool isZero() const noexcept
         {
             for (const auto& c : v)
                 if (c != T(0)) return false;
@@ -319,7 +319,7 @@ namespace sr
     };
 
     template <typename T, std::size_t N>
-    inline const Vector<T, N> operator*(const T scalar, const Vector<T, N>& vec) noexcept
+    [[nodiscard]] inline const Vector<T, N> operator*(const T scalar, const Vector<T, N>& vec) noexcept
     {
         Vector<T, N> result = vec;
         result *= scalar;

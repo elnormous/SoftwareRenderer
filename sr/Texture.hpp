@@ -81,21 +81,21 @@ namespace sr
             }
         }
 
-        auto getPixelFormat() const noexcept { return pixelFormat; }
-        auto getWidth() const noexcept { return width; }
-        auto getHeight() const noexcept { return height; }
+        [[nodiscard]] auto getPixelFormat() const noexcept { return pixelFormat; }
+        [[nodiscard]] auto getWidth() const noexcept { return width; }
+        [[nodiscard]] auto getHeight() const noexcept { return height; }
 
-        std::size_t getLevelCount() const noexcept
+        [[nodiscard]] std::size_t getLevelCount() const noexcept
         {
             return levels.size();
         }
 
-        std::vector<std::uint8_t>& getData(const std::uint32_t level = 0)
+        [[nodiscard]] std::vector<std::uint8_t>& getData(const std::uint32_t level = 0)
         {
             return levels[level];
         }
 
-        const std::vector<std::uint8_t>& getData(const std::uint32_t level = 0) const
+        [[nodiscard]] const std::vector<std::uint8_t>& getData(const std::uint32_t level = 0) const
         {
             return levels[level];
         }
@@ -114,9 +114,9 @@ namespace sr
             levels[level] = buffer;
         }
 
-        Color getPixel(const std::size_t x,
-                       const std::size_t y,
-                       const std::uint32_t level) const
+        [[nodiscard]] Color getPixel(const std::size_t x,
+                                     const std::size_t y,
+                                     const std::uint32_t level) const
         {
             const auto& buffer = levels[level];
 
@@ -147,7 +147,7 @@ namespace sr
             }
         }
 
-        Color sample(const Sampler* sampler, const Vector<float, 2>& coord) const
+        [[nodiscard]] Color sample(const Sampler* sampler, const Vector<float, 2>& coord) const
         {
             if (sampler && !levels.empty())
             {

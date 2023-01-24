@@ -50,7 +50,7 @@ namespace sr
         {
         }
 
-        constexpr std::uint32_t getIntValue() const noexcept
+        [[nodiscard]] constexpr std::uint32_t getIntValue() const noexcept
         {
             return (static_cast<std::uint32_t>(r * 255.0F) << 24) |
                    (static_cast<std::uint32_t>(g * 255.0F) << 16) |
@@ -58,7 +58,7 @@ namespace sr
                    static_cast<std::uint32_t>(a * 255.0F);
         }
 
-        std::uint32_t getIntValueRaw() const noexcept
+        [[nodiscard]] std::uint32_t getIntValueRaw() const noexcept
         {
             const std::array<std::uint8_t, 4> result{
                 static_cast<std::uint8_t>(r * 255.0F),

@@ -41,7 +41,7 @@ namespace sr
         {
         }
 
-        constexpr bool isEmpty() const noexcept
+        [[nodiscard]] constexpr bool isEmpty() const noexcept
         {
             return size.isZero();
         }
@@ -57,61 +57,61 @@ namespace sr
             position = newPosition;
         }
 
-        constexpr T left() const noexcept
+        [[nodiscard]] constexpr T left() const noexcept
         {
             return position.v[0];
         }
 
-        constexpr T bottom() const noexcept
+        [[nodiscard]] constexpr T bottom() const noexcept
         {
             return position.v[1];
         }
 
-        constexpr T right() const noexcept
+        [[nodiscard]] constexpr T right() const noexcept
         {
             return position.v[0] + size.v[0];
         }
 
-        constexpr T top() const noexcept
+        [[nodiscard]] constexpr T top() const noexcept
         {
             return position.v[1] + size.v[1];
         }
 
-        constexpr Vector<T, 2> bottomLeft() const noexcept
+        [[nodiscard]] constexpr Vector<T, 2> bottomLeft() const noexcept
         {
             return position;
         }
 
-        constexpr Vector<T, 2> topRight() const noexcept
+        [[nodiscard]] constexpr Vector<T, 2> topRight() const noexcept
         {
             return Vector<T, 2>{position.v[0] + size.v[0], position.v[1] + size.v[1]};
         }
 
-        constexpr bool containsPoint(const T x, const T y) const noexcept
+        [[nodiscard]] constexpr bool containsPoint(const T x, const T y) const noexcept
         {
             return x >= position.v[0] && x <= (position.v[0] + size.v[0]) &&
                 y >= position.v[1] && y <= (position.v[1] + size.v[1]);
         }
 
-        constexpr bool containsPoint(const Vector<T, 2>& point) const noexcept
+        [[nodiscard]] constexpr bool containsPoint(const Vector<T, 2>& point) const noexcept
         {
             return point.v[0] >= position.v[0] && point.v[0] <= (position.v[0] + size.v[0]) &&
                 point.v[1] >= position.v[1] && point.v[1] <= (position.v[1] + size.v[1]);
         }
 
-        constexpr bool contains(const T x, const T y,
-                                const T width, const T height) const noexcept
+        [[nodiscard]] constexpr bool contains(const T x, const T y,
+                                              const T width, const T height) const noexcept
         {
             return containsPoint(x, y) && containsPoint(x + width, y + height);
         }
 
-        constexpr bool contains(const Rect& r) const noexcept
+        [[nodiscard]] constexpr bool contains(const Rect& r) const noexcept
         {
             return contains(r.position.v[0], r.position.v[1], r.size.v[0], r.size.v[1]);
         }
 
-        bool intersects(const T x, const T y,
-                        const T width, const T height) const noexcept
+        [[nodiscard]] bool intersects(const T x, const T y,
+                                      const T width, const T height) const noexcept
         {
             T t;
             if ((t = x - position.v[0]) > size.v[0] || -t > width)
@@ -121,12 +121,12 @@ namespace sr
             return true;
         }
 
-        constexpr bool intersects(const Rect& r) const noexcept
+        [[nodiscard]] constexpr bool intersects(const Rect& r) const noexcept
         {
             return intersects(r.position.v[0], r.position.v[1], r.size.v[0], r.size.v[1]);
         }
 
-        static bool intersect(const Rect& r1, const Rect& r2, Rect& dst) noexcept
+        [[nodiscard]] static bool intersect(const Rect& r1, const Rect& r2, Rect& dst) noexcept
         {
             const T xmin = std::max(r1.position.v[0], r2.position.v[0]);
             const T xmax = std::min(r1.right(), r2.right());
@@ -165,19 +165,19 @@ namespace sr
             size.v[1] += verticalAmount * T(2);
         }
 
-        constexpr bool operator==(const Rect& other) const noexcept
+        [[nodiscard]] constexpr bool operator==(const Rect& other) const noexcept
         {
             return position.v[0] == other.position.v[0] && size.v[0] == other.size.v[0] &&
                 position.v[1] == other.position.v[1] && size.v[1] == other.size.v[1];
         }
 
-        constexpr bool operator!=(const Rect& other) const noexcept
+        [[nodiscard]] constexpr bool operator!=(const Rect& other) const noexcept
         {
             return position.v[0] != other.position.v[0] || size.v[0] != other.size.v[0] ||
                 position.v[1] != other.position.v[1] || size.v[1] != other.size.v[1];
         }
 
-        constexpr const Rect operator*(const T scalar) const noexcept
+        [[nodiscard]] constexpr const Rect operator*(const T scalar) const noexcept
         {
             return Rect{
                 position.v[0] * scalar, position.v[1] * scalar,
@@ -194,7 +194,7 @@ namespace sr
             return *this;
         }
 
-        constexpr const Rect operator/(const T scalar) const noexcept
+        [[nodiscard]] constexpr const Rect operator/(const T scalar) const noexcept
         {
             return Rect{
                 position.v[0] / scalar, position.v[1] / scalar,
