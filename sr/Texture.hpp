@@ -32,26 +32,26 @@ namespace sr
             {
                 levels.push_back(std::vector<std::uint8_t>(width * height * pixelSize));
 
-                if (mipMaps)
+                if (mipMaps || true)
                 {
-                    std::size_t newWidth = width;
-                    std::size_t newHeight = height;
+                    auto mipmapWidth = width >> 1;
+                    auto mipmapHeight = height >> 1;
 
-                    while (newWidth > 1 || newHeight > 1)
+                    while (mipmapWidth > 0 || mipmapHeight > 0)
                     {
-                        newWidth >>= 1;
-                        newHeight >>= 1;
+                        if (mipmapWidth < 1) mipmapWidth = 1;
+                        if (mipmapHeight < 1) mipmapHeight = 1;
 
-                        if (newWidth < 1) newWidth = 1;
-                        if (newHeight < 1) newHeight = 1;
+                        levels.push_back(std::vector<std::uint8_t>(mipmapWidth * mipmapHeight * pixelSize));
 
-                        levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
+                        mipmapWidth >>= 1;
+                        mipmapHeight >>= 1;
                     }
                 }
             }
         }
 
-        void resize(std::size_t newWidth, std::size_t newHeight)
+        void resize(const std::size_t newWidth, const std::size_t newHeight)
         {
             width = newWidth;
             height = newHeight;
@@ -65,18 +65,18 @@ namespace sr
 
             if (mipMaps)
             {
-                newWidth = width;
-                newHeight = height;
+                auto mipmapWidth = width >> 1;
+                auto mipmapHeight = height >> 1;
 
-                while (newWidth > 1 || newHeight > 1)
+                while (mipmapWidth > 0 || mipmapHeight > 0)
                 {
-                    newWidth >>= 1;
-                    newHeight >>= 1;
+                    if (mipmapWidth < 1) mipmapWidth = 1;
+                    if (mipmapHeight < 1) mipmapHeight = 1;
 
-                    if (newWidth < 1) newWidth = 1;
-                    if (newHeight < 1) newHeight = 1;
+                    levels.push_back(std::vector<std::uint8_t>(mipmapWidth * mipmapHeight * pixelSize));
 
-                    levels.push_back(std::vector<std::uint8_t>(newWidth * newHeight * pixelSize));
+                    mipmapWidth >>= 1;
+                    mipmapHeight >>= 1;
                 }
             }
         }
@@ -90,17 +90,18 @@ namespace sr
             return levels.size();
         }
 
-        std::vector<std::uint8_t>& getData(std::uint32_t level = 0)
+        std::vector<std::uint8_t>& getData(const std::uint32_t level = 0)
         {
             return levels[level];
         }
 
-        const std::vector<std::uint8_t>& getData(std::uint32_t level = 0) const
+        const std::vector<std::uint8_t>& getData(const std::uint32_t level = 0) const
         {
             return levels[level];
         }
 
-        void setData(const std::vector<std::uint8_t>& buffer, std::uint32_t level = 0)
+        void setData(const std::vector<std::uint8_t>& buffer,
+                     const std::uint32_t level = 0)
         {
             const auto pixelSize = getPixelSize(pixelFormat);
             if (pixelSize == 0)
